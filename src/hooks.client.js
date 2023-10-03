@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { toasts } from "svelte-toasts";
 const sbUrl = "https://njcypmepfxckouqjunrr.supabase.co";
 
 export function randomNum(min, max) {
