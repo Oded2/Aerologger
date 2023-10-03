@@ -1,0 +1,45 @@
+.font-google-quicksand {
+  font-weight: 600;
+  font-family: "Quicksand", sans-serif;
+}
+h1.font-google-quicksand {
+  font-weight: bold;
+}
+.font-google-work-sans {
+  font-family: "Work Sans", sans-serif;
+}
+
+.font-google-roboto-mono {
+  font-family: "Roboto Mono", monospace;
+}
+
+.font-google-signika-negative {
+  font-family: "Signika Negative", sans-serif;
+}
+
+.font-google-mulish {
+  font-family: "Mulish", sans-serif;
+}
+
+.font-google-caveat {
+  font-family: "Caveat", cursive;
+}
+
+.font-google-space-mono {
+  font-family: "Space Mono", monospace;
+}
+.font-google-comfortaa {
+  font-family: "Comfortaa", cursive;
+}
+.full-background {
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
+  top: 0;
+}
+.fw-500 {
+  font-weight: 500 !important;
+}
+.fw-600 {
+  font-weight: 600 !important;
+}
