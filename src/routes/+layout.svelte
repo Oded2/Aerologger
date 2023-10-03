@@ -1,10 +1,12 @@
 <script>
   import "../global.css";
-  const googleFontsUrl = new URL("https://fonts.googleapis.com/css2");
-  const fonts = ["quicksand"];
+  import hrefs from "../data/hrefs.json";
+  import { page } from "$app/stores";
+  $: pageUrl = $page.url;
+  $: pageHref = pageUrl.href.replace(pageUrl.origin, "");
 </script>
 
-<nav class="navbar navbar-expand-lg font-google-quicksand">
+<nav class="navbar navbar-expand-md font-google-quicksand">
   <div class="container">
     <a href="/" class="navbar-brand">AeroLogger</a>
     <button
@@ -18,16 +20,30 @@
     >
       <span class="navbar-toggler-icon" />
     </button>
-    <div
-      class="collapse navbar-collapse justify-content-end"
-      id="navbarSupportedContent"
-    >
-      <ul class="navbar-nav">
-        <li class="nav-item me-2">
-          <a href="/" class="btn btn-outline-primary fw-600">Log In</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav m-auto">
+        <li class="nav-item">
+          <a
+            href="/"
+            class="nav-link"
+            class:active={pageHref == hrefs.home.home.link}>Home</a
+          >
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item me-md-2 mb-1 mb-md-0">
+          <a
+            href={hrefs.login.home.link}
+            class="btn btn-outline-primary fw-600"
+            class:disabled={pageHref == hrefs.login.home.link}>Log In</a
+          >
         </li>
         <li class="nav-item">
-          <a href="/" class="btn btn-outline-secondary fw-600">Sign Up</a>
+          <a
+            href={hrefs.signup.home.link}
+            class="btn btn-outline-secondary fw-600"
+            class:disabled={pageHref == hrefs.signup.home.link}>Sign Up</a
+          >
         </li>
       </ul>
     </div>

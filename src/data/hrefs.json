@@ -1,0 +1,20 @@
+{
+    "home": {
+        "home": {
+            "title": "AeroLogger",
+            "link": "/"
+        }
+    },
+    "signup": {
+        "home": {
+            "title": "Sign Up",
+            "link": "/signup"
+        }
+    },
+    "login": {
+        "home": {
+            "title": "Log In",
+            "link": "/login"
+        }
+    }
+}

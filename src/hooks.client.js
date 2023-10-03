@@ -1,7 +1,8 @@
+import { createClient } from "@supabase/supabase-js";
+const sbUrl = "https://njcypmepfxckouqjunrr.supabase.co";
+
 export function randomNum(min, max) {
-  const difference = max - min;
-  let rand = parseInt(Math.random() * difference + min);
-  return rand;
+  return parseInt(Math.random() * (max - min) + min);
 }
 export function addParams(link = new URL(), params) {
   for (const key in params) {
@@ -15,21 +16,6 @@ export function addParamsString(string, params) {
   return link.toString().replace("https://codevault.com", string);
 }
 
-export async function fetchData(url) {
-  let response;
-  try {
-    response = await fetch(url);
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-  if (response.status != 200) {
-    console.error(response.status);
-    return false;
-  }
-  return response.json();
-}
-
 export function simplifyString(str) {
   for (let i = 0; i < str.length; i++) {
     str = str.replace(/\s/g, "").toLowerCase();
@@ -40,12 +26,18 @@ export function createSbClient(api) {
   return createClient(sbUrl, api);
 }
 
-export function showToast(type = "success", title = "Success", description) {
+export function createToast(
+  type,
+  title,
+  description,
+  duration = 5000,
+  placement = "bottom-center"
+) {
   return toasts.add({
     title: title,
     description: description,
-    duration: 5000,
-    placement: "bottom-center",
+    duration: duration,
+    placement: placement,
     type: type,
     theme: "dark",
     showProgress: true,
@@ -67,8 +59,7 @@ export function maxLen(string = "", maxLen = NaN) {
 }
 
 export function formatDateStr(dateStr) {
-  const date = new Date(dateStr);
-  return formatDate(date);
+  return formatDate(new Date(dateStr));
 }
 export function formatDate(date = new Date()) {
   const dateOptions = { month: "long", day: "numeric", year: "numeric" };
