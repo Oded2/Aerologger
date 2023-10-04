@@ -1,5 +1,4 @@
 import { SUPABASE } from "$env/static/private";
-
-export function load() {
+export async function load() {
   return { sbApi: SUPABASE };
 }

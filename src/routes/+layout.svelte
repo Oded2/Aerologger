@@ -2,8 +2,31 @@
   import "../global.css";
   import hrefs from "../data/hrefs.json";
   import { page } from "$app/stores";
+  import { getUserDetails } from "../hooks.client.js";
+  import { onMount } from "svelte";
+  export let data;
+  const sbApi = data.sbApi;
+  let userId;
+  onMount(async () => {
+    userId = await getUserDetails(sbApi);
+  });
+  let title = "AeroLogger";
   $: pageUrl = $page.url;
   $: pageHref = pageUrl.href.replace(pageUrl.origin, "");
+  $: if (pageHref) {
+    title = findTitle();
+  }
+  function findTitle() {
+    for (let key in hrefs) {
+      const current = hrefs[key];
+      for (let secondKey in current) {
+        const secondCurrent = current[secondKey];
+        if (secondCurrent["link"] == pageHref) {
+          return secondCurrent["title"];
+        }
+      }
+    }
+  }
 </script>
 
 <nav class="navbar navbar-expand-md font-google-quicksand">
@@ -30,25 +53,37 @@
           >
         </li>
       </ul>
+
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item me-md-2 mb-1 mb-md-0">
-          <a
-            href={hrefs.login.home.link}
-            class="btn btn-outline-primary fw-600"
-            class:disabled={pageHref == hrefs.login.home.link}>Log In</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            href={hrefs.signup.home.link}
-            class="btn btn-outline-secondary fw-600"
-            class:disabled={pageHref == hrefs.signup.home.link}>Sign Up</a
-          >
-        </li>
+        {#if userId}
+          <li class="nav-item mb-1 mb-md-0">
+            <a
+              href={hrefs.signout.home.title}
+              class="btn btn-outline-danger fw-600">Signout</a
+            >
+          </li>
+        {:else}
+          <li class="nav-item mb-1 mb-md-0">
+            <a
+              href={hrefs.login.home.link}
+              class="btn btn-outline-primary fw-600"
+              class:disabled={pageHref == hrefs.login.home.link}>Log In</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href={hrefs.signup.home.link}
+              class="btn btn-outline-secondary fw-600"
+              class:disabled={pageHref == hrefs.signup.home.link}>Sign Up</a
+            >
+          </li>
+        {/if}
       </ul>
     </div>
   </div>
 </nav>
 <slot />
 
-<svelte:head />
+<svelte:head>
+  <title>{title}</title>
+</svelte:head>

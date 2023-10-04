@@ -16,5 +16,11 @@
             "title": "Log In",
             "link": "/login"
         }
+    },
+    "signout": {
+        "home": {
+            "title": "Sign Out",
+            "link": "/signout"
+        }
     }
 }
