@@ -22,5 +22,11 @@
             "title": "Sign Out",
             "link": "/signout"
         }
+    },
+    "account": {
+        "home": {
+            "title": "Account",
+            "link": "/account"
+        }
     }
 }

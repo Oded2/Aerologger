@@ -57,10 +57,18 @@
       {#await userId then userId}
         <ul class="navbar-nav ms-auto">
           {#if userId}
+            <li class="nav-item mb-1 mb-md-0 me-md-2">
+              <a
+                href={hrefs.account.home.link}
+                class="btn btn-outline-primary fw-600"
+                class:disabled={pageHref == hrefs.account.home.link}>Account</a
+              >
+            </li>
             <li class="nav-item mb-1 mb-md-0">
               <a
                 href={hrefs.signout.home.link}
-                class="btn btn-outline-danger fw-600">Signout</a
+                class="btn btn-outline-danger fw-600"
+                class:disabled={pageHref == hrefs.signout.home.link}>Signout</a
               >
             </li>
           {:else}
