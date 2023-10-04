@@ -7,14 +7,12 @@
   export let data;
   const sbApi = data.sbApi;
   let userId;
-  onMount(async () => {
-    userId = await getUserDetails(sbApi);
-  });
   let title = "AeroLogger";
   $: pageUrl = $page.url;
   $: pageHref = pageUrl.href.replace(pageUrl.origin, "");
   $: if (pageHref) {
     title = findTitle();
+    userId = getUserDetails(sbApi);
   }
   function findTitle() {
     for (let key in hrefs) {
@@ -31,7 +29,7 @@
 
 <nav class="navbar navbar-expand-md font-google-quicksand">
   <div class="container">
-    <a href="/" class="navbar-brand">AeroLogger</a>
+    <a href="/" class="navbar-brand fw-600">AeroLogger</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -47,38 +45,42 @@
       <ul class="navbar-nav m-auto">
         <li class="nav-item">
           <a
-            href="/"
+            href={hrefs.home.home.link}
             class="nav-link"
             class:active={pageHref == hrefs.home.home.link}>Home</a
           >
         </li>
+        <li class="nav-item">
+          <a href="/" class="nav-link" class:active={false}>Logbook</a>
+        </li>
       </ul>
-
-      <ul class="navbar-nav ms-auto">
-        {#if userId}
-          <li class="nav-item mb-1 mb-md-0">
-            <a
-              href={hrefs.signout.home.title}
-              class="btn btn-outline-danger fw-600">Signout</a
-            >
-          </li>
-        {:else}
-          <li class="nav-item mb-1 mb-md-0">
-            <a
-              href={hrefs.login.home.link}
-              class="btn btn-outline-primary fw-600"
-              class:disabled={pageHref == hrefs.login.home.link}>Log In</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              href={hrefs.signup.home.link}
-              class="btn btn-outline-secondary fw-600"
-              class:disabled={pageHref == hrefs.signup.home.link}>Sign Up</a
-            >
-          </li>
-        {/if}
-      </ul>
+      {#await userId then userId}
+        <ul class="navbar-nav ms-auto">
+          {#if userId}
+            <li class="nav-item mb-1 mb-md-0">
+              <a
+                href={hrefs.signout.home.link}
+                class="btn btn-outline-danger fw-600">Signout</a
+              >
+            </li>
+          {:else}
+            <li class="nav-item mb-1 mb-md-0 me-md-2">
+              <a
+                href={hrefs.login.home.link}
+                class="btn btn-outline-primary fw-600"
+                class:disabled={pageHref == hrefs.login.home.link}>Log In</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                href={hrefs.signup.home.link}
+                class="btn btn-outline-secondary fw-600"
+                class:disabled={pageHref == hrefs.signup.home.link}>Sign Up</a
+              >
+            </li>
+          {/if}
+        </ul>
+      {/await}
     </div>
   </div>
 </nav>
