@@ -64,6 +64,13 @@
             class:active={pageHref == hrefs.newFlight.home.link}>New Flight</a
           >
         </li>
+        <li class="nav-item">
+          <a
+            href={hrefs.contact.home.link}
+            class="nav-link"
+            class:active={pageHref == hrefs.contact.home.link}>Contact</a
+          >
+        </li>
       </ul>
       {#await userId then userId}
         <ul class="navbar-nav ms-auto">

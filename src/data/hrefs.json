@@ -47,5 +47,12 @@
             "title": "Log New Flight",
             "link": "/newFlight"
         }
+    },
+    "contact": {
+        "home": {
+            "title": "Contact",
+            "link": "/contact",
+            "mail": "odedconnect@gmail.com"
+        }
     }
 }
