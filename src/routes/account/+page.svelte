@@ -48,7 +48,7 @@
       return;
     }
     toggleEmailEdit();
-    newEmail = "";
+
     refrshUser();
     toast = createToast(
       "info",
@@ -56,6 +56,7 @@
       `An email has been sent to ${newEmail} with a verification link.`,
       10000
     );
+    newEmail = "";
   }
   async function changeFname() {
     inProgress = true;
@@ -68,13 +69,13 @@
       return;
     }
     toggleFnameEdit();
-    newFname = "";
     refrshUser();
     toast = createToast(
       "success",
       "Success",
       `Your first name has been changed to ${newFname}.`
     );
+    newFname = "";
   }
   async function changeLname() {
     inProgress = true;
@@ -87,13 +88,14 @@
       return;
     }
     toggleLnameEdit();
-    newLname = "";
+
     refrshUser();
     toast = createToast(
       "success",
       "Success",
       `Your last name has been changed to ${newLname}.`
     );
+    newLname = "";
   }
   function refrshUser() {
     user = getUserDetails(api);
