@@ -1,72 +1,53 @@
 <script>
   import hrefs from "../../data/hrefs.json";
-  import { getUserDetails } from "../../hooks.client.js";
+  import {
+    createSbClient,
+    createToast,
+    getUserDetails,
+  } from "../../hooks.client.js";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
+  import ToastSetup from "../../components/setup/ToastSetup.svelte";
   export let data;
   const api = data.sbApi;
   const user = getUserDetails(api);
+  const sb = createSbClient(api);
+  let toast;
   onMount(async () => {
     (await user) ? false : goto(hrefs.login.home.link);
   });
+
   let newEmail = "",
     newFname,
     newLname;
+  let emailEdit = false,
+    nameEdit = false;
+  let inProgress = false;
+  function toggleEmailEdit() {
+    emailEdit = !emailEdit;
+  }
+  async function changeEmail() {
+    if (newEmail.length == 0) {
+      toggleEmailEdit();
+      toast = createToast("error", "Error", "New email cannot be empty");
+      return;
+    }
+    inProgress = true;
+    const { error } = await sb.auth.updateUser({ email: newEmail });
+    inProgress = false;
+    toggleEmailEdit();
+    if (error) {
+      toast = createToast("error", "Error", error.message);
+      return;
+    }
+    toast = createToast(
+      "info",
+      "Check Email",
+      `An email has been sent to ${newEmail} with a verification link.`
+    );
+  }
 </script>
 
-<!-- <Modal showModal={showEmail} on:click={toggleEmail}>
-    <div class="p-sm-5 mx-sm-5 text-center">
-      <h1 class="font-google-quicksand fw-bold">Edit email</h1>
-      <h4 class="font-google-quicksand fw-600">Current email: {values.email}</h4>
-      <input
-        type="email"
-        class="form-control fs-4"
-        placeholder="Type your new email here"
-        bind:value={newValues.email}
-        disabled={toChange.email}
-      />
-      <button
-        class="btn btn-primary fs-4 font-google-quicksand fw-bold w-100 my-2"
-        on:click={updateEmail}
-        disabled={toChange.email}>Confirm</button
-      >
-    </div>
-  </Modal>
-  
-  <Modal showModal={showName} on:click={toggleName}>
-    <div class="p-sm-5 mx-sm-5 text-center">
-      <h1 class="font-google-quicksand fw-bold">Edit name</h1>
-      <h4 class="font-google-quicksand fw-600">
-        Current name: {values.fname}
-        {values.lname}
-      </h4>
-      <div class="row">
-        <div class="col-md">
-          <input
-            type="text"
-            class="form-control fs-4"
-            placeholder="Type your new first name here"
-            bind:value={newValues.fname}
-            disabled={toChange.name}
-          />
-        </div>
-        <div class="col-md">
-          <input
-            type="text"
-            class="form-control fs-4"
-            placeholder="Type your new last name here"
-            bind:value={newValues.lname}
-            disabled={toChange.name}
-          />
-        </div>
-      </div>
-      <button
-        class="btn btn-primary fs-4 font-google-quicksand fw-bold w-100 my-2"
-        on:click={updateName}
-        disabled={toChange.name}>Confirm</button
-      >
-    </div>
-  </Modal> -->
 <main>
   {#await user}
     <h1>Loading...</h1>
@@ -84,22 +65,39 @@
           <span class="font-google-quicksand">Account Settings</span>
         </div>
         <div class="card-body fs-2 font-google-quicksand">
-          <div class="row mb-3 text-center">
-            <div class="col-lg-3 fw-bold">Email</div>
-            <div class="col-lg-6 fw-500">{user.email}</div>
-
-            <div class="col-lg-3">
-              <button
-                class="btn btn-primary font-google-quicksand fw-bold fs-4 w-100"
-                ><i class="fa-solid fa-pen-to-square" /> Edit</button
-              >
+          <div class="row text-center">
+            <div class="col-lg-3 mb-3 fw-bold">Email</div>
+            <div class="col-lg-6 mb-3 fw-500">
+              {#if emailEdit}
+                <input
+                  type="email"
+                  placeholder="Type your new email here"
+                  class="form-control h-100 fs-5"
+                  bind:value={newEmail}
+                />
+              {:else}{user.email}{/if}
             </div>
-          </div>
-          <div class="row mb-3 pt-3 text-center border-top">
-            <div class="col-lg-3 fw-bold">Name</div>
+
+            <div class="col-lg-3 mb-3">
+              {#if emailEdit}
+                <button
+                  class="btn btn-primary font-google-quicksand fw-bold fs-4 w-100"
+                  disabled={inProgress}
+                  on:click={changeEmail}>Confirm</button
+                >
+              {:else}
+                <button
+                  class="btn btn-primary font-google-quicksand fw-bold fs-4 w-100"
+                  on:click={toggleEmailEdit}
+                  ><i class="fa-solid fa-pen-to-square" />
+                  Edit</button
+                >
+              {/if}
+            </div>
+            <div class="col-lg-3 mb-3 fw-bold">Name</div>
             <div class="col-lg-6 fw-500">{user.fname} {user.lname}</div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 mb-3">
               <button
                 class="btn btn-primary font-google-quicksand fw-bold fs-4 w-100"
                 ><i class="fa-solid fa-pen-to-square" /> Edit</button
@@ -183,3 +181,4 @@
     {/await}
   </div>
 </main> -->
+<ToastSetup {toast} />
