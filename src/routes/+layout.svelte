@@ -3,7 +3,7 @@
   import hrefs from "../data/hrefs.json";
   import { page } from "$app/stores";
   import { getUserDetails } from "../hooks.client.js";
-  import { onMount } from "svelte";
+  import icon from "../data/images/logo_simplified.png";
   export let data;
   const sbApi = data.sbApi;
   let userId;
@@ -29,7 +29,9 @@
 
 <nav class="navbar navbar-expand-md font-google-quicksand">
   <div class="container">
-    <a href="/" class="navbar-brand fw-600">AeroLogger</a>
+    <a href="/" class="navbar-brand fw-600"
+      ><i class="fa-solid fa-plane-departure" /> AeroLogger</a
+    >
     <button
       class="navbar-toggler"
       type="button"
