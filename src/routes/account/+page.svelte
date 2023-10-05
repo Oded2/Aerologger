@@ -188,7 +188,7 @@
               {#if lnameEdit}
                 <input
                   type="text"
-                  placeholder="Type your new first name here"
+                  placeholder="Type your new last name here"
                   class="form-control fs-5"
                   bind:value={newLname}
                 />
