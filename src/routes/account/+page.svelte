@@ -8,9 +8,10 @@
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
+  import FloatElement from "../../components/FloatElement.svelte";
   export let data;
   const api = data.sbApi;
-  const user = getUserDetails(api);
+  let user = getUserDetails(api);
   const sb = createSbClient(api);
   let toast;
   onMount(async () => {
@@ -18,33 +19,85 @@
   });
 
   let newEmail = "",
-    newFname,
-    newLname;
+    newFname = "",
+    newLname = "";
   let emailEdit = false,
-    nameEdit = false;
+    fnameEdit = false,
+    lnameEdit = false;
   let inProgress = false;
+  $: visible = emailEdit || fnameEdit || lnameEdit;
   function toggleEmailEdit() {
     emailEdit = !emailEdit;
   }
+  function toggleFnameEdit() {
+    fnameEdit = !fnameEdit;
+  }
+  function toggleLnameEdit() {
+    lnameEdit = !lnameEdit;
+  }
   async function changeEmail() {
     if (newEmail.length == 0) {
-      toggleEmailEdit();
       toast = createToast("error", "Error", "New email cannot be empty");
       return;
     }
     inProgress = true;
     const { error } = await sb.auth.updateUser({ email: newEmail });
     inProgress = false;
-    toggleEmailEdit();
     if (error) {
       toast = createToast("error", "Error", error.message);
       return;
     }
+    refrshUser();
     toast = createToast(
       "info",
       "Check Email",
-      `An email has been sent to ${newEmail} with a verification link.`
+      `An email has been sent to ${newEmail} with a verification link.`,
+      10000
     );
+  }
+  async function changeFname() {
+    inProgress = true;
+    const { error } = await sb.auth.updateUser({
+      data: { first_name: newFname },
+    });
+    inProgress = false;
+    toggleFnameEdit();
+    if (error) {
+      toast = createToast("error", "Error", error.message);
+      return;
+    }
+    refrshUser();
+    toast = createToast(
+      "success",
+      "Success",
+      `Your first name has been changed to ${newFname}.`
+    );
+  }
+  async function changeLname() {
+    inProgress = true;
+    const { error } = await sb.auth.updateUser({
+      data: { last_name: newLname },
+    });
+    inProgress = false;
+    toggleLnameEdit();
+    if (error) {
+      toast = createToast("error", "Error", error.message);
+      return;
+    }
+    refrshUser();
+    toast = createToast(
+      "success",
+      "Success",
+      `Your last name has been changed to ${newLname}.`
+    );
+  }
+  function refrshUser() {
+    user = getUserDetails(api);
+  }
+  function cancelEdits() {
+    emailEdit = false;
+    fnameEdit = false;
+    lnameEdit = false;
   }
 </script>
 
@@ -72,10 +125,12 @@
                 <input
                   type="email"
                   placeholder="Type your new email here"
-                  class="form-control h-100 fs-5"
+                  class="form-control fs-5"
                   bind:value={newEmail}
                 />
-              {:else}{user.email}{/if}
+              {:else}
+                {user.email}
+              {/if}
             </div>
 
             <div class="col-lg-3 mb-3">
@@ -94,14 +149,65 @@
                 >
               {/if}
             </div>
-            <div class="col-lg-3 mb-3 fw-bold">Name</div>
-            <div class="col-lg-6 fw-500">{user.fname} {user.lname}</div>
+            <div class="col-lg-3 mb-3 fw-bold">First Name</div>
+            <div class="col-lg-6 fw-500 mb-3">
+              {#if fnameEdit}
+                <input
+                  type="text"
+                  placeholder="Type your new first name here"
+                  class="form-control fs-5"
+                  bind:value={newFname}
+                />
+              {:else}
+                {user.fname ? user.fname : "No first name set."}
+              {/if}
+            </div>
 
             <div class="col-lg-3 mb-3">
-              <button
-                class="btn btn-primary font-google-quicksand fw-bold fs-4 w-100"
-                ><i class="fa-solid fa-pen-to-square" /> Edit</button
-              >
+              {#if fnameEdit}
+                <button
+                  class="btn btn-primary font-google-quicksand fw-bold fs-4 w-100"
+                  disabled={inProgress}
+                  on:click={changeFname}>Confirm</button
+                >
+              {:else}
+                <button
+                  class="btn btn-primary font-google-quicksand fw-bold fs-4 w-100"
+                  on:click={toggleFnameEdit}
+                  ><i class="fa-solid fa-pen-to-square" />
+                  Edit</button
+                >
+              {/if}
+            </div>
+            <div class="col-lg-3 mb-3 fw-bold">Last Name</div>
+            <div class="col-lg-6 fw-500 mb-3">
+              {#if lnameEdit}
+                <input
+                  type="text"
+                  placeholder="Type your new first name here"
+                  class="form-control fs-5"
+                  bind:value={newLname}
+                />
+              {:else}
+                {user.lname ? user.lname : "No last name set."}
+              {/if}
+            </div>
+
+            <div class="col-lg-3 mb-3">
+              {#if lnameEdit}
+                <button
+                  class="btn btn-primary font-google-quicksand fw-bold fs-4 w-100"
+                  disabled={inProgress}
+                  on:click={changeLname}>Confirm</button
+                >
+              {:else}
+                <button
+                  class="btn btn-primary font-google-quicksand fw-bold fs-4 w-100"
+                  on:click={toggleLnameEdit}
+                  ><i class="fa-solid fa-pen-to-square" />
+                  Edit</button
+                >
+              {/if}
             </div>
           </div>
           <div class="pt-3 text-center border-top">
@@ -116,69 +222,10 @@
     </div>
   {/await}
 </main>
-<!-- <main>
-  <div class="container my-5">
-    {#await user}
-      <h1>Loading data...</h1>
-    {:then userDetails}
-      <h1 class="font-google-gabarito">
-        Welcome back, <span class="text-primary">{userDetails.fname}</span>
-      </h1>
-      <div class="card shadow">
-        <div class="card-header fs-6"><span>AeroLogger</span></div>
-        <div class="card-body">
-          <div class="row mb-2 border-bottom pb-2">
-            <div class="col-md">
-              <h3>Email</h3>
-            </div>
-            <div class="col-md">
-              <button
-                class="btn btn-outline-primary btn-lg w-100 font-google-gabarito"
-                >Edit</button
-              >
-            </div>
-            <div class="col-md text-center">
-              <h3>{userDetails.email}</h3>
-            </div>
-          </div>
-          <div class="row mb-2 pb-2 border-bottom">
-            <div class="col-md">
-              <h3>First Name</h3>
-            </div>
-            <div class="col-md">
-              <button
-                class="btn btn-outline-primary btn-lg w-100 font-google-gabarito"
-                >Edit</button
-              >
-            </div>
-            <div class="col-md text-center">
-              <h3>{userDetails.fname}</h3>
-            </div>
-          </div>
-          <div class="row mb-2 pb-2 border-bottom">
-            <div class="col-md">
-              <h3>Last Name</h3>
-            </div>
-            <div class="col-md">
-              <button
-                class="btn btn-outline-primary btn-lg w-100 font-google-gabarito"
-                >Edit</button
-              >
-            </div>
-            <div class="col-md text-center">
-              <h3>{userDetails.lname}</h3>
-            </div>
-          </div>
-          <div>
-            <a
-              href="/"
-              class="btn btn-outline-danger btn-lg w-100 font-google-gabarito"
-              >Reset Password</a
-            >
-          </div>
-        </div>
-      </div>
-    {/await}
-  </div>
-</main> -->
+<FloatElement {visible}>
+  <button
+    class="btn btn-secondary btn-lg font-google-gabarito"
+    on:click={cancelEdits}>Cancel Editing</button
+  >
+</FloatElement>
 <ToastSetup {toast} />

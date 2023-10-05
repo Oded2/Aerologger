@@ -1,12 +1,15 @@
 <script>
+  export let visible = true;
 </script>
 
-<div class="parent m-3 d-print-none">
-  <slot />
-</div>
+{#if visible}
+  <div class="m-3 d-print-none">
+    <slot />
+  </div>
+{/if}
 
 <style>
-  div.parent {
+  div {
     z-index: 1;
     position: fixed;
     bottom: 0;
