@@ -29,9 +29,7 @@
 
 <nav class="navbar navbar-expand-md font-google-quicksand">
   <div class="container">
-    <a href="/" class="navbar-brand fw-600"
-      ><i class="fa-solid fa-plane-departure" /> AeroLogger</a
-    >
+    <a href="/" class="navbar-brand fw-600">AeroLogger</a>
     <button
       class="navbar-toggler"
       type="button"
