@@ -47,6 +47,8 @@
       toast = createToast("error", "Error", error.message);
       return;
     }
+    toggleEmailEdit();
+    newEmail = "";
     refrshUser();
     toast = createToast(
       "info",
@@ -61,11 +63,12 @@
       data: { first_name: newFname },
     });
     inProgress = false;
-    toggleFnameEdit();
     if (error) {
       toast = createToast("error", "Error", error.message);
       return;
     }
+    toggleFnameEdit();
+    newFname = "";
     refrshUser();
     toast = createToast(
       "success",
@@ -79,11 +82,12 @@
       data: { last_name: newLname },
     });
     inProgress = false;
-    toggleLnameEdit();
     if (error) {
       toast = createToast("error", "Error", error.message);
       return;
     }
+    toggleLnameEdit();
+    newLname = "";
     refrshUser();
     toast = createToast(
       "success",
