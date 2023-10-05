@@ -3,13 +3,16 @@
   import hrefs from "../../data/hrefs.json";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import { goto } from "$app/navigation";
+  import Modal from "../../components/Modal.svelte";
   export let data;
   const api = data.sbApi;
   const sb = createSbClient(api);
   let toast;
   let email = "",
     password = "";
+  let resetEmail = "";
   let inProgress = false;
+  let showModal = false;
   $: emailLen = email.length > 0;
   $: passwordLen = password.length > 0;
   async function submit() {
@@ -44,8 +47,53 @@
 
     return true;
   }
+  function toggleModal() {
+    showModal = !showModal;
+  }
+  async function resetPass() {
+    if (resetEmail.length == 0) {
+      toast = createToast("error", "Error", "Email cannot be empty");
+      return;
+    }
+    inProgress = true;
+    const { error } = await sb.auth.resetPasswordForEmail(resetEmail, {
+      redirectTo: hrefs.passwordreset.home.weblink,
+    });
+    inProgress = false;
+    if (error) {
+      toast = createToast("error", "Error", error.message);
+      return;
+    }
+    toast = createToast(
+      "info",
+      "Check email",
+      `An email has been sent to ${resetEmail} with the instructions to reset your password. Email might take a few moments to arrive.`,
+      10000
+    );
+  }
 </script>
 
+<Modal {showModal} on:click={toggleModal}>
+  <div class="p-sm-5 fs-2">
+    <label for="resetEmail" class="font-google-quicksand fw-600"
+      >Enter your email</label
+    >
+    <input
+      type="email"
+      class="form-control"
+      id="resetEmail"
+      bind:value={resetEmail}
+    />
+    <button
+      class="btn btn-primary font-google-quicksand fw-bold fs-4 my-2 w-100"
+      disabled={inProgress}
+      on:click={resetPass}>Send link</button
+    >
+    <div class="form-text fs-6">
+      Email might can take up to a few moments to send.
+    </div>
+  </div>
+</Modal>
 <main>
   <div class="container my-5 font-google-quicksand">
     <form on:submit|preventDefault={submit}>
@@ -85,6 +133,11 @@
               bind:value={password}
               required
             />
+            <button
+              class="btn btn-outline-danger mt-3 fw-600"
+              type="reset"
+              on:click={toggleModal}>Forgot Password?</button
+            >
           </div>
         </div>
         <div class="card-footer px-sm-5">

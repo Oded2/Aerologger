@@ -51,7 +51,18 @@
           >
         </li>
         <li class="nav-item">
-          <a href="/" class="nav-link" class:active={false}>Logbook</a>
+          <a
+            href={hrefs.logbook.home.link}
+            class="nav-link"
+            class:active={pageHref == hrefs.logbook.home.link}>Logbook</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            href={hrefs.newFlight.home.link}
+            class="nav-link"
+            class:active={pageHref == hrefs.newFlight.home.link}>New Flight</a
+          >
         </li>
       </ul>
       {#await userId then userId}

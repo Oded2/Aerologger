@@ -108,7 +108,7 @@
           </div>
           <div class="pt-3 text-center border-top">
             <a
-              href={"/"}
+              href={hrefs.passwordreset.home.link}
               class="btn btn-outline-danger font-google-quicksand fw-bold fs-4 w-100"
               >Reset Password</a
             >

@@ -23,10 +23,29 @@
             "link": "/signout"
         }
     },
+    "passwordreset": {
+        "home": {
+            "title": "Password Reset",
+            "link": "/passwordreset",
+            "weblink": "https://aerologger.netlify.app/passwordreset"
+        }
+    },
     "account": {
         "home": {
             "title": "Account",
             "link": "/account"
+        }
+    },
+    "logbook": {
+        "home": {
+            "title": "Logbook",
+            "link": "/logbook"
+        }
+    },
+    "newFlight": {
+        "home": {
+            "title": "Log New Flight",
+            "link": "/newFlight"
         }
     }
 }
