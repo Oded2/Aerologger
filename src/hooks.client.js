@@ -1,8 +1,5 @@
-import { goto } from "$app/navigation";
 import { createClient } from "@supabase/supabase-js";
 import { toasts } from "svelte-toasts";
-import hrefs from "./data/hrefs.json";
-import { redirect } from "@sveltejs/kit";
 const sbUrl = "https://njcypmepfxckouqjunrr.supabase.co";
 
 export function randomNum(min, max) {
