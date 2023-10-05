@@ -36,7 +36,7 @@
       <h1>Loading...</h1>
     {:then user}
       {#if user}
-        <div class="mb-5 bg-light">
+        <div class="mb-5">
           <h1>
             Welcome to your <span class="text-primary">flight log</span>, {user.fname}.
           </h1>
