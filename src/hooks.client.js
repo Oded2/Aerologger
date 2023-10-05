@@ -96,3 +96,12 @@ export function GetSortOrder(prop) {
     return 0;
   };
 }
+
+export function getTimeStr(date = new Date()) {
+  return `${date.getHours()}:${date.getMinutes()}`;
+}
+export function parseDateAndTime(dateString, timeString) {
+  const [year, month, day] = dateString.split("-").map(Number);
+  const [hours, minutes] = timeString.split(":").map(Number);
+  return new Date(year, month - 1, day, hours, minutes);
+}
