@@ -26,6 +26,7 @@
   let inProgress = false;
   $: depDate = parseDateAndTime(depDateStr, depTimeStr);
   $: desDate = parseDateAndTime(desDateStr, desTimeStr);
+  $: console.log(depDate);
   async function submit() {
     if (!verify()) {
       return;
@@ -36,8 +37,8 @@
       owner: userId,
       dep: dep,
       des: des,
-      depDate: depDate.toLocaleDateString(),
-      desDate: depDate.toLocaleDateString(),
+      depDate: depDate.toISOString(),
+      desDate: desDate.toISOString(),
       type: planeType,
       model: planeModel,
       identification: planeId,
