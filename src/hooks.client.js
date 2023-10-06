@@ -109,3 +109,11 @@ export function parseDateAndTime(dateString, timeString) {
   const [hours, minutes] = timeString.split(":").map(Number);
   return new Date(year, month - 1, day, hours, minutes);
 }
+
+export function copyToClipboard(text = "") {
+  try {
+    navigator.clipboard.writeText(text);
+  } catch (error) {
+    console.error(error);
+  }
+}

@@ -8,9 +8,11 @@
   import hrefs from "../../../data/hrefs.json";
   import FloatElement from "../../../components/FloatElement.svelte";
   import ToastSetup from "../../../components/setup/ToastSetup.svelte";
+  import ShareModal from "../../../components/ShareModal.svelte";
   export let data;
   const api = data.sbApi;
   let toast;
+  let showModal = false;
   const allLogs = data.logs;
   const url = $page.url;
   const user = getUserDetails(api);
@@ -26,7 +28,16 @@
     let date = new Date(string);
     return `${formatDate(date)} at ${getTimeStr(date)}`;
   }
+  function toggleModal() {
+    showModal = !showModal;
+  }
 </script>
+
+<ShareModal
+  {showModal}
+  on:click={toggleModal}
+  shareText="Check out this flight from Aerologger. "
+/>
 
 <main>
   <div class="container py-5">
@@ -130,7 +141,10 @@
 </main>
 
 <FloatElement>
-  <button class="btn btn-primary btn-lg me-3"
+  <button
+    class="btn btn-primary btn-lg me-3"
+    on:click={toggleModal}
+    disabled={!log.public}
     ><i class="fa-solid fa-share-from-square" /> Share</button
   >
   <a href={hrefs.logbook.home.link} class="btn btn-secondary btn-lg"
