@@ -44,7 +44,7 @@
           </h1>
         </div>
         <div class="fs-3">
-          <div class="row border-bottom py-2">
+          <div class="row border-bottom py-2 d-none d-md-flex">
             <div class="col-md-3 mb-3">
               <i class="fa-solid fa-plane-departure" /> Takeoff
             </div>
@@ -58,9 +58,10 @@
               <i class="fa-solid fa-note-sticky" /> Notes
             </div>
           </div>
+          <div class="border-bottom d-block d-md-none" />
 
           {#each userLogs as log}
-            <div class="row py-2 border-bottom hover-row">
+            <div class="row py-2 border-bottom">
               <div class="col-md-3 mb-3">
                 <div class="fw-bold d-md-none my-1">
                   <i class="fa-solid fa-plane-departure" /> Takeoff
@@ -123,12 +124,3 @@
     <div />
   </div>
 </main>
-
-<style>
-  div.hover-row {
-    transition: 0.5s;
-  }
-  div.hover-row:hover {
-    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
-  }
-</style>
