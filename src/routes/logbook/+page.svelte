@@ -48,7 +48,7 @@
     return `${formatDate(date)} at ${getTimeStr(date)}`;
   }
   async function changeVisibility(id = "", makePublic = false) {
-    for (const i of userLogs) {
+    for (const i in userLogs) {
       const current = userLogs[i];
       if (current.id === id) {
         inProgress = true;
@@ -66,13 +66,13 @@
     }
   }
   async function deleteFlight(id = "") {
-    // if (
-    //   !confirm(
-    //     "Are you sure you want to delete this flight? This action cannot be reversed."
-    //   )
-    // ) {
-    //   return;
-    // }
+    if (
+      !confirm(
+        "Are you sure you want to delete this flight? This action cannot be reversed."
+      )
+    ) {
+      return;
+    }
     for (const i in userLogs) {
       const current = userLogs[i];
       if (current.id === id) {
@@ -117,7 +117,7 @@
           </h1>
           <h3>
             Air time: <span class="text-primary"
-              >{totalHours} hours and {totalMinutes} minutes</span
+              >{totalHours.toLocaleString()} hours and {totalMinutes} minutes</span
             >
           </h3>
         </div>

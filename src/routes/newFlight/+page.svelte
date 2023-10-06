@@ -48,6 +48,16 @@
       showError(error.message);
       return;
     }
+    dep = "";
+    des = "";
+    depDateStr = dateToStr();
+    desDateStr = dateToStr();
+    depTimeStr = getTimeStr();
+    desTimeStr = getTimeStr();
+    planeType = "airplane";
+    planeModel = "";
+    planeId = "";
+    userNotes = "";
     toast = createToast(
       "success",
       "Flight Added",

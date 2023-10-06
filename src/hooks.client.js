@@ -102,7 +102,10 @@ export function GetSortOrder(prop) {
 }
 
 export function getTimeStr(date = new Date()) {
-  return `${date.getHours()}:${date.getMinutes().toString().padEnd(2, "0")}`;
+  return `${date.getHours().toString().padStart(2, "0")}:${date
+    .getMinutes()
+    .toString()
+    .padStart(2, "0")}`;
 }
 export function parseDateAndTime(dateString, timeString) {
   const [year, month, day] = dateString.split("-").map(Number);
