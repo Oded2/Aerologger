@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import {
+    GetSortOrder,
     addParamsString,
     createSbClient,
     createToast,
@@ -19,8 +20,9 @@
   let toast;
   let inProgress = false;
   let userLogs = [];
-  let totalHours = 0,
-    totalMinutes = 0;
+  let totalMinutes = 0;
+  $: hours = Math.floor(totalMinutes / 60);
+  $: minutes = totalMinutes % 60;
   onMount(fetchLogs);
   async function fetchLogs() {
     const userDetails = await user;
@@ -32,7 +34,6 @@
     for (const i of allLogs) {
       if (i.owner === userId) {
         userLogs.push(i);
-        userLogs = userLogs;
         const minutes = calculateMinutes(
           new Date(i.depDate),
           new Date(i.desDate)
@@ -40,12 +41,15 @@
         totalMinutes += minutes;
       }
     }
-    totalHours = Math.floor(totalMinutes / 60);
-    totalMinutes %= 60;
+    userLogs.sort(GetSortOrder("depDate"));
+    userLogs = userLogs;
   }
   function formatDateTime(string = "") {
-    let date = new Date(string);
-    return `${formatDate(date)} at ${getTimeStr(date)}`;
+    const utcDate = new Date(string);
+    const localDate = new Date(
+      utcDate.valueOf() - utcDate.getTimezoneOffset() * 60000
+    );
+    return `${formatDate(localDate)} at ${getTimeStr(localDate)}`;
   }
   async function changeVisibility(id = "", makePublic = false) {
     for (const i in userLogs) {
@@ -117,7 +121,7 @@
           </h1>
           <h3>
             Air time: <span class="text-primary"
-              >{totalHours.toLocaleString()} hours and {totalMinutes} minutes</span
+              >{hours.toLocaleString()} hours and {minutes} minutes</span
             >
           </h3>
         </div>
@@ -137,7 +141,9 @@
             </div>
           </div>
           <div class="border-bottom d-block d-md-none" />
-
+          <span class="font-reset fw-light fs-6"
+            >Please note that dates and times are relative to your time zone.</span
+          >
           {#each userLogs as log}
             <div class="row py-2 border-bottom">
               <div class="col-md-3 mb-3">
