@@ -1,7 +1,6 @@
 <script>
   import { page } from "$app/stores";
   import {
-    createSbClient,
     getUserDetails,
     formatDate,
     getTimeStr,
@@ -11,7 +10,6 @@
   import ToastSetup from "../../../components/setup/ToastSetup.svelte";
   export let data;
   const api = data.sbApi;
-  const sbUrl = data.sbUrl;
   let toast;
   const allLogs = data.logs;
   const url = $page.url;
