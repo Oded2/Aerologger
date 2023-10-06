@@ -26,7 +26,6 @@
   let inProgress = false;
   $: depDate = parseDateAndTime(depDateStr, depTimeStr);
   $: desDate = parseDateAndTime(desDateStr, desTimeStr);
-  $: console.log(depDate);
   async function submit() {
     if (!verify()) {
       return;
