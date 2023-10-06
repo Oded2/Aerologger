@@ -4,6 +4,7 @@
     getUserDetails,
     formatDate,
     getTimeStr,
+    formatDuration,
   } from "../../../hooks.client.js";
   import hrefs from "../../../data/hrefs.json";
   import FloatElement from "../../../components/FloatElement.svelte";
@@ -71,7 +72,7 @@
                         {log.model}</span
                       >
                     </div>
-                    <div class="text-center border-bottom py-2">
+                    <div class="text-center py-2">
                       Aircraft ID: <span class="text-uppercase text-primary">
                         {log.identification}</span
                       >
@@ -92,22 +93,30 @@
                         class="text-capitalize text-primary">{log.dep}</span
                       >
                     </div>
-                    <div class=" text-center border-bottom py-2">
-                      Time of Departure : <span class="text-primary">
-                        {formatDateTime(log.depDate)}</span
-                      >
-                    </div>
                     <div class="text-center border-bottom py-2">
                       Airport of Destination: <span class="text-primary">
                         {log.des}</span
                       >
                     </div>
+                    <div class=" text-center border-bottom py-2">
+                      Time of Departure : <span class="text-primary">
+                        {formatDateTime(log.depDate)}</span
+                      >
+                    </div>
+
                     <div class="text-center border-bottom py-2">
                       Time of Arrival: <span class="text-primary">
                         {formatDateTime(log.desDate)}</span
                       >
                     </div>
-                    <!-- TODO: ADD TOTAL FLIGHT TIME IN HOURS AND MINUTES. -->
+                    <div class="text-center py-2">
+                      Total Duration: <span class="text-primary">
+                        {formatDuration(
+                          new Date(log.depDate),
+                          new Date(log.desDate)
+                        )}</span
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
