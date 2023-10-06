@@ -50,7 +50,7 @@
   }
   async function autoFill() {
     const userDetails = await getUserDetails(api);
-    if (!user) {
+    if (!userDetails) {
       return;
     }
     email = userDetails.email;
