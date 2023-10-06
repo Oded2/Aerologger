@@ -52,6 +52,9 @@
 
   async function autoFill() {
     const userDetails = await user;
+    if (!user) {
+      return;
+    }
     email = userDetails.email;
     name = `${userDetails.fname} ${userDetails.lname}`;
   }
