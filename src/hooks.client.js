@@ -11,12 +11,16 @@ export function addParams(link = new URL(), params) {
     link.searchParams.append(key, value);
   }
 }
-export function addParamsString(string, params) {
+export function addParamsString(string = "", params = {}) {
   const link = new URL("https://codevault.com");
   addParams(link, params);
   return link.toString().replace("https://codevault.com", string);
 }
-
+export function delelteAllParams(link = new URL()) {
+  link.searchParams.forEach((_value, key) => {
+    link.searchParams.delete(key);
+  });
+}
 export async function getUserDetails(api) {
   const sb = createSbClient(api);
   const { data } = await sb.auth.getSession();

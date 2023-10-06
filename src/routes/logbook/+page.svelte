@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import {
+    addParamsString,
     formatDate,
     getTimeStr,
     getUserDetails,
@@ -55,7 +56,7 @@
           </div>
 
           {#each userLogs as log}
-            <div class="row py-2 border-bottom">
+            <div class="row py-2 border-bottom hover-row">
               <div class="col-md-3 mb-3">
                 <div class="fw-bold d-md-none my-1">
                   <i class="fa-solid fa-plane-departure" /> Takeoff
@@ -98,8 +99,11 @@
                 {maxLen(log.notes, 60)}
               </div>
               <div class="d-flex justify-content-end my-1">
-                <a href="/" class="btn btn-outline-primary btn-lg"
-                  >More Details</a
+                <a
+                  href={addParamsString(hrefs.logbook.viewer.link, {
+                    logId: log.id,
+                  })}
+                  class="btn btn-outline-primary btn-lg">More Details</a
                 >
               </div>
             </div>
@@ -115,3 +119,12 @@
     <div />
   </div>
 </main>
+
+<style>
+  div.hover-row {
+    transition: 0.5s;
+  }
+  div.hover-row:hover {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+  }
+</style>

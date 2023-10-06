@@ -40,6 +40,10 @@
         "home": {
             "title": "Logbook",
             "link": "/logbook"
+        },
+        "viewer": {
+            "title": "Logbook Viewer",
+            "link": "/logbook/viewer"
         }
     },
     "newFlight": {

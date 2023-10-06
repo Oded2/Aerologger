@@ -2,13 +2,14 @@
   import "../global.css";
   import hrefs from "../data/hrefs.json";
   import { page } from "$app/stores";
-  import { getUserDetails } from "../hooks.client.js";
+  import { delelteAllParams, getUserDetails } from "../hooks.client.js";
   import icon from "../data/images/logo_simplified.png";
   export let data;
   const sbApi = data.sbApi;
   let userId;
   let title = "AeroLogger";
-  $: pageUrl = $page.url;
+  $: pageUrl = new URL($page.url);
+  $: delelteAllParams(pageUrl);
   $: pageHref = pageUrl.href.replace(pageUrl.origin, "");
   $: if (pageHref) {
     title = findTitle();

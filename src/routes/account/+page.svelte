@@ -115,7 +115,9 @@
       <div class="font-google-gabarito">
         <h1>Welcome back, <span class="text-primary">{user.fname}</span>.</h1>
         <h3>
-          Looking for your logbook? <a href="/" class="text-reset">Click Here</a
+          Looking for your logbook? <a
+            href={hrefs.login.home.link}
+            class="text-reset">Click Here</a
           >.
         </h3>
       </div>
