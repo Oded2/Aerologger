@@ -117,8 +117,8 @@ export function copyToClipboard(text = "") {
     console.error(error);
   }
 }
-export function formatDuration(date1 = new Date(), date2 = new Date()) {
-  const timeDifference = date2.getTime() - date1.getTime();
+export function formatDuration(startDate = new Date(), endDate = new Date()) {
+  const timeDifference = endDate.getTime() - startDate.getTime();
   const hours = Math.floor(timeDifference / 3600000);
   const minutes = Math.floor((timeDifference % 3600000) / 60000);
   return `${hours} hours and ${minutes} minutes`;

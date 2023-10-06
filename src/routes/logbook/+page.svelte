@@ -16,9 +16,11 @@
   const sb = createSbClient(api);
   const user = getUserDetails(api);
   const allLogs = data.logs;
+  let toast;
   let inProgress = false;
   let userLogs = [];
-  let toast;
+  let totalHours = 0,
+    totalMinutes = 0;
   onMount(fetchLogs);
   async function fetchLogs() {
     const userDetails = await user;
@@ -27,12 +29,19 @@
     }
     userLogs = [];
     const userId = userDetails.id;
-    for (let i of allLogs) {
-      if (i["owner"] === userId) {
+    for (const i of allLogs) {
+      if (i.owner === userId) {
         userLogs.push(i);
         userLogs = userLogs;
+        const minutes = calculateMinutes(
+          new Date(i.depDate),
+          new Date(i.desDate)
+        );
+        totalMinutes += minutes;
       }
     }
+    totalHours = Math.floor(totalMinutes / 60);
+    totalMinutes %= 60;
   }
   function formatDateTime(string = "") {
     let date = new Date(string);
@@ -56,6 +65,11 @@
       }
     }
   }
+  function calculateMinutes(startDate = new Date(), endDate = new Date()) {
+    const timeDifference = endDate.valueOf() - startDate.valueOf();
+    const minutes = Math.floor(timeDifference / 60000);
+    return minutes;
+  }
 </script>
 
 <main>
@@ -66,8 +80,13 @@
       {#if user}
         <div class="mb-5">
           <h1>
-            Welcome to your <span class="text-primary">flight log</span>, {user.fname}.
+            Welcome to your <span class="text-primary">logbook</span>, {user.fname}.
           </h1>
+          <h3>
+            Air time: <span class="text-primary"
+              >{totalHours} hours and {totalMinutes} minutes</span
+            >
+          </h3>
         </div>
         <div class="fs-3">
           <div class="row border-bottom py-2 d-none d-md-flex">
