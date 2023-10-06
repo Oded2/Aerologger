@@ -48,10 +48,8 @@
     topic = "";
     message = "";
   }
-  const user = getUserDetails(api);
-
   async function autoFill() {
-    const userDetails = await user;
+    const userDetails = await getUserDetails(api);
     if (!user) {
       return;
     }
