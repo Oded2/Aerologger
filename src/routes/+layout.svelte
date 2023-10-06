@@ -100,7 +100,7 @@
             <li class="nav-item">
               <a
                 href={hrefs.signup.home.link}
-                class="btn btn-secondary fw-600"
+                class="btn btn-dark fw-600"
                 class:disabled={pageHref == hrefs.signup.home.link}>Sign Up</a
               >
             </li>
