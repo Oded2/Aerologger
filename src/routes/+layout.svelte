@@ -78,14 +78,14 @@
             <li class="nav-item mb-1 mb-md-0 me-md-2">
               <a
                 href={hrefs.account.home.link}
-                class="btn btn-outline-primary fw-600"
+                class="btn btn-primary fw-600"
                 class:disabled={pageHref == hrefs.account.home.link}>Account</a
               >
             </li>
             <li class="nav-item mb-1 mb-md-0">
               <a
                 href={hrefs.signout.home.link}
-                class="btn btn-outline-danger fw-600"
+                class="btn btn-dark fw-600"
                 class:disabled={pageHref == hrefs.signout.home.link}>Signout</a
               >
             </li>
@@ -93,14 +93,14 @@
             <li class="nav-item mb-1 mb-md-0 me-md-2">
               <a
                 href={hrefs.login.home.link}
-                class="btn btn-outline-primary fw-600"
+                class="btn btn-primary fw-600"
                 class:disabled={pageHref == hrefs.login.home.link}>Log In</a
               >
             </li>
             <li class="nav-item">
               <a
                 href={hrefs.signup.home.link}
-                class="btn btn-outline-secondary fw-600"
+                class="btn btn-secondary fw-600"
                 class:disabled={pageHref == hrefs.signup.home.link}>Sign Up</a
               >
             </li>
