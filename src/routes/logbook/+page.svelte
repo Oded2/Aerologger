@@ -2,22 +2,30 @@
   import { onMount } from "svelte";
   import {
     addParamsString,
+    createSbClient,
+    createToast,
     formatDate,
     getTimeStr,
     getUserDetails,
     maxLen,
   } from "../../hooks.client.js";
   import hrefs from "../../data/hrefs.json";
+  import ToastSetup from "../../components/setup/ToastSetup.svelte";
   export let data;
   const api = data.sbApi;
+  const sb = createSbClient(api);
   const user = getUserDetails(api);
   const allLogs = data.logs;
+  let inProgress = false;
   let userLogs = [];
-  onMount(async () => {
+  let toast;
+  onMount(fetchLogs);
+  async function fetchLogs() {
     const userDetails = await user;
     if (!userDetails) {
       return;
     }
+    userLogs = [];
     const userId = userDetails.id;
     for (let i of allLogs) {
       if (i["owner"] === userId) {
@@ -25,10 +33,28 @@
         userLogs = userLogs;
       }
     }
-  });
+  }
   function formatDateTime(string = "") {
     let date = new Date(string);
     return `${formatDate(date)} at ${getTimeStr(date)}`;
+  }
+  async function changeVisibility(id = "", makePublic = false) {
+    for (const i in userLogs) {
+      const current = userLogs[i];
+      if (current.id === id) {
+        inProgress = true;
+        const { error } = await sb
+          .from("Logs")
+          .update({ public: makePublic })
+          .eq("id", id);
+        inProgress = false;
+        if (error) {
+          toast = createToast("error", "Error", error.message);
+          return;
+        }
+        userLogs[i].public = makePublic;
+      }
+    }
   }
 </script>
 
@@ -103,16 +129,39 @@
                 </div>
                 {maxLen(log.notes, 60)}
               </div>
-              <div class="d-flex justify-content-end my-1">
-                <a
-                  href={addParamsString(hrefs.logbook.viewer.link, {
-                    logId: log.id,
-                  })}
-                  class="btn btn-outline-primary btn-lg">More Details</a
-                >
+              <div class="row my-1">
+                <div class="col-auto justify-content-between">
+                  <button
+                    class="btn btn-outline-dark btn-lg mb-3"
+                    on:click={() => changeVisibility(log.id, false)}
+                    disabled={!log.public || inProgress}>Private</button
+                  >
+                </div>
+                <div class="col-auto">
+                  <button
+                    class="btn btn-outline-dark btn-lg mb-3"
+                    on:click={() => changeVisibility(log.id, true)}
+                    disabled={log.public || inProgress}>Public</button
+                  >
+                </div>
+                <div class="col-sm" />
+                <div class="col-auto">
+                  <a
+                    href={addParamsString(hrefs.logbook.viewer.link, {
+                      logId: log.id,
+                    })}
+                    class="btn btn-outline-primary btn-lg mb-3">Details</a
+                  >
+                </div>
               </div>
             </div>
           {/each}
+          <div class="my-3">
+            <a
+              href={hrefs.newFlight.home.link}
+              class="btn btn-primary btn-lg w-100">Log New Flight</a
+            >
+          </div>
         </div>
       {:else}
         <h1>
@@ -124,3 +173,4 @@
     <div />
   </div>
 </main>
+<ToastSetup {toast} />
