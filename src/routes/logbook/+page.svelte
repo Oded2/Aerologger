@@ -65,6 +65,7 @@
       }
     }
   }
+  async function deleteFlight() {}
   function calculateMinutes(startDate = new Date(), endDate = new Date()) {
     const timeDifference = endDate.valueOf() - startDate.valueOf();
     const minutes = Math.floor(timeDifference / 60000);
@@ -151,14 +152,18 @@
               <div class="row my-1">
                 <div class="col-auto justify-content-between">
                   <button
-                    class="btn btn-outline-dark btn-lg mb-3"
+                    class="btn btn-lg mb-3"
+                    class:btn-dark={!log.public}
+                    class:btn-outline-dark={log.public}
                     on:click={() => changeVisibility(log.id, false)}
                     disabled={!log.public || inProgress}>Private</button
                   >
                 </div>
                 <div class="col-auto">
                   <button
-                    class="btn btn-outline-dark btn-lg mb-3"
+                    class="btn btn-lg mb-3"
+                    class:btn-dark={log.public}
+                    class:btn-outline-dark={!log.public}
                     on:click={() => changeVisibility(log.id, true)}
                     disabled={log.public || inProgress}>Public</button
                   >
