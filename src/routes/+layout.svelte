@@ -3,7 +3,6 @@
   import hrefs from "../data/hrefs.json";
   import { page } from "$app/stores";
   import { delelteAllParams, getUserDetails } from "../hooks.client.js";
-  import icon from "../data/images/logo_simplified.png";
   export let data;
   const sbApi = data.sbApi;
   let userId;

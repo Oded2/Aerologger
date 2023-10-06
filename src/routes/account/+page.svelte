@@ -116,7 +116,7 @@
         <h1>Welcome back, <span class="text-primary">{user.fname}</span>.</h1>
         <h3>
           Looking for your logbook? <a
-            href={hrefs.login.home.link}
+            href={hrefs.logbook.home.link}
             class="text-reset">Click Here</a
           >.
         </h3>
