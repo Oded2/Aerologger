@@ -14,7 +14,11 @@
   const allLogs = data.logs;
   let userLogs = [];
   onMount(async () => {
-    const userId = (await user).id;
+    const userDetails = await user;
+    if (!userDetails) {
+      return;
+    }
+    const userId = userDetails.id;
     for (let i of allLogs) {
       if (i["owner"] === userId) {
         userLogs.push(i);
