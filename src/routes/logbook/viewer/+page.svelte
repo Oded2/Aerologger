@@ -8,28 +8,17 @@
   } from "../../../hooks.client.js";
   import hrefs from "../../../data/hrefs.json";
   import FloatElement from "../../../components/FloatElement.svelte";
+  import ToastSetup from "../../../components/setup/ToastSetup.svelte";
   export let data;
   const api = data.sbApi;
   const sbUrl = data.sbUrl;
+  let toast;
   const allLogs = data.logs;
-  const sb = createSbClient(api);
   const url = $page.url;
   const user = getUserDetails(api);
   const logId = url.searchParams.get("logId");
   let valid = !isNaN(logId);
-  let log = {
-    id: 6,
-    owner: "7e65410d-ff08-4e75-bd4d-e1de80402744",
-    dep: "LLHZ",
-    des: "LLBG",
-    depDate: "2023-10-05T08:46:00",
-    desDate: "2023-10-05T20:35:00",
-    type: "airplane",
-    model: "Airbus A350",
-    identification: "4X-CHA",
-    notes: "Fun Flight",
-    public: false,
-  };
+  let log = {};
   for (const i of allLogs) {
     if (i["id"] == logId) {
       log = i;
@@ -52,8 +41,8 @@
             <div class="text-center">
               <h1>{log.dep} to {log.des}</h1>
             </div>
-            <div class="row fs-3">
-              <div class="col-md mb-5">
+            <div class="row fs-3 my-5">
+              <div class="col-lg-4 mb-5">
                 <div class="card shadow h-100">
                   <div class="card-header text-center">
                     <h3>
@@ -81,7 +70,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md mb-5">
+              <div class="col-lg-4 mb-5">
                 <div class="card shadow h-100">
                   <div class="card-header text-center">
                     <h3>
@@ -113,6 +102,18 @@
                   </div>
                 </div>
               </div>
+              <div class="col-lg-4 mb-5">
+                <div class="card shadow h-100">
+                  <div class="card-header text-center">
+                    <h3>
+                      <i class="fa-solid fa-note-sticky" /> Notes
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <p class="font-google-quicksand">{log.notes}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         {:else}
@@ -130,8 +131,13 @@
   </div>
 </main>
 
-<FloatElement
-  ><a href={hrefs.logbook.home.link} class="btn btn-secondary btn-lg"
+<FloatElement>
+  <button class="btn btn-primary btn-lg me-3"
+    ><i class="fa-solid fa-share-from-square" /> Share</button
+  >
+  <a href={hrefs.logbook.home.link} class="btn btn-secondary btn-lg"
     ><i class="fa-solid fa-rotate-left" /> Return to Logbook</a
-  ></FloatElement
->
+  >
+</FloatElement>
+
+<ToastSetup {toast} />
