@@ -1,33 +1,30 @@
 <script>
   import { onMount } from "svelte";
-  import { formatDate, getUserDetails } from "../../hooks.client.js";
+  import {
+    formatDate,
+    getTimeStr,
+    getUserDetails,
+    maxLen,
+  } from "../../hooks.client.js";
   import hrefs from "../../data/hrefs.json";
   export let data;
   const api = data.sbApi;
   const user = getUserDetails(api);
   const allLogs = data.logs;
-  let userLogs = [
-    {
-      id: 6,
-      owner: "7e65410d-ff08-4e75-bd4d-e1de80402744",
-      dep: "LLHZ",
-      des: "LLBG",
-      depDate: "2023-10-05T08:46:00",
-      desDate: "2023-10-05T20:35:00",
-      type: "airplane",
-      model: "Airbus A350",
-      identification: "4X-CHA",
-      notes: "Fun Flight",
-    },
-  ];
+  let userLogs = [];
   onMount(async () => {
     const userId = (await user).id;
     for (let i of allLogs) {
       if (i["owner"] === userId) {
         userLogs.push(i);
+        userLogs = userLogs;
       }
     }
   });
+  function formatDateTime(string = "") {
+    let date = new Date(string);
+    return `${formatDate(date)} at ${getTimeStr(date)}`;
+  }
 </script>
 
 <main>
@@ -41,22 +38,69 @@
             Welcome to your <span class="text-primary">flight log</span>, {user.fname}.
           </h1>
         </div>
-        <div class="row bg-sky">
-          {#each userLogs as log}
-            <div class="col-md-6 mb-3">
-              <div class="card">
-                <div class="card-header font-reset">
-                  <span>Flight from {formatDate(new Date(log.depDate))}</span>
-                </div>
-                <div class="card-body px-0 pt-0">
-                  <div class="d-flex justify-content-between">
-                    <h1>
-                      {log.dep}
-                    </h1>
+        <div class="fs-3">
+          <div class="row border-bottom py-2">
+            <div class="col-md-3 mb-3">
+              <i class="fa-solid fa-plane-departure" /> Takeoff
+            </div>
+            <div class="col-md-3 mb-3">
+              <i class="fa-solid fa-plane-arrival" /> Landing
+            </div>
+            <div class="col-md-3 mb-3">
+              <i class="fa-solid fa-plane-circle-exclamation" /> Plane Information
+            </div>
+            <div class="col-md-3 mb-3">
+              <i class="fa-solid fa-note-sticky" /> Notes
+            </div>
+          </div>
 
-                    <h1>{log.des}</h1>
-                  </div>
+          {#each userLogs as log}
+            <div class="row py-2 border-bottom">
+              <div class="col-md-3 mb-3">
+                <div class="fw-bold d-md-none my-1">
+                  <i class="fa-solid fa-plane-departure" /> Takeoff
                 </div>
+                <div>
+                  <span class="text-primary">{log.dep}</span> at
+                  {formatDateTime(log.depDate)}
+                </div>
+                <div />
+              </div>
+              <div class="col-md-3 mb-3">
+                <div class="fw-bold d-md-none my-1">
+                  <i class="fa-solid fa-plane-arrival" /> Landing
+                </div>
+                <div>
+                  <span class="text-primary">{log.des}</span> at {formatDateTime(
+                    log.desDate
+                  )}
+                </div>
+              </div>
+              <div class="col-md-3 mb-3">
+                <div class="fw-bold d-md-none my-1">
+                  <i class="fa-solid fa-plane-circle-exclamation" /> Plane Information
+                </div>
+                <div>
+                  Type: <span class="text-capitalize">{log.type}</span>
+                </div>
+                <div>
+                  Model: <span class="text-capitalize">{log.model}</span>
+                </div>
+                <div>
+                  ID: <span class="text-uppercase">{log.identification}</span>
+                </div>
+                <div />
+              </div>
+              <div class="col-md-3 mb-3">
+                <div class="fw-bold d-md-none my-1">
+                  <i class="fa-solid fa-note-sticky" /> Notes
+                </div>
+                {maxLen(log.notes, 60)}
+              </div>
+              <div class="d-flex justify-content-end my-1">
+                <a href="/" class="btn btn-outline-primary btn-lg"
+                  >More Details</a
+                >
               </div>
             </div>
           {/each}
@@ -71,9 +115,3 @@
     <div />
   </div>
 </main>
-
-<style>
-  .bg-sky {
-    background-image: url("../../data/images/sky.svg");
-  }
-</style>
