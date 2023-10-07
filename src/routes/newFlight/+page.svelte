@@ -9,6 +9,7 @@
   } from "../../hooks.client.js";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import Switch from "../../components/Switch.svelte";
+  import airports from "../../data/airports.json";
   export let data;
   const api = data.sbApi;
   const sb = createSbClient(api);
@@ -27,8 +28,12 @@
   let isPublic = true;
   let inProgress = false;
   let depSync = true;
+  $: dep = dep.toUpperCase();
+  $: des = des.toUpperCase();
+  $: planeId = planeId.toUpperCase();
   $: depDate = parseDateAndTime(depDateStr, depTimeStr);
   $: desDate = parseDateAndTime(desDateStr, desTimeStr);
+
   $: if (depSync) {
     desDateStr = depDateStr;
   }
@@ -72,6 +77,8 @@
     );
   }
   function verify() {
+    let depValid = false,
+      desValid = false;
     if (!planeType || planeType.length == 0) {
       showError("Aircraft type cannot be empty");
       return false;
@@ -85,7 +92,23 @@
       return false;
     }
     if (depDate.valueOf() > desDate.valueOf()) {
-      showError("Departure cannot be after arrival");
+      showError("Departure must be before arrival");
+      return false;
+    }
+    for (const i of airports) {
+      if (dep === i.icao) {
+        depValid = true;
+      }
+      if (des === i.icao) {
+        desValid = true;
+      }
+    }
+    if (!depValid) {
+      showError("Departure airport must be a valid ICAO code.");
+      return false;
+    }
+    if (!desValid) {
+      showError("Destination airport must be a valid ICAO code.");
       return false;
     }
     return true;
@@ -118,17 +141,23 @@
                     class="form-control"
                     bind:value={dep}
                   />
+                  <span class="form-text fs-6"
+                    >Aiport must be an ICAO code.</span
+                  >
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="des" class="form-label"
-                    >Airport of Destination</label
-                  >
+                    >Airport of Destination
+                  </label>
                   <input
                     type="text"
                     id="des"
                     class="form-control"
                     bind:value={des}
                   />
+                  <span class="form-text fs-6"
+                    >Aiport must be an ICAO code.</span
+                  >
                 </div>
                 <div class="col-md-6 col-xl-3 mb-3">
                   <label for="depdate" class="form-label"
