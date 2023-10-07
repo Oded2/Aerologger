@@ -41,7 +41,7 @@
         totalMinutes += minutes;
       }
     }
-    userLogs.sort(GetSortOrder("depDate"));
+    userLogs.sort(GetSortOrder("depDate", true));
     userLogs = userLogs;
   }
   function formatDateTime(string = "") {

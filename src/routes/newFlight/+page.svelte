@@ -131,6 +131,7 @@
                   <div class="input-group">
                     <button
                       class="input-group-text btn btn-secondary"
+                      type="button"
                       on:click={() => (depDateStr = dateToStr())}>Today</button
                     >
                     <input
@@ -159,7 +160,9 @@
                   <div class="input-group">
                     <button
                       class="input-group-text btn btn-secondary"
-                      on:click={() => (desDateStr = dateToStr())}>Today</button
+                      type="button"
+                      on:click={() => (desDateStr = depDateStr)}
+                      >Departure</button
                     >
                     <input
                       type="date"
