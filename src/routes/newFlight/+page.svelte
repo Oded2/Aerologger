@@ -24,9 +24,12 @@
     planeId = "";
   let userNotes = "";
   let inProgress = false;
+  let depSync = true;
   $: depDate = parseDateAndTime(depDateStr, depTimeStr);
   $: desDate = parseDateAndTime(desDateStr, desTimeStr);
-
+  $: if (depSync) {
+    desDateStr = depDateStr;
+  }
   async function submit() {
     if (!verify()) {
       return;
@@ -160,14 +163,15 @@
                   <div class="input-group">
                     <button
                       class="input-group-text btn btn-secondary"
+                      class:disabled={depDateStr == desDateStr}
                       type="button"
-                      on:click={() => (desDateStr = depDateStr)}
-                      >Departure</button
+                      on:click={() => (depSync = true)}>Sync</button
                     >
                     <input
                       type="date"
                       id="desdate"
                       class="form-control"
+                      on:input={() => (depSync = false)}
                       bind:value={desDateStr}
                     />
                   </div>
