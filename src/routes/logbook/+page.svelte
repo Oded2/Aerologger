@@ -97,6 +97,10 @@
           "Flight Deleted",
           "Your flight has been deleted from your logbook."
         );
+        totalMinutes -= calculateMinutes(
+          new Date(current.depDate),
+          new Date(current.desDate)
+        );
         userLogs.splice(i, 1);
         userLogs = userLogs;
       }
