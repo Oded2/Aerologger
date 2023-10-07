@@ -123,6 +123,11 @@
             Air time: <span class="text-primary"
               >{hours.toLocaleString()} hours and {minutes} minutes</span
             >
+            <h4>
+              Total flights: <span class="text-primary"
+                >{userLogs.length.toLocaleString()}</span
+              >
+            </h4>
           </h3>
         </div>
         <div class="fs-3">
