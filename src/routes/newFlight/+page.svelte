@@ -8,6 +8,7 @@
     parseDateAndTime,
   } from "../../hooks.client.js";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
+  import Switch from "../../components/Switch.svelte";
   export let data;
   const api = data.sbApi;
   const sb = createSbClient(api);
@@ -23,6 +24,7 @@
     planeModel = "",
     planeId = "";
   let userNotes = "";
+  let isPublic = true;
   let inProgress = false;
   let depSync = true;
   $: depDate = parseDateAndTime(depDateStr, depTimeStr);
@@ -46,6 +48,7 @@
       model: planeModel,
       identification: planeId,
       notes: userNotes,
+      public: isPublic,
     });
     inProgress = false;
     if (error) {
@@ -215,7 +218,7 @@
                     placeholder={'"4X-CHA"'}
                   />
                 </div>
-                <div>
+                <div class="col-12 mb-3">
                   <label for="notes" class="form-label">Notes</label>
                   <textarea
                     id="notes"
@@ -223,6 +226,12 @@
                     class="form-control fs-5"
                     bind:value={userNotes}
                   />
+                </div>
+                <div class="col-auto">
+                  <Switch bind:checked={isPublic} text="Make public" />
+                  <span class="font-reset fw-light fs-6"
+                    >You can always change this later.</span
+                  >
                 </div>
               </div>
             </div>

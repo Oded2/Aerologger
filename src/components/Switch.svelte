@@ -8,12 +8,20 @@
   }
   export let round = true;
   export let checked = true;
+  export let text = "";
 </script>
 
-<label class="switch">
-  <input type="checkbox" bind:checked on:change={clicked} />
-  <span class="slider" class:round />
-</label>
+<div class="row">
+  <div class="col-auto d-flex align-items-center">
+    <span>{text}</span>
+  </div>
+  <div class="col-auto d-flex align-items-center">
+    <label class="switch">
+      <input type="checkbox" bind:checked on:change={clicked} />
+      <span class="slider" class:round />
+    </label>
+  </div>
+</div>
 
 <style>
   .switch {
