@@ -167,6 +167,7 @@
                     <button
                       class="input-group-text btn btn-secondary"
                       type="button"
+                      disabled={depDateStr == dateToStr()}
                       on:click={() => (depDateStr = dateToStr())}>Today</button
                     >
                     <input
