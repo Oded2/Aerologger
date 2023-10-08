@@ -124,6 +124,14 @@
       showError("Departure must be before arrival");
       return false;
     }
+    if (isNaN(depDate.valueOf())) {
+      showError("Departure date or time is invalid");
+      return false;
+    }
+    if (isNaN(desDate.valueOf())) {
+      showError("Arrival date or time is invalid");
+      return false;
+    }
     return true;
   }
   function showError(desc) {
