@@ -155,16 +155,16 @@
                       <li>Country: {getCountryByCode(log.dep.country)}</li>
                       <li>Elevation: {log.dep.elevation_ft} ft</li>
                     </ul>
-                    <div>
-                      <iframe
-                        src={getOpenStreetMap(
-                          parseFloat(log.dep.latitude),
-                          parseFloat(log.dep.longitude)
-                        )}
-                        frameborder="0"
-                        title="Open Street Map"
-                      />
-                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <iframe
+                      src={getOpenStreetMap(
+                        parseFloat(log.dep.latitude),
+                        parseFloat(log.dep.longitude)
+                      )}
+                      frameborder="0"
+                      title="Open Street Map"
+                    />
                   </div>
                 </div>
               </div>
@@ -191,17 +191,18 @@
                         <li>Region: {log.des.region}</li>
                         <li>Country: {getCountryByCode(log.des.country)}</li>
                         <li>Elevation: {log.des.elevation_ft} ft</li>
+                        <li />
                       </ul>
-                      <div>
-                        <iframe
-                          src={getOpenStreetMap(
-                            parseFloat(log.des.latitude),
-                            parseFloat(log.des.longitude)
-                          )}
-                          frameborder="0"
-                          title="Open Street Map"
-                        />
-                      </div>
+                    </div>
+                    <div class="card-footer">
+                      <iframe
+                        src={getOpenStreetMap(
+                          parseFloat(log.des.latitude),
+                          parseFloat(log.des.longitude)
+                        )}
+                        frameborder="0"
+                        title="Open Street Map"
+                      />
                     </div>
                   </div>
                 </div>
@@ -240,6 +241,6 @@
 <style>
   iframe {
     width: 100%;
-    min-height: 400px;
+    height: 400px;
   }
 </style>
