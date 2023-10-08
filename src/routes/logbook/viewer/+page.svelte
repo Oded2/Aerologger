@@ -62,23 +62,26 @@
                     </h3>
                   </div>
                   <div class="card-body">
-                    <div class=" text-center border-bottom py-2">
-                      Aircraft Type: <span
-                        class="text-capitalize text-aerologger">{log.type}</span
-                      >
-                    </div>
-                    <div class=" text-center border-bottom py-2">
-                      Aircraft Model : <span
-                        class="text-capitalize text-aerologger"
-                      >
-                        {log.model}</span
-                      >
-                    </div>
-                    <div class="text-center py-2">
-                      Aircraft ID: <span class="text-uppercase text-aerologger">
-                        {log.identification}</span
-                      >
-                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                        Aircraft Type: <span
+                          class="text-capitalize text-aerologger"
+                          >{log.type}</span
+                        >
+                      </li>
+                      <li class="list-group-item">
+                        Aircraft Model : <span
+                          class="text-capitalize text-aerologger"
+                        >
+                          {log.model}</span
+                        >
+                      </li>
+                      <li class="list-group-item">
+                        Aircraft ID: <span class=" text-aerologger">
+                          {log.identification}</span
+                        >
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -89,29 +92,31 @@
                       <i class="fa-solid fa-plane" /> Flight Information
                     </h3>
                   </div>
-                  <div class="card-body text-center">
-                    <div class="  border-bottom py-2">
-                      {log.dep.icao} to {log.des.icao}
-                    </div>
-                    <div class="  border-bottom py-2">
-                      Time of Departure : <span class="text-aerologger">
-                        {formatDateTime(log.depDate)}</span
-                      >
-                    </div>
+                  <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                        {log.dep.icao} to {log.des.icao}
+                      </li>
+                      <li class="list-group-item">
+                        Time of Departure : <span class="text-aerologger">
+                          {formatDateTime(log.depDate)}</span
+                        >
+                      </li>
 
-                    <div class=" border-bottom py-2">
-                      Time of Arrival: <span class="text-aerologger">
-                        {formatDateTime(log.desDate)}</span
-                      >
-                    </div>
-                    <div class=" py-2">
-                      Total Duration: <span class="text-aerologger">
-                        {formatDuration(
-                          new Date(log.depDate),
-                          new Date(log.desDate)
-                        )}</span
-                      >
-                    </div>
+                      <li class="list-group-item">
+                        Time of Arrival: <span class="text-aerologger">
+                          {formatDateTime(log.desDate)}</span
+                        >
+                      </li>
+                      <li class="list-group-item">
+                        Total Duration: <span class="text-aerologger">
+                          {formatDuration(
+                            new Date(log.depDate),
+                            new Date(log.desDate)
+                          )}</span
+                        >
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -140,20 +145,24 @@
                     </h3>
                   </div>
                   <div class="card-body">
-                    <ul>
-                      <li>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
                         Name: {log.dep.name}
                       </li>
-                      <li>ICAO Code: {log.dep.icao}</li>
-                      <li>
+                      <li class="list-group-item">ICAO Code: {log.dep.icao}</li>
+                      <li class="list-group-item">
                         IATA Code: {log.dep.iata.length > 0
                           ? log.dep.iata
                           : "Not found"}
                       </li>
-                      <li>City: {log.dep.city}</li>
-                      <li>Region: {log.dep.region}</li>
-                      <li>Country: {getCountryByCode(log.dep.country)}</li>
-                      <li>Elevation: {log.dep.elevation_ft} ft</li>
+                      <li class="list-group-item">City: {log.dep.city}</li>
+                      <li class="list-group-item">Region: {log.dep.region}</li>
+                      <li class="list-group-item">
+                        Country: {getCountryByCode(log.dep.country)}
+                      </li>
+                      <li class="list-group-item">
+                        Elevation: {log.dep.elevation_ft} ft
+                      </li>
                     </ul>
                   </div>
                   <div class="card-footer">
@@ -177,21 +186,28 @@
                       </h3>
                     </div>
                     <div class="card-body">
-                      <ul>
-                        <li>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
                           Name: {log.des.name}
                         </li>
-                        <li>ICAO Code: {log.des.icao}</li>
-                        <li>
+                        <li class="list-group-item">
+                          ICAO Code: {log.des.icao}
+                        </li>
+                        <li class="list-group-item">
                           IATA Code: {log.des.iata.length > 0
                             ? log.des.iata
                             : "Not found"}
                         </li>
-                        <li>City: {log.des.city}</li>
-                        <li>Region: {log.des.region}</li>
-                        <li>Country: {getCountryByCode(log.des.country)}</li>
-                        <li>Elevation: {log.des.elevation_ft} ft</li>
-                        <li />
+                        <li class="list-group-item">City: {log.des.city}</li>
+                        <li class="list-group-item">
+                          Region: {log.des.region}
+                        </li>
+                        <li class="list-group-item">
+                          Country: {getCountryByCode(log.des.country)}
+                        </li>
+                        <li class="list-group-item">
+                          Elevation: {log.des.elevation_ft} ft
+                        </li>
                       </ul>
                     </div>
                     <div class="card-footer">
