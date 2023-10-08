@@ -5,13 +5,12 @@
     formatDate,
     getTimeStr,
     formatDuration,
-    getCountryByCode,
-    getOpenStreetMap,
   } from "../../../hooks.client.js";
   import hrefs from "../../../data/hrefs.json";
   import FloatElement from "../../../components/FloatElement.svelte";
   import ToastSetup from "../../../components/setup/ToastSetup.svelte";
   import ShareModal from "../../../components/ShareModal.svelte";
+  import AirportCard from "../../../components/AirportCard.svelte";
   export let data;
   const api = data.sbApi;
   let toast;
@@ -28,7 +27,7 @@
     }
   }
   function formatDateTime(string = "") {
-    let date = new Date(string);
+    const date = new Date(string);
     return `${formatDate(date)} at ${getTimeStr(date)}`;
   }
   function toggleModal() {
@@ -137,90 +136,21 @@
                   ? 'col-lg-12'
                   : 'col-lg-6'} mb-5"
               >
-                <div class="card shadow h-100">
-                  <div class="card-header text-center">
-                    <h3>
-                      <i class="fa-solid fa-plane-departure" />
-                      {#if log.dep.icao !== log.des.icao}Departure{/if} Airport Information
-                    </h3>
-                  </div>
-                  <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item">
-                        Name: {log.dep.name}
-                      </li>
-                      <li class="list-group-item">ICAO Code: {log.dep.icao}</li>
-                      <li class="list-group-item">
-                        IATA Code: {log.dep.iata.length > 0
-                          ? log.dep.iata
-                          : "Not found"}
-                      </li>
-                      <li class="list-group-item">City: {log.dep.city}</li>
-                      <li class="list-group-item">Region: {log.dep.region}</li>
-                      <li class="list-group-item">
-                        Country: {getCountryByCode(log.dep.country)}
-                      </li>
-                      <li class="list-group-item">
-                        Elevation: {log.dep.elevation_ft} ft
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="card-footer">
-                    <iframe
-                      src={getOpenStreetMap(
-                        parseFloat(log.dep.latitude),
-                        parseFloat(log.dep.longitude)
-                      )}
-                      frameborder="0"
-                      title="Open Street Map"
-                    />
-                  </div>
-                </div>
+                <AirportCard
+                  airportData={log.dep}
+                  cardTitle={log.dep.icao === log.des.icao
+                    ? "Airport Information"
+                    : "Departure Airport Information"}
+                  icon="plane-departure"
+                />
               </div>
               {#if log.dep.icao !== log.des.icao}
                 <div class="col-lg-6 mb-5">
-                  <div class="card shadow h-100">
-                    <div class="card-header text-center">
-                      <h3>
-                        <i class="fa-solid fa-plane-arrival" /> Arrival Airport Information
-                      </h3>
-                    </div>
-                    <div class="card-body">
-                      <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                          Name: {log.des.name}
-                        </li>
-                        <li class="list-group-item">
-                          ICAO Code: {log.des.icao}
-                        </li>
-                        <li class="list-group-item">
-                          IATA Code: {log.des.iata.length > 0
-                            ? log.des.iata
-                            : "Not found"}
-                        </li>
-                        <li class="list-group-item">City: {log.des.city}</li>
-                        <li class="list-group-item">
-                          Region: {log.des.region}
-                        </li>
-                        <li class="list-group-item">
-                          Country: {getCountryByCode(log.des.country)}
-                        </li>
-                        <li class="list-group-item">
-                          Elevation: {log.des.elevation_ft} ft
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="card-footer">
-                      <iframe
-                        src={getOpenStreetMap(
-                          parseFloat(log.des.latitude),
-                          parseFloat(log.des.longitude)
-                        )}
-                        frameborder="0"
-                        title="Open Street Map"
-                      />
-                    </div>
-                  </div>
+                  <AirportCard
+                    airportData={log.des}
+                    cardTitle="Arrival Airport Information"
+                    icon="plane-arrival"
+                  />
                 </div>
               {/if}
             </div>
@@ -253,10 +183,3 @@
 </FloatElement>
 
 <ToastSetup {toast} />
-
-<style>
-  iframe {
-    width: 100%;
-    height: 400px;
-  }
-</style>
