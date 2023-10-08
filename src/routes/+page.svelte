@@ -18,7 +18,9 @@
     {:then user}
       <div>
         <h1>
-          Hello <span class="text-primary">{user ? user.fname : "Pilot"}</span>.
+          Hello <span class="text-aerologger"
+            >{user ? user.fname : "Pilot"}</span
+          >.
         </h1>
         <h2>What would you like to do today?</h2>
         <div class="row my-3">

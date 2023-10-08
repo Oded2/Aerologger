@@ -121,14 +121,14 @@
       {#if user}
         <div class="mb-5">
           <h1>
-            Welcome to your <span class="text-primary">logbook</span>, {user.fname}.
+            Welcome to your <span class="text-aerologger">logbook</span>, {user.fname}.
           </h1>
           <h3>
-            Air time: <span class="text-primary"
+            Air time: <span class="text-aerologger"
               >{hours.toLocaleString()} hours and {minutes} minutes</span
             >
             <h4>
-              Total flights: <span class="text-primary"
+              Total flights: <span class="text-aerologger"
                 >{userLogs.length.toLocaleString()}</span
               >
             </h4>
@@ -160,7 +160,7 @@
                   <i class="fa-solid fa-plane-departure" /> Takeoff
                 </div>
                 <div>
-                  <span class="text-primary">{log.dep}</span> at
+                  <span class="text-aerologger">{log.dep.name}</span> at
                   {formatDateTime(log.depDate)}
                 </div>
                 <div />
@@ -170,7 +170,7 @@
                   <i class="fa-solid fa-plane-arrival" /> Landing
                 </div>
                 <div>
-                  <span class="text-primary">{log.des}</span> at {formatDateTime(
+                  <span class="text-aerologger">{log.des.name}</span> at {formatDateTime(
                     log.desDate
                   )}
                 </div>

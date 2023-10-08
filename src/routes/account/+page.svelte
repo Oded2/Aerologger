@@ -113,7 +113,9 @@
   {:then user}
     <div class="container my-5">
       <div class="font-google-gabarito">
-        <h1>Welcome back, <span class="text-primary">{user.fname}</span>.</h1>
+        <h1>
+          Welcome back, <span class="text-aerologger">{user.fname}</span>.
+        </h1>
         <h3>
           Looking for your logbook? <a
             href={hrefs.logbook.home.link}

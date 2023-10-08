@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { toasts } from "svelte-toasts";
+import countries from "./data/countries.json";
 const sbUrl = "https://njcypmepfxckouqjunrr.supabase.co";
 
 export function randomNum(min, max) {
@@ -125,4 +126,29 @@ export function formatDuration(startDate = new Date(), endDate = new Date()) {
   const hours = Math.floor(timeDifference / 3600000);
   const minutes = Math.floor((timeDifference % 3600000) / 60000);
   return `${hours.toLocaleString()} hours and ${minutes} minutes`;
+}
+
+export function getCountryByCode(code = "") {
+  code = code.toUpperCase();
+  for (const i of countries) {
+    if (i.code === code) {
+      return i.name;
+    }
+  }
+  return null;
+}
+export function getOpenStreetMap(latitude, longitude) {
+  if (!latitude || !longitude) {
+    return "https://www.openstreetmap.org/export/embed.html?bbox=-132.67089843750003%2C21.779905342529645%2C-59.28222656250001%2C51.781435604431195&amp;layer=mapnik";
+  }
+  const degrees = 30 / 111.32;
+  const bbox = [
+    longitude - degrees,
+    latitude - degrees,
+    longitude + degrees,
+    latitude + degrees,
+  ].join(",");
+  const marker = `${latitude},${longitude}`;
+  const embedLink = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&amp;layer=mapnik&marker=${marker}`;
+  return embedLink;
 }

@@ -1,5 +1,5 @@
 import { SUPABASE } from "$env/static/private";
-const sbUrl = "https://njcypmepfxckouqjunrr.supabase.co";
+import { APININJAS } from "$env/static/private";
 export async function load() {
-  return { sbApi: SUPABASE };
+  return { sbApi: SUPABASE, ninjaApi: APININJAS };
 }

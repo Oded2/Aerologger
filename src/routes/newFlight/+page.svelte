@@ -1,5 +1,7 @@
 <script>
   import {
+    addParams,
+    addParamsString,
     createSbClient,
     createToast,
     dateToStr,
@@ -9,11 +11,12 @@
   } from "../../hooks.client.js";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import Switch from "../../components/Switch.svelte";
-  import airports from "../../data/airports.json";
   export let data;
-  const api = data.sbApi;
-  const sb = createSbClient(api);
-  const user = getUserDetails(api);
+  const sbApi = data.sbApi;
+  const ninjaApi = data.ninjaApi;
+  const sb = createSbClient(sbApi);
+  const user = getUserDetails(sbApi);
+  const airportUrl = "https://api.api-ninjas.com/v1/airports";
   let toast;
   let dep = "",
     des = "";
@@ -28,25 +31,53 @@
   let isPublic = true;
   let inProgress = false;
   let depSync = true;
-  $: dep = dep.toUpperCase();
-  $: des = des.toUpperCase();
   $: planeId = planeId.toUpperCase();
   $: depDate = parseDateAndTime(depDateStr, depTimeStr);
   $: desDate = parseDateAndTime(desDateStr, desTimeStr);
-
   $: if (depSync) {
     desDateStr = depDateStr;
   }
+  async function getAirportDetails(airport = "") {
+    const url = addParamsString(
+      airportUrl,
+      airport.length == 3
+        ? { iata: airport }
+        : airport.length == 4
+        ? { icao: airport }
+        : { name: airport }
+    );
+    try {
+      const response = (
+        await fetch(url, { headers: { "X-Api-Key": ninjaApi } })
+      ).json();
+      return await response;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
   async function submit() {
     if (!verify()) {
       return;
     }
     inProgress = true;
-    const userId = (await user).id;
+    const depAirport = await getAirportDetails(dep);
+    const desAirport = await getAirportDetails(des);
+    if (depAirport.length != 1) {
+      showError("Departure airport not found.");
+      inProgress = false;
+      return;
+    }
+    if (desAirport.length != 1) {
+      showError("Destination airport not found");
+      inProgress = false;
+      return;
+    }
     const { error } = await sb.from("Logs").insert({
-      owner: userId,
-      dep: dep,
-      des: des,
+      owner: (await user).id,
+      dep: depAirport[0],
+      des: desAirport[0],
       depDate: depDate.toISOString(),
       desDate: desDate.toISOString(),
       type: planeType,
@@ -77,8 +108,6 @@
     );
   }
   function verify() {
-    let depValid = false,
-      desValid = false;
     if (!planeType || planeType.length == 0) {
       showError("Aircraft type cannot be empty");
       return false;
@@ -93,22 +122,6 @@
     }
     if (depDate.valueOf() > desDate.valueOf()) {
       showError("Departure must be before arrival");
-      return false;
-    }
-    for (const i of airports) {
-      if (dep === i.icao) {
-        depValid = true;
-      }
-      if (des === i.icao) {
-        desValid = true;
-      }
-    }
-    if (!depValid) {
-      showError("Departure airport must be a valid ICAO code.");
-      return false;
-    }
-    if (!desValid) {
-      showError("Destination airport must be a valid ICAO code.");
       return false;
     }
     return true;
@@ -141,9 +154,7 @@
                     class="form-control"
                     bind:value={dep}
                   />
-                  <span class="form-text fs-6"
-                    >Aiport must be an ICAO code.</span
-                  >
+                  <span class="form-text fs-6">Name, IATA, or ICAO code.</span>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="des" class="form-label"
@@ -155,9 +166,7 @@
                     class="form-control"
                     bind:value={des}
                   />
-                  <span class="form-text fs-6"
-                    >Aiport must be an ICAO code.</span
-                  >
+                  <span class="form-text fs-6">Name, IATA, or ICAO code.</span>
                 </div>
                 <div class="col-md-6 col-xl-3 mb-3">
                   <label for="depdate" class="form-label"

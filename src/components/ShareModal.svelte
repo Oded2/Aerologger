@@ -26,7 +26,7 @@
 <Modal on:click {showModal}
   ><div class="font-google-gabarito">
     <div class="text-center"><h1>Share</h1></div>
-    <div class="p-5">
+    <div class="p-md-5">
       <div class="input-group">
         <button class="input-group-text btn btn-primary fs-5" on:click={copy}
           >Copy Link</button

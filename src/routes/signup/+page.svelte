@@ -166,7 +166,7 @@
       <div class="text-center">
         <h1 class=" fw-bold">Hello, Pilot.</h1>
         <h2 class=" fw-bold">
-          A verification email has been sent to <span class="text-primary"
+          A verification email has been sent to <span class="text-aerologger"
             >{email}</span
           >
         </h2>
