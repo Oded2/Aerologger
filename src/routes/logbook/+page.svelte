@@ -12,6 +12,7 @@
   } from "../../hooks.client.js";
   import hrefs from "../../data/hrefs.json";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
+  import FloatElement from "../../components/FloatElement.svelte";
   export let data;
   const api = data.sbApi;
   const sb = createSbClient(api);
@@ -252,3 +253,8 @@
   </div>
 </main>
 <ToastSetup {toast} />
+<FloatElement
+  ><a href={hrefs.logbook.settings.link} class="btn btn-dark btn-lg"
+    ><i class="fa-solid fa-gear" /></a
+  ></FloatElement
+>
