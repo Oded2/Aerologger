@@ -10,6 +10,8 @@
   } from "../../hooks.client.js";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import Switch from "../../components/Switch.svelte";
+  import hrefs from "../../data/hrefs.json";
+  import logo from "../../data/images/logo_simplified.png";
   export let data;
   const sbApi = data.sbApi;
   const ninjaApi = data.ninjaApi;
@@ -28,9 +30,11 @@
     planeId = "";
   let userNotes = "";
   let isPublic = true;
-  let inProgress = false;
+  let inProgress = false,
+    isComplete = false;
   let depSync = true;
   let submitText = "Submit Flight";
+  let logNumber = NaN;
   $: planeId = planeId.toUpperCase();
   $: depDate = parseDateAndTime(depDateStr, depTimeStr);
   $: desDate = parseDateAndTime(desDateStr, desTimeStr);
@@ -77,24 +81,29 @@
       return;
     }
     submitText = "Inserting Into Databse";
-    const { error } = await sb.from("Logs").insert({
-      owner: (await user).id,
-      dep: depAirport[0],
-      des: desAirport[0],
-      depDate: depDate.toISOString(),
-      desDate: desDate.toISOString(),
-      type: planeType,
-      model: planeModel,
-      identification: planeId,
-      notes: userNotes,
-      public: isPublic,
-    });
+    const { data, error } = await sb
+      .from("Logs")
+      .insert({
+        owner: (await user).id,
+        dep: depAirport[0],
+        des: desAirport[0],
+        depDate: depDate.toISOString(),
+        desDate: desDate.toISOString(),
+        type: planeType,
+        model: planeModel,
+        identification: planeId,
+        notes: userNotes,
+        public: isPublic,
+      })
+      .select();
     submitText = "Submit Flight";
     inProgress = false;
+    logNumber = data[0].id;
     if (error) {
       showError(error.message);
       return;
     }
+    isComplete = true;
     dep = "";
     des = "";
     depDateStr = dateToStr();
@@ -105,11 +114,6 @@
     planeModel = "";
     planeId = "";
     userNotes = "";
-    toast = createToast(
-      "success",
-      "Flight Added",
-      "Your flight is now available in your logbook."
-    );
   }
   function verify() {
     if (!planeType || planeType.length == 0) {
@@ -149,152 +153,193 @@
       <h1>Loading...</h1>
     {:then user}
       {#if user}
-        <div>
-          <h1>Welcome back, {user.fname}.</h1>
-        </div>
-        <form on:submit|preventDefault={submit}>
-          <div class="card">
-            <div class="card-body fs-3">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="dep" class="form-label"
-                    >Airport of Departure</label
-                  >
-                  <input
-                    type="text"
-                    id="dep"
-                    class="form-control"
-                    bind:value={dep}
-                  />
-                  <span class="form-text fs-6">Name, IATA, or ICAO code.</span>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="des" class="form-label"
-                    >Airport of Destination
-                  </label>
-                  <input
-                    type="text"
-                    id="des"
-                    class="form-control"
-                    bind:value={des}
-                  />
-                  <span class="form-text fs-6">Name, IATA, or ICAO code.</span>
-                </div>
-                <div class="col-md-6 col-xl-3 mb-3">
-                  <label for="depdate" class="form-label"
-                    >Date of Departure</label
-                  >
-                  <div class="input-group">
-                    <button
-                      class="input-group-text btn btn-secondary"
-                      type="button"
-                      disabled={depDateStr == dateToStr()}
-                      on:click={() => (depDateStr = dateToStr())}>Today</button
-                    >
-                    <input
-                      type="date"
-                      id="depdate"
-                      class="form-control"
-                      bind:value={depDateStr}
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6 col-xl-3 mb-3">
-                  <label for="deptime" class="form-label"
-                    >Time of Departure</label
-                  >
+        {#if isComplete}
+          <div class="row">
+            <div class="col-auto">
+              <h1>
+                Your flight has been added to your <a
+                  href={hrefs.logbook.home.link}>logbook</a
+                >.
+              </h1>
 
-                  <input
-                    type="time"
-                    id="deptime"
-                    class="form-control"
-                    bind:value={depTimeStr}
-                  />
-                </div>
-                <div class="col-md-6 col-xl-3 mb-3">
-                  <label for="desdate" class="form-label">Date of Arrival</label
+              <div class="row my-4">
+                <div class="col">
+                  <a
+                    href={addParamsString(hrefs.logbook.viewer.link, {
+                      logId: logNumber,
+                    })}
+                    class="btn btn-primary btn-lg fs-2 w-100">View Flight</a
                   >
-                  <div class="input-group">
-                    <button
-                      class="input-group-text btn btn-secondary"
-                      class:disabled={depDateStr == desDateStr}
-                      type="button"
-                      on:click={() => (depSync = true)}>Sync</button
-                    >
-                    <input
-                      type="date"
-                      id="desdate"
-                      class="form-control"
-                      on:input={() => (depSync = false)}
-                      bind:value={desDateStr}
-                    />
-                  </div>
                 </div>
-                <div class="col-md-6 col-xl-3 mb-3">
-                  <label for="destime" class="form-label">Time of Arrival</label
-                  >
-                  <input
-                    type="time"
-                    id="destime"
-                    class="form-control"
-                    bind:value={desTimeStr}
-                  />
-                </div>
-                <div class="col-md-6 col-xl-4 mb-3">
-                  <label for="planetype" class="form-label">Aircraft Type</label
-                  >
-                  <select id="planetype" class="form-select">
-                    <option value="airplane" selected>Airplane</option>
-                    <option value="helicopter">Helicopter</option>
-                    <option value="glider">Sailplane / Glider</option>
-                    <option value="rc">Remote Control (rc)</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-                <div class="col-md-6 col-xl-4 mb-3">
-                  <label for="planemodel" class="form-label">Model</label>
-                  <input
-                    id="planemodel"
-                    class="form-control"
-                    bind:value={planeModel}
-                    placeholder={'"Cessna 172"'}
-                  />
-                </div>
-                <div class="col-md-6 col-xl-4 mb-3">
-                  <label for="planeid" class="form-label">Identification</label>
-                  <input
-                    id="planeid"
-                    class="form-control"
-                    bind:value={planeId}
-                    placeholder={'"4X-CHA"'}
-                  />
-                </div>
-                <div class="col-12 mb-3">
-                  <label for="notes" class="form-label">Notes</label>
-                  <textarea
-                    id="notes"
-                    rows="4"
-                    class="form-control fs-5"
-                    bind:value={userNotes}
-                  />
-                </div>
-                <div class="col-auto">
-                  <Switch bind:checked={isPublic} text="Make public" />
-                  <span class="font-reset fw-light fs-6"
-                    >You can always change this later.</span
+                <div class="col">
+                  <button
+                    on:click={() => (isComplete = false)}
+                    class="btn btn-outline-primary btn-lg fs-2 w-100"
+                    >Log New Flight</button
                   >
                 </div>
               </div>
             </div>
-            <div class="card-footer">
-              <button
-                class="btn btn-primary btn-lg w-100 fs-4"
-                type="submit"
-                disabled={inProgress}>{submitText}</button
-              >
+            <div class="col">
+              <img src={logo} alt="AeroLogger's Logo" class="img-fluid" />
             </div>
           </div>
-        </form>
+        {:else}
+          <div>
+            <h1>Welcome back, {user.fname}.</h1>
+          </div>
+          <form on:submit|preventDefault={submit}>
+            <div class="card">
+              <div class="card-body fs-3">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="dep" class="form-label"
+                      >Airport of Departure</label
+                    >
+                    <input
+                      type="text"
+                      id="dep"
+                      class="form-control"
+                      bind:value={dep}
+                    />
+                    <span class="form-text fs-6">Name, IATA, or ICAO code.</span
+                    >
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="des" class="form-label"
+                      >Airport of Destination
+                    </label>
+                    <input
+                      type="text"
+                      id="des"
+                      class="form-control"
+                      bind:value={des}
+                    />
+                    <span class="form-text fs-6">Name, IATA, or ICAO code.</span
+                    >
+                  </div>
+                  <div class="col-md-6 col-xl-3 mb-3">
+                    <label for="depdate" class="form-label"
+                      >Date of Departure</label
+                    >
+                    <div class="input-group">
+                      <button
+                        class="input-group-text btn btn-secondary"
+                        type="button"
+                        disabled={depDateStr == dateToStr()}
+                        on:click={() => (depDateStr = dateToStr())}
+                        >Today</button
+                      >
+                      <input
+                        type="date"
+                        id="depdate"
+                        class="form-control"
+                        bind:value={depDateStr}
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xl-3 mb-3">
+                    <label for="deptime" class="form-label"
+                      >Time of Departure</label
+                    >
+
+                    <input
+                      type="time"
+                      id="deptime"
+                      class="form-control"
+                      bind:value={depTimeStr}
+                    />
+                  </div>
+                  <div class="col-md-6 col-xl-3 mb-3">
+                    <label for="desdate" class="form-label"
+                      >Date of Arrival</label
+                    >
+                    <div class="input-group">
+                      <button
+                        class="input-group-text btn btn-secondary"
+                        class:disabled={depDateStr == desDateStr}
+                        type="button"
+                        on:click={() => (depSync = true)}>Sync</button
+                      >
+                      <input
+                        type="date"
+                        id="desdate"
+                        class="form-control"
+                        on:input={() => (depSync = false)}
+                        bind:value={desDateStr}
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xl-3 mb-3">
+                    <label for="destime" class="form-label"
+                      >Time of Arrival</label
+                    >
+                    <input
+                      type="time"
+                      id="destime"
+                      class="form-control"
+                      bind:value={desTimeStr}
+                    />
+                  </div>
+                  <div class="col-md-6 col-xl-4 mb-3">
+                    <label for="planetype" class="form-label"
+                      >Aircraft Type</label
+                    >
+                    <select id="planetype" class="form-select">
+                      <option value="airplane" selected>Airplane</option>
+                      <option value="helicopter">Helicopter</option>
+                      <option value="glider">Sailplane / Glider</option>
+                      <option value="rc">Remote Control (rc)</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 col-xl-4 mb-3">
+                    <label for="planemodel" class="form-label">Model</label>
+                    <input
+                      id="planemodel"
+                      class="form-control"
+                      bind:value={planeModel}
+                      placeholder={'"Cessna 172"'}
+                    />
+                  </div>
+                  <div class="col-md-6 col-xl-4 mb-3">
+                    <label for="planeid" class="form-label"
+                      >Identification</label
+                    >
+                    <input
+                      id="planeid"
+                      class="form-control"
+                      bind:value={planeId}
+                      placeholder={'"4X-CHA"'}
+                    />
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label for="notes" class="form-label">Notes</label>
+                    <textarea
+                      id="notes"
+                      rows="4"
+                      class="form-control fs-5"
+                      bind:value={userNotes}
+                    />
+                  </div>
+                  <div class="col-auto">
+                    <Switch bind:checked={isPublic} text="Make public" />
+                    <span class="font-reset fw-light fs-6"
+                      >You can always change this later.</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button
+                  class="btn btn-primary btn-lg w-100 fs-4"
+                  type="submit"
+                  disabled={inProgress}>{submitText}</button
+                >
+              </div>
+            </div>
+          </form>
+        {/if}
       {:else}
         <h1>User not logged in.</h1>
       {/if}
