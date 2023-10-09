@@ -145,6 +145,7 @@
   function showError(desc) {
     toast = createToast("error", "Error", desc);
   }
+  isComplete = true;
 </script>
 
 <main>
@@ -154,33 +155,31 @@
     {:then user}
       {#if user}
         {#if isComplete}
-          <div class="row">
-            <div class="col-auto">
-              <h1>
-                Your flight has been added to your <a
-                  href={hrefs.logbook.home.link}>logbook</a
-                >.
-              </h1>
+          <h1 class="text-success">Success!</h1>
+          <h2>
+            Your flight has been added to your <a href={hrefs.logbook.home.link}
+              >logbook</a
+            >.
+          </h2>
 
-              <div class="row my-4">
-                <div class="col">
-                  <a
-                    href={addParamsString(hrefs.logbook.viewer.link, {
-                      logId: logNumber,
-                    })}
-                    class="btn btn-primary btn-lg fs-2 w-100">View Flight</a
-                  >
-                </div>
-                <div class="col">
-                  <button
-                    on:click={() => (isComplete = false)}
-                    class="btn btn-outline-primary btn-lg fs-2 w-100"
-                    >Log New Flight</button
-                  >
-                </div>
-              </div>
+          <div class="row my-4">
+            <div class="col">
+              <a
+                href={addParamsString(hrefs.logbook.viewer.link, {
+                  logId: logNumber,
+                })}
+                class="btn btn-primary btn-lg fs-2 w-100 h-100">View Flight</a
+              >
             </div>
             <div class="col">
+              <button
+                on:click={() => (isComplete = false)}
+                class="btn btn-outline-primary btn-lg fs-2 w-100 h-100"
+                >Log New Flight</button
+              >
+            </div>
+
+            <div class="d-flex justify-content-center">
               <img src={logo} alt="AeroLogger's Logo" class="img-fluid" />
             </div>
           </div>
@@ -351,5 +350,8 @@
 <style>
   textarea {
     resize: none;
+  }
+  img {
+    max-height: 60vh;
   }
 </style>
