@@ -1,6 +1,5 @@
 <script>
   import {
-    addParams,
     addParamsString,
     createSbClient,
     createToast,
@@ -31,6 +30,7 @@
   let isPublic = true;
   let inProgress = false;
   let depSync = true;
+  let submitText = "Submit Flight";
   $: planeId = planeId.toUpperCase();
   $: depDate = parseDateAndTime(depDateStr, depTimeStr);
   $: desDate = parseDateAndTime(desDateStr, desTimeStr);
@@ -62,18 +62,21 @@
       return;
     }
     inProgress = true;
+    submitText = "Fetching Departure Airport";
     const depAirport = await getAirportDetails(dep);
-    const desAirport = await getAirportDetails(des);
     if (depAirport.length != 1) {
       showError("Departure airport not found.");
       inProgress = false;
       return;
     }
+    submitText = "Fetching Destination Airport";
+    const desAirport = await getAirportDetails(des);
     if (desAirport.length != 1) {
       showError("Destination airport not found");
       inProgress = false;
       return;
     }
+    submitText = "Inserting Into Databse";
     const { error } = await sb.from("Logs").insert({
       owner: (await user).id,
       dep: depAirport[0],
@@ -86,6 +89,7 @@
       notes: userNotes,
       public: isPublic,
     });
+    submitText = "Submit Flight";
     inProgress = false;
     if (error) {
       showError(error.message);
@@ -286,7 +290,7 @@
               <button
                 class="btn btn-primary btn-lg w-100 fs-4"
                 type="submit"
-                disabled={inProgress}>Submit Flight</button
+                disabled={inProgress}>{submitText}</button
               >
             </div>
           </div>
