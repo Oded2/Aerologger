@@ -103,6 +103,7 @@
       showError(error.message);
       return;
     }
+    isComplete = true;
     dep = "";
     des = "";
     depDateStr = dateToStr();
