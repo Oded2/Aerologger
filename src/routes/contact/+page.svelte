@@ -4,16 +4,19 @@
   import { createToast, getUserDetails } from "../../hooks.client.js";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   export let data;
-  const api = data.sbApi;
+
   const url = data.url;
+  const { session } = data;
   const mail = hrefs.contact.home.mail;
-  let email = "",
-    name = "",
+
+  let email = session ? session.user.email : "",
+    name = session
+      ? `${session.user.user_metadata.first_name} ${session.user.user_metadata.last_name}`
+      : "",
     topic = "",
     message = "";
   let inProgress = false;
   let toast;
-  onMount(autoFill);
   async function onSubmit() {
     if (!verify()) {
       return;
@@ -47,14 +50,6 @@
   function clearValues() {
     topic = "";
     message = "";
-  }
-  async function autoFill() {
-    const userDetails = await getUserDetails(api);
-    if (!userDetails) {
-      return;
-    }
-    email = userDetails.email;
-    name = `${userDetails.fname} ${userDetails.lname}`;
   }
   function verify() {
     function errorToast(desc) {

@@ -1,14 +1,10 @@
 <script>
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
-  import {
-    createSbClient,
-    createToast,
-    getUserDetails,
-  } from "../../hooks.client.js";
+  import { createToast } from "../../hooks.client.js";
   export let data;
-  const api = data.sbApi;
-  const sb = createSbClient(api);
-  const user = getUserDetails(api);
+  const { session } = data;
+  const user = session ? session.user : false;
+  const { supabase } = data;
   let inProgress = false;
   let toast;
   async function changeVisibility(toPublic = true) {
@@ -22,10 +18,10 @@
       return;
     }
     inProgress = true;
-    const { error } = await sb
+    const { error } = await supabase
       .from("Logs")
       .update({ public: toPublic })
-      .eq("owner", (await user).id);
+      .eq("owner", user.id);
     inProgress = false;
     if (error) {
       toast = createToast("error", "Error", error.message);
@@ -46,10 +42,7 @@
       return;
     }
     inProgress = true;
-    const { error } = await sb
-      .from("Logs")
-      .delete()
-      .eq("owner", (await user).id);
+    const { error } = await supabase.from("Logs").delete().eq("owner", user.id);
     inProgress = false;
     if (error) {
       toast = createToast("error", "Error", error.message);

@@ -2,17 +2,15 @@
   import "../global.css";
   import hrefs from "../data/hrefs.json";
   import { page } from "$app/stores";
-  import { delelteAllParams, getUserDetails } from "../hooks.client.js";
+  import { delelteAllParams } from "../hooks.client.js";
   export let data;
-  const sbApi = data.sbApi;
-  let userId;
+  const userId = data.session;
   let title = "AeroLogger";
   $: pageUrl = new URL($page.url);
   $: delelteAllParams(pageUrl);
   $: pageHref = pageUrl.href.replace(pageUrl.origin, "");
   $: if (pageHref) {
     title = findTitle();
-    userId = getUserDetails(sbApi);
   }
   function findTitle() {
     for (let key in hrefs) {
@@ -29,7 +27,7 @@
 
 <nav class="navbar navbar-expand-md font-google-quicksand">
   <div class="container">
-    <a href="/" class="navbar-brand fw-600">AeroLogger</a>
+    <a href={hrefs.home.home.link} class="navbar-brand fw-600">AeroLogger</a>
     <button
       class="navbar-toggler"
       type="button"

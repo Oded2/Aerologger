@@ -1,12 +1,10 @@
 <script>
-  import { createSbClient, createToast } from "../../hooks.client.js";
   import hrefs from "../../data/hrefs.json";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import { goto } from "$app/navigation";
   import Modal from "../../components/Modal.svelte";
   export let data;
-  const api = data.sbApi;
-  const sb = createSbClient(api);
+  const { supabase } = data;
   let toast;
   let email = "",
     password = "";
@@ -20,7 +18,7 @@
       return;
     }
     inProgress = true;
-    const { error } = await sb.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
@@ -56,7 +54,7 @@
       return;
     }
     inProgress = true;
-    const { error } = await sb.auth.resetPasswordForEmail(resetEmail, {
+    const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
       redirectTo: hrefs.passwordreset.home.weblink,
     });
     inProgress = false;

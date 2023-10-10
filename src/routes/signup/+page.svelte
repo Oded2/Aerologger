@@ -1,10 +1,9 @@
 <script>
-  import { createSbClient, createToast } from "../../hooks.client.js";
   import hrefs from "../../data/hrefs.json";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   export let data;
-  const api = data.sbApi;
-  const sb = createSbClient(api);
+  let { supabase } = data;
+  $: ({ supabase } = data);
   let toast;
   let email = "",
     fname = "",
@@ -22,20 +21,22 @@
       return;
     }
     inProgress = true;
-    const { error } = await sb.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        data: { first_name: fname, last_name: lname },
-      },
-    });
-    inProgress = false;
-    if (error) {
-      toast = createToast("error", "Error", error.message);
-      return;
-    }
+    await handleSignUp();
     isComplete = true;
   }
+  const handleSignUp = async () => {
+    await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          first_name: fname,
+          last_name: lname,
+        },
+        emailRedirectTo: `${location.origin}/auth/callback`,
+      },
+    });
+  };
   function validateForm() {
     const errorToast = (description) => {
       toast = createToast("error", "Invalid Credentials", description);

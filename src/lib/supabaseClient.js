@@ -1,4 +1,4 @@
 import { createClient } from "@supabase/supabase-js";
-import { SUPABASE } from "$env/static/private";
-const sbUrl = "https://njcypmepfxckouqjunrr.supabase.co";
-export const supabase = createClient(sbUrl, SUPABASE);
+import { PUBLIC_SUPABASE } from "$env/static/public";
+import { PUBLIC_SBURL } from "$env/static/public";
+export const supabase = createClient(PUBLIC_SBURL, PUBLIC_SUPABASE);
