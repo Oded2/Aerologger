@@ -103,7 +103,6 @@
       showError(error.message);
       return;
     }
-    isComplete = true;
     dep = "";
     des = "";
     depDateStr = dateToStr();
@@ -145,7 +144,6 @@
   function showError(desc) {
     toast = createToast("error", "Error", desc);
   }
-  isComplete = true;
 </script>
 
 <main>
