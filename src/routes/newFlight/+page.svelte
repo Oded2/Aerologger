@@ -34,6 +34,7 @@
     isComplete = false;
   let depSync = true;
   let submitText = "Submit Flight";
+  $: submitText = inProgress ? submitText : "Submit Flight";
   let logNumber = NaN;
   $: planeId = planeId.toUpperCase();
   $: depDate = parseDateAndTime(depDateStr, depTimeStr);
