@@ -248,7 +248,7 @@
                     disabled={log.public || inProgress}>Public</button
                   >
                 </div>
-                <div class="col-sm" />
+                <div class="col-sm d-none d-sm-block" />
                 <div class="col-auto">
                   <a
                     href={addParamsString(hrefs.logbook.viewer.link, {
