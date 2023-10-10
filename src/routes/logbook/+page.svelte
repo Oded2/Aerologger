@@ -6,6 +6,7 @@
     createSbClient,
     createToast,
     formatDate,
+    formatDuration,
     getTimeStr,
     getUserDetails,
     maxLen,
@@ -13,6 +14,7 @@
   import hrefs from "../../data/hrefs.json";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import FloatElement from "../../components/FloatElement.svelte";
+  import Modal from "../../components/Modal.svelte";
   export let data;
   const api = data.sbApi;
   const sb = createSbClient(api);
@@ -20,12 +22,13 @@
   const allLogs = data.logs;
   let toast;
   let inProgress = false;
+  let delConfirm = false;
   let userLogs = [];
   let totalMinutes = 0;
+  let currentFlight = { id: NaN, dep: {}, des: {}, time: "" };
   $: hours = Math.floor(totalMinutes / 60);
   $: minutes = totalMinutes % 60;
-  onMount(fetchLogs);
-  async function fetchLogs() {
+  onMount(async () => {
     const userDetails = await user;
     if (!userDetails) {
       return;
@@ -44,6 +47,9 @@
     }
     userLogs.sort(GetSortOrder("depDate", true));
     userLogs = userLogs;
+  });
+  function toggleModal() {
+    delConfirm = !delConfirm;
   }
   function formatDateTime(string = "") {
     const utcDate = new Date(string);
@@ -71,13 +77,6 @@
     }
   }
   async function deleteFlight(id = "") {
-    if (
-      !confirm(
-        "Are you sure you want to delete this flight? This action cannot be reversed."
-      )
-    ) {
-      return;
-    }
     for (const i in userLogs) {
       const current = userLogs[i];
       if (current.id === id) {
@@ -106,6 +105,7 @@
         userLogs = userLogs;
       }
     }
+    delConfirm = false;
   }
   function calculateMinutes(startDate = new Date(), endDate = new Date()) {
     const timeDifference = endDate.valueOf() - startDate.valueOf();
@@ -114,6 +114,38 @@
   }
 </script>
 
+<Modal showModal={delConfirm} on:click={toggleModal}>
+  <div class="font-google-quicksand">
+    <div class="text-center">
+      <h1>Are you sure you want to delete this flight?</h1>
+      <h4>This action cannot be undone.</h4>
+      <div class="mt-4">
+        <h2>Flight Info</h2>
+        <h3>
+          <span class="fw-bold">{currentFlight.dep.city}</span> to
+          <span class="fw-bold">{currentFlight.des.city}</span>;
+          <span class="fw-bold">{currentFlight.time}</span>
+        </h3>
+      </div>
+    </div>
+
+    <div class="row mt-5 pt-5">
+      <div class="col-sm mb-2 mb-sm-0">
+        <button
+          class="btn btn-primary btn-lg w-100 fw-bold h-100"
+          on:click={toggleModal}>Cancel</button
+        >
+      </div>
+      <div class="col-sm">
+        <button
+          class="btn btn-danger btn-lg w-100 fw-bold h-100"
+          disabled={inProgress}
+          on:click={() => deleteFlight(currentFlight.id)}>Delete Flight</button
+        >
+      </div>
+    </div>
+  </div>
+</Modal>
 <main>
   <div class="container my-5 font-google-gabarito">
     {#await user}
@@ -228,7 +260,16 @@
                 <div class="col-auto">
                   <button
                     class="btn btn-outline-danger btn-lg mb-3"
-                    on:click={() => deleteFlight(log.id)}
+                    on:click={() => {
+                      currentFlight.id = log.id;
+                      currentFlight.dep = log.dep;
+                      currentFlight.des = log.des;
+                      currentFlight.time = formatDuration(
+                        new Date(log.depDate),
+                        new Date(log.desDate)
+                      );
+                      toggleModal();
+                    }}
                     disabled={inProgress}>Delete</button
                   >
                 </div>
