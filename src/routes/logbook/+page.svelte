@@ -27,10 +27,9 @@
   $: hours = Math.floor(totalMinutes / 60);
   $: minutes = totalMinutes % 60;
   onMount(() => {
-    userLogs = [];
     const userId = user.id;
     for (const i of allLogs) {
-      if (i.owner === userId) {
+      if (i.user_id == userId) {
         userLogs.push(i);
         const minutes = calculateMinutes(
           new Date(i.depDate),
@@ -75,7 +74,7 @@
       const current = userLogs[i];
       if (current.id === id) {
         inProgress = true;
-        const userDetails = await user;
+        const userDetails = user;
         if (current.owner !== userDetails.id) {
           toast = createToast("error", "Error", "Unauthorized");
           return;
