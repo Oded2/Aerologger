@@ -1,4 +1,44 @@
-<script>
+<!-- src/routes/+layout.svelte -->
+<script lang="ts">
+  import { invalidate } from "$app/navigation";
+  import { onMount } from "svelte";
+  import hrefs from "../data/hrefs.json";
+  import { page } from "$app/stores";
+  import "../global.css";
+  $: pageUrl = new URL($page.url);
+  $: pageHref = pageUrl.href.replace(pageUrl.origin, "");
+  let title = "AeroLogger";
+  $: if (pageHref) {
+    title = findTitle();
+  }
+  export let data;
+  $: supabase = data.supabase;
+  $: session = data.session;
+  onMount(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, _session) => {
+      if (_session?.expires_at !== session?.expires_at) {
+        invalidate("supabase:auth");
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  });
+  function findTitle() {
+    for (let key in hrefs) {
+      const current = hrefs[key];
+      for (let secondKey in current) {
+        const secondCurrent = current[secondKey];
+        if (secondCurrent["link"] == pageHref) {
+          return secondCurrent["title"];
+        }
+      }
+    }
+  }
+</script>
+
+<!-- <script>
   import "../global.css";
   import hrefs from "../data/hrefs.json";
   import { page } from "$app/stores";
@@ -23,8 +63,7 @@
       }
     }
   }
-</script>
-
+</script> -->
 <nav class="navbar navbar-expand-md font-google-quicksand">
   <div class="container">
     <a href={hrefs.home.home.link} class="navbar-brand fw-600">AeroLogger</a>
@@ -70,46 +109,41 @@
           >
         </li>
       </ul>
-      {#await userId then userId}
-        <ul class="navbar-nav ms-auto">
-          {#if userId}
-            <li class="nav-item mb-1 mb-md-0 me-md-2">
-              <a
-                href={hrefs.account.home.link}
-                class="btn btn-primary fw-600"
-                class:disabled={pageHref == hrefs.account.home.link}>Account</a
-              >
-            </li>
-            <li class="nav-item mb-1 mb-md-0">
-              <a
-                href={hrefs.signout.home.link}
-                class="btn btn-dark fw-600"
-                class:disabled={pageHref == hrefs.signout.home.link}>Signout</a
-              >
-            </li>
-          {:else}
-            <li class="nav-item mb-1 mb-md-0 me-md-2">
-              <a
-                href={hrefs.login.home.link}
-                class="btn btn-primary fw-600"
-                class:disabled={pageHref == hrefs.login.home.link}>Log In</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                href={hrefs.signup.home.link}
-                class="btn btn-dark fw-600"
-                class:disabled={pageHref == hrefs.signup.home.link}>Sign Up</a
-              >
-            </li>
-          {/if}
-        </ul>
-      {/await}
+      <ul class="navbar-nav ms-auto">
+        {#if session}
+          <li class="nav-item mb-1 mb-md-0 me-md-2">
+            <a
+              href={hrefs.account.home.link}
+              class="btn btn-primary fw-600"
+              class:disabled={pageHref == hrefs.account.home.link}>Account</a
+            >
+          </li>
+          <li class="nav-item mb-1 mb-md-0">
+            <a
+              href={hrefs.signout.home.link}
+              class="btn btn-dark fw-600"
+              class:disabled={pageHref == hrefs.signout.home.link}>Signout</a
+            >
+          </li>
+        {:else}
+          <li class="nav-item mb-1 mb-md-0 me-md-2">
+            <a
+              href={hrefs.login.home.link}
+              class="btn btn-primary fw-600"
+              class:disabled={pageHref == hrefs.login.home.link}>Log In</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href={hrefs.signup.home.link}
+              class="btn btn-dark fw-600"
+              class:disabled={pageHref == hrefs.signup.home.link}>Sign Up</a
+            >
+          </li>
+        {/if}
+      </ul>
     </div>
   </div>
 </nav>
 <slot />
-
-<svelte:head>
-  <title>{title}</title>
-</svelte:head>
+<svelte:head><title>{title}</title></svelte:head>
