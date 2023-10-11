@@ -6,7 +6,7 @@
   import { page } from "$app/stores";
   import "../global.css";
   $: pageUrl = new URL($page.url);
-  $: pageHref = pageUrl.href.replace(pageUrl.origin, "");
+  $: pageHref = pageUrl.pathname;
   let title = "AeroLogger";
   $: if (pageHref) {
     title = findTitle();

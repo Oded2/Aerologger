@@ -85,7 +85,7 @@
     const { data, error } = await supabase
       .from("Logs")
       .insert({
-        owner: user.id,
+        user_id: user.id,
         dep: depAirport[0],
         des: desAirport[0],
         depDate: depDate.toISOString(),

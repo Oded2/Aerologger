@@ -21,7 +21,7 @@
     const { error } = await supabase
       .from("Logs")
       .update({ public: toPublic })
-      .eq("owner", user.id);
+      .eq("user_id", user.id);
     inProgress = false;
     if (error) {
       toast = createToast("error", "Error", error.message);
@@ -42,7 +42,10 @@
       return;
     }
     inProgress = true;
-    const { error } = await supabase.from("Logs").delete().eq("owner", user.id);
+    const { error } = await supabase
+      .from("Logs")
+      .delete()
+      .eq("user_id", user.id);
     inProgress = false;
     if (error) {
       toast = createToast("error", "Error", error.message);

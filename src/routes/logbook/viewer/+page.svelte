@@ -12,12 +12,12 @@
   import ShareModal from "../../../components/ShareModal.svelte";
   import AirportCard from "../../../components/AirportCard.svelte";
   export let data;
-  const api = data.sbApi;
+  const { session } = data;
   let toast;
   let showModal = false;
   const allLogs = data.logs;
   const url = $page.url;
-  const user = getUserDetails(api);
+  const user = session ? session.user : false;
   const logId = url.searchParams.get("logId");
   let valid = !isNaN(logId);
   let log = {};
@@ -47,7 +47,7 @@
       {#await user}
         <h1>Loading...</h1>
       {:then user}
-        {#if log.public ? true : user ? user.id === log.owner : false}
+        {#if log.public ? true : user ? user.id === log.user_id : false}
           <div class="font-google-gabarito">
             <div class="text-center">
               <h1>{log.dep.city} to {log.des.city}</h1>

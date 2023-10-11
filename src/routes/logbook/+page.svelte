@@ -73,12 +73,12 @@
     for (const i in userLogs) {
       const current = userLogs[i];
       if (current.id === id) {
-        inProgress = true;
         const userDetails = user;
-        if (current.owner !== userDetails.id) {
+        if (current.user_id !== userDetails.id) {
           toast = createToast("error", "Error", "Unauthorized");
           return;
         }
+        inProgress = true;
         const { error } = await supabase.from("Logs").delete().eq("id", id);
         inProgress = false;
         if (error) {
