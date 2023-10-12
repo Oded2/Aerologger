@@ -1,7 +1,6 @@
 <script>
   import {
     addParamsString,
-    createSbClient,
     createToast,
     dateToStr,
     getTimeStr,

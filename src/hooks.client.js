@@ -1,8 +1,5 @@
-import { createClient } from "@supabase/supabase-js";
 import { toasts } from "svelte-toasts";
 import countries from "./data/countries.json";
-const sbUrl = "https://njcypmepfxckouqjunrr.supabase.co";
-
 export function randomNum(min, max) {
   return parseInt(Math.random() * (max - min) + min);
 }
@@ -43,10 +40,6 @@ export function simplifyString(str) {
   }
   return str;
 }
-export function createSbClient(api) {
-  return createClient(sbUrl, api);
-}
-
 export function createToast(
   type,
   title,
