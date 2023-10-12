@@ -4,7 +4,6 @@
     createToast,
     dateToStr,
     getTimeStr,
-    getUserDetails,
     parseDateAndTime,
   } from "../../hooks.client.js";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";

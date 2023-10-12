@@ -19,20 +19,6 @@ export function delelteAllParams(link = new URL()) {
     link.searchParams.delete(key);
   });
 }
-export async function getUserDetails(api) {
-  const sb = createSbClient(api);
-  const { data } = await sb.auth.getSession();
-  if (!data.session) {
-    return;
-  }
-  const user = data.session.user;
-  return {
-    id: user.id,
-    email: user.email,
-    fname: user.user_metadata.first_name,
-    lname: user.user_metadata.last_name,
-  };
-}
 
 export function simplifyString(str) {
   for (let i = 0; i < str.length; i++) {

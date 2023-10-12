@@ -1,12 +1,6 @@
 <script>
   import hrefs from "../../data/hrefs.json";
-  import {
-    createSbClient,
-    createToast,
-    getUserDetails,
-  } from "../../hooks.client.js";
-  import { goto } from "$app/navigation";
-  import { onMount } from "svelte";
+  import { createToast } from "../../hooks.client.js";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import FloatElement from "../../components/FloatElement.svelte";
   export let data;
