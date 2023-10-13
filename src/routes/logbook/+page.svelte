@@ -203,14 +203,17 @@
               <div class="fw-bold d-md-none my-1">
                 <i class="fa-solid fa-plane-circle-exclamation" /> Plane Information
               </div>
+              <div class="fw-bold">
+                {log.plane.manufacturer}, {log.plane.model}
+              </div>
+
               <div>
-                Type: <span class="text-capitalize">{log.type}</span>
+                Tail Number: <span class="text-uppercase fw-bold"
+                  >{log.identification}</span
+                >
               </div>
               <div>
-                Model: <span class="text-capitalize">{log.model}</span>
-              </div>
-              <div>
-                ID: <span class="text-uppercase">{log.identification}</span>
+                Type: <span class="text-capitalize fw-bold">{log.type}</span>
               </div>
               <div />
             </div>

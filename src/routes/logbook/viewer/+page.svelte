@@ -1,7 +1,6 @@
 <script>
   import { page } from "$app/stores";
   import {
-    getUserDetails,
     formatDate,
     getTimeStr,
     formatDuration,
@@ -69,15 +68,24 @@
                         >
                       </li>
                       <li class="list-group-item">
-                        Aircraft Model : <span
+                        Aircraft Manufacturer: <span
                           class="text-capitalize text-aerologger"
                         >
-                          {log.model}</span
+                          {log.plane.manufacturer}</span
+                        >
+                      </li>
+                      <li class="list-group-item">
+                        Aircraft Model: <span
+                          class="text-capitalize text-aerologger"
+                        >
+                          {log.plane.model}</span
                         >
                       </li>
                       <li class="list-group-item">
                         Aircraft ID: <span class=" text-aerologger">
-                          {log.identification}</span
+                          {log.identification.length > 1
+                            ? log.identification
+                            : "None"}</span
                         >
                       </li>
                     </ul>

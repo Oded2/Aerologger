@@ -24,6 +24,7 @@
   let depTimeStr = getTimeStr(),
     desTimeStr = getTimeStr();
   let planeType = "airplane",
+    planeManu = "",
     planeModel = "",
     planeId = "";
   let userNotes = "";
@@ -59,12 +60,28 @@
       return false;
     }
   }
-
+  async function fetchPlane() {
+    const response = await fetch(
+      addParamsString("https://api.api-ninjas.com/v1/aircraft", {
+        manufacturer: planeManu,
+        model: planeModel,
+      }),
+      { headers: { "X-Api-Key": ninjaApi } }
+    );
+    return await response.json();
+  }
   async function submit() {
     if (!verify()) {
       return;
     }
     inProgress = true;
+    submitText = "Fetching Aircraft";
+    const plane = await fetchPlane();
+    if (plane.length < 1) {
+      showError("Plane not found.");
+      inProgress = false;
+      return;
+    }
     submitText = "Fetching Departure Airport";
     const depAirport = await getAirportDetails(dep);
     if (depAirport.length != 1) {
@@ -89,7 +106,7 @@
         depDate: depDate.toISOString(),
         desDate: desDate.toISOString(),
         type: planeType,
-        model: planeModel,
+        plane: plane[0],
         identification: planeId,
         notes: userNotes,
         public: isPublic,
@@ -119,14 +136,23 @@
       showError("Aircraft type cannot be empty");
       return false;
     }
-    if (dep.length == 0) {
+    if (!dep || dep.length == 0) {
       showError("Airport of departure cannot be empty");
       return false;
     }
-    if (des.length == 0) {
+    if (!dep || des.length == 0) {
       showError("Airport of destination cannot be empty");
       return false;
     }
+    if (!planeManu || planeManu.length == 0) {
+      showError("Plane manufacturer cannot be empty");
+      return false;
+    }
+    if (!planeModel || planeModel.length == 0) {
+      showError("Plane model cannot be empty.");
+      return false;
+    }
+
     if (depDate.valueOf() > desDate.valueOf()) {
       showError("Departure must be before arrival");
       return false;
@@ -270,7 +296,40 @@
                     bind:value={desTimeStr}
                   />
                 </div>
-                <div class="col-md-6 col-xl-4 mb-3">
+
+                <div class="col-md-6 col-xl-3 mb-3">
+                  <label for="planemanu" class="form-label"
+                    >Aircraft Manufacturer</label
+                  >
+                  <input
+                    id="planemanu"
+                    class="form-control"
+                    bind:value={planeManu}
+                    placeholder={'"Cessna"'}
+                  />
+                </div>
+                <div class="col-md-6 col-xl-3 mb-3">
+                  <label for="planemodel" class="form-label"
+                    >Aircraft Model</label
+                  >
+                  <input
+                    id="planemodel"
+                    class="form-control"
+                    bind:value={planeModel}
+                    placeholder={'"172"'}
+                  />
+                </div>
+
+                <div class="col-md-6 col-xl-3 mb-3">
+                  <label for="planeid" class="form-label">Tail Number</label>
+                  <input
+                    id="planeid"
+                    class="form-control"
+                    bind:value={planeId}
+                    placeholder={'"4X-CHA"'}
+                  />
+                </div>
+                <div class="col-md-6 col-xl-3 mb-3">
                   <label for="planetype" class="form-label">Aircraft Type</label
                   >
                   <select id="planetype" class="form-select">
@@ -280,24 +339,6 @@
                     <option value="rc">Remote Control (rc)</option>
                     <option value="other">Other</option>
                   </select>
-                </div>
-                <div class="col-md-6 col-xl-4 mb-3">
-                  <label for="planemodel" class="form-label">Model</label>
-                  <input
-                    id="planemodel"
-                    class="form-control"
-                    bind:value={planeModel}
-                    placeholder={'"Cessna 172"'}
-                  />
-                </div>
-                <div class="col-md-6 col-xl-4 mb-3">
-                  <label for="planeid" class="form-label">Identification</label>
-                  <input
-                    id="planeid"
-                    class="form-control"
-                    bind:value={planeId}
-                    placeholder={'"4X-CHA"'}
-                  />
                 </div>
                 <div class="col-12 mb-3">
                   <label for="notes" class="form-label">Notes</label>
