@@ -27,6 +27,9 @@
       log = i;
     }
   }
+  for (const i in log.plane) {
+    console.log(log.plane[i]);
+  }
   function formatDateTime(string = "") {
     const date = new Date(string);
     return `${formatDate(date)} at ${getTimeStr(date)}`;
@@ -49,65 +52,72 @@
   <div class="row font-google-quicksand py-2">
     <div class="col-lg">
       <h3>
-        Manufacturer: <span class="fw-bold"> {log.plane.manufacturer}</span>
-      </h3>
-      <h3>
-        Model: <span class="fw-bold"> {log.plane.model}</span>
-      </h3>
-      <h3>
-        Engine Type: <span class="fw-bold">{log.plane.engine_type}</span>
-      </h3>
-      <h3>
-        Engine Thrust: <span class="fw-bold"
-          >{log.plane.engine_thrust_lb_ft} LBF</span
+        Manufacturer: <span class="fw-bold">
+          {log.plane.manufacturer ?? "---"}</span
         >
       </h3>
       <h3>
-        Max Speed: <span class="fw-bold">{log.plane.max_speed_knots} Knots</span
+        Model: <span class="fw-bold"> {log.plane.model ?? "---"}</span>
+      </h3>
+      <h3>
+        Engine Type: <span class="fw-bold"
+          >{log.plane.engine_type ?? "---"}</span
+        >
+      </h3>
+      <h3>
+        Engine Thrust: <span class="fw-bold"
+          >{log.plane.engine_thrust_lb_ft ?? "---"} LBF</span
+        >
+      </h3>
+      <h3>
+        Max Speed: <span class="fw-bold"
+          >{log.plane.max_speed_knots ?? "---"} Knots</span
         >
       </h3>
       <h3>
         Cruise Speed: <span class="fw-bold"
-          >{log.plane.cruise_speed_knots} Knots</span
+          >{log.plane.cruise_speed_knots ?? "---"} Knots</span
         >
       </h3>
       <h3>
-        Ceiling: <span class="fw-bold">{log.plane.ceiling_ft} ft</span>
+        Ceiling: <span class="fw-bold">{log.plane.ceiling_ft ?? "---"} ft</span>
       </h3>
     </div>
     <div class="col-lg">
       <h3>
         Takeoff Ground Run: <span class="fw-bold">
-          {log.plane.takeoff_ground_run_ft} ft</span
+          {log.plane.takeoff_ground_run_ft ?? "---"} ft</span
         >
       </h3>
       <h3>
         Landing Ground Roll: <span class="fw-bold">
-          {log.plane.landing_ground_roll_ft} ft</span
+          {log.plane.landing_ground_roll_ft ?? "---"} ft</span
         >
       </h3>
       <h3>
         Gross Weight: <span class="fw-bold"
-          >{log.plane.gross_weight_lbs} lbs</span
+          >{log.plane.gross_weight_lbs ?? "---"} lbs</span
         >
       </h3>
       <h3>
         Empty Weight: <span class="fw-bold"
-          >{log.plane.empty_weight_lbs} lbs</span
+          >{log.plane.empty_weight_lbs ?? "---"} lbs</span
         >
       </h3>
       <h3>
-        Length: <span class="fw-bold">{log.plane.length_ft} ft</span>
+        Length: <span class="fw-bold">{log.plane.length_ft ?? "---"} ft</span>
       </h3>
       <h3>
-        Height: <span class="fw-bold">{log.plane.height_ft} ft</span>
+        Height: <span class="fw-bold">{log.plane.height_ft ?? "---"} ft</span>
       </h3>
       <h3>
-        Wing Span: <span class="fw-bold">{log.plane.wing_span_ft} ft</span>
+        Wing Span: <span class="fw-bold"
+          >{log.plane.wing_span_ft ?? "---"} ft</span
+        >
       </h3>
       <h3>
         Range: <span class="fw-bold"
-          >{log.plane.range_nautical_miles} Nautical Miles</span
+          >{log.plane.range_nautical_miles ?? "---"} Nautical Miles</span
         >
       </h3>
     </div>
