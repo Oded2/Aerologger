@@ -96,7 +96,7 @@
       inProgress = false;
       return;
     }
-    submitText = "Inserting Into Databse";
+    submitText = "Inserting Into Database";
     const { data, error } = await supabase
       .from("Logs")
       .insert({

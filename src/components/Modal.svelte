@@ -16,7 +16,7 @@
       class=" container bg-light rounded card"
       in:fly={{ duration: 300, y: 200 }}
     >
-      <div class="card-body overflow-hidden d-grid">
+      <div class="card-body overflow-auto d-grid">
         <slot />
       </div>
       <div class="card-footer text-center">
@@ -37,6 +37,6 @@
   }
   .card {
     min-height: 50%;
-    max-height: 90%;
+    max-height: 85%;
   }
 </style>
