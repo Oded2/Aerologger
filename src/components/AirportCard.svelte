@@ -19,22 +19,26 @@
         {airportData.name}
       </li>
       <li class="list-group-item">
-        ICAO Code: {airportData.icao}
+        ICAO: <span class="fw-bold">{airportData.icao}</span>
       </li>
       <li class="list-group-item">
-        IATA Code: {airportData.iata.length > 0
-          ? airportData.iata
-          : "Not found"}
-      </li>
-      <li class="list-group-item">City: {airportData.city}</li>
-      <li class="list-group-item">
-        Region: {airportData.region}
+        IATA: <span class="fw-bold">
+          {airportData.iata.length > 0 ? airportData.iata : "Not found"}</span
+        >
       </li>
       <li class="list-group-item">
-        Country: {getCountryByCode(airportData.country)}
+        City: <span class="fw-bold">{airportData.city}</span>
       </li>
       <li class="list-group-item">
-        Elevation: {airportData.elevation_ft} ft
+        Region: <span class="fw-bold">{airportData.region}</span>
+      </li>
+      <li class="list-group-item">
+        Country: <span class="fw-bold"
+          >{getCountryByCode(airportData.country)}</span
+        >
+      </li>
+      <li class="list-group-item">
+        Elevation: <span class="fw-bold">{airportData.elevation_ft} ft</span>
       </li>
     </ul>
   </div>
