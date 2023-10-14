@@ -27,9 +27,6 @@
       log = i;
     }
   }
-  for (const i in log.plane) {
-    console.log(log.plane[i]);
-  }
   function formatDateTime(string = "") {
     const date = new Date(string);
     return `${formatDate(date)} at ${getTimeStr(date)}`;
