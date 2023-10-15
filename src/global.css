@@ -30,7 +30,6 @@ h1.font-google-quicksand {
 .font-google-caveat {
   font-family: "Caveat", cursive;
 }
-
 .font-google-space-mono {
   font-family: "Space Mono", monospace;
 }
@@ -38,7 +37,7 @@ h1.font-google-quicksand {
   font-family: "Comfortaa", cursive;
 }
 .font-google-gabarito {
-  font-family: "Gabarito", cursive;
+  font-family: "Gabarito", sans-serif;
 }
 .full-background {
   position: absolute;

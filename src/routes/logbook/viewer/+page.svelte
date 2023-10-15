@@ -247,7 +247,7 @@
                 </h3>
               </div>
               <div class="card-body">
-                <p class="font-google-quicksand">{log.notes}</p>
+                <p class="font-google-quicksand" dir="auto">{log.notes}</p>
               </div>
             </div>
           </div>

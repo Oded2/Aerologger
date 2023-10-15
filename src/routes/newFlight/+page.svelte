@@ -315,6 +315,7 @@
                 <div class="col-12 mb-3">
                   <label for="notes" class="form-label">Notes</label>
                   <textarea
+                    dir="auto"
                     id="notes"
                     rows="4"
                     class="form-control fs-5"
@@ -350,6 +351,7 @@
   textarea {
     resize: none;
   }
+
   img {
     max-height: 60vh;
   }
