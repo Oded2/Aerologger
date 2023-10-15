@@ -35,13 +35,6 @@
   let logNumber = NaN;
   $: planeId = planeId.toUpperCase();
   $: depDate = parseDateAndTime(dateStr, depTimeStr);
-  $: desDate =
-    parseDateAndTime(dateStr, desTimeStr).valueOf() >= depDate.valueOf()
-      ? parseDateAndTime(dateStr, desTimeStr)
-      : parseDateAndTime(
-          dateToStr(new Date(depDate.valueOf() + 86400000)),
-          desTimeStr
-        );
   async function getAirportDetails(airport = "") {
     const url = addParamsString(
       airportUrl,
@@ -75,6 +68,13 @@
     if (!verify()) {
       return;
     }
+    const desDate =
+      parseDateAndTime(dateStr, desTimeStr).valueOf() >= depDate.valueOf()
+        ? parseDateAndTime(dateStr, desTimeStr)
+        : parseDateAndTime(
+            dateToStr(new Date(depDate.valueOf() + 86400000)),
+            desTimeStr
+          );
     inProgress = true;
     submitText = "Fetching Aircraft";
     const plane = await fetchPlane();
