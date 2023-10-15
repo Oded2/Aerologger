@@ -106,7 +106,7 @@ export function formatDuration(startDate = new Date(), endDate = new Date()) {
   const minutes = Math.floor((timeDifference % 3600000) / 60000);
   return `${hours.toLocaleString()} ${
     hours == 1 ? "hour" : "hours"
-  } and ${minutes.toLocaleString()} ${minutes == 1 ? "minute" : "minutes"} `;
+  } and ${minutes.toLocaleString()} ${minutes == 1 ? "minute" : "minutes"}`;
 }
 
 export function getCountryByCode(code = "") {
