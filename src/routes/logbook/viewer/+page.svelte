@@ -63,58 +63,88 @@
       </h3>
       <h3>
         Engine Thrust: <span class="fw-bold"
-          >{log.plane.engine_thrust_lb_ft ?? "---"} LBF</span
+          >{log.plane.engine_thrust_lb_ft
+            ? parseFloat(log.plane.engine_thrust_lb_ft).toLocaleString()
+            : "---"} LBF</span
         >
       </h3>
       <h3>
         Max Speed: <span class="fw-bold"
-          >{log.plane.max_speed_knots ?? "---"} Knots</span
+          >{log.plane.max_speed_knots
+            ? parseFloat(log.plane.max_speed_knots).toLocaleString()
+            : "---"} Knots</span
         >
       </h3>
       <h3>
         Cruise Speed: <span class="fw-bold"
-          >{log.plane.cruise_speed_knots ?? "---"} Knots</span
+          >{log.plane.cruise_speed_knots
+            ? parseFloat(log.plane.cruise_speed_knots).toLocaleString()
+            : "---"} Knots</span
         >
       </h3>
       <h3>
-        Ceiling: <span class="fw-bold">{log.plane.ceiling_ft ?? "---"} ft</span>
+        Ceiling: <span class="fw-bold"
+          >{log.plane.ceiling_ft
+            ? parseFloat(log.plane.ceiling_ft).toLocaleString()
+            : "---"} ft</span
+        >
       </h3>
     </div>
     <div class="col-lg">
       <h3>
         Takeoff Ground Run: <span class="fw-bold">
-          {log.plane.takeoff_ground_run_ft ?? "---"} ft</span
+          {log.plane.takeoff_ground_run_ft
+            ? parseFloat(log.plane.takeoff_ground_run_ft).toLocaleString()
+            : "---"} ft</span
         >
       </h3>
       <h3>
         Landing Ground Roll: <span class="fw-bold">
-          {log.plane.landing_ground_roll_ft ?? "---"} ft</span
+          {log.plane.landing_ground_roll_ft
+            ? parseFloat(log.plane.landing_ground_roll_ft).toLocaleString()
+            : "---"} ft</span
         >
       </h3>
       <h3>
         Gross Weight: <span class="fw-bold"
-          >{log.plane.gross_weight_lbs ?? "---"} lbs</span
+          >{log.plane.gross_weight_lbs
+            ? parseFloat(log.plane.gross_weight_lbs).toLocaleString()
+            : "---"} lbs</span
         >
       </h3>
       <h3>
         Empty Weight: <span class="fw-bold"
-          >{log.plane.empty_weight_lbs ?? "---"} lbs</span
+          >{log.plane.empty_weight_lbs
+            ? parseFloat(log.plane.empty_weight_lbs).toLocaleString()
+            : "---"} lbs</span
         >
       </h3>
       <h3>
-        Length: <span class="fw-bold">{log.plane.length_ft ?? "---"} ft</span>
+        Length: <span class="fw-bold"
+          >{log.plane.length_ft
+            ? parseFloat(log.plane.length_ft).toLocaleString()
+            : "---"} ft</span
+        >
       </h3>
       <h3>
-        Height: <span class="fw-bold">{log.plane.height_ft ?? "---"} ft</span>
+        Height: <span class="fw-bold"
+          >{log.plane.height_ft
+            ? parseFloat(log.plane.height_ft).toLocaleString()
+            : "---"} ft</span
+        >
       </h3>
       <h3>
         Wing Span: <span class="fw-bold"
-          >{log.plane.wing_span_ft ?? "---"} ft</span
+          >{log.plane.wing_span_ft
+            ? parseFloat(log.plane.wing_span_ft).toLocaleString()
+            : "---"} ft</span
         >
       </h3>
       <h3>
         Range: <span class="fw-bold"
-          >{log.plane.range_nautical_miles ?? "---"} Nautical Miles</span
+          >{log.plane.range_nautical_miles
+            ? parseFloat(log.plane.range_nautical_miles).toLocaleString()
+            : "---"} Nautical Miles</span
         >
       </h3>
     </div>
