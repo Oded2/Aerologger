@@ -19,8 +19,7 @@
   let toast;
   let dep = "",
     des = "";
-  let depDateStr = dateToStr(),
-    desDateStr = dateToStr();
+  let depDateStr = dateToStr();
   let depTimeStr = getTimeStr(),
     desTimeStr = getTimeStr();
   let planeType = "airplane",
@@ -31,16 +30,18 @@
   let isPublic = true;
   let inProgress = false,
     isComplete = false;
-  let depSync = true;
   let submitText = "Submit Flight";
   $: submitText = inProgress ? submitText : "Submit Flight";
   let logNumber = NaN;
   $: planeId = planeId.toUpperCase();
   $: depDate = parseDateAndTime(depDateStr, depTimeStr);
-  $: desDate = parseDateAndTime(desDateStr, desTimeStr);
-  $: if (depSync) {
-    desDateStr = depDateStr;
-  }
+  $: desDate =
+    parseDateAndTime(dateToStr(), desTimeStr).valueOf() >= depDate.valueOf()
+      ? parseDateAndTime(dateToStr(), desTimeStr)
+      : parseDateAndTime(
+          dateToStr(new Date(new Date().valueOf() + 86400000)),
+          desTimeStr
+        );
   async function getAirportDetails(airport = "") {
     const url = addParamsString(
       airportUrl,
@@ -123,7 +124,6 @@
     dep = "";
     des = "";
     depDateStr = dateToStr();
-    desDateStr = dateToStr();
     depTimeStr = getTimeStr();
     desTimeStr = getTimeStr();
     planeType = "airplane";
@@ -153,17 +153,8 @@
       showError("Plane model cannot be empty.");
       return false;
     }
-
-    if (depDate.valueOf() > desDate.valueOf()) {
-      showError("Departure must be before arrival");
-      return false;
-    }
     if (isNaN(depDate.valueOf())) {
-      showError("Departure date or time is invalid");
-      return false;
-    }
-    if (isNaN(desDate.valueOf())) {
-      showError("Arrival date or time is invalid");
+      showError("Date or time is invalid");
       return false;
     }
     return true;
@@ -237,10 +228,8 @@
                   />
                   <span class="form-text">Name, IATA, or ICAO code</span>
                 </div>
-                <div class="col-md-6 col-xl-3 mb-3">
-                  <label for="depdate" class="form-label"
-                    >Date of Departure</label
-                  >
+                <div class="col-md-6 col-xl-4 mb-3">
+                  <label for="depdate" class="form-label">Date</label>
                   <div class="input-group">
                     <button
                       class="input-group-text btn btn-secondary"
@@ -256,7 +245,7 @@
                     />
                   </div>
                 </div>
-                <div class="col-md-6 col-xl-3 mb-3">
+                <div class="col-md-6 col-xl-4 mb-3">
                   <label for="deptime" class="form-label"
                     >Time of Departure</label
                   >
@@ -268,26 +257,8 @@
                     bind:value={depTimeStr}
                   />
                 </div>
-                <div class="col-md-6 col-xl-3 mb-3">
-                  <label for="desdate" class="form-label">Date of Arrival</label
-                  >
-                  <div class="input-group">
-                    <button
-                      class="input-group-text btn btn-secondary"
-                      class:disabled={depDateStr == desDateStr}
-                      type="button"
-                      on:click={() => (depSync = true)}>Sync</button
-                    >
-                    <input
-                      type="date"
-                      id="desdate"
-                      class="form-control"
-                      on:input={() => (depSync = false)}
-                      bind:value={desDateStr}
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6 col-xl-3 mb-3">
+
+                <div class="col-md-6 col-xl-4 mb-3">
                   <label for="destime" class="form-label">Time of Arrival</label
                   >
                   <input

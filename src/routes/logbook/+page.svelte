@@ -45,13 +45,6 @@
   function toggleModal() {
     delConfirm = !delConfirm;
   }
-  function formatDateTime(string = "") {
-    const utcDate = new Date(string);
-    const localDate = new Date(
-      utcDate.valueOf() - utcDate.getTimezoneOffset() * 60000
-    );
-    return `${formatDate(localDate)} at ${getTimeStr(localDate)}`;
-  }
   async function changeVisibility(id = "", makePublic = false) {
     for (const i in userLogs) {
       const current = userLogs[i];
