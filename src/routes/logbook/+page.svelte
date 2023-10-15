@@ -196,10 +196,10 @@
                     )}
                   </div>
                   <div class="fs-6">
-                    ( {formatDuration(
+                    {`(${formatDuration(
                       new Date(log.depDate),
                       new Date(log.desDate)
-                    )})
+                    )})`}
                   </div>
                 </td>
                 <td>{log.identification}</td>
