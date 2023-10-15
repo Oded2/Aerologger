@@ -161,25 +161,25 @@
         <table class="table fs-5">
           <thead>
             <tr>
-              <th scope="col"
+              <th scope="col" class="text-nowrap"
                 ><i class="fa-solid fa-calendar-days" title="Flight Date" /> Date
               </th>
-              <th scope="col"
+              <th scope="col" class="text-nowrap"
                 ><i class="fa-solid fa-map" title="Flight Route" /> Route
               </th>
-              <th scope="col"
+              <th scope="col" class="text-nowrap"
                 ><i
                   class="fa-solid fa-clock"
                   title="Takeoff and Landing Times"
                 /> Times
               </th>
-              <th scope="col"
+              <th scope="col" class="text-nowrap"
                 ><i class="fa-solid fa-hashtag" title="Tail Number" /> Tail Number</th
               >
-              <th scope="col"
-                ><i class="fa-solid fa-user" title="Publicity Status" /> Status
+              <th scope="col" class="text-nowrap">
+                <i class="fa-solid fa-user" title="Publicity Status" /> Status
               </th>
-              <th scope="col"
+              <th scope="col" class="text-nowrap"
                 ><i class="fa-solid fa-circle-info" title="Flight Options" /> More
               </th>
             </tr>
@@ -189,10 +189,18 @@
               <tr>
                 <th scope="row">{formatDateStr(log.depDate)}</th>
                 <td>{log.dep.icao} to {log.des.icao}</td>
-                <td
-                  >{getTimeStr(new Date(log.depDate))} to {getTimeStr(
-                    new Date(log.desDate)
-                  )}
+                <td>
+                  <div>
+                    {getTimeStr(new Date(log.depDate))} to {getTimeStr(
+                      new Date(log.desDate)
+                    )}
+                  </div>
+                  <div class="fs-6">
+                    ( {formatDuration(
+                      new Date(log.depDate),
+                      new Date(log.desDate)
+                    )})
+                  </div>
                 </td>
                 <td>{log.identification}</td>
                 <td
@@ -348,3 +356,9 @@
     ><i class="fa-solid fa-gear" /></a
   ></FloatElement
 >
+
+<style>
+  table > thead > tr > th {
+    overflow: auto;
+  }
+</style>
