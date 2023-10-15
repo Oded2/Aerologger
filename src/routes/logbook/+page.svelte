@@ -5,6 +5,7 @@
     addParamsString,
     createToast,
     formatDate,
+    formatDateStr,
     formatDuration,
     getTimeStr,
     maxLen,
@@ -142,7 +143,7 @@
 <main>
   <div class="container my-5 font-google-gabarito">
     {#if user}
-      <div class="mb-5">
+      <div class="mb-3">
         <h1>
           Welcome to your <span class="text-aerologger">logbook</span>, {user
             .user_metadata.first_name}.
@@ -158,124 +159,167 @@
           </h4>
         </h3>
       </div>
-      <div class="fs-3">
-        <div class="row border-bottom py-2 d-none d-md-flex">
-          <div class="col-md-3 mb-3">
-            <i class="fa-solid fa-plane-departure" /> Takeoff
-          </div>
-          <div class="col-md-3 mb-3">
-            <i class="fa-solid fa-plane-arrival" /> Landing
-          </div>
-          <div class="col-md-3 mb-3">
-            <i class="fa-solid fa-plane-circle-exclamation" /> Plane Information
-          </div>
-          <div class="col-md-3 mb-3">
-            <i class="fa-solid fa-note-sticky" /> Notes
-          </div>
-        </div>
-        <div class="border-bottom d-block d-md-none" />
+      <div class="mb-3">
         <span class="font-reset fw-light fs-6"
-          >Please note that dates and times are relative to your time zone.</span
+          >Please note that date and times are relative to your time zone.</span
         >
+      </div>
+      <div class="table-responsive d-none d-md-block">
+        <table class="table fs-5">
+          <thead>
+            <tr>
+              <th scope="col"><i class="fa-solid fa-calendar-days" /> Date</th>
+              <th scope="col"><i class="fa-solid fa-map" /> Route</th>
+              <th scope="col"><i class="fa-solid fa-clock" /> Times</th>
+              <th scope="col"><i class="fa-solid fa-hashtag" /> Tail Number</th>
+              <th scope="col"><i class="fa-solid fa-user" /> Status</th>
+              <th scope="col"><i class="fa-solid fa-circle-info" /> More</th>
+            </tr>
+          </thead>
+          <tbody>
+            {#each userLogs as log}
+              <tr>
+                <th scope="row">{formatDateStr(log.depDate)}</th>
+                <td>{log.dep.icao} to {log.des.icao}</td>
+                <td
+                  >{getTimeStr(new Date(log.depDate))} to {getTimeStr(
+                    new Date(log.desDate)
+                  )}
+                </td>
+                <td>{log.identification}</td>
+                <td
+                  ><select
+                    class="form-select"
+                    disabled={inProgress}
+                    on:input={() => changeVisibility(log.id, !log.public)}
+                    ><option selected={log.public}>Public</option>
+                    <option selected={!log.public}>Private</option></select
+                  ></td
+                >
+                <td>
+                  <div class="btn-group">
+                    <a
+                      href={addParamsString(hrefs.logbook.viewer.link, {
+                        logId: log.id,
+                      })}
+                      class="btn btn-secondary">View</a
+                    >
+                    <button
+                      type="button"
+                      class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      disabled={inProgress}
+                    >
+                      <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <button
+                          class="btn btn-danger dropdown-item"
+                          on:click={() => {
+                            currentFlight.id = log.id;
+                            currentFlight.dep = log.dep;
+                            currentFlight.des = log.des;
+                            currentFlight.time = formatDuration(
+                              new Date(log.depDate),
+                              new Date(log.desDate)
+                            );
+                            toggleModal();
+                          }}>Delete Flight</button
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+      <div class="fs-3 d-md-none">
         {#each userLogs as log}
-          <div class="row py-2 border-bottom">
-            <div class="col-md-3 mb-3">
-              <div class="fw-bold d-md-none my-1">
-                <i class="fa-solid fa-plane-departure" /> Takeoff
-              </div>
-              <div>
-                <span class="text-aerologger">{log.dep.name}</span> at
-                {formatDateTime(log.depDate)}
-              </div>
-              <div />
-            </div>
-            <div class="col-md-3 mb-3">
-              <div class="fw-bold d-md-none my-1">
-                <i class="fa-solid fa-plane-arrival" /> Landing
-              </div>
-              <div>
-                <span class="text-aerologger">{log.des.name}</span> at {formatDateTime(
-                  log.desDate
-                )}
+          <div class="border-bottom">
+            <div class="mb-3">
+              <div class="fw-bold my-1">
+                <i class="fa-solid fa-calendar-days" />
+                {formatDateStr(log.depDate)}
               </div>
             </div>
-            <div class="col-md-3 mb-3">
-              <div class="fw-bold d-md-none my-1">
-                <i class="fa-solid fa-plane-circle-exclamation" /> Plane Information
-              </div>
-              <div class="fw-bold">
-                {log.plane.manufacturer}, {log.plane.model}
-              </div>
-
+            <div class="mb-3">
               <div>
-                Tail Number: <span class="text-uppercase fw-bold"
-                  >{log.identification}</span
-                >
+                <i class="fa-solid fa-map" />
+                {log.dep.icao} to {log.des.icao}
               </div>
-              <div>
-                Type: <span class="text-capitalize fw-bold">{log.type}</span>
-              </div>
-              <div />
             </div>
-            <div class="col-md-3 mb-3">
-              <div class="fw-bold d-md-none my-1">
-                <i class="fa-solid fa-note-sticky" /> Notes
-              </div>
-              {maxLen(log.notes, 60)}
+            <div class="mb-3">
+              <i class="fa-solid fa-clock" />
+              {getTimeStr(new Date(log.depDate))} to {getTimeStr(
+                new Date(log.desDate)
+              )}
             </div>
-            <div class="row my-1">
-              <div class="col-auto justify-content-between">
-                <button
-                  class="btn btn-lg mb-3"
-                  class:btn-dark={!log.public}
-                  class:btn-outline-dark={log.public}
-                  on:click={() => changeVisibility(log.id, false)}
-                  disabled={!log.public || inProgress}>Private</button
+            <div class="mb-3">
+              <i class="fa-solid fa-hashtag" />
+              {log.identification}
+            </div>
+            <div class="mb-3 row">
+              <div class="col-auto"><i class="fa-solid fa-user" /></div>
+              <div class="col">
+                <select
+                  class="form-select"
+                  disabled={inProgress}
+                  on:input={() => changeVisibility(log.id, !log.public)}
+                  ><option selected={log.public}>Public</option>
+                  <option selected={!log.public}>Private</option></select
                 >
               </div>
-              <div class="col-auto">
-                <button
-                  class="btn btn-lg mb-3"
-                  class:btn-dark={log.public}
-                  class:btn-outline-dark={!log.public}
-                  on:click={() => changeVisibility(log.id, true)}
-                  disabled={log.public || inProgress}>Public</button
-                >
-              </div>
-              <div class="col-sm d-none d-sm-block" />
-              <div class="col-auto">
-                <a
-                  href={addParamsString(hrefs.logbook.viewer.link, {
-                    logId: log.id,
-                  })}
-                  class="btn btn-outline-primary btn-lg mb-3">Details</a
-                >
-              </div>
-              <div class="col-auto">
-                <button
-                  class="btn btn-outline-danger btn-lg mb-3"
-                  on:click={() => {
-                    currentFlight.id = log.id;
-                    currentFlight.dep = log.dep;
-                    currentFlight.des = log.des;
-                    currentFlight.time = formatDuration(
-                      new Date(log.depDate),
-                      new Date(log.desDate)
-                    );
-                    toggleModal();
-                  }}
-                  disabled={inProgress}>Delete</button
-                >
+            </div>
+            <div class="mb-3 row">
+              <div class="col-auto"><i class="fa-solid fa-circle-info" /></div>
+              <div class="col">
+                <div class="btn-group">
+                  <a
+                    href={addParamsString(hrefs.logbook.viewer.link, {
+                      logId: log.id,
+                    })}
+                    class="btn btn-secondary">View</a
+                  >
+                  <button
+                    type="button"
+                    class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    disabled={inProgress}
+                  >
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <button
+                        class="btn btn-danger dropdown-item"
+                        on:click={() => {
+                          currentFlight.id = log.id;
+                          currentFlight.dep = log.dep;
+                          currentFlight.des = log.des;
+                          currentFlight.time = formatDuration(
+                            new Date(log.depDate),
+                            new Date(log.desDate)
+                          );
+                          toggleModal();
+                        }}>Delete Flight</button
+                      >
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         {/each}
-        <div class="my-3">
-          <a
-            href={hrefs.newFlight.home.link}
-            class="btn btn-primary btn-lg w-100">Log New Flight</a
-          >
-        </div>
+      </div>
+      <div class="my-3">
+        <a href={hrefs.newFlight.home.link} class="btn btn-primary btn-lg w-100"
+          >Log New Flight</a
+        >
       </div>
     {:else}
       <h1>
