@@ -159,7 +159,7 @@
                       >
                     </li>
                     <li class="list-group-item">
-                      Aircraft ID: <span class=" text-aerologger">
+                      Tail Number: <span class=" text-aerologger">
                         {log.identification.length > 1
                           ? log.identification
                           : "None"}</span
