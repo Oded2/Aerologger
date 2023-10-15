@@ -168,12 +168,27 @@
         <table class="table fs-5">
           <thead>
             <tr>
-              <th scope="col"><i class="fa-solid fa-calendar-days" /> Date</th>
-              <th scope="col"><i class="fa-solid fa-map" /> Route</th>
-              <th scope="col"><i class="fa-solid fa-clock" /> Times</th>
-              <th scope="col"><i class="fa-solid fa-hashtag" /> Tail Number</th>
-              <th scope="col"><i class="fa-solid fa-user" /> Status</th>
-              <th scope="col"><i class="fa-solid fa-circle-info" /> More</th>
+              <th scope="col"
+                ><i class="fa-solid fa-calendar-days" title="Flight Date" /> Date
+              </th>
+              <th scope="col"
+                ><i class="fa-solid fa-map" title="Flight Route" /> Route
+              </th>
+              <th scope="col"
+                ><i
+                  class="fa-solid fa-clock"
+                  title="Takeoff and Landing Times"
+                /> Times
+              </th>
+              <th scope="col"
+                ><i class="fa-solid fa-hashtag" title="Tail Number" /> Tail Number</th
+              >
+              <th scope="col"
+                ><i class="fa-solid fa-user" title="Publicity Status" /> Status
+              </th>
+              <th scope="col"
+                ><i class="fa-solid fa-circle-info" title="Flight Options" /> More
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -239,31 +254,33 @@
       </div>
       <div class="fs-3 d-md-none">
         {#each userLogs as log}
-          <div class="border-bottom">
+          <div class="border-bottom mb-4">
             <div class="mb-3">
               <div class="fw-bold my-1">
-                <i class="fa-solid fa-calendar-days" />
+                <i class="fa-solid fa-calendar-days" title="Flight Date" />
                 {formatDateStr(log.depDate)}
               </div>
             </div>
             <div class="mb-3">
               <div>
-                <i class="fa-solid fa-map" />
+                <i class="fa-solid fa-map" title="Flight Route" />
                 {log.dep.icao} to {log.des.icao}
               </div>
             </div>
             <div class="mb-3">
-              <i class="fa-solid fa-clock" />
+              <i class="fa-solid fa-clock" title="Takeoff and Landing Times" />
               {getTimeStr(new Date(log.depDate))} to {getTimeStr(
                 new Date(log.desDate)
               )}
             </div>
             <div class="mb-3">
-              <i class="fa-solid fa-hashtag" />
+              <i class="fa-solid fa-hashtag" title="Tail Number" />
               {log.identification}
             </div>
             <div class="mb-3 row">
-              <div class="col-auto"><i class="fa-solid fa-user" /></div>
+              <div class="col-auto">
+                <i class="fa-solid fa-user" title="Publicity Status" />
+              </div>
               <div class="col">
                 <select
                   class="form-select"
@@ -275,7 +292,9 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <div class="col-auto"><i class="fa-solid fa-circle-info" /></div>
+              <div class="col-auto">
+                <i class="fa-solid fa-circle-info" title="Flight Options" />
+              </div>
               <div class="col">
                 <div class="btn-group">
                   <a
