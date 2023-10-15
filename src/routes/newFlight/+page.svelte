@@ -127,6 +127,7 @@
     depTimeStr = getTimeStr();
     desTimeStr = getTimeStr();
     planeType = "airplane";
+    planeManu = "";
     planeModel = "";
     planeId = "";
     userNotes = "";
