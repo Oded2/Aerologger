@@ -144,3 +144,9 @@
 </main>
 
 <ToastSetup {toast} />
+
+<style>
+  textarea {
+    resize: none;
+  }
+</style>
