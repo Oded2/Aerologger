@@ -19,7 +19,7 @@
   let toast;
   let dep = "",
     des = "";
-  let depDateStr = dateToStr();
+  let dateStr = dateToStr();
   let depTimeStr = getTimeStr(),
     desTimeStr = getTimeStr();
   let planeType = "airplane",
@@ -34,12 +34,12 @@
   $: submitText = inProgress ? submitText : "Submit Flight";
   let logNumber = NaN;
   $: planeId = planeId.toUpperCase();
-  $: depDate = parseDateAndTime(depDateStr, depTimeStr);
+  $: depDate = parseDateAndTime(dateStr, depTimeStr);
   $: desDate =
-    parseDateAndTime(dateToStr(), desTimeStr).valueOf() >= depDate.valueOf()
-      ? parseDateAndTime(dateToStr(), desTimeStr)
+    parseDateAndTime(dateStr, desTimeStr).valueOf() >= depDate.valueOf()
+      ? parseDateAndTime(dateStr, desTimeStr)
       : parseDateAndTime(
-          dateToStr(new Date(new Date().valueOf() + 86400000)),
+          dateToStr(new Date(depDate.valueOf() + 86400000)),
           desTimeStr
         );
   async function getAirportDetails(airport = "") {
@@ -123,7 +123,7 @@
     isComplete = true;
     dep = "";
     des = "";
-    depDateStr = dateToStr();
+    dateStr = dateToStr();
     depTimeStr = getTimeStr();
     desTimeStr = getTimeStr();
     planeType = "airplane";
@@ -234,14 +234,14 @@
                     <button
                       class="input-group-text btn btn-secondary"
                       type="button"
-                      disabled={depDateStr == dateToStr()}
-                      on:click={() => (depDateStr = dateToStr())}>Today</button
+                      disabled={dateStr == dateToStr()}
+                      on:click={() => (dateStr = dateToStr())}>Today</button
                     >
                     <input
                       type="date"
                       id="depdate"
                       class="form-control"
-                      bind:value={depDateStr}
+                      bind:value={dateStr}
                     />
                   </div>
                 </div>
