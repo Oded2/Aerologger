@@ -68,7 +68,7 @@
                 required
                 bind:value={password}
               />
-              <div class="form-text fs-6">Minimum 8 characters.</div>
+              <div class="form-text">Minimum 8 characters.</div>
             </div>
             <div class="mb-3">
               <label class="fw-bold" for="confirmpass"

@@ -87,7 +87,7 @@
       disabled={inProgress}
       on:click={resetPass}>Send link</button
     >
-    <div class="form-text fs-6">
+    <div class="form-text">
       Email might can take up to a few moments to send.
     </div>
   </div>

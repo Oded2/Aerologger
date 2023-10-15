@@ -52,3 +52,7 @@ h1.font-google-quicksand {
 .fw-600 {
   font-weight: 600 !important;
 }
+
+.form-text {
+  font-size: 1rem;
+}

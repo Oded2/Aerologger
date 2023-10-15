@@ -89,7 +89,7 @@
                 required
               />
               <div class="invalid-feedback">Hello</div>
-              <div class="form-text fs-6">
+              <div class="form-text">
                 You will have to verify this email afterwards.
               </div>
             </div>

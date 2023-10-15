@@ -222,7 +222,7 @@
                     class="form-control"
                     bind:value={dep}
                   />
-                  <span class="form-text fs-6">Name, IATA, or ICAO code.</span>
+                  <span class="form-text">Name, IATA, or ICAO code</span>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="des" class="form-label"
@@ -234,7 +234,7 @@
                     class="form-control"
                     bind:value={des}
                   />
-                  <span class="form-text fs-6">Name, IATA, or ICAO code.</span>
+                  <span class="form-text">Name, IATA, or ICAO code</span>
                 </div>
                 <div class="col-md-6 col-xl-3 mb-3">
                   <label for="depdate" class="form-label"
