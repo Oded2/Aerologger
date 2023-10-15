@@ -12,21 +12,20 @@
   import AirportCard from "../../../components/AirportCard.svelte";
   import Modal from "../../../components/Modal.svelte";
   export let data;
-  const { session } = data;
   let toast;
   let showModal = false,
     showShareModal = false;
-  const allLogs = data.logs;
+  const { logs } = data;
   const url = $page.url;
-  const user = session ? session.user : false;
   const logId = url.searchParams.get("logId");
   let valid = !isNaN(logId);
-  let log = {};
-  for (const i of allLogs) {
-    if (i["id"] == logId) {
+  let log;
+  for (const i of logs) {
+    if (i.id == logId) {
       log = i;
     }
   }
+  valid = !!log;
   function formatDateTime(string = "") {
     const date = new Date(string);
     return `${formatDate(date)} at ${getTimeStr(date)}`;
@@ -153,7 +152,7 @@
 
 <main>
   <div class="container py-5">
-    {#if valid && log.public ? true : user ? user.id === log.user_id : false}
+    {#if valid}
       <div class="font-google-gabarito">
         <div class="text-center">
           <h1>{log.dep.city} to {log.des.city}</h1>
@@ -285,7 +284,7 @@
   </div>
 </main>
 
-<FloatElement>
+<FloatElement visible={valid}>
   <button
     class="btn btn-primary btn-lg me-3"
     on:click={toggleShareModal}

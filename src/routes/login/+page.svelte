@@ -3,6 +3,7 @@
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import { goto } from "$app/navigation";
   import Modal from "../../components/Modal.svelte";
+  import { createToast } from "../../hooks.client.js";
   export let data;
   const { supabase } = data;
   let toast;
