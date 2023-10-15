@@ -118,143 +118,139 @@
         >
       </h3>
     </div>
-  </div></Modal
->
+  </div>
+</Modal>
 
 <main>
   <div class="container py-5">
-    {#if valid}
-      {#if log.public ? true : user ? user.id === log.user_id : false}
-        <div class="font-google-gabarito">
-          <div class="text-center">
-            <h1>{log.dep.city} to {log.des.city}</h1>
+    {#if valid && log.public ? true : user ? user.id === log.user_id : false}
+      <div class="font-google-gabarito">
+        <div class="text-center">
+          <h1>{log.dep.city} to {log.des.city}</h1>
+        </div>
+        <div class="row fs-3 my-5">
+          <div class="col-lg-4 mb-5">
+            <div class="card shadow h-100">
+              <div class="card-header text-center">
+                <h3>
+                  <i class="fa-solid fa-plane-circle-exclamation" /> Plane Information
+                </h3>
+              </div>
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    Aircraft Type: <span class="text-capitalize text-aerologger"
+                      >{log.type}</span
+                    >
+                  </li>
+                  <li class="list-group-item">
+                    Aircraft Manufacturer: <span
+                      class="text-capitalize text-aerologger"
+                    >
+                      {log.plane.manufacturer}</span
+                    >
+                  </li>
+                  <li class="list-group-item">
+                    Aircraft Model: <span
+                      class="text-capitalize text-aerologger"
+                    >
+                      {log.plane.model}</span
+                    >
+                  </li>
+                  <li class="list-group-item">
+                    Tail Number: <span class=" text-aerologger">
+                      {log.identification.length > 1
+                        ? log.identification
+                        : "None"}</span
+                    >
+                  </li>
+                  <li class="list-group-item">
+                    <button
+                      class="btn btn-primary btn-lg w-100 fw-bold"
+                      on:click={toggleModal}>Advanced</button
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div class="row fs-3 my-5">
-            <div class="col-lg-4 mb-5">
-              <div class="card shadow h-100">
-                <div class="card-header text-center">
-                  <h3>
-                    <i class="fa-solid fa-plane-circle-exclamation" /> Plane Information
-                  </h3>
-                </div>
-                <div class="card-body">
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                      Aircraft Type: <span
-                        class="text-capitalize text-aerologger">{log.type}</span
-                      >
-                    </li>
-                    <li class="list-group-item">
-                      Aircraft Manufacturer: <span
-                        class="text-capitalize text-aerologger"
-                      >
-                        {log.plane.manufacturer}</span
-                      >
-                    </li>
-                    <li class="list-group-item">
-                      Aircraft Model: <span
-                        class="text-capitalize text-aerologger"
-                      >
-                        {log.plane.model}</span
-                      >
-                    </li>
-                    <li class="list-group-item">
-                      Tail Number: <span class=" text-aerologger">
-                        {log.identification.length > 1
-                          ? log.identification
-                          : "None"}</span
-                      >
-                    </li>
-                    <li class="list-group-item">
-                      <button
-                        class="btn btn-primary btn-lg w-100 fw-bold"
-                        on:click={toggleModal}>Advanced</button
-                      >
-                    </li>
-                  </ul>
-                </div>
+          <div class="col-lg-4 mb-5">
+            <div class="card shadow h-100">
+              <div class="card-header text-center">
+                <h3>
+                  <i class="fa-solid fa-plane" /> Flight Information
+                </h3>
               </div>
-            </div>
-            <div class="col-lg-4 mb-5">
-              <div class="card shadow h-100">
-                <div class="card-header text-center">
-                  <h3>
-                    <i class="fa-solid fa-plane" /> Flight Information
-                  </h3>
-                </div>
-                <div class="card-body">
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item fw-bold">
-                      {log.dep.icao} to {log.des.icao}
-                    </li>
-                    <li class="list-group-item">
-                      Time of Departure : <span class="text-aerologger">
-                        {formatDateTime(log.depDate)}</span
-                      >
-                    </li>
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item fw-bold">
+                    {log.dep.icao} to {log.des.icao}
+                  </li>
+                  <li class="list-group-item">
+                    Time of Departure : <span class="text-aerologger">
+                      {formatDateTime(log.depDate)}</span
+                    >
+                  </li>
 
-                    <li class="list-group-item">
-                      Time of Arrival: <span class="text-aerologger">
-                        {formatDateTime(log.desDate)}</span
-                      >
-                    </li>
-                    <li class="list-group-item">
-                      Total Duration: <span class="text-aerologger">
-                        {formatDuration(
-                          new Date(log.depDate),
-                          new Date(log.desDate)
-                        )}</span
-                      >
-                    </li>
-                  </ul>
-                </div>
+                  <li class="list-group-item">
+                    Time of Arrival: <span class="text-aerologger">
+                      {formatDateTime(log.desDate)}</span
+                    >
+                  </li>
+                  <li class="list-group-item">
+                    Total Duration: <span class="text-aerologger">
+                      {formatDuration(
+                        new Date(log.depDate),
+                        new Date(log.desDate)
+                      )}</span
+                    >
+                  </li>
+                </ul>
               </div>
             </div>
-            <div class="col-lg-4 mb-5">
-              <div class="card shadow h-100">
-                <div class="card-header text-center">
-                  <h3>
-                    <i class="fa-solid fa-note-sticky" /> Notes
-                  </h3>
-                </div>
-                <div class="card-body">
-                  <p class="font-google-quicksand">{log.notes}</p>
-                </div>
+          </div>
+          <div class="col-lg-4 mb-5">
+            <div class="card shadow h-100">
+              <div class="card-header text-center">
+                <h3>
+                  <i class="fa-solid fa-note-sticky" /> Notes
+                </h3>
+              </div>
+              <div class="card-body">
+                <p class="font-google-quicksand">{log.notes}</p>
               </div>
             </div>
-            <div
-              class="{log.dep.icao === log.des.icao
-                ? 'col-lg-12'
-                : 'col-lg-6'} mb-5"
-            >
+          </div>
+          <div
+            class="{log.dep.icao === log.des.icao
+              ? 'col-lg-12'
+              : 'col-lg-6'} mb-5"
+          >
+            <AirportCard
+              airportData={log.dep}
+              cardTitle={log.dep.icao === log.des.icao
+                ? "Airport Information"
+                : "Departure Airport Information"}
+              icon="plane-departure"
+            />
+          </div>
+          {#if log.dep.icao !== log.des.icao}
+            <div class="col-lg-6 mb-5">
               <AirportCard
-                airportData={log.dep}
-                cardTitle={log.dep.icao === log.des.icao
-                  ? "Airport Information"
-                  : "Departure Airport Information"}
-                icon="plane-departure"
+                airportData={log.des}
+                cardTitle="Arrival Airport Information"
+                icon="plane-arrival"
               />
             </div>
-            {#if log.dep.icao !== log.des.icao}
-              <div class="col-lg-6 mb-5">
-                <AirportCard
-                  airportData={log.des}
-                  cardTitle="Arrival Airport Information"
-                  icon="plane-arrival"
-                />
-              </div>
-            {/if}
-          </div>
+          {/if}
         </div>
-      {:else}
-        <h1>
-          Access denied, try <a href={hrefs.login.home.link} class="text-reset"
-            >logging in</a
-          >.
-        </h1>
-      {/if}
+      </div>
     {:else}
-      <h1>Invalid Parameters</h1>
+      <h1>
+        Access denied, try <a href={hrefs.login.home.link} class="text-reset"
+          >logging in</a
+        >.
+      </h1>
     {/if}
   </div>
 </main>
