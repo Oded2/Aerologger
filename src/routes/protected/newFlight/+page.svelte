@@ -5,11 +5,11 @@
     dateToStr,
     getTimeStr,
     parseDateAndTime,
-  } from "../../hooks.client.js";
-  import ToastSetup from "../../components/setup/ToastSetup.svelte";
-  import Switch from "../../components/Switch.svelte";
-  import hrefs from "../../data/hrefs.json";
-  import logo from "../../data/images/logo_simplified.png";
+  } from "../../../hooks.client.js";
+  import ToastSetup from "../../../components/setup/ToastSetup.svelte";
+  import Switch from "../../../components/Switch.svelte";
+  import hrefs from "../../../data/hrefs.json";
+  import logo from "../../../data/images/logo_simplified.png";
   export let data;
   const ninjaApi = data.api;
   const { supabase } = data;

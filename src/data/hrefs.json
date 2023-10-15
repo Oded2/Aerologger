@@ -26,34 +26,34 @@
     "passwordreset": {
         "home": {
             "title": "Password Reset",
-            "link": "/passwordreset",
+            "link": "/protected/passwordreset",
             "weblink": "https://aerologger.netlify.app/passwordreset"
         }
     },
     "account": {
         "home": {
             "title": "Account",
-            "link": "/account"
+            "link": "/protected/account"
         }
     },
     "logbook": {
         "home": {
             "title": "Logbook",
-            "link": "/logbook"
+            "link": "/protected/logbook"
         },
         "viewer": {
             "title": "Logbook Viewer",
-            "link": "/logbook/viewer"
+            "link": "/protected/logbook/viewer"
         },
         "settings": {
             "title": "Logbook Settings",
-            "link": "/logbooksettings"
+            "link": "/protected/logbooksettings"
         }
     },
     "newFlight": {
         "home": {
             "title": "Log New Flight",
-            "link": "/newFlight"
+            "link": "/protected/newFlight"
         }
     },
     "contact": {

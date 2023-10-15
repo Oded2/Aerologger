@@ -1,6 +1,6 @@
 <script>
-  import ToastSetup from "../../components/setup/ToastSetup.svelte";
-  import { createToast } from "../../hooks.client.js";
+  import ToastSetup from "../../../components/setup/ToastSetup.svelte";
+  import { createToast } from "../../../hooks.client.js";
   export let data;
   const { session } = data;
   const user = session ? session.user : false;

@@ -1,8 +1,8 @@
 <script>
-  import hrefs from "../../data/hrefs.json";
-  import { createToast } from "../../hooks.client.js";
-  import ToastSetup from "../../components/setup/ToastSetup.svelte";
-  import FloatElement from "../../components/FloatElement.svelte";
+  import hrefs from "../../../data/hrefs.json";
+  import { createToast } from "../../../hooks.client.js";
+  import ToastSetup from "../../../components/setup/ToastSetup.svelte";
+  import FloatElement from "../../../components/FloatElement.svelte";
   export let data;
   const sb = data.supabase;
   const userData = data.session.user.user_metadata;

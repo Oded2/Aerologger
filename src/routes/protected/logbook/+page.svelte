@@ -6,11 +6,11 @@
     formatDateStr,
     formatDuration,
     getTimeStr,
-  } from "../../hooks.client.js";
-  import hrefs from "../../data/hrefs.json";
-  import ToastSetup from "../../components/setup/ToastSetup.svelte";
-  import FloatElement from "../../components/FloatElement.svelte";
-  import Modal from "../../components/Modal.svelte";
+  } from "../../../hooks.client.js";
+  import hrefs from "../../../data/hrefs.json";
+  import ToastSetup from "../../../components/setup/ToastSetup.svelte";
+  import FloatElement from "../../../components/FloatElement.svelte";
+  import Modal from "../../../components/Modal.svelte";
   export let data;
   const { supabase, session } = data;
   const user = session.user;

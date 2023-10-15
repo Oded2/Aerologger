@@ -1,9 +1,9 @@
 <script>
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
-  import ToastSetup from "../../components/setup/ToastSetup.svelte";
-  import hrefs from "../../data/hrefs.json";
-  import { createToast } from "../../hooks.client.js";
+  import ToastSetup from "../../../components/setup/ToastSetup.svelte";
+  import hrefs from "../../../data/hrefs.json";
+  import { createToast } from "../../../hooks.client.js";
   export let data;
   const { supabase } = data;
   const user = data.session;
