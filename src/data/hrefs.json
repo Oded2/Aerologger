@@ -56,6 +56,12 @@
             "link": "/protected/newFlight"
         }
     },
+    "explore": {
+        "home": {
+            "title": "Explore",
+            "link": "/explore"
+        }
+    },
     "contact": {
         "home": {
             "title": "Contact",
