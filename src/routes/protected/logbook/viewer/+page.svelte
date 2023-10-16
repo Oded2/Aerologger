@@ -15,7 +15,7 @@
   let toast;
   let showModal = false,
     showShareModal = false;
-  const { logs } = data;
+  const { logs, session } = data;
   const url = $page.url;
   const logId = url.searchParams.get("logId");
   let log;
@@ -290,9 +290,11 @@
     disabled={!log.public}
     ><i class="fa-solid fa-share-from-square" /> Share</button
   >
-  <a href={hrefs.logbook.home.link} class="btn btn-secondary btn-lg"
-    ><i class="fa-solid fa-rotate-left" /> Return</a
-  >
+  {#if session}
+    <a href={hrefs.logbook.home.link} class="btn btn-secondary btn-lg"
+      ><i class="fa-solid fa-book" /> Logbook</a
+    >
+  {/if}
 </FloatElement>
 
 <ToastSetup {toast} />
