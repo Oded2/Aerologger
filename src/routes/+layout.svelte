@@ -85,6 +85,15 @@
         </li>
         <li class="nav-item">
           <a
+            href={hrefs.explore.home.link}
+            class="nav-link"
+            class:active={pageHref == hrefs.explore.home.link}
+          >
+            <i class="fa-solid fa-earth-americas" /> Explore</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
             href={hrefs.contact.home.link}
             class="nav-link"
             class:active={pageHref == hrefs.contact.home.link}

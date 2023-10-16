@@ -32,10 +32,19 @@
           {/if}
         </div>
         <div class="col-sm mb-2">
-          <a
-            href={hrefs.explore.home.title}
-            class="btn btn-outline-primary btn-lg w-100">Explore AeroLogger</a
-          >
+          {#if user}
+            <a
+              href={hrefs.logbook.home.link}
+              class="btn btn-outline-primary btn-lg w-100"
+            >
+              View Logbook</a
+            >
+          {:else}
+            <a
+              href={hrefs.explore.home.link}
+              class="btn btn-outline-primary btn-lg w-100">Explore AeroLogger</a
+            >
+          {/if}
         </div>
       </div>
     </div>

@@ -60,6 +60,11 @@
         "home": {
             "title": "Explore",
             "link": "/explore"
+        },
+        "publiclogbook": {
+            "title": "Public Logbook",
+            "link": "/explore/publiclogbook",
+            "description": "Explore a massive logbook of every public flight on AeroLogger."
         }
     },
     "contact": {
