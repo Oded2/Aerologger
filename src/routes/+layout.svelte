@@ -67,6 +67,7 @@
           <a
             href={hrefs.logbook.home.link}
             class="nav-link"
+            class:disabled={!session}
             class:active={pageHref == hrefs.logbook.home.link}
           >
             <i class="fa-solid fa-book" /> Logbook</a
@@ -76,6 +77,7 @@
           <a
             href={hrefs.newFlight.home.link}
             class="nav-link"
+            class:disabled={!session}
             class:active={pageHref == hrefs.newFlight.home.link}
           >
             <i class="fa-solid fa-plane" /> New Log</a

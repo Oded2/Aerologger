@@ -18,14 +18,13 @@
   const { logs } = data;
   const url = $page.url;
   const logId = url.searchParams.get("logId");
-  let valid = !isNaN(logId);
   let log;
   for (const i of logs) {
     if (i.id == logId) {
       log = i;
     }
   }
-  valid = !!log;
+  const valid = !!log;
   function formatDateTime(string = "") {
     const date = new Date(string);
     return `${formatDate(date)} at ${getTimeStr(date)}`;
