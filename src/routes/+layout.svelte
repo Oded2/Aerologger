@@ -7,6 +7,7 @@
   $: pageUrl = new URL($page.url);
   $: pageHref = pageUrl.pathname;
   let title = "AeroLogger";
+  let darkMode = false;
   $: if (pageHref) {
     title = findTitle();
   }
@@ -37,7 +38,7 @@
   }
 </script>
 
-<nav class="navbar navbar-expand-md font-google-quicksand">
+<nav class="navbar navbar-expand-lg font-google-quicksand">
   <div class="container">
     <a href={hrefs.home.home.link} class="navbar-brand fw-600">AeroLogger</a>
     <button
@@ -101,23 +102,39 @@
         </li>
       </ul>
       <ul class="navbar-nav ms-auto">
+        <li class="nav-item mb-1 mb-lg-0 me-lg-2">
+          <button
+            class="btn btn-dark"
+            data-bs-toggle="button"
+            id="darkSwitch"
+            on:click={() => (darkMode = !darkMode)}
+            >{#if darkMode}
+              <i class="fa-solid fa-sun" style="color: #f3bc24;" />
+            {:else}
+              <i class="fa-solid fa-moon" style="color: #fafafa;" />
+            {/if}
+          </button>
+        </li>
         {#if session}
-          <li class="nav-item mb-1 mb-md-0 me-md-2">
+          <li class="nav-item mb-1 mb-lg-0 me-lg-2">
             <a
               href={hrefs.account.home.link}
               class="btn btn-primary fw-600"
               class:disabled={pageHref == hrefs.account.home.link}>Account</a
             >
           </li>
-          <li class="nav-item mb-1 mb-md-0">
+
+          <li class="nav-item mb-1 mb-lg-0">
             <a
               href={hrefs.signout.home.link}
-              class="btn btn-dark fw-600"
+              class="btn fw-600"
+              class:btn-dark={!darkMode}
+              class:btn-light={darkMode}
               class:disabled={pageHref == hrefs.signout.home.link}>Signout</a
             >
           </li>
         {:else}
-          <li class="nav-item mb-1 mb-md-0 me-md-2">
+          <li class="nav-item mb-1 mb-lg-0 me-lg-2">
             <a
               href={hrefs.login.home.link}
               class="btn btn-primary fw-600"
@@ -127,7 +144,9 @@
           <li class="nav-item">
             <a
               href={hrefs.signup.home.link}
-              class="btn btn-dark fw-600"
+              class="btn fw-600"
+              class:btn-dark={!darkMode}
+              class:btn-light={darkMode}
               class:disabled={pageHref == hrefs.signup.home.link}>Sign Up</a
             >
           </li>
