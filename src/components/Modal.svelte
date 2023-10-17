@@ -12,10 +12,7 @@
     transition:fade={{ duration: 100 }}
     on:click|self
   >
-    <div
-      class=" container bg-light rounded card"
-      in:fly={{ duration: 300, y: 200 }}
-    >
+    <div class=" container rounded card" in:fly={{ duration: 300, y: 200 }}>
       <div class="card-body overflow-auto d-grid">
         <slot />
       </div>
