@@ -1,12 +1,10 @@
 <script>
   import { goto } from "$app/navigation";
-  import { onMount } from "svelte";
   import ToastSetup from "../../../components/setup/ToastSetup.svelte";
   import hrefs from "../../../data/hrefs.json";
   import { createToast } from "../../../hooks.client.js";
   export let data;
-  const { supabase } = data;
-  const user = data.session;
+  const { supabase, session } = data;
   let toast;
   let password = "",
     confirmPass = "";
@@ -18,11 +16,11 @@
   }
   function verify() {
     if (password !== confirmPass) {
-      createToast("Passwords must match.");
+      showErrorToast("Passwords must match.");
       return false;
     }
     if (password.length < 8) {
-      createToast("Password must be at least 8 characters long.");
+      showErrorToast("Password must be at least 8 characters long.");
       return false;
     }
     return true;
@@ -51,11 +49,11 @@
 
 <main>
   <div class="container py-5 font-google-quicksand fs-4">
-    {#if user}
+    {#if session}
       <form on:submit|preventDefault>
         <div class="card">
           <div class="card-header fs-6">
-            <span>Account: {user.email}</span>
+            <span>Account: {session.user.email}</span>
           </div>
           <div class="card-body fs-3">
             <div class="mb-3">
