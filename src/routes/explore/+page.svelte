@@ -1,9 +1,35 @@
 <script>
+  import { goto } from "$app/navigation";
   import ExploreCard from "../../components/ExploreCard.svelte";
+  import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import hrefs from "../../data/hrefs.json";
+  import { createToast } from "../../hooks.client.js";
   export let data;
-  const { userProfile, session } = data;
+  const { userProfile, supabase, session } = data;
+  let toast;
   let profileSearch = userProfile ? userProfile.username : "";
+  let inProgress = false;
+  async function findPilot() {
+    if (profileSearch.length == 0) {
+      toast = createToast("error", "Error", "Search cannot be empty.");
+      return;
+    }
+    inProgress = true;
+    const { data } = await supabase
+      .from("Profiles")
+      .select()
+      .eq("username", profileSearch);
+    if (data.length > 0) {
+      goto(hrefs.explore.profile.link.replace("slug", profileSearch));
+      return;
+    }
+    inProgress = false;
+    toast = createToast(
+      "error",
+      "User not found",
+      `User "${profileSearch}" does not exist.`
+    );
+  }
 </script>
 
 <main>
@@ -32,9 +58,10 @@
           title={hrefs.explore.profile.title}
           desc={hrefs.explore.profile.description}
           icon="magnifying-glass"
-          href={hrefs.explore.profile.link.replace("slug", profileSearch)}
           submitText="Search"
+          link={false}
           disabled={profileSearch.length == 0}
+          on:click={findPilot}
         >
           <label for="search" class="form-label fs-5">Pilot's Username</label>
           <div class="input-group">
@@ -42,11 +69,19 @@
               type="text"
               class="form-control"
               id="search"
+              placeholder="Enter a pilot's username"
               bind:value={profileSearch}
             />
+            <button
+              class="input-group-text btn btn-secondary"
+              on:click={() => (profileSearch = "")}
+              ><i class="fa-solid fa-x" /></button
+            >
           </div>
         </ExploreCard>
       </div>
     </div>
   </div>
 </main>
+
+<ToastSetup {toast} />

@@ -6,6 +6,7 @@
   export let href = "";
   export let submitText = "Show Me";
   export let disabled = false;
+  export let link = true;
 </script>
 
 <div class="card h-100 shadow">
@@ -17,8 +18,14 @@
     <slot />
   </div>
   <div class="card-footer">
-    <a {href} class="btn btn-primary btn-lg w-100" class:disabled
-      >{submitText}</a
-    >
+    {#if link}
+      <a {href} class="btn btn-primary btn-lg w-100" class:disabled
+        >{submitText}</a
+      >
+    {:else}
+      <button class="btn btn-primary btn-lg w-100" {disabled} on:click
+        >{submitText}</button
+      >
+    {/if}
   </div>
 </div>
