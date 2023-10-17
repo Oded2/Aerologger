@@ -43,7 +43,7 @@
         },
         "viewer": {
             "title": "Logbook Viewer",
-            "link": "/protected/logbook/viewer"
+            "link": "/viewer/slug"
         },
         "settings": {
             "title": "Logbook Settings",

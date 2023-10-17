@@ -4,8 +4,6 @@ import { createSupabaseServerClient } from "@supabase/auth-helpers-sveltekit";
 import { redirect } from "@sveltejs/kit";
 import hrefs from "./data/hrefs.json";
 
-const exceptions = ["/protected/logbook/viewer"];
-
 export const handle = async ({ event, resolve }) => {
   event.locals.supabase = createSupabaseServerClient({
     supabaseUrl: PUBLIC_SBURL,
@@ -18,10 +16,7 @@ export const handle = async ({ event, resolve }) => {
     } = await event.locals.supabase.auth.getSession();
     return session;
   };
-  if (
-    event.url.pathname.startsWith("/protected") &&
-    !exceptions.includes(event.url.pathname)
-  ) {
+  if (event.url.pathname.startsWith("/protected")) {
     const session = await event.locals.getSession();
     if (!session) {
       throw redirect(303, hrefs.login.home.link);

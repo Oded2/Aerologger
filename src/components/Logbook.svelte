@@ -6,6 +6,7 @@
     formatDuration,
     getTimeStr,
     createToast,
+    GetSortOrder,
   } from "../hooks.client.js";
   import hrefs from "../data/hrefs.json";
   import ToastSetup from "./setup/ToastSetup.svelte";
@@ -20,6 +21,7 @@
   let currentFlight = { id: NaN, dep: {}, des: {}, time: "" };
   let totalMinutes = 0,
     totalFlights = 0;
+  logs.sort(GetSortOrder("depDate", true));
   $: hours = Math.floor(totalMinutes / 60);
   $: minutes = totalMinutes % 60;
   for (const i of logs) {
@@ -180,10 +182,12 @@
             <td>
               <div class="btn-group">
                 <a
-                  href={addParamsString(hrefs.logbook.viewer.link, {
-                    logId: log.id,
-                    ref: refUrl,
-                  })}
+                  href={addParamsString(
+                    hrefs.logbook.viewer.link.replace("slug", log.id),
+                    {
+                      ref: refUrl,
+                    }
+                  )}
                   class="btn btn-secondary">View</a
                 >
                 {#if allowModification}

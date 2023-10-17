@@ -1,6 +1,5 @@
 <script>
   import Logbook from "../../../../components/Logbook.svelte";
-
   export let data;
   const { profile, logs } = data;
 </script>
@@ -13,3 +12,5 @@
   </div>
   <Logbook {logs} allowModification={false} />
 </main>
+
+<svelte:head><title>{profile.display_name}'s Profile</title></svelte:head>

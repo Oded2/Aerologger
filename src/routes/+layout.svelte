@@ -4,6 +4,7 @@
   import hrefs from "../data/hrefs.json";
   import { page } from "$app/stores";
   import "../global.css";
+
   $: pageUrl = new URL($page.url);
   $: pageHref = pageUrl.pathname;
   let title = "AeroLogger";
@@ -156,4 +157,5 @@
   </div>
 </nav>
 <slot />
+
 <svelte:head><title>{title}</title></svelte:head>
