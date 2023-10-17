@@ -31,7 +31,11 @@
     });
     inProgress = false;
     if (error) {
-      toast = createToast("error", "Error", error.message);
+      toast = createToast(
+        "error",
+        "Error",
+        error.code === "23505" ? "Username already taken" : error.message
+      );
       return;
     }
     toast = createToast(
