@@ -90,7 +90,6 @@
             <button
               class="btn btn-primary fs-4 fw-bold w-100"
               type="submit"
-              on:click={submit}
               disabled={!isValid || inProgress}>Reset Password</button
             >
           </div>
