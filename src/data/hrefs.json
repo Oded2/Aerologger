@@ -53,7 +53,7 @@
     "newFlight": {
         "home": {
             "title": "Log New Flight",
-            "link": "/protected/newflight"
+            "link": "/protected/newlog"
         }
     },
     "explore": {
