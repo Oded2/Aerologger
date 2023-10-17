@@ -72,7 +72,7 @@
         },
         "buildprofile": {
             "title": "Profile Builder",
-            "link": "/protected/myprofile/builder"
+            "link": "/protected/profilebuilder"
         }
     },
     "contact": {

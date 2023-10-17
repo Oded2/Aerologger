@@ -1,14 +1,14 @@
 <script>
-  import ToastSetup from "../../../../components/setup/ToastSetup.svelte";
-  import { createToast } from "../../../../hooks.client.js";
-  import MidScreen from "./../../../../components/MidScreen.svelte";
+  import ToastSetup from "../../../components/setup/ToastSetup.svelte";
+  import { createToast, dateToStr } from "../../../hooks.client.js";
+  import MidScreen from "../../../components/MidScreen.svelte";
   export let data;
-  const { supabase, session } = data;
+  const { supabase, session, profile } = data;
   let toast;
   let inProgress = false;
-  let username = "",
-    displayName = "",
-    birthday = "";
+  let username = profile.username ?? "",
+    displayName = profile.display_name ?? "",
+    birthday = profile.birthday ? dateToStr(new Date(profile.birthday)) : "";
 
   $: disabled =
     inProgress ||
@@ -23,7 +23,7 @@
       return;
     }
     inProgress = true;
-    const { error } = await supabase.from("Profiles").insert({
+    const { error } = await supabase.from("Profiles").upsert({
       user_id: session.user.id,
       username: username,
       display_name: displayName,
@@ -37,7 +37,7 @@
     toast = createToast(
       "success",
       "Success",
-      "Your AeroLogger profile has been made."
+      "Your AeroLogger profile has been updated."
     );
   }
   function verify() {
