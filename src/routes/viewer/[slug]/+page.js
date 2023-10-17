@@ -4,5 +4,12 @@ export async function load({ params, parent }) {
     .from("Logs")
     .select()
     .eq("id", params.slug);
-  return { log: log[0] };
+  if (!log[0]) {
+    return;
+  }
+  const { data: profile } = await supabase
+    .from("Profiles")
+    .select()
+    .eq("user_id", log[0].user_id);
+  return { log: log[0], profile: profile[0] };
 }

@@ -15,7 +15,7 @@
   let toast;
   let showModal = false,
     showShareModal = false;
-  const { log, session } = data;
+  const { profile, log, session } = data;
   const url = $page.url;
   const ref = url.searchParams.get("ref");
   const valid = !!log;
@@ -149,6 +149,15 @@
       <div class="font-google-gabarito">
         <div class="text-center">
           <h1>{log.dep.city} to {log.des.city}</h1>
+          <h2>
+            Logged by: <a
+              href={hrefs.explore.profile.link.replace(
+                "slug",
+                profile.username
+              )}
+              class="text-aerologger">{profile.display_name}</a
+            >
+          </h2>
         </div>
         <div class="row fs-3 my-5">
           <div class="col-lg-4 mb-5">
