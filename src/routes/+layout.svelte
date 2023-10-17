@@ -158,4 +158,4 @@
 </nav>
 <slot />
 
-<svelte:head><title>{title}</title></svelte:head>
+<svelte:head><title>{title ?? "AeroLogger"}</title></svelte:head>
