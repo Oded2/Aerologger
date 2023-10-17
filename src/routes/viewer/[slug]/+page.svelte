@@ -155,7 +155,7 @@
                 "slug",
                 profile.username
               )}
-              class="text-aerologger">{profile.display_name}</a
+              class="text-reset">{profile.display_name}</a
             >
           </h2>
         </div>
