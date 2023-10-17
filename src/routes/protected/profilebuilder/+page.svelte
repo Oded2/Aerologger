@@ -104,7 +104,7 @@
             <div class="mb-3 form-floating">
               <input
                 type="text"
-                class="form-control is"
+                class="form-control"
                 id="username"
                 placeholder="Your username"
                 bind:value={username}
@@ -120,7 +120,7 @@
             <div class="mb-3 form-floating">
               <input
                 type="text"
-                class="form-control is"
+                class="form-control"
                 id="displayname"
                 placeholder="Your public name"
                 bind:value={displayName}
