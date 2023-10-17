@@ -62,17 +62,14 @@
             "link": "/explore"
         },
         "profile": {
-            "title": "Your Profile",
-            "link": "/explore/profile/slug"
-        },
-        "myprofile": {
-            "title": "My Profile",
-            "link": "/protected/myprofile",
-            "description": "Build your AeroLogger profile."
+            "title": "Profile Search",
+            "link": "/explore/profile/slug",
+            "description": "Explore any AeroLogger pilot's logbook. Only flights set public by the pilot are shown."
         },
         "buildprofile": {
             "title": "Profile Builder",
-            "link": "/protected/profilebuilder"
+            "link": "/protected/profilebuilder",
+            "description": "Build your AeroLogger profile, make changes, and more."
         }
     },
     "contact": {

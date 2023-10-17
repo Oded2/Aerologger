@@ -4,6 +4,8 @@
   export let icon = "",
     iconType = "solid";
   export let href = "";
+  export let submitText = "Show Me";
+  export let disabled = false;
 </script>
 
 <div class="card h-100 shadow">
@@ -12,8 +14,11 @@
   </div>
   <div class="card-body">
     <p class="fs-5">{desc}</p>
+    <slot />
   </div>
   <div class="card-footer">
-    <a {href} class="btn btn-primary btn-lg w-100">Show Me</a>
+    <a {href} class="btn btn-primary btn-lg w-100" class:disabled
+      >{submitText}</a
+    >
   </div>
 </div>

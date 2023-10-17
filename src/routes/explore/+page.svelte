@@ -1,9 +1,9 @@
 <script>
   import ExploreCard from "../../components/ExploreCard.svelte";
   import hrefs from "../../data/hrefs.json";
-
   export let data;
-  const { logs } = data;
+  const { userProfile } = data;
+  let profileSearch = userProfile ? userProfile.username : "";
 </script>
 
 <main>
@@ -20,11 +20,31 @@
     <div class="row">
       <div class="col-md-6">
         <ExploreCard
-          title={hrefs.explore.myprofile.title}
-          desc={hrefs.explore.myprofile.description}
-          icon="user"
-          href={hrefs.explore.myprofile.link}
+          title={hrefs.explore.buildprofile.title}
+          desc={hrefs.explore.buildprofile.description}
+          icon="wrench"
+          href={hrefs.explore.buildprofile.link}
         />
+      </div>
+      <div class="col-md-6">
+        <ExploreCard
+          title={hrefs.explore.profile.title}
+          desc={hrefs.explore.profile.description}
+          icon="magnifying-glass"
+          href={hrefs.explore.profile.link.replace("slug", profileSearch)}
+          submitText="Search"
+          disabled={profileSearch.length == 0}
+        >
+          <label for="search" class="form-label fs-5">Pilot's Username</label>
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              id="search"
+              bind:value={profileSearch}
+            />
+          </div>
+        </ExploreCard>
       </div>
     </div>
   </div>
