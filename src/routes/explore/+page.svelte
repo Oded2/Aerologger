@@ -60,7 +60,7 @@
           icon="magnifying-glass"
           submitText="Search"
           link={false}
-          disabled={profileSearch.length == 0}
+          disabled={profileSearch.length == 0 || inProgress}
           on:click={findPilot}
         >
           <label for="search" class="form-label fs-5">Pilot's Username</label>
