@@ -12,8 +12,7 @@
   import logo from "../../../data/images/logo_simplified.png";
   export let data;
   const ninjaApi = data.api;
-  const { supabase } = data;
-  const { session } = data;
+  const { supabase, session } = data;
   const user = session ? session.user : false;
   const airportUrl = "https://api.api-ninjas.com/v1/airports";
   let toast;
