@@ -9,9 +9,7 @@
   const mail = hrefs.contact.home.mail;
 
   let email = session ? session.user.email : "",
-    name = session
-      ? `${session.user.user_metadata.first_name} ${session.user.user_metadata.last_name}`
-      : "",
+    name = "",
     topic = "",
     message = "";
   let inProgress = false;

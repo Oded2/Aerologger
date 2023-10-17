@@ -61,10 +61,18 @@
             "title": "Explore",
             "link": "/explore"
         },
-        "publiclogbook": {
-            "title": "Public Logbook",
-            "link": "/explore/publiclogbook",
-            "description": "Explore a massive logbook of every public flight on AeroLogger."
+        "profile": {
+            "title": "Your Profile",
+            "link": "/explore/profile/slug"
+        },
+        "myprofile": {
+            "title": "My Profile",
+            "link": "/protected/myprofile",
+            "description": "Build your AeroLogger profile."
+        },
+        "buildprofile": {
+            "title": "Profile Builder",
+            "link": "/protected/myprofile/builder"
         }
     },
     "contact": {

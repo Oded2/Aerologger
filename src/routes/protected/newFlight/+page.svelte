@@ -198,7 +198,7 @@
         </div>
       {:else}
         <div>
-          <h1>Welcome back, {user.user_metadata.first_name}.</h1>
+          <h1>Welcome back.</h1>
         </div>
         <form on:submit|preventDefault={submit}>
           <div class="card">

@@ -23,8 +23,7 @@
 <main>
   <div class="container mt-5 font-google-gabarito">
     <h1>
-      Welcome to your <span class="text-aerologger">logbook</span>, {user
-        .user_metadata.first_name}.
+      Welcome to your <span class="text-aerologger">logbook</span>.
     </h1>
   </div>
   <Logbook logs={newLogs} {supabase} />

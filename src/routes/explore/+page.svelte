@@ -20,10 +20,10 @@
     <div class="row">
       <div class="col-md-6">
         <ExploreCard
-          title="Public Logbook"
-          desc={hrefs.explore.publiclogbook.description}
-          icon="book"
-          href={hrefs.explore.publiclogbook.link}
+          title={hrefs.explore.myprofile.title}
+          desc={hrefs.explore.myprofile.description}
+          icon="user"
+          href={hrefs.explore.myprofile.link}
         />
       </div>
     </div>

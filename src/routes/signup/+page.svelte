@@ -6,8 +6,6 @@
   $: ({ supabase } = data);
   let toast;
   let email = "",
-    fname = "",
-    lname = "",
     password = "",
     confirmpass = "";
   let inProgress = false,
@@ -29,10 +27,6 @@
       email,
       password,
       options: {
-        data: {
-          first_name: fname,
-          last_name: lname,
-        },
         emailRedirectTo: `${location.origin}/auth/callback`,
       },
     });
@@ -93,25 +87,7 @@
                 You will have to verify this email afterwards.
               </div>
             </div>
-            <div class="col-md-6 mb-3">
-              <label for="fname" class="form-label">First Name</label>
 
-              <input
-                type="text"
-                id="fname"
-                class="form-control"
-                bind:value={fname}
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="lname" class="form-label">Last Name</label>
-              <input
-                type="text"
-                id="lname"
-                class="form-control"
-                bind:value={lname}
-              />
-            </div>
             <div class="col-md-6">
               <label for="password" class="form-label"
                 >Password <span title="Required field" class="required">*</span
