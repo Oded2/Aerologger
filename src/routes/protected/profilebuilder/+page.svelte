@@ -113,8 +113,8 @@
                 >Username <span class="text-danger">*</span></label
               >
               <div class="form-text">
-                Your username must be unique, and contain only latin letters and
-                numbers.
+                Your username must be unique, and only contain letters from the
+                latin alphabet and numbers.
               </div>
             </div>
             <div class="mb-3 form-floating">
@@ -149,7 +149,7 @@
             <button
               {disabled}
               type="submit"
-              class="btn btn-primary btn-lg w-100">Make Profile</button
+              class="btn btn-primary btn-lg w-100">Edit Profile</button
             >
           </div>
         </div>
