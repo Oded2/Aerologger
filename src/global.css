@@ -1,5 +1,8 @@
-.text-aerologger {
+[data-bs-theme="light"] .text-aerologger {
   color: #3057a3;
+}
+[data-bs-theme="dark"] .text-aerologger {
+  color: #467de9;
 }
 .font-reset {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto;
