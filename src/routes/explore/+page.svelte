@@ -2,7 +2,7 @@
   import ExploreCard from "../../components/ExploreCard.svelte";
   import hrefs from "../../data/hrefs.json";
   export let data;
-  const { userProfile } = data;
+  const { userProfile, session } = data;
   let profileSearch = userProfile ? userProfile.username : "";
 </script>
 
@@ -18,14 +18,15 @@
       </p>
     </div>
     <div class="row">
-      <div class="col-md-6">
-        <ExploreCard
-          title={hrefs.explore.buildprofile.title}
-          desc={hrefs.explore.buildprofile.description}
-          icon="wrench"
-          href={hrefs.explore.buildprofile.link}
-        />
-      </div>
+      {#if session}
+        <div class="col-md-6">
+          <ExploreCard
+            title={hrefs.explore.buildprofile.title}
+            desc={hrefs.explore.buildprofile.description}
+            icon="wrench"
+            href={hrefs.explore.buildprofile.link}
+          />
+        </div>{/if}
       <div class="col-md-6">
         <ExploreCard
           title={hrefs.explore.profile.title}

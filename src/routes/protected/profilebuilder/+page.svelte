@@ -6,9 +6,9 @@
   const { supabase, session, profile } = data;
   let toast;
   let inProgress = false;
-  let username = profile.username ?? "",
-    displayName = profile.display_name ?? "",
-    birthday = profile.birthday ? dateToStr(new Date(profile.birthday)) : "";
+  let username = profile ? profile.username : "",
+    displayName = profile ? profile.display_name : "",
+    birthday = profile ? dateToStr(new Date(profile.birthday)) : "";
 
   $: disabled =
     inProgress ||
