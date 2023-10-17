@@ -18,6 +18,7 @@
   const { logs, session } = data;
   const url = $page.url;
   const logId = url.searchParams.get("logId");
+  const ref = url.searchParams.get("ref");
   let log;
   for (const i of logs) {
     if (i.id == logId) {
@@ -291,8 +292,8 @@
     ><i class="fa-solid fa-share-from-square" /> Share</button
   >
   {#if session}
-    <a href={hrefs.logbook.home.link} class="btn btn-secondary btn-lg"
-      ><i class="fa-solid fa-book" /> Logbook</a
+    <a href={ref ?? hrefs.logbook.home.link} class="btn btn-secondary btn-lg"
+      ><i class="fa-solid fa-rotate-left" /> Return</a
     >
   {/if}
 </FloatElement>

@@ -9,9 +9,11 @@
   } from "../hooks.client.js";
   import hrefs from "../data/hrefs.json";
   import ToastSetup from "./setup/ToastSetup.svelte";
+  import { page } from "$app/stores";
   export let logs = [];
   export let supabase;
   export let allowModification = true;
+  const refUrl = $page.url.href;
   let toast;
   let inProgress = false,
     delConfirm = false;
@@ -180,6 +182,7 @@
                 <a
                   href={addParamsString(hrefs.logbook.viewer.link, {
                     logId: log.id,
+                    ref: refUrl,
                   })}
                   class="btn btn-secondary">View</a
                 >
