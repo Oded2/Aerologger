@@ -50,7 +50,7 @@
 <main>
   <div class="container py-5 font-google-quicksand fs-4">
     {#if session}
-      <form on:submit|preventDefault>
+      <form on:submit|preventDefault={submit}>
         <div class="card">
           <div class="card-header fs-6">
             <span>Account: {session.user.email}</span>
