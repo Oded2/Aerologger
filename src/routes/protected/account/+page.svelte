@@ -205,7 +205,8 @@
                   <button
                     class="input-group-text btn btn-secondary"
                     on:click={() => (birthday = null)}
-                    disabled={!birthday}><i class="fa-solid fa-x" /></button
+                    disabled={!birthday}
+                    type="button"><i class="fa-solid fa-x" /></button
                   >
                 </div>
                 <div class="form-text">
