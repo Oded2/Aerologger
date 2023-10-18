@@ -59,7 +59,7 @@
         submitText="Search"
         link={false}
         disabled={profileSearch.length == 0 || inProgress}
-        on:click={findPilot}
+        on:submit={findPilot}
       >
         <label for="search" class="form-label fs-5">Pilot's Username</label>
         <div class="input-group">
@@ -72,6 +72,7 @@
           />
           <button
             class="input-group-text btn btn-secondary"
+            type="button"
             on:click={() => (profileSearch = "")}
             disabled={profileSearch.length == 0}
             ><i class="fa-solid fa-x" /></button
