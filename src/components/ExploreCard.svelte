@@ -11,7 +11,7 @@
 </script>
 
 {#if visible}
-  <div class="col-md-6">
+  <div class="col-md-6 mb-5">
     <form on:submit|preventDefault class="h-100">
       <div class="card h-100 shadow">
         <div class="card-header text-center">
