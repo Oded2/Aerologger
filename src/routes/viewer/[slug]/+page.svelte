@@ -293,11 +293,10 @@
     disabled={!log.public}
     ><i class="fa-solid fa-share-from-square" /> Share</button
   >
-  {#if session}
-    <a href={ref ?? hrefs.logbook.home.link} class="btn btn-secondary btn-lg"
-      ><i class="fa-solid fa-rotate-left" /> Return</a
-    >
-  {/if}
+
+  <a href={ref ?? hrefs.logbook.home.link} class="btn btn-secondary btn-lg"
+    ><i class="fa-solid fa-rotate-left" /> Return</a
+  >
 </FloatElement>
 
 <ToastSetup {toast} />
