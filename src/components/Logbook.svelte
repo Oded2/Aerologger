@@ -139,9 +139,11 @@
           <th scope="col" class="text-nowrap"
             ><i class="fa-solid fa-hashtag" title="Tail Number" /> Tail Number</th
           >
-          <th scope="col" class="text-nowrap">
-            <i class="fa-solid fa-user" title="Publicity Status" /> Status
-          </th>
+          {#if allowModification}
+            <th scope="col" class="text-nowrap">
+              <i class="fa-solid fa-user" title="Publicity Status" /> Status
+            </th>
+          {/if}
           <th scope="col" class="text-nowrap"
             ><i class="fa-solid fa-circle-info" title="Flight Options" /> More
           </th>
@@ -166,15 +168,17 @@
               </div>
             </td>
             <td>{log.identification}</td>
-            <td
-              ><select
-                class="form-select"
-                disabled={inProgress || !allowModification}
-                on:input={() => changeVisibility(log.id, !log.public)}
-                ><option selected={log.public}>Public</option>
-                <option selected={!log.public}>Private</option></select
-              ></td
-            >
+            {#if allowModification}
+              <td
+                ><select
+                  class="form-select"
+                  disabled={inProgress || !allowModification}
+                  on:input={() => changeVisibility(log.id, !log.public)}
+                  ><option selected={log.public}>Public</option>
+                  <option selected={!log.public}>Private</option></select
+                ></td
+              >
+            {/if}
             <td>
               <div class="btn-group">
                 <a
@@ -246,20 +250,22 @@
           <i class="fa-solid fa-hashtag" title="Tail Number" />
           {log.identification}
         </div>
-        <div class="mb-3 row">
-          <div class="col-auto">
-            <i class="fa-solid fa-user" title="Publicity Status" />
+        {#if allowModification}
+          <div class="mb-3 row">
+            <div class="col-auto">
+              <i class="fa-solid fa-user" title="Publicity Status" />
+            </div>
+            <div class="col">
+              <select
+                class="form-select"
+                disabled={inProgress}
+                on:input={() => changeVisibility(log.id, !log.public)}
+                ><option selected={log.public}>Public</option>
+                <option selected={!log.public}>Private</option></select
+              >
+            </div>
           </div>
-          <div class="col">
-            <select
-              class="form-select"
-              disabled={inProgress}
-              on:input={() => changeVisibility(log.id, !log.public)}
-              ><option selected={log.public}>Public</option>
-              <option selected={!log.public}>Private</option></select
-            >
-          </div>
-        </div>
+        {/if}
         <div class="mb-3 row">
           <div class="col-auto">
             <i class="fa-solid fa-circle-info" title="Flight Options" />
@@ -272,32 +278,34 @@
                 })}
                 class="btn btn-secondary">View</a
               >
-              <button
-                type="button"
-                class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                disabled={inProgress}
-              >
-                <span class="visually-hidden">Toggle Dropdown</span>
-              </button>
-              <ul class="dropdown-menu">
-                <li>
-                  <button
-                    class="btn btn-danger dropdown-item"
-                    on:click={() => {
-                      currentFlight.id = log.id;
-                      currentFlight.dep = log.dep;
-                      currentFlight.des = log.des;
-                      currentFlight.time = formatDuration(
-                        new Date(log.depDate),
-                        new Date(log.desDate)
-                      );
-                      toggleModal();
-                    }}>Delete Flight</button
-                  >
-                </li>
-              </ul>
+              {#if allowModification}
+                <button
+                  type="button"
+                  class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  disabled={inProgress}
+                >
+                  <span class="visually-hidden">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <button
+                      class="btn btn-danger dropdown-item"
+                      on:click={() => {
+                        currentFlight.id = log.id;
+                        currentFlight.dep = log.dep;
+                        currentFlight.des = log.des;
+                        currentFlight.time = formatDuration(
+                          new Date(log.depDate),
+                          new Date(log.desDate)
+                        );
+                        toggleModal();
+                      }}>Delete Flight</button
+                    >
+                  </li>
+                </ul>
+              {/if}
             </div>
           </div>
         </div>
