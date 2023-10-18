@@ -75,6 +75,7 @@
             <button
               class="input-group-text btn btn-secondary"
               on:click={() => (profileSearch = "")}
+              disabled={profileSearch.length == 0}
               ><i class="fa-solid fa-x" /></button
             >
           </div>

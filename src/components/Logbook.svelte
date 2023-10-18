@@ -7,6 +7,7 @@
     getTimeStr,
     createToast,
     GetSortOrder,
+    calculateMinutes,
   } from "../hooks.client.js";
   import hrefs from "../data/hrefs.json";
   import ToastSetup from "./setup/ToastSetup.svelte";
@@ -68,11 +69,6 @@
       }
     }
     delConfirm = false;
-  }
-  function calculateMinutes(startDate = new Date(), endDate = new Date()) {
-    const timeDifference = endDate.valueOf() - startDate.valueOf();
-    const minutes = Math.floor(timeDifference / 60000);
-    return minutes;
   }
 </script>
 

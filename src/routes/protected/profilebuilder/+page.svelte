@@ -8,7 +8,7 @@
   let inProgress = false;
   let username = profile ? profile.username : "",
     displayName = profile ? profile.display_name : "",
-    birthday = profile ? dateToStr(new Date(profile.birthday)) : "";
+    birthday = profile.birthday ? dateToStr(new Date(profile.birthday)) : null;
 
   $: disabled =
     inProgress ||
@@ -27,7 +27,7 @@
       user_id: session.user.id,
       username: username,
       display_name: displayName,
-      birthday: birthday.length > 0 ? new Date(birthday).toISOString() : null,
+      birthday: birthday ? new Date(birthday).toISOString() : null,
     });
     inProgress = false;
     if (error) {
@@ -77,10 +77,7 @@
       );
       return false;
     }
-    if (
-      birthday.length > 0 &&
-      new Date(birthday).valueOf() > new Date().valueOf()
-    ) {
+    if (birthday > 0 && new Date(birthday).valueOf() > new Date().valueOf()) {
       toast = createToast("error", "Error", "Birthday cannot be after today");
       return false;
     }
@@ -134,12 +131,19 @@
             </div>
             <div class="mb-3">
               <label for="birthday" class="form-label">Birthday</label>
-              <input
-                type="date"
-                class="form-control is"
-                id="birthday"
-                bind:value={birthday}
-              />
+              <div class="input-group">
+                <input
+                  type="date"
+                  class="form-control is"
+                  id="birthday"
+                  bind:value={birthday}
+                />
+                <button
+                  class="input-group-text btn btn-secondary"
+                  on:click={() => (birthday = null)}
+                  disabled={!birthday}><i class="fa-solid fa-x" /></button
+                >
+              </div>
               <div class="form-text">
                 Your birthday will be public. This field is not required.
               </div>

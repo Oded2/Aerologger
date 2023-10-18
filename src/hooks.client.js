@@ -139,3 +139,8 @@ export function getOpenStreetMap(latitude, longitude) {
   const embedLink = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&amp;layer=mapnik&marker=${marker}`;
   return embedLink;
 }
+export function calculateMinutes(startDate = new Date(), endDate = new Date()) {
+  const timeDifference = endDate.valueOf() - startDate.valueOf();
+  const minutes = Math.floor(timeDifference / 60000);
+  return minutes;
+}
