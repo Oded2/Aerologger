@@ -47,12 +47,13 @@
       {#if session}
         <div class="col-md-6">
           <ExploreCard
-            title={hrefs.explore.buildprofile.title}
-            desc={hrefs.explore.buildprofile.description}
+            title="Settings"
+            desc="Build your AeroLogger profile, make changes, and more."
             icon="wrench"
-            href={hrefs.explore.buildprofile.link}
+            href={hrefs.account.home.link}
           />
-        </div>{/if}
+        </div>
+      {/if}
       <div class="col-md-6">
         <ExploreCard
           title={hrefs.explore.profile.title}

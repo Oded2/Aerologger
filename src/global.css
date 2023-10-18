@@ -8,8 +8,10 @@
   font-family: system-ui, -apple-system, "Segoe UI", Roboto;
 }
 .font-google-quicksand {
-  font-weight: 500;
   font-family: "Quicksand", sans-serif;
+}
+p.font-google-quicksand {
+  font-weight: 500;
 }
 h1.font-google-quicksand {
   font-weight: bold;
