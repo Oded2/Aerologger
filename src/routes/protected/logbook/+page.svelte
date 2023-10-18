@@ -1,6 +1,4 @@
 <script>
-  import hrefs from "../../../data/hrefs.json";
-  import FloatElement from "../../../components/FloatElement.svelte";
   import Logbook from "../../../components/Logbook.svelte";
   import MidScreen from "../../../components/MidScreen.svelte";
   import ToastSetup from "../../../components/setup/ToastSetup.svelte";
