@@ -132,6 +132,12 @@
                   You will be sent a verification email to your new email.
                 </div>
               </div>
+              <div class="mb-3">
+                <a
+                  href={hrefs.passwordreset.home.link}
+                  class="btn btn-outline-danger btn-lg w-100">Reset Password</a
+                >
+              </div>
             </div>
             <div class="card-footer">
               <button
