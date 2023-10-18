@@ -13,7 +13,6 @@
   $: if (pageHref) {
     title = findTitle();
   }
-  $: console.log(title);
   export let data;
   $: supabase = data.supabase;
   $: session = data.session;
