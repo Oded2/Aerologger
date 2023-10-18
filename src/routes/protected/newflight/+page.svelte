@@ -268,7 +268,7 @@
                   />
                 </div>
 
-                <div class="col-md-6 col-xl-3 mb-3">
+                <div class="col-md-6 col-xl-3 mb-3 text-nowrap">
                   <label for="planemanu" class="form-label"
                     >Aircraft Manufacturer</label
                   >
@@ -300,7 +300,7 @@
                     placeholder={'"4X-CHA"'}
                   />
                 </div>
-                <div class="col-md-6 col-xl-3 mb-3">
+                <div class="col-md-12 col-xl-3 mb-3">
                   <label for="planetype" class="form-label">Aircraft Type</label
                   >
                   <select id="planetype" class="form-select">
@@ -353,5 +353,8 @@
 
   img {
     max-height: 60vh;
+  }
+  div.text-nowrap {
+    overflow: auto;
   }
 </style>
