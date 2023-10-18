@@ -287,7 +287,7 @@
 </main>
 
 <FloatElement visible={valid}>
-  {#if log.publicj}
+  {#if log.public}
     <button class="btn btn-primary btn-lg me-3" on:click={toggleShareModal}
       ><i class="fa-solid fa-share-from-square" /> Share</button
     >
