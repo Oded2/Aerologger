@@ -8,7 +8,11 @@
   let email = session.user.email;
   let displayName = profile ? profile.display_name : "";
   let username = profile ? profile.username : "";
-  let birthday = profile ? dateToStr(new Date(profile.birthday)) : null;
+  let birthday = profile
+    ? profile.birthday
+      ? dateToStr(new Date(profile.birthday))
+      : null
+    : null;
   let inProgress = false;
   let accountChange = false,
     profileChange = false;
