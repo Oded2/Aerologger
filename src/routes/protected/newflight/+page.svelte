@@ -203,7 +203,7 @@
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="dep" class="form-label"
-                    >Airport of Departure</label
+                    ><i class="fa-solid fa-plane-departure" /> Airport of Departure</label
                   >
                   <input
                     type="text"
@@ -215,7 +215,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="des" class="form-label"
-                    >Airport of Destination
+                    ><i class="fa-solid fa-plane-arrival" /> Airport of Destination
                   </label>
                   <input
                     type="text"
@@ -226,7 +226,9 @@
                   <span class="form-text">Name, IATA, or ICAO code</span>
                 </div>
                 <div class="col-md-6 col-xl-4 mb-3">
-                  <label for="depdate" class="form-label">Date</label>
+                  <label for="depdate" class="form-label"
+                    ><i class="fa-solid fa-calendar-days" /> Date</label
+                  >
                   <div class="input-group">
                     <button
                       class="input-group-text btn btn-secondary"
@@ -244,7 +246,7 @@
                 </div>
                 <div class="col-md-6 col-xl-4 mb-3">
                   <label for="deptime" class="form-label"
-                    >Time of Departure</label
+                    ><i class="fa-solid fa-clock" /> Time of Departure</label
                   >
 
                   <input
@@ -256,7 +258,8 @@
                 </div>
 
                 <div class="col-md-6 col-xl-4 mb-3">
-                  <label for="destime" class="form-label">Time of Arrival</label
+                  <label for="destime" class="form-label"
+                    ><i class="fa-regular fa-clock" /> Time of Arrival</label
                   >
                   <input
                     type="time"
@@ -268,7 +271,7 @@
 
                 <div class="col-md-6 col-xl-3 mb-3 text-nowrap">
                   <label for="planemanu" class="form-label"
-                    >Aircraft Manufacturer</label
+                    ><i class="fa-solid fa-globe" /> Aircraft Manufacturer</label
                   >
                   <input
                     id="planemanu"
@@ -279,7 +282,8 @@
                 </div>
                 <div class="col-md-6 col-xl-3 mb-3">
                   <label for="planemodel" class="form-label"
-                    >Aircraft Model</label
+                    ><i class="fa-solid fa-plane-circle-exclamation" /> Aircraft
+                    Model</label
                   >
                   <input
                     id="planemodel"
@@ -290,7 +294,9 @@
                 </div>
 
                 <div class="col-md-6 col-xl-3 mb-3">
-                  <label for="planeid" class="form-label">Tail Number</label>
+                  <label for="planeid" class="form-label"
+                    ><i class="fa-solid fa-hashtag" /> Tail Number</label
+                  >
                   <input
                     id="planeid"
                     class="form-control"
@@ -299,7 +305,8 @@
                   />
                 </div>
                 <div class="col-md-12 col-xl-3 mb-3">
-                  <label for="planetype" class="form-label">Aircraft Type</label
+                  <label for="planetype" class="form-label"
+                    ><i class="fa-solid fa-plane" /> Aircraft Type</label
                   >
                   <select id="planetype" class="form-select">
                     <option value="airplane" selected>Airplane</option>
