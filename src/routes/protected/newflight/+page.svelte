@@ -177,9 +177,7 @@
         <div class="row my-4">
           <div class="col">
             <a
-              href={addParamsString(hrefs.logbook.viewer.link, {
-                logId: logNumber,
-              })}
+              href={hrefs.logbook.viewer.link.replace("slug", logNumber)}
               class="btn btn-primary btn-lg fs-2 w-100 h-100">View Flight</a
             >
           </div>
