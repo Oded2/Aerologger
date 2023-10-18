@@ -15,10 +15,11 @@
   let toast;
   let showModal = false,
     showShareModal = false;
-  const { profile, log, session } = data;
+  const { profile, log } = data;
   const url = $page.url;
   const ref = url.searchParams.get("ref");
   const valid = !!log;
+  const isPlane = log.type === "airplane";
   function formatDateTime(string = "") {
     const date = new Date(string);
     return `${formatDate(date)} at ${getTimeStr(date)}`;
@@ -36,112 +37,6 @@
   on:click={toggleShareModal}
   shareText="Check out this flight from Aerologger. "
 />
-<Modal {showModal} on:click={toggleModal}>
-  <h1 class="font-google-quicksand text-center">Aircraft Information</h1>
-  <div class="row font-google-quicksand py-2">
-    <div class="col-lg">
-      <h3>
-        Manufacturer: <span class="fw-bold">
-          {log.plane.manufacturer ?? "---"}</span
-        >
-      </h3>
-      <h3>
-        Model: <span class="fw-bold"> {log.plane.model ?? "---"}</span>
-      </h3>
-      <h3>
-        Engine Type: <span class="fw-bold"
-          >{log.plane.engine_type ?? "---"}</span
-        >
-      </h3>
-      <h3>
-        Engine Thrust: <span class="fw-bold"
-          >{log.plane.engine_thrust_lb_ft
-            ? parseFloat(log.plane.engine_thrust_lb_ft).toLocaleString()
-            : "---"} LBF</span
-        >
-      </h3>
-      <h3>
-        Max Speed: <span class="fw-bold"
-          >{log.plane.max_speed_knots
-            ? parseFloat(log.plane.max_speed_knots).toLocaleString()
-            : "---"} Knots</span
-        >
-      </h3>
-      <h3>
-        Cruise Speed: <span class="fw-bold"
-          >{log.plane.cruise_speed_knots
-            ? parseFloat(log.plane.cruise_speed_knots).toLocaleString()
-            : "---"} Knots</span
-        >
-      </h3>
-      <h3>
-        Ceiling: <span class="fw-bold"
-          >{log.plane.ceiling_ft
-            ? parseFloat(log.plane.ceiling_ft).toLocaleString()
-            : "---"} ft</span
-        >
-      </h3>
-    </div>
-    <div class="col-lg">
-      <h3>
-        Takeoff Ground Run: <span class="fw-bold">
-          {log.plane.takeoff_ground_run_ft
-            ? parseFloat(log.plane.takeoff_ground_run_ft).toLocaleString()
-            : "---"} ft</span
-        >
-      </h3>
-      <h3>
-        Landing Ground Roll: <span class="fw-bold">
-          {log.plane.landing_ground_roll_ft
-            ? parseFloat(log.plane.landing_ground_roll_ft).toLocaleString()
-            : "---"} ft</span
-        >
-      </h3>
-      <h3>
-        Gross Weight: <span class="fw-bold"
-          >{log.plane.gross_weight_lbs
-            ? parseFloat(log.plane.gross_weight_lbs).toLocaleString()
-            : "---"} lbs</span
-        >
-      </h3>
-      <h3>
-        Empty Weight: <span class="fw-bold"
-          >{log.plane.empty_weight_lbs
-            ? parseFloat(log.plane.empty_weight_lbs).toLocaleString()
-            : "---"} lbs</span
-        >
-      </h3>
-      <h3>
-        Length: <span class="fw-bold"
-          >{log.plane.length_ft
-            ? parseFloat(log.plane.length_ft).toLocaleString()
-            : "---"} ft</span
-        >
-      </h3>
-      <h3>
-        Height: <span class="fw-bold"
-          >{log.plane.height_ft
-            ? parseFloat(log.plane.height_ft).toLocaleString()
-            : "---"} ft</span
-        >
-      </h3>
-      <h3>
-        Wing Span: <span class="fw-bold"
-          >{log.plane.wing_span_ft
-            ? parseFloat(log.plane.wing_span_ft).toLocaleString()
-            : "---"} ft</span
-        >
-      </h3>
-      <h3>
-        Range: <span class="fw-bold"
-          >{log.plane.range_nautical_miles
-            ? parseFloat(log.plane.range_nautical_miles).toLocaleString()
-            : "---"} Nautical Miles</span
-        >
-      </h3>
-    </div>
-  </div>
-</Modal>
 
 <main>
   <div class="container py-5">
@@ -286,6 +181,184 @@
   </div>
 </main>
 
+<Modal {showModal} on:click={toggleModal}>
+  <h1 class="font-google-quicksand text-center">Aircraft Information</h1>
+  <div class="row font-google-quicksand py-2">
+    <div class="col-lg">
+      <h3>
+        Manufacturer: <span class="fw-bold">
+          {log.plane.manufacturer ?? "---"}</span
+        >
+      </h3>
+      <h3>
+        Model: <span class="fw-bold"> {log.plane.model ?? "---"}</span>
+      </h3>
+      {#if isPlane}
+        <h3>
+          Engine Type: <span class="fw-bold"
+            >{log.plane.engine_type ?? "---"}</span
+          >
+        </h3>
+
+        <h3>
+          Engine Thrust: <span class="fw-bold"
+            >{log.plane.engine_thrust_lb_ft
+              ? parseFloat(log.plane.engine_thrust_lb_ft).toLocaleString()
+              : "---"} LBF</span
+          >
+        </h3>
+
+        <h3>
+          Max Speed: <span class="fw-bold"
+            >{log.plane.max_speed_knots
+              ? parseFloat(log.plane.max_speed_knots).toLocaleString()
+              : "---"} Knots</span
+          >
+        </h3>
+        <h3>
+          Cruise Speed: <span class="fw-bold"
+            >{log.plane.cruise_speed_knots
+              ? parseFloat(log.plane.cruise_speed_knots).toLocaleString()
+              : "---"} Knots</span
+          >
+        </h3>
+        <h3>
+          Ceiling: <span class="fw-bold"
+            >{log.plane.ceiling_ft
+              ? parseFloat(log.plane.ceiling_ft).toLocaleString()
+              : "---"} ft</span
+          >
+        </h3>
+      {:else}
+        <h3>
+          Max Speed: <span class="fw-bold"
+            >{log.plane.max_speed_sl_knots ?? "---"} Knots</span
+          >
+        </h3>
+        <h3>
+          Cruise Speed: <span class="fw-bold"
+            >{log.plane.cruise_speed_sl_knots ?? "---"} Knots</span
+          >
+        </h3>
+        <h3>
+          Cruise Time: <span class="fw-bold"
+            >{log.plane.cruise_time_min ?? "---"} Minutes</span
+          >
+        </h3>
+        <h3>
+          Fuel Capacity: <span class="fw-bold"
+            >{log.plane.fuel_capacity_gallons ?? "---"} Gallons</span
+          >
+        </h3>
+        <h3>
+          Storage Width: <span class="fw-bold"
+            >{log.plane.storage_width_ft
+              ? parseFloat(log.plane.storage_width_ft).toLocaleString()
+              : "---"} ft</span
+          >
+        </h3>
+        <h3>
+          Gross External Loads: <span class="fw-bold"
+            >{log.plane.gross_external_load_lbs
+              ? parseFloat(log.plane.gross_external_load_lbs).toLocaleString()
+              : "---"} lbs</span
+          >
+        </h3>
+      {/if}
+    </div>
+    <div class="col-lg">
+      {#if isPlane}
+        <h3>
+          Takeoff Ground Run: <span class="fw-bold">
+            {log.plane.takeoff_ground_run_ft
+              ? parseFloat(log.plane.takeoff_ground_run_ft).toLocaleString()
+              : "---"} ft</span
+          >
+        </h3>
+        <h3>
+          Landing Ground Roll: <span class="fw-bold">
+            {log.plane.landing_ground_roll_ft
+              ? parseFloat(log.plane.landing_ground_roll_ft).toLocaleString()
+              : "---"} ft</span
+          >
+        </h3>
+        <h3>
+          Gross Weight: <span class="fw-bold"
+            >{log.plane.gross_weight_lbs
+              ? parseFloat(log.plane.gross_weight_lbs).toLocaleString()
+              : "---"} lbs</span
+          >
+        </h3>
+        <h3>
+          Empty Weight: <span class="fw-bold"
+            >{log.plane.empty_weight_lbs
+              ? parseFloat(log.plane.empty_weight_lbs).toLocaleString()
+              : "---"} lbs</span
+          >
+        </h3>
+        <h3>
+          Wing Span: <span class="fw-bold"
+            >{log.plane.wing_span_ft
+              ? parseFloat(log.plane.wing_span_ft).toLocaleString()
+              : "---"} ft</span
+          >
+        </h3>
+      {:else}
+        <h3>
+          External Load Limit: <span class="fw-bold"
+            >{log.plane.external_load_limit_lbs
+              ? parseFloat(log.plane.external_load_limit_lbs).toLocaleString()
+              : "---"} lbs</span
+          >
+        </h3>
+        <h3>
+          Rotor Type: <span class="fw-bold">{log.plane.rotor_type}</span>
+        </h3>
+        <h3>
+          Rotor Diameter: <span class="fw-bold"
+            >{log.plane.main_rotor_diameter_ft
+              ? parseFloat(log.plane.main_rotor_diameter_ft).toLocaleString()
+              : "---"} ft</span
+          >
+        </h3>
+        <h3>
+          Blades: <span class="fw-bold"
+            >{log.plane.num_blades
+              ? parseFloat(log.plane.num_blades).toLocaleString()
+              : "---"}</span
+          >
+        </h3>
+        <h3>
+          Blade Material: <span class="fw-bold"
+            >{log.plane.blade_material ?? "---"}</span
+          >
+        </h3>
+      {/if}
+      <h3>
+        Length: <span class="fw-bold"
+          >{log.plane.length_ft
+            ? parseFloat(log.plane.length_ft).toLocaleString()
+            : "---"} ft</span
+        >
+      </h3>
+      <h3>
+        Height: <span class="fw-bold"
+          >{log.plane.height_ft
+            ? parseFloat(log.plane.height_ft).toLocaleString()
+            : "---"} ft</span
+        >
+      </h3>
+
+      <h3>
+        Range: <span class="fw-bold"
+          >{log.plane.range_nautical_miles
+            ? parseFloat(log.plane.range_nautical_miles).toLocaleString()
+            : "---"} Nautical Miles</span
+        >
+      </h3>
+    </div>
+  </div>
+</Modal>
 <svelte:head>
   <title>Flight from {log.dep.city} to {log.des.city}</title>
 </svelte:head>
