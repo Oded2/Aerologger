@@ -44,44 +44,40 @@
       </p>
     </div>
     <div class="row">
-      {#if session}
-        <div class="col-md-6">
-          <ExploreCard
-            title="Settings"
-            desc="Build your AeroLogger profile, make changes, and more."
-            icon="wrench"
-            href={hrefs.account.home.link}
+      <ExploreCard
+        title="Settings"
+        desc="Build your AeroLogger profile, make changes, and more."
+        icon="wrench"
+        href={hrefs.account.home.link}
+        visible={session}
+      />
+
+      <ExploreCard
+        title={hrefs.explore.profile.title}
+        desc={hrefs.explore.profile.description}
+        icon="magnifying-glass"
+        submitText="Search"
+        link={false}
+        disabled={profileSearch.length == 0 || inProgress}
+        on:click={findPilot}
+      >
+        <label for="search" class="form-label fs-5">Pilot's Username</label>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            id="search"
+            placeholder="Enter a pilot's username"
+            bind:value={profileSearch}
           />
+          <button
+            class="input-group-text btn btn-secondary"
+            on:click={() => (profileSearch = "")}
+            disabled={profileSearch.length == 0}
+            ><i class="fa-solid fa-x" /></button
+          >
         </div>
-      {/if}
-      <div class="col-md-6">
-        <ExploreCard
-          title={hrefs.explore.profile.title}
-          desc={hrefs.explore.profile.description}
-          icon="magnifying-glass"
-          submitText="Search"
-          link={false}
-          disabled={profileSearch.length == 0 || inProgress}
-          on:click={findPilot}
-        >
-          <label for="search" class="form-label fs-5">Pilot's Username</label>
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              id="search"
-              placeholder="Enter a pilot's username"
-              bind:value={profileSearch}
-            />
-            <button
-              class="input-group-text btn btn-secondary"
-              on:click={() => (profileSearch = "")}
-              disabled={profileSearch.length == 0}
-              ><i class="fa-solid fa-x" /></button
-            >
-          </div>
-        </ExploreCard>
-      </div>
+      </ExploreCard>
     </div>
   </div>
 </main>
