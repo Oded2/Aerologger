@@ -8,7 +8,7 @@
     "Check out AeroLogger, a fast, free, and convenient flight logging website.";
   let href = url.href;
   function copy() {
-    copyToClipboard(href);
+    copyToClipboard(url.href);
     href = "Link copied to clipboard";
     setTimeout(() => (href = url.href), 3000);
   }
