@@ -104,7 +104,7 @@
     </div>
   </div>
 </Modal>
-<div class="container">
+<div class="container font-google-gabarito">
   <div class="mb-3">
     <h3>
       Air time: <span class="text-aerologger"

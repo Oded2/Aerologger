@@ -115,7 +115,7 @@
                     {log.dep.icao} to {log.des.icao}
                   </li>
                   <li class="list-group-item">
-                    Time of Departure : <span class="text-aerologger">
+                    Time of Departure: <span class="text-aerologger">
                       {formatDateTime(log.depDate)}</span
                     >
                   </li>
