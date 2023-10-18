@@ -273,9 +273,12 @@
           <div class="col">
             <div class="btn-group">
               <a
-                href={addParamsString(hrefs.logbook.viewer.link, {
-                  logId: log.id,
-                })}
+                href={addParamsString(
+                  hrefs.logbook.viewer.link.replace("slug", log.id),
+                  {
+                    ref: refUrl,
+                  }
+                )}
                 class="btn btn-secondary">View</a
               >
               {#if allowModification}
