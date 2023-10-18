@@ -287,13 +287,11 @@
 </main>
 
 <FloatElement visible={valid}>
-  <button
-    class="btn btn-primary btn-lg me-3"
-    on:click={toggleShareModal}
-    disabled={!log.public}
-    ><i class="fa-solid fa-share-from-square" /> Share</button
-  >
-
+  {#if log.publicj}
+    <button class="btn btn-primary btn-lg me-3" on:click={toggleShareModal}
+      ><i class="fa-solid fa-share-from-square" /> Share</button
+    >
+  {/if}
   <a href={ref ?? hrefs.logbook.home.link} class="btn btn-secondary btn-lg"
     ><i class="fa-solid fa-rotate-left" /> Return</a
   >
