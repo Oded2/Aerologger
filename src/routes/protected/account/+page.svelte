@@ -49,8 +49,8 @@
     <div class="font-google-gabarito">
       <h1>Welcome back.</h1>
       <h3>
-        Looking for your logbook? <a
-          href={hrefs.logbook.home.link}
+        Looking to edit your profile? <a
+          href={hrefs.explore.buildprofile.link}
           class="text-reset">Click Here</a
         >.
       </h3>
