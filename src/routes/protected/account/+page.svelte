@@ -208,7 +208,10 @@
                   />
                   <button
                     class="input-group-text btn btn-secondary"
-                    on:click={() => (birthday = null)}
+                    on:click={() => {
+                      birthday = null;
+                      profileChange = true;
+                    }}
                     disabled={!birthday}
                     type="button"><i class="fa-solid fa-x" /></button
                   >
