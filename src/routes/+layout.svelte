@@ -106,7 +106,8 @@
         <li class="nav-item mb-1 mb-lg-0 me-lg-2">
           <button
             class="btn btn-dark"
-            data-bs-toggle="button"
+            class:active={darkMode}
+            aria-pressed={darkMode}
             id="darkSwitch"
             on:click={() => (darkMode = !darkMode)}
             >{#if darkMode}

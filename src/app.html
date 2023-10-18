@@ -41,14 +41,28 @@
   <body data-sveltekit-preload-data="hover">
     <div>%sveltekit.body%</div>
   </body>
-</html>
-
-<script>
-  document.getElementById("darkSwitch").addEventListener("click", () => {
-    if (document.documentElement.getAttribute("data-bs-theme") == "dark") {
-      document.documentElement.setAttribute("data-bs-theme", "light");
-    } else {
-      document.documentElement.setAttribute("data-bs-theme", "dark");
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (isDark()) {
+        toggleDarkMode();
+      }
+    });
+    document
+      .getElementById("darkSwitch")
+      .addEventListener("click", toggleDarkMode);
+    function toggleDarkMode() {
+      if (document.documentElement.getAttribute("data-bs-theme") === "light") {
+        document.documentElement.setAttribute("data-bs-theme", "dark");
+      } else {
+        document.documentElement.setAttribute("data-bs-theme", "light");
+      }
     }
-  });
-</script>
+    function isDark() {
+      return document
+        .getElementById("darkSwitch")
+        .getAttribute("aria-pressed") === "true"
+        ? true
+        : false;
+    }
+  </script>
+</html>
