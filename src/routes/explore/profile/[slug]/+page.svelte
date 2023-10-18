@@ -42,11 +42,3 @@
 </main>
 
 <svelte:head><title>{profile.display_name}'s Profile</title></svelte:head>
-
-<style>
-  @media (min-width: 600px) {
-    div.card {
-      width: 600px;
-    }
-  }
-</style>

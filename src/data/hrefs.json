@@ -44,10 +44,6 @@
         "viewer": {
             "title": "Logbook Viewer",
             "link": "/viewer/slug"
-        },
-        "settings": {
-            "title": "Logbook Settings",
-            "link": "/protected/logbooksettings"
         }
     },
     "newFlight": {
