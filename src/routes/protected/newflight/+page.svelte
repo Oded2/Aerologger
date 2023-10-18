@@ -15,6 +15,8 @@
   const { supabase, session } = data;
   const user = session ? session.user : false;
   const airportUrl = "https://api.api-ninjas.com/v1/airports";
+  const airplaneUrl = "https://api.api-ninjas.com/v1/aircraft";
+  const heliUrl = "https://api.api-ninjas.com/v1/helicopter";
   let toast;
   let dep = "",
     des = "";
@@ -55,7 +57,7 @@
   }
   async function fetchPlane() {
     const response = await fetch(
-      addParamsString("https://api.api-ninjas.com/v1/aircraft", {
+      addParamsString(planeType === "airplane" ? airplaneUrl : heliUrl, {
         manufacturer: planeManu,
         model: planeModel,
       }),
@@ -308,11 +310,13 @@
                   <label for="planetype" class="form-label"
                     ><i class="fa-solid fa-plane" /> Aircraft Type</label
                   >
-                  <select id="planetype" class="form-select">
+                  <select
+                    id="planetype"
+                    class="form-select"
+                    bind:value={planeType}
+                  >
                     <option value="airplane" selected>Airplane</option>
                     <option value="helicopter">Helicopter</option>
-                    <option value="glider">Sailplane / Glider</option>
-                    <option value="rc">Remote Control (rc)</option>
                     <option value="other">Other</option>
                   </select>
                 </div>
