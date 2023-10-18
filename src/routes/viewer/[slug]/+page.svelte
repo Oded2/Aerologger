@@ -286,6 +286,10 @@
   </div>
 </main>
 
+<svelte:head>
+  <title>Flight from {log.dep.city} to {log.des.city}</title>
+</svelte:head>
+
 <FloatElement visible={valid}>
   {#if log.public}
     <button class="btn btn-primary btn-lg me-3" on:click={toggleShareModal}

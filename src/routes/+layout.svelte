@@ -4,6 +4,7 @@
   import hrefs from "../data/hrefs.json";
   import { page } from "$app/stores";
   import "../global.css";
+  import Title from "../components/Title.svelte";
 
   $: pageUrl = new URL($page.url);
   $: pageHref = pageUrl.pathname;
@@ -12,6 +13,7 @@
   $: if (pageHref) {
     title = findTitle();
   }
+  $: console.log(title);
   export let data;
   $: supabase = data.supabase;
   $: session = data.session;
@@ -159,4 +161,6 @@
 </nav>
 <slot />
 
-<svelte:head><title>{title ?? "AeroLogger"}</title></svelte:head>
+{#if title}
+  <Title {title} />
+{/if}
