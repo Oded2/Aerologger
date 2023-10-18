@@ -78,7 +78,10 @@
           );
     inProgress = true;
     submitText = "Fetching Aircraft";
-    const plane = await fetchPlane();
+    const plane =
+      planeType == "other"
+        ? [{ manufacturer: planeManu, model: planeModel }]
+        : await fetchPlane();
     if (plane.length < 1) {
       showError("Plane not found.");
       inProgress = false;

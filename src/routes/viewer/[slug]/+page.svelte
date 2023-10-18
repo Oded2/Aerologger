@@ -90,12 +90,14 @@
                         : "None"}</span
                     >
                   </li>
-                  <li class="list-group-item">
-                    <button
-                      class="btn btn-primary btn-lg w-100 fw-bold"
-                      on:click={toggleModal}>Advanced</button
-                    >
-                  </li>
+                  {#if log.type !== "other"}
+                    <li class="list-group-item">
+                      <button
+                        class="btn btn-primary btn-lg w-100 fw-bold"
+                        on:click={toggleModal}>Advanced</button
+                      >
+                    </li>
+                  {/if}
                 </ul>
               </div>
             </div>
