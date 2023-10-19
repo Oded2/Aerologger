@@ -274,7 +274,7 @@
                   />
                 </div>
 
-                <div class="col-md-6 col-xl-3 mb-3 text-nowrap">
+                <div class="col-md-6 col-xl-3 pb-3 text-nowrap">
                   <label for="planemanu" class="form-label"
                     ><i class="fa-solid fa-globe" /> Aircraft Manufacturer</label
                   >
