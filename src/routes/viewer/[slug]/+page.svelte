@@ -16,10 +16,16 @@
   let showModal = false,
     showShareModal = false;
   const { profile, log } = data;
+  const profileRef = hrefs.explore.profile.link.replace(
+    "slug",
+    profile.username
+  );
   const url = $page.url;
   const ref = url.searchParams.get("ref");
+  url.searchParams.set("ref", profileRef);
   const valid = !!log;
   const isPlane = log.type === "airplane";
+
   function formatDateTime(string = "") {
     const date = new Date(string);
     return `${formatDate(date)} at ${getTimeStr(date)}`;
@@ -34,6 +40,7 @@
 
 <ShareModal
   showModal={showShareModal}
+  {url}
   on:click={toggleShareModal}
   shareText="Check out this flight from Aerologger. "
 />
@@ -45,12 +52,8 @@
         <div class="text-center">
           <h1>{log.dep.city} to {log.des.city}</h1>
           <h2>
-            Logged by: <a
-              href={hrefs.explore.profile.link.replace(
-                "slug",
-                profile.username
-              )}
-              class="text-reset">{profile.display_name}</a
+            Logged by: <a href={profileRef} class="text-reset"
+              >{profile.display_name}</a
             >
           </h2>
         </div>
