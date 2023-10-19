@@ -99,7 +99,8 @@
     if (value.length > 50) {
       toast = createToast(
         "error",
-        `Invalid ${name}``${name} cannot be more than 50 characters long`
+        `Invalid ${name}`,
+        `${name} cannot be more than 50 characters long`
       );
       return false;
     }
