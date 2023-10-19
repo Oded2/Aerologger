@@ -70,7 +70,16 @@
       Welcome to your <span class="text-aerologger">logbook</span>.
     </h1>
   </div>
-  <Logbook {logs} {supabase} />
+  <Logbook
+    {logs}
+    {supabase}
+    on:delete={() =>
+      (toast = createToast(
+        "success",
+        "Flight Deleted",
+        "Your flight has been deleted from your logbook."
+      ))}
+  />
   <div class="container my-5">
     <MidScreen
       ><div class="card shadow">

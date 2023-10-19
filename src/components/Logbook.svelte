@@ -10,13 +10,13 @@
     calculateMinutes,
   } from "../hooks.client.js";
   import hrefs from "../data/hrefs.json";
-  import ToastSetup from "./setup/ToastSetup.svelte";
   import { page } from "$app/stores";
+  import { createEventDispatcher } from "svelte";
   export let logs = [];
   export let supabase;
   export let allowModification = true;
+  const dispatch = createEventDispatcher();
   const refUrl = $page.url.href;
-  let toast;
   let inProgress = false,
     delConfirm = false;
   let currentFlight = { id: NaN, dep: {}, des: {}, time: "" };
@@ -55,17 +55,13 @@
           toast = createToast("error", "Error", error.message);
           return;
         }
-        toast = createToast(
-          "success",
-          "Flight Deleted",
-          "Your flight has been deleted from your logbook."
-        );
         totalMinutes -= calculateMinutes(
           new Date(current.depDate),
           new Date(current.desDate)
         );
         logs.splice(i, 1);
         logs = logs;
+        dispatch("delete");
       }
     }
     delConfirm = false;
@@ -316,7 +312,6 @@
     {/each}
   </div>
 </div>
-<ToastSetup {toast} />
 
 <style>
   table > thead > tr > th {
