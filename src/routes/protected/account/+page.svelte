@@ -202,14 +202,17 @@
                 </div>
               </div>
               <div class="mb-3">
-                <label for="birthday" class="form-label">Birthday</label>
                 <div class="input-group">
-                  <input
-                    type="date"
-                    class="form-control is"
-                    id="birthday"
-                    bind:value={birthday}
-                  />
+                  <div class="form-floating">
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="birthday"
+                      bind:value={birthday}
+                    />
+
+                    <label for="birthday">Birthday</label>
+                  </div>
                   <button
                     class="input-group-text btn btn-secondary"
                     on:click={() => {
