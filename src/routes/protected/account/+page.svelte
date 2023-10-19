@@ -15,6 +15,7 @@
     : null;
   let og = { email, displayName, username, birthday };
   let inProgress = false;
+  const maxlength = 50;
   $: accountChange = email !== og.email;
   $: profileChange =
     displayName !== og.displayName ||
@@ -70,7 +71,8 @@
     );
   }
   async function editAccount() {
-    if (!verifyInput(email, "Email")) {
+    if (!email || email.length == 0) {
+      createToast("error", "Invalid Email", "Email cannot be empty");
       return;
     }
     inProgress = true;
@@ -96,11 +98,11 @@
       );
       return false;
     }
-    if (value.length > 50) {
+    if (value.length > maxlength) {
       toast = createToast(
         "error",
         `Invalid ${name}`,
-        `${name} cannot be more than 50 characters long`
+        `${name} cannot be more than ${maxlength} characters long`
       );
       return false;
     }
@@ -172,6 +174,7 @@
                   placeholder="Your username"
                   bind:value={username}
                   required
+                  {maxlength}
                 />
                 <label for="username"
                   >Username <span class="text-danger">*</span></label
@@ -189,6 +192,7 @@
                   placeholder="Your public name"
                   bind:value={displayName}
                   required
+                  {maxlength}
                 />
                 <label for="displayname"
                   >Display Name <span class="text-danger">*</span></label
