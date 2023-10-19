@@ -10,11 +10,7 @@
   import Switch from "../../../components/Switch.svelte";
   import hrefs from "../../../data/hrefs.json";
   import logo from "../../../data/images/logo_simplified.png";
-  export let data;
-  const { supabase, session, api } = data;
-  const airportUrl = "https://api.api-ninjas.com/v1/airports";
-  const airplaneUrl = "https://api.api-ninjas.com/v1/aircraft";
-  const heliUrl = "https://api.api-ninjas.com/v1/helicopter";
+  import { goto } from "$app/navigation";
   let toast;
   let dep = "",
     des = "";
@@ -32,107 +28,35 @@
   let submitText = "Submit Flight";
   $: submitText = inProgress ? submitText : "Submit Flight";
   let logNumber = NaN;
+  $: desDate =
+    parseDateAndTime(dateStr, desTimeStr).valueOf() >= depDate.valueOf()
+      ? parseDateAndTime(dateStr, desTimeStr)
+      : parseDateAndTime(
+          dateToStr(new Date(depDate.valueOf() + 86400000)),
+          desTimeStr
+        );
   $: planeId = planeId.toUpperCase();
   $: depDate = parseDateAndTime(dateStr, depTimeStr);
-  async function getAirportDetails(airport = "") {
-    const url = addParamsString(
-      airportUrl,
-      airport.length == 3
-        ? { iata: airport }
-        : airport.length == 4
-        ? { icao: airport }
-        : { name: airport }
-    );
-    try {
-      const response = (
-        await fetch(url, { headers: { "X-Api-Key": api } })
-      ).json();
-      return await response;
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  }
-  async function fetchPlane() {
-    const response = await fetch(
-      addParamsString(planeType === "airplane" ? airplaneUrl : heliUrl, {
-        manufacturer: planeManu,
-        model: planeModel,
-      }),
-      { headers: { "X-Api-Key": api } }
-    );
-    return await response.json();
-  }
+
   async function submit() {
     if (!verify()) {
       return;
     }
-    const desDate =
-      parseDateAndTime(dateStr, desTimeStr).valueOf() >= depDate.valueOf()
-        ? parseDateAndTime(dateStr, desTimeStr)
-        : parseDateAndTime(
-            dateToStr(new Date(depDate.valueOf() + 86400000)),
-            desTimeStr
-          );
     inProgress = true;
-    submitText = "Fetching Aircraft";
-    const plane =
-      planeType == "other"
-        ? [{ manufacturer: planeManu, model: planeModel }]
-        : await fetchPlane();
-    if (plane.length < 1) {
-      showError("Plane not found.");
-      inProgress = false;
-      return;
-    }
-    submitText = "Fetching Departure Airport";
-    const depAirport = await getAirportDetails(dep);
-    if (depAirport.length != 1) {
-      showError("Departure airport not found.");
-      inProgress = false;
-      return;
-    }
-    submitText = "Fetching Destination Airport";
-    const desAirport = await getAirportDetails(des);
-    if (desAirport.length != 1) {
-      showError("Destination airport not found");
-      inProgress = false;
-      return;
-    }
-    submitText = "Inserting Into Database";
-    const { data, error } = await supabase
-      .from("Logs")
-      .insert({
-        user_id: session.user.id,
-        dep: depAirport[0],
-        des: desAirport[0],
+    goto(
+      addParamsString(hrefs.newFlight.submit.link, {
+        dep,
+        des,
         depDate: depDate.toISOString(),
         desDate: desDate.toISOString(),
-        type: planeType,
-        plane: plane[0],
-        identification: planeId,
-        notes: userNotes,
-        public: isPublic,
+        planeManu,
+        planeModel,
+        planeId,
+        planeType,
+        userNotes,
+        isPublic,
       })
-      .select();
-    submitText = "Submit Flight";
-    inProgress = false;
-    logNumber = data[0].id;
-    if (error) {
-      showError(error.message);
-      return;
-    }
-    isComplete = true;
-    dep = "";
-    des = "";
-    dateStr = dateToStr();
-    depTimeStr = getTimeStr();
-    desTimeStr = getTimeStr();
-    planeType = "airplane";
-    planeManu = "";
-    planeModel = "";
-    planeId = "";
-    userNotes = "";
+    );
   }
   function verify() {
     if (!planeType || planeType.length == 0) {
@@ -354,10 +278,6 @@
 <style>
   textarea {
     resize: none;
-  }
-
-  img {
-    max-height: 60vh;
   }
   div.text-nowrap {
     overflow: auto;
