@@ -13,9 +13,14 @@
       ? dateToStr(new Date(profile.birthday))
       : null
     : null;
+  let og = { email, displayName, username, birthday };
   let inProgress = false;
-  let accountChange = false,
-    profileChange = false;
+  $: accountChange = email !== og.email;
+  $: profileChange =
+    displayName !== og.displayName ||
+    username !== og.username ||
+    birthday !== og.birthday;
+
   async function editProfile() {
     if (!verifyInput(username, "Username")) {
       return;
@@ -55,7 +60,9 @@
       );
       return;
     }
-    profileChange = false;
+    og.displayName = displayName;
+    og.username = username;
+    og.birthday = birthday;
     toast = createToast(
       "success",
       "Success",
@@ -73,12 +80,12 @@
       toast = createToast("error", "Error", error.message);
       return;
     }
+    og.email = email;
     toast = createToast(
       "info",
       "Check Email",
       `An email has been sent to ${email} with a verification link`
     );
-    accountChange = false;
   }
   function verifyInput(value = "", name = "") {
     if (!value || value.length == 0) {
@@ -109,12 +116,8 @@
       <h1>Welcome back.</h1>
     </div>
     <div class="row">
-      <div class="col-md">
-        <form
-          on:input={() => (accountChange = true)}
-          on:submit|preventDefault={editAccount}
-          class="h-100"
-        >
+      <div class="col-lg mb-5">
+        <form on:submit|preventDefault={editAccount} class="h-100">
           <div class="card shadow my-5 h-100">
             <div class="card-header">
               <span class="font-google-quicksand">Account Settings</span>
@@ -153,12 +156,8 @@
           </div>
         </form>
       </div>
-      <div class="col-md">
-        <form
-          on:input={() => (profileChange = true)}
-          on:submit|preventDefault={editProfile}
-          class="h-100"
-        >
+      <div class="col-lg mb-5">
+        <form on:submit|preventDefault={editProfile} class="h-100">
           <div class="card shadow my-5 h-100">
             <div class="card-header">
               <span class="font-google-quicksand">Profile Settings</span>
