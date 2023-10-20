@@ -178,12 +178,10 @@
             <td>
               <div class="btn-group">
                 <a
-                  href={addParamsString(
-                    hrefs.logbook.viewer.link.replace("slug", log.id),
-                    {
-                      ref: refUrl,
-                    }
-                  )}
+                  href={addParamsString(hrefs.logbook.viewer.link, {
+                    logId: log.id,
+                    ref: refUrl,
+                  })}
                   class="btn btn-secondary">View</a
                 >
                 {#if allowModification}

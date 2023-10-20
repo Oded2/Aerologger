@@ -42,8 +42,8 @@
             "link": "/protected/logbook"
         },
         "viewer": {
-            "title": "Logbook Viewer",
-            "link": "/viewer/slug"
+            "title": "Flight Viewer",
+            "link": "/viewer"
         }
     },
     "newFlight": {

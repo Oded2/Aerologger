@@ -1,9 +1,9 @@
-export async function load({ params, parent }) {
+export async function load({ parent, url }) {
   const { supabase } = await parent();
   const { data: log } = await supabase
     .from("Logs")
     .select()
-    .eq("id", params.slug);
+    .eq("id", url.searchParams.get("logId"));
   if (!log[0]) {
     return;
   }

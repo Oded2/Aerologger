@@ -4,13 +4,13 @@
     formatDate,
     getTimeStr,
     formatDuration,
-  } from "../../../hooks.client.js";
-  import hrefs from "../../../data/hrefs.json";
-  import FloatElement from "../../../components/FloatElement.svelte";
-  import ToastSetup from "../../../components/setup/ToastSetup.svelte";
-  import ShareModal from "../../../components/ShareModal.svelte";
-  import AirportCard from "../../../components/AirportCard.svelte";
-  import Modal from "../../../components/Modal.svelte";
+  } from "../../hooks.client.js";
+  import hrefs from "../../data/hrefs.json";
+  import FloatElement from "../../components/FloatElement.svelte";
+  import ToastSetup from "../../components/setup/ToastSetup.svelte";
+  import ShareModal from "../../components/ShareModal.svelte";
+  import AirportCard from "../../components/AirportCard.svelte";
+  import Modal from "../../components/Modal.svelte";
   export let data;
   let toast;
   let showModal = false,
