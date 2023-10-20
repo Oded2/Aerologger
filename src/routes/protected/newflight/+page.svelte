@@ -28,6 +28,7 @@
   let submitText = "Submit Flight";
   $: submitText = inProgress ? submitText : "Submit Flight";
   let logNumber = NaN;
+  let isValid = false;
   $: desDate =
     parseDateAndTime(dateStr, desTimeStr).valueOf() >= depDate.valueOf()
       ? parseDateAndTime(dateStr, desTimeStr)
@@ -37,28 +38,26 @@
         );
   $: planeId = planeId.toUpperCase();
   $: depDate = parseDateAndTime(dateStr, depTimeStr);
-
+  $: submitLink = addParamsString(hrefs.newFlight.submit.link, {
+    dep,
+    des,
+    depDate: depDate.toISOString(),
+    desDate: desDate.toISOString(),
+    planeManu,
+    planeModel,
+    planeId,
+    planeType,
+    userNotes,
+    isPublic,
+  });
   async function submit() {
     if (!verify()) {
       return;
     }
     inProgress = true;
-    goto(
-      addParamsString(hrefs.newFlight.submit.link, {
-        dep,
-        des,
-        depDate: depDate.toISOString(),
-        desDate: desDate.toISOString(),
-        planeManu,
-        planeModel,
-        planeId,
-        planeType,
-        userNotes,
-        isPublic,
-      })
-    );
+    goto(submitLink);
   }
-  function verify() {
+  function verify(showToast = true) {
     if (!planeType || planeType.length == 0) {
       showError("Aircraft type cannot be empty");
       return false;
@@ -84,9 +83,11 @@
       return false;
     }
     return true;
-  }
-  function showError(desc) {
-    toast = createToast("error", "Error", desc);
+    function showError(desc) {
+      if (showToast) {
+        toast = createToast("error", "Error", desc);
+      }
+    }
   }
 </script>
 
@@ -123,7 +124,12 @@
       <div>
         <h1>Welcome back.</h1>
       </div>
-      <form on:submit|preventDefault={submit}>
+      <form
+        on:submit|preventDefault
+        on:input={() => {
+          isValid = verify(false);
+        }}
+      >
         <div class="card">
           <div class="card-body fs-3">
             <div class="row">
@@ -174,7 +180,6 @@
                 <label for="deptime" class="form-label"
                   ><i class="fa-solid fa-clock" /> Time of Departure</label
                 >
-
                 <input
                   type="time"
                   id="deptime"
@@ -262,11 +267,21 @@
             </div>
           </div>
           <div class="card-footer">
-            <button
-              class="btn btn-primary btn-lg w-100 fs-4"
-              type="submit"
-              disabled={inProgress}>{submitText}</button
-            >
+            {#if isValid}
+              <a
+                data-sveltekit-preload-data="off"
+                href={submitLink}
+                class="btn btn-primary btb-lg w-100 fs-4"
+                class:disabled={inProgress}
+                on:click={() => (inProgress = true)}>{submitText}</a
+              >
+            {:else}
+              <button
+                class="btn btn-primary btn-lg w-100 fs-4"
+                type="submit"
+                disabled>{submitText}</button
+              >
+            {/if}
           </div>
         </div>
       </form>
