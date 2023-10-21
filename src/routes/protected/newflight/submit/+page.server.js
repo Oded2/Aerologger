@@ -19,7 +19,7 @@ export async function load({ url }) {
   };
   for (const i in params) {
     if (!params[i]) {
-      throw redirect(301, hrefs.newFlight.home.link);
+      handleError();
     }
   }
   const dep = params.dep,
@@ -74,5 +74,5 @@ async function getAirportDetails(airport = "") {
 }
 
 function handleError() {
-  throw redirect(301, hrefs.newFlight.home.link);
+  throw redirect(301, "/protected/newflight/error");
 }
