@@ -3,6 +3,7 @@
     addParamsString,
     createToast,
     dateToStr,
+    fetchFromEndpoint,
     getTimeStr,
     parseDateAndTime,
   } from "../../../hooks.client.js";
@@ -10,11 +11,10 @@
   import Switch from "../../../components/Switch.svelte";
   import hrefs from "../../../data/hrefs.json";
   import logo from "../../../data/images/logo_simplified.png";
+  import { onMount } from "svelte";
   export let data;
-  const { supabase, session, api } = data;
-  const airportUrl = "https://api.api-ninjas.com/v1/airports";
-  const airplaneUrl = "https://api.api-ninjas.com/v1/aircraft";
-  const heliUrl = "https://api.api-ninjas.com/v1/helicopter";
+  const { supabase, session } = data;
+  const apiRef = hrefs.apis;
   let toast;
   let dep = "",
     des = "";
@@ -35,33 +35,14 @@
   $: planeId = planeId.toUpperCase();
   $: depDate = parseDateAndTime(dateStr, depTimeStr);
   async function getAirportDetails(airport = "") {
-    const url = addParamsString(
-      airportUrl,
-      airport.length == 3
-        ? { iata: airport }
-        : airport.length == 4
-        ? { icao: airport }
-        : { name: airport }
-    );
-    try {
-      const response = (
-        await fetch(url, { headers: { "X-Api-Key": api } })
-      ).json();
-      return await response;
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
+    return await fetchFromEndpoint(apiRef.airport.link, { airport });
   }
   async function fetchPlane() {
-    const response = await fetch(
-      addParamsString(planeType === "airplane" ? airplaneUrl : heliUrl, {
-        manufacturer: planeManu,
-        model: planeModel,
-      }),
-      { headers: { "X-Api-Key": api } }
-    );
-    return await response.json();
+    return await fetchFromEndpoint(apiRef.airplane.link, {
+      type: planeType,
+      manu: planeManu,
+      model: planeModel,
+    });
   }
   async function submit() {
     if (!verify()) {

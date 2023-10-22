@@ -144,3 +144,14 @@ export function calculateMinutes(startDate = new Date(), endDate = new Date()) {
   const minutes = Math.floor(timeDifference / 60000);
   return minutes;
 }
+
+export async function fetchFromEndpoint(ref = "", params = {}) {
+  const response = await fetch(ref, {
+    method: "POST",
+    body: JSON.stringify(params),
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  return await response.json();
+}

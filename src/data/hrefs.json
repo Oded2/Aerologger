@@ -73,5 +73,13 @@
             "link": "/contact",
             "mail": "odedconnect@gmail.com"
         }
+    },
+    "apis": {
+        "airport": {
+            "link": "/apis/airports"
+        },
+        "airplane": {
+            "link": "/apis/airplane"
+        }
     }
 }
