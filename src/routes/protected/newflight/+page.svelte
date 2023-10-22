@@ -10,7 +10,11 @@
   import Switch from "../../../components/Switch.svelte";
   import hrefs from "../../../data/hrefs.json";
   import logo from "../../../data/images/logo_simplified.png";
-  import { goto } from "$app/navigation";
+  export let data;
+  const { supabase, session, api } = data;
+  const airportUrl = "https://api.api-ninjas.com/v1/airports";
+  const airplaneUrl = "https://api.api-ninjas.com/v1/aircraft";
+  const heliUrl = "https://api.api-ninjas.com/v1/helicopter";
   let toast;
   let dep = "",
     des = "";
@@ -28,36 +32,109 @@
   let submitText = "Submit Flight";
   $: submitText = inProgress ? submitText : "Submit Flight";
   let logNumber = NaN;
-  let isValid = false;
-  $: desDate =
-    parseDateAndTime(dateStr, desTimeStr).valueOf() >= depDate.valueOf()
-      ? parseDateAndTime(dateStr, desTimeStr)
-      : parseDateAndTime(
-          dateToStr(new Date(depDate.valueOf() + 86400000)),
-          desTimeStr
-        );
   $: planeId = planeId.toUpperCase();
   $: depDate = parseDateAndTime(dateStr, depTimeStr);
-  $: submitLink = addParamsString(hrefs.newFlight.submit.link, {
-    dep,
-    des,
-    depDate: depDate.toISOString(),
-    desDate: desDate.toISOString(),
-    planeManu,
-    planeModel,
-    planeId,
-    planeType,
-    userNotes,
-    isPublic,
-  });
+  async function getAirportDetails(airport = "") {
+    const url = addParamsString(
+      airportUrl,
+      airport.length == 3
+        ? { iata: airport }
+        : airport.length == 4
+        ? { icao: airport }
+        : { name: airport }
+    );
+    try {
+      const response = (
+        await fetch(url, { headers: { "X-Api-Key": api } })
+      ).json();
+      return await response;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+  async function fetchPlane() {
+    const response = await fetch(
+      addParamsString(planeType === "airplane" ? airplaneUrl : heliUrl, {
+        manufacturer: planeManu,
+        model: planeModel,
+      }),
+      { headers: { "X-Api-Key": api } }
+    );
+    return await response.json();
+  }
   async function submit() {
     if (!verify()) {
       return;
     }
+    const desDate =
+      parseDateAndTime(dateStr, desTimeStr).valueOf() >= depDate.valueOf()
+        ? parseDateAndTime(dateStr, desTimeStr)
+        : parseDateAndTime(
+            dateToStr(new Date(depDate.valueOf() + 86400000)),
+            desTimeStr
+          );
     inProgress = true;
-    goto(submitLink);
+    submitText = "Fetching Aircraft";
+    const plane =
+      planeType == "other"
+        ? [{ manufacturer: planeManu, model: planeModel }]
+        : await fetchPlane();
+    if (plane.length < 1) {
+      showError("Plane not found.");
+      inProgress = false;
+      return;
+    }
+    submitText = "Fetching Departure Airport";
+    const depAirport = await getAirportDetails(dep);
+    if (depAirport.length != 1) {
+      showError("Departure airport not found.");
+      inProgress = false;
+      return;
+    }
+    submitText = "Fetching Destination Airport";
+    const desAirport = await getAirportDetails(des);
+    if (desAirport.length != 1) {
+      showError("Destination airport not found");
+      inProgress = false;
+      return;
+    }
+    submitText = "Inserting Into Database";
+    const { data, error } = await supabase
+      .from("Logs")
+      .insert({
+        user_id: session.user.id,
+        dep: depAirport[0],
+        des: desAirport[0],
+        depDate: depDate.toISOString(),
+        desDate: desDate.toISOString(),
+        type: planeType,
+        plane: plane[0],
+        identification: planeId,
+        notes: userNotes,
+        public: isPublic,
+      })
+      .select();
+    submitText = "Submit Flight";
+    inProgress = false;
+    logNumber = data[0].id;
+    if (error) {
+      showError(error.message);
+      return;
+    }
+    isComplete = true;
+    dep = "";
+    des = "";
+    dateStr = dateToStr();
+    depTimeStr = getTimeStr();
+    desTimeStr = getTimeStr();
+    planeType = "airplane";
+    planeManu = "";
+    planeModel = "";
+    planeId = "";
+    userNotes = "";
   }
-  function verify(showToast = true) {
+  function verify() {
     if (!planeType || planeType.length == 0) {
       showError("Aircraft type cannot be empty");
       return false;
@@ -83,11 +160,9 @@
       return false;
     }
     return true;
-    function showError(desc) {
-      if (showToast) {
-        toast = createToast("error", "Error", desc);
-      }
-    }
+  }
+  function showError(desc) {
+    toast = createToast("error", "Error", desc);
   }
 </script>
 
@@ -124,12 +199,7 @@
       <div>
         <h1>Welcome back.</h1>
       </div>
-      <form
-        on:submit|preventDefault
-        on:input={() => {
-          isValid = verify(false);
-        }}
-      >
+      <form on:submit|preventDefault={submit}>
         <div class="card">
           <div class="card-body fs-3">
             <div class="row">
@@ -180,6 +250,7 @@
                 <label for="deptime" class="form-label"
                   ><i class="fa-solid fa-clock" /> Time of Departure</label
                 >
+
                 <input
                   type="time"
                   id="deptime"
@@ -267,21 +338,11 @@
             </div>
           </div>
           <div class="card-footer">
-            {#if isValid}
-              <a
-                data-sveltekit-preload-data="off"
-                href={submitLink}
-                class="btn btn-primary btb-lg w-100 fs-4"
-                class:disabled={inProgress}
-                on:click={() => (inProgress = true)}>{submitText}</a
-              >
-            {:else}
-              <button
-                class="btn btn-primary btn-lg w-100 fs-4"
-                type="submit"
-                disabled>{submitText}</button
-              >
-            {/if}
+            <button
+              class="btn btn-primary btn-lg w-100 fs-4"
+              type="submit"
+              disabled={inProgress}>{submitText}</button
+            >
           </div>
         </div>
       </form>
@@ -293,6 +354,10 @@
 <style>
   textarea {
     resize: none;
+  }
+
+  img {
+    max-height: 60vh;
   }
   div.text-nowrap {
     overflow: auto;
