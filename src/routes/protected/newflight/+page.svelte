@@ -11,7 +11,6 @@
   import Switch from "../../../components/Switch.svelte";
   import hrefs from "../../../data/hrefs.json";
   import logo from "../../../data/images/logo_simplified.png";
-  import { onMount } from "svelte";
   export let data;
   const { supabase, session } = data;
   const apiRef = hrefs.apis;
