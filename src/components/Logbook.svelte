@@ -184,11 +184,8 @@
           </div>
           {#if allowModification}
             <div class="col-md mb-2 mb-md-0 row">
-              <div class="col-auto">
-                <i
-                  class="d-md-none fa-solid fa-user"
-                  title="Publicity Status"
-                />
+              <div class="col-auto d-md-none">
+                <i class=" fa-solid fa-user" title="Publicity Status" />
               </div>
               <div class="col col-md-12 px-md-0">
                 <select
