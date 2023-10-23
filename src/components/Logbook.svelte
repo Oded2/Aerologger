@@ -15,6 +15,8 @@
   export let logs = [];
   export let supabase;
   export let allowModification = true;
+  const maxLogs = 10;
+  let currentPage = 1;
   const dispatch = createEventDispatcher();
   const refUrl = $page.url.href;
   let inProgress = false,
@@ -118,64 +120,93 @@
       >Please note that date and times are relative to your time zone.</span
     >
   </div>
-  <div class="table-responsive d-none d-md-block font-google-gabarito">
-    <table class="table fs-5">
-      <thead>
-        <tr>
-          <th scope="col" class="text-nowrap"
-            ><i class="fa-solid fa-calendar-days" title="Flight Date" /> Date
-          </th>
-          <th scope="col" class="text-nowrap"
-            ><i class="fa-solid fa-map" title="Flight Route" /> Route
-          </th>
-          <th scope="col" class="text-nowrap"
-            ><i class="fa-solid fa-clock" title="Takeoff and Landing Times" />
-            Times
-          </th>
-          <th scope="col" class="text-nowrap"
-            ><i class="fa-solid fa-hashtag" title="Tail Number" /> Tail Number</th
-          >
+
+  <div class="fs-5">
+    <div class="row p-2 mb-2 border-bottom d-none d-md-flex">
+      <div class="col-md mb-2 mb-md-0 fw-bold">
+        <i class="fa-solid fa-calendar-days" title="Flight Date" /> Date
+      </div>
+      <div class="col-md mb-2 mb-md-0 fw-bold">
+        <i class="fa-solid fa-map" title="Flight Route" /> Route
+      </div>
+      <div class="col-md mb-2 mb-md-0 fw-bold">
+        <i class="fa-solid fa-clock" title="Takeoff and Landing Times" />
+        Times
+      </div>
+      <div class="col-md mb-2 mb-md-0 fw-bold">
+        <i class="fa-solid fa-hashtag" title="Tail Number" /> Tail Number
+      </div>
+      {#if allowModification}
+        <div class="col-md mb-2 mb-md-0 fw-bold">
+          <i class="fa-solid fa-user" title="Publicity Status" /> Status
+        </div>
+      {/if}
+      <div class="col-md mb-2 mb-md-0 fw-bold">
+        <i class="fa-solid fa-circle-info" title="Flight Options" /> More
+      </div>
+    </div>
+    {#each logs as log, index}
+      {#if index < currentPage * maxLogs}
+        <div class="row mb-3 border-bottom">
+          <div class="col-md mb-2 mb-md-0 fw-bold">
+            <i
+              class="d-md-none fa-solid fa-calendar-days"
+              title="Flight Date"
+            />
+            {formatDateStr(log.depDate)}
+          </div>
+          <div class="col-md mb-2 mb-md-0">
+            <i class="d-md-none fa-solid fa-map" title="Flight Route" />
+            {log.dep.icao} to {log.des.icao}
+          </div>
+          <div class="col-md mb-2 mb-md-0">
+            <div>
+              <i
+                class="d-md-none fa-solid fa-clock"
+                title="Takeoff and Landing Times"
+              />
+              {getTimeStr(new Date(log.depDate))} to {getTimeStr(
+                new Date(log.desDate)
+              )}
+            </div>
+            <div class="fs-6">
+              {`(${formatDuration(
+                new Date(log.depDate),
+                new Date(log.desDate)
+              )})`}
+            </div>
+          </div>
+          <div class="col-md mb-2 mb-md-0">
+            <i class="d-md-none fa-solid fa-hashtag" title="Tail Number" />
+            {log.identification}
+          </div>
           {#if allowModification}
-            <th scope="col" class="text-nowrap">
-              <i class="fa-solid fa-user" title="Publicity Status" /> Status
-            </th>
-          {/if}
-          <th scope="col" class="text-nowrap"
-            ><i class="fa-solid fa-circle-info" title="Flight Options" /> More
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each logs as log}
-          <tr>
-            <th scope="row">{formatDateStr(log.depDate)}</th>
-            <td>{log.dep.icao} to {log.des.icao}</td>
-            <td>
-              <div>
-                {getTimeStr(new Date(log.depDate))} to {getTimeStr(
-                  new Date(log.desDate)
-                )}
+            <div class="col-md mb-2 mb-md-0 row">
+              <div class="col-auto">
+                <i
+                  class="d-md-none fa-solid fa-user"
+                  title="Publicity Status"
+                />
               </div>
-              <div class="fs-6">
-                {`(${formatDuration(
-                  new Date(log.depDate),
-                  new Date(log.desDate)
-                )})`}
-              </div>
-            </td>
-            <td>{log.identification}</td>
-            {#if allowModification}
-              <td
-                ><select
+              <div class="col">
+                <select
                   class="form-select"
                   disabled={inProgress || !allowModification}
                   on:input={() => changeVisibility(log.id, !log.public)}
                   ><option selected={log.public}>Public</option>
                   <option selected={!log.public}>Private</option></select
-                ></td
-              >
-            {/if}
-            <td>
+                >
+              </div>
+            </div>
+          {/if}
+          <div class="col-md mb-2 mb-md-0 row">
+            <div class="col-auto">
+              <i
+                class="d-md-none fa-solid fa-circle-info"
+                title="Flight Options"
+              />
+            </div>
+            <div class="col">
               <div class="btn-group">
                 <a
                   href={addParamsString(hrefs.logbook.viewer.link, {
@@ -213,106 +244,10 @@
                   </ul>
                 {/if}
               </div>
-            </td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  </div>
-  <div class="fs-3 d-md-none">
-    {#each logs as log}
-      <div class="border-bottom mb-4">
-        <div class="mb-3">
-          <div class="fw-bold my-1">
-            <i class="fa-solid fa-calendar-days" title="Flight Date" />
-            {formatDateStr(log.depDate)}
-          </div>
-        </div>
-        <div class="mb-3">
-          <div>
-            <i class="fa-solid fa-map" title="Flight Route" />
-            {log.dep.icao} to {log.des.icao}
-          </div>
-        </div>
-        <div class="mb-3">
-          <i class="fa-solid fa-clock" title="Takeoff and Landing Times" />
-          {getTimeStr(new Date(log.depDate))} to {getTimeStr(
-            new Date(log.desDate)
-          )}
-        </div>
-        <div class="mb-3">
-          <i class="fa-solid fa-hashtag" title="Tail Number" />
-          {log.identification}
-        </div>
-        {#if allowModification}
-          <div class="mb-3 row">
-            <div class="col-auto">
-              <i class="fa-solid fa-user" title="Publicity Status" />
-            </div>
-            <div class="col">
-              <select
-                class="form-select"
-                disabled={inProgress}
-                on:input={() => changeVisibility(log.id, !log.public)}
-                ><option selected={log.public}>Public</option>
-                <option selected={!log.public}>Private</option></select
-              >
-            </div>
-          </div>
-        {/if}
-        <div class="mb-3 row">
-          <div class="col-auto">
-            <i class="fa-solid fa-circle-info" title="Flight Options" />
-          </div>
-          <div class="col">
-            <div class="btn-group">
-              <a
-                href={addParamsString(
-                  hrefs.logbook.viewer.link.replace("slug", log.id),
-                  {
-                    ref: refUrl,
-                  }
-                )}
-                class="btn btn-secondary">View</a
-              >
-              {#if allowModification}
-                <button
-                  type="button"
-                  class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  disabled={inProgress}
-                >
-                  <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li>
-                    <button
-                      class="btn btn-danger dropdown-item"
-                      on:click={() => {
-                        currentFlight.id = log.id;
-                        currentFlight.dep = log.dep;
-                        currentFlight.des = log.des;
-                        currentFlight.time = formatDuration(
-                          new Date(log.depDate),
-                          new Date(log.desDate)
-                        );
-                        toggleModal();
-                      }}>Delete Flight</button
-                    >
-                  </li>
-                </ul>
-              {/if}
             </div>
           </div>
         </div>
-      </div>
+      {/if}
     {/each}
   </div>
 </div>
-
-<style>
-  table > thead > tr > th {
-    overflow: auto;
-  }
-</style>
