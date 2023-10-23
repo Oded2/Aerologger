@@ -117,6 +117,9 @@
   <div class="container my-5">
     <div class="font-google-gabarito">
       <h1>Welcome back.</h1>
+      <h5 class="fw-normal">
+        User Id: {session.user.id}
+      </h5>
     </div>
     <div class="row">
       <div class="col-lg mb-5">

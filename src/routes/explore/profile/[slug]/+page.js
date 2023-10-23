@@ -1,10 +1,11 @@
-export async function load({ params, parent }) {
-  const username = params.slug;
+export async function load({ params, parent, url }) {
+  const user = params.slug;
+  const type = url.searchParams.get("searchby") ?? "username";
   const { supabase } = await parent();
   const { data: userProfile } = await supabase
     .from("Profiles")
     .select()
-    .eq("username", username);
+    .eq(type, user);
   const { data: userLogs } = await supabase
     .from("Logs")
     .select()

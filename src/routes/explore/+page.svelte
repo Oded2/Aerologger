@@ -3,11 +3,12 @@
   import ExploreCard from "../../components/ExploreCard.svelte";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import hrefs from "../../data/hrefs.json";
-  import { createToast } from "../../hooks.client.js";
+  import { addParamsString, createToast } from "../../hooks.client.js";
   export let data;
   const { userProfile, supabase, session } = data;
   let toast;
   let profileSearch = userProfile ? userProfile.username : "";
+  let type = "username";
   let inProgress = false;
   async function findPilot() {
     if (profileSearch.length == 0) {
@@ -18,9 +19,13 @@
     const { data } = await supabase
       .from("Profiles")
       .select()
-      .eq("username", profileSearch);
+      .eq(type, profileSearch);
     if (data.length > 0) {
-      goto(hrefs.explore.profile.link.replace("slug", profileSearch));
+      const ref = addParamsString(
+        hrefs.explore.profile.link.replace("slug", profileSearch),
+        { searchby: type }
+      );
+      goto(ref);
       return;
     }
     inProgress = false;
@@ -61,22 +66,31 @@
         disabled={profileSearch.length == 0 || inProgress}
         on:submit={findPilot}
       >
-        <label for="search" class="form-label fs-5">Pilot's Username</label>
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            id="search"
-            placeholder="Enter a pilot's username"
-            bind:value={profileSearch}
-          />
-          <button
-            class="input-group-text btn btn-secondary"
-            type="button"
-            on:click={() => (profileSearch = "")}
-            disabled={profileSearch.length == 0}
-            ><i class="fa-solid fa-x" /></button
-          >
+        <div class="mb-3">
+          <label for="search" class="form-label fs-5">Search Pilot</label>
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              id="search"
+              placeholder="Enter a pilot's username"
+              bind:value={profileSearch}
+            />
+            <button
+              class="input-group-text btn btn-secondary"
+              type="button"
+              on:click={() => (profileSearch = "")}
+              disabled={profileSearch.length == 0}
+              ><i class="fa-solid fa-x" /></button
+            >
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="type" class="form-label fs-5">Search By</label>
+          <select id="type" class="form-select" bind:value={type}>
+            <option value="username" selected>Username</option>
+            <option value="user_id">User Id</option>
+          </select>
         </div>
       </ExploreCard>
     </div>
