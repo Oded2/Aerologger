@@ -17,6 +17,7 @@
   export let allowModification = true;
   const maxLogs = 10;
   let currentPage = 1;
+  let userPage = currentPage;
   const dispatch = createEventDispatcher();
   const refUrl = $page.url.href;
   let inProgress = false,
@@ -61,7 +62,7 @@
           new Date(current.depDate),
           new Date(current.desDate)
         );
-
+        totalFlights--;
         logs.splice(i, 1);
         logs = logs;
         dispatch("delete");
@@ -147,7 +148,7 @@
       </div>
     </div>
     {#each logs as log, index}
-      {#if index + 1 < currentPage * maxLogs && index + 1 > currentPage * maxLogs - 10}
+      {#if index < currentPage * maxLogs && index >= currentPage * maxLogs - maxLogs}
         <div class="row mb-3 border-bottom">
           <div class="col-md mb-2 mb-md-0 fw-bold">
             <i
@@ -252,8 +253,10 @@
     {/each}
     {#if logs.length > maxLogs}
       <div class="m-auto">
-        <div class="mb-2 fs-6">Page {currentPage}</div>
-        <div class="btn-group w-100">
+        <div class="mb-2 fs-6">
+          Page {currentPage}
+        </div>
+        <div class="btn-group w-100 mb-2">
           <button
             class="btn btn-secondary btn-lg"
             on:click={() => currentPage--}
@@ -263,9 +266,27 @@
           <button
             class="btn btn-secondary btn-lg"
             on:click={() => currentPage++}
-            disabled={logs.length / currentPage < maxLogs}
+            disabled={logs.length / currentPage <= maxLogs}
             ><i class="fa-solid fa-forward" /></button
           >
+        </div>
+        <div class="row">
+          <div class="col-auto">Go to page</div>
+          <div class="col-auto">
+            <div class="input-group">
+              <input type="number" class="form-control" bind:value={userPage} />
+              <button
+                class="btn btn-primary input-group-text"
+                on:click={() => (currentPage = userPage)}
+                disabled={userPage == currentPage ||
+                  !userPage ||
+                  userPage >
+                    logs.length / maxLogs +
+                      (logs.length % maxLogs != 0 ? 1 : 0)}
+                ><i class="fa-solid fa-check" /></button
+              >
+            </div>
+          </div>
         </div>
       </div>
     {/if}
