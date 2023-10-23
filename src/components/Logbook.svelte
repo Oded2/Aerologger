@@ -190,7 +190,7 @@
                   title="Publicity Status"
                 />
               </div>
-              <div class="col">
+              <div class="col col-md-12 px-md-0">
                 <select
                   class="form-select"
                   disabled={inProgress || !allowModification}
