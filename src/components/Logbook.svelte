@@ -43,6 +43,11 @@
       toast = createToast("error", "Error", error.message);
       return;
     }
+    for (const i in logs) {
+      if (logs[i].id === id) {
+        logs[i].public = makePublic;
+      }
+    }
   }
   function toggleModal() {
     delConfirm = !delConfirm;
