@@ -61,6 +61,7 @@
           new Date(current.depDate),
           new Date(current.desDate)
         );
+
         logs.splice(i, 1);
         logs = logs;
         dispatch("delete");
@@ -146,7 +147,7 @@
       </div>
     </div>
     {#each logs as log, index}
-      {#if index < currentPage * maxLogs}
+      {#if index + 1 < currentPage * maxLogs && index + 1 > currentPage * maxLogs - 10}
         <div class="row mb-3 border-bottom">
           <div class="col-md mb-2 mb-md-0 fw-bold">
             <i
@@ -249,5 +250,24 @@
         </div>
       {/if}
     {/each}
+    {#if logs.length > maxLogs}
+      <div class="m-auto">
+        <div class="mb-2 fs-6">Page {currentPage}</div>
+        <div class="btn-group w-100">
+          <button
+            class="btn btn-secondary btn-lg"
+            on:click={() => currentPage--}
+            disabled={currentPage == 1}
+            ><i class="fa-solid fa-backward" /></button
+          >
+          <button
+            class="btn btn-secondary btn-lg"
+            on:click={() => currentPage++}
+            disabled={logs.length / currentPage < maxLogs}
+            ><i class="fa-solid fa-forward" /></button
+          >
+        </div>
+      </div>
+    {/if}
   </div>
 </div>
