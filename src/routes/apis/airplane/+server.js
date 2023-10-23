@@ -1,5 +1,5 @@
 import { APININJAS } from "$env/static/private";
-import { addParams } from "../../../hooks.client.js";
+import { addParamsString } from "../../../hooks.client.js";
 
 export async function POST({ request }) {
   const { type, manu, model } = await request.json();
@@ -8,8 +8,8 @@ export async function POST({ request }) {
       ? "https://api.api-ninjas.com/v1/aircraft"
       : "https://api.api-ninjas.com/v1/helicopter"
   );
-  addParams(airplaneUrl, { manufacturer: manu, model });
-  const response = await fetch(airplaneUrl, {
+  const newUrl = addParamsString(airplaneUrl, { manufacturer: manu, model });
+  const response = await fetch(newUrl, {
     headers: { "X-Api-Key": APININJAS },
   });
   return response;
