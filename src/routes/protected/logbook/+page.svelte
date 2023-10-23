@@ -81,42 +81,43 @@
       ))}
   />
   <div class="container my-5">
-    <MidScreen
-      ><div class="card shadow">
-        <div class="card-header">
-          <span class="font-google-quicksand">Logbook settings</span>
-        </div>
-        <div class="card-body">
-          <div class="my-3">
-            <h5>Privacy</h5>
-            <div class="row">
-              <div class="col-sm mb-3">
-                <button
-                  class="btn btn-dark w-100 shadow"
-                  on:click={() => changeVisibility(false)}
-                  disabled={inProgress}>Make Logs Private</button
-                >
+    {#if logs.length > 0}
+      <MidScreen
+        ><div class="card shadow">
+          <div class="card-header">
+            <span class="font-google-quicksand">Logbook settings</span>
+          </div>
+          <div class="card-body">
+            <div class="my-3">
+              <h5>Privacy</h5>
+              <div class="row">
+                <div class="col-sm mb-3">
+                  <button
+                    class="btn btn-dark w-100 shadow"
+                    on:click={() => changeVisibility(false)}
+                    disabled={inProgress}>Make Logs Private</button
+                  >
+                </div>
+                <div class="col-sm mb-3">
+                  <button
+                    class="btn btn-dark w-100 shadow"
+                    on:click={() => changeVisibility(true)}
+                    disabled={inProgress}>Make Logs Public</button
+                  >
+                </div>
               </div>
-              <div class="col-sm mb-3">
-                <button
-                  class="btn btn-dark w-100 shadow"
-                  on:click={() => changeVisibility(true)}
-                  disabled={inProgress}>Make Logs Public</button
+            </div>
+            <div class="mb-3">
+              <h5>Danger Zone</h5>
+              <div>
+                <button class="btn btn-outline-danger w-100" on:click={purge}
+                  >Purge Logbook</button
                 >
               </div>
             </div>
           </div>
-          <div class="mb-3">
-            <h5>Danger Zone</h5>
-            <div>
-              <button class="btn btn-outline-danger w-100" on:click={purge}
-                >Purge Logbook</button
-              >
-            </div>
-          </div>
         </div>
-      </div>
-    </MidScreen>
+      </MidScreen>{/if}
   </div>
 </main>
 <ToastSetup {toast} />
