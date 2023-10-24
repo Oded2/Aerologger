@@ -87,7 +87,7 @@
       </div>
       <div class="row">
         <div class="col-lg-6 col-xl-4 mb-5">
-          <div class="card h-100">
+          <div class="card h-100" data-bs-theme="light">
             <div class="card-header"><h1>Easy to Use</h1></div>
             <div class="card-body fs-5">
               <ul>
@@ -107,7 +107,7 @@
           </div>
         </div>
         <div class="col-lg-6 col-xl-4 mb-5">
-          <div class="card h-100">
+          <div class="card h-100" data-bs-theme="light">
             <div class="card-header">
               <h1>Free and Secure</h1>
             </div>
@@ -130,7 +130,7 @@
           </div>
         </div>
         <div class="col-xl-4 mb-5">
-          <div class="card h-100">
+          <div class="card h-100" data-bs-theme="light">
             <div class="card-header">
               <h1>Notices</h1>
             </div>
