@@ -4,6 +4,7 @@
     formatDate,
     getTimeStr,
     formatDuration,
+    maxLen,
   } from "../../hooks.client.js";
   import hrefs from "../../data/hrefs.json";
   import FloatElement from "../../components/FloatElement.svelte";
@@ -13,7 +14,8 @@
   import Modal from "../../components/Modal.svelte";
   export let data;
   let toast;
-  let showModal = false,
+  let showAircraftModal = false,
+    showNotesModal = false,
     showShareModal = false;
   const { profile, log } = data;
   const profileRef = hrefs.explore.profile.link.replace(
@@ -33,8 +35,11 @@
   function toggleShareModal() {
     showShareModal = !showShareModal;
   }
-  function toggleModal() {
-    showModal = !showModal;
+  function toggleAircraftModal() {
+    showAircraftModal = !showAircraftModal;
+  }
+  function toggleNotesModal() {
+    showNotesModal = !showNotesModal;
   }
 </script>
 
@@ -93,16 +98,16 @@
                         : "None"}</span
                     >
                   </li>
-                  {#if log.type !== "other"}
-                    <li class="list-group-item">
-                      <button
-                        class="btn btn-primary btn-lg w-100 fw-bold"
-                        on:click={toggleModal}>Advanced</button
-                      >
-                    </li>
-                  {/if}
                 </ul>
               </div>
+              {#if log.type !== "other"}
+                <div class="card-footer">
+                  <button
+                    class="btn btn-primary w-100 fw-bold"
+                    on:click={toggleAircraftModal}>Advanced</button
+                  >
+                </div>
+              {/if}
             </div>
           </div>
           <div class="col-lg-4 mb-5">
@@ -148,8 +153,23 @@
                 </h3>
               </div>
               <div class="card-body">
-                <p class="font-google-quicksand" dir="auto">{log.notes}</p>
+                <p class="font-google-quicksand" dir="auto">
+                  {maxLen(log.notes, 200)}
+                </p>
               </div>
+              {#if log.notes.length > 200}
+                <div class="card-footer btn-group">
+                  <button
+                    class="btn btn-primary w-100 fw-bold"
+                    on:click={toggleNotesModal}>Show More</button
+                  >
+                  <button
+                    class="btn btn-secondary w-100 fw-bold"
+                    on:click={() => navigator.clipboard.writeText(log.notes)}
+                    >Copy</button
+                  >
+                </div>
+              {/if}
             </div>
           </div>
           <div
@@ -186,7 +206,7 @@
   </div>
 </main>
 
-<Modal {showModal} on:click={toggleModal}>
+<Modal showModal={showAircraftModal} on:click={toggleAircraftModal}>
   <h1 class="font-google-quicksand text-center">Aircraft Information</h1>
   <div class="row font-google-quicksand py-2">
     <div class="col-lg">
@@ -362,6 +382,11 @@
         >
       </h3>
     </div>
+  </div>
+</Modal>
+<Modal showModal={showNotesModal} on:click={toggleNotesModal}>
+  <div class="px-sm-5">
+    <p class="font-google-quicksand fs-4">{log.notes}</p>
   </div>
 </Modal>
 <svelte:head>
