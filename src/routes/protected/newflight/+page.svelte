@@ -185,7 +185,7 @@
         <div class="card">
           <div class="card-body fs-3">
             <div class="row">
-              <div class="col-md-6 mb-3">
+              <div class="col-md-6 pb-3 text-nowrap">
                 <label for="dep" class="form-label"
                   ><i class="fa-solid fa-plane-departure" /> Airport of Departure</label
                 >
@@ -197,7 +197,7 @@
                 />
                 <span class="form-text">Name, IATA, or ICAO code</span>
               </div>
-              <div class="col-md-6 mb-3">
+              <div class="col-md-6 pb-3 text-nowrap">
                 <label for="des" class="form-label"
                   ><i class="fa-solid fa-plane-arrival" /> Airport of Destination
                 </label>
@@ -209,7 +209,7 @@
                 />
                 <span class="form-text">Name, IATA, or ICAO code</span>
               </div>
-              <div class="col-md-6 col-xl-4 mb-3">
+              <div class="col-md-6 col-xl-4 pb-3 text-nowrap">
                 <label for="depdate" class="form-label"
                   ><i class="fa-solid fa-calendar-days" /> Date</label
                 >
@@ -228,7 +228,7 @@
                   />
                 </div>
               </div>
-              <div class="col-md-6 col-xl-4 mb-3">
+              <div class="col-md-6 col-xl-4 pb-3 text-nowrap">
                 <label for="deptime" class="form-label"
                   ><i class="fa-solid fa-clock" /> Time of Departure</label
                 >
@@ -241,7 +241,7 @@
                 />
               </div>
 
-              <div class="col-md-6 col-xl-4 mb-3">
+              <div class="col-md-6 col-xl-4 pb-3 text-nowrap">
                 <label for="destime" class="form-label"
                   ><i class="fa-regular fa-clock" /> Time of Arrival</label
                 >
@@ -264,7 +264,7 @@
                   placeholder={'"Cessna"'}
                 />
               </div>
-              <div class="col-md-6 col-xl-3 mb-3">
+              <div class="col-md-6 col-xl-3 pb-3 text-nowrap">
                 <label for="planemodel" class="form-label"
                   ><i class="fa-solid fa-plane-circle-exclamation" /> Aircraft Model</label
                 >
@@ -276,7 +276,7 @@
                 />
               </div>
 
-              <div class="col-md-6 col-xl-3 mb-3">
+              <div class="col-md-6 col-xl-3 pb-3 text-nowrap">
                 <label for="planeid" class="form-label"
                   ><i class="fa-solid fa-hashtag" /> Tail Number</label
                 >
@@ -287,7 +287,7 @@
                   placeholder={'"4X-CHA"'}
                 />
               </div>
-              <div class="col-md-12 col-xl-3 mb-3">
+              <div class="col-md-12 col-xl-3 pb-3 text-nowrap">
                 <label for="planetype" class="form-label"
                   ><i class="fa-solid fa-plane" /> Aircraft Type</label
                 >
@@ -301,7 +301,7 @@
                   <option value="other">Other</option>
                 </select>
               </div>
-              <div class="col-12 mb-3">
+              <div class="col-12 pb-3 text-nowrap">
                 <label for="notes" class="form-label">Notes</label>
                 <textarea
                   dir="auto"
