@@ -1,6 +1,10 @@
 <script>
   import hrefs from "../../../data/hrefs.json";
-  import { createToast, dateToStr } from "../../../hooks.client.js";
+  import {
+    createToast,
+    dateToStr,
+    hasSpecialCharacters,
+  } from "../../../hooks.client.js";
   import ToastSetup from "../../../components/setup/ToastSetup.svelte";
   export let data;
   const { supabase, session, profile } = data;
@@ -26,7 +30,7 @@
     if (!verifyInput(username, "Username")) {
       return;
     }
-    if (!validString(username)) {
+    if (!hasSpecialCharacters(username)) {
       toast = createToast(
         "error",
         "Invalid Username",
@@ -107,9 +111,6 @@
       return false;
     }
     return true;
-  }
-  function validString(inputString = "") {
-    return inputString.length == 0 ? true : /^[a-zA-Z0-9]+$/.test(inputString);
   }
 </script>
 
