@@ -205,31 +205,29 @@
                   The name you will be publicly known as.
                 </div>
               </div>
-              <div class="mb-3">
-                <div class="input-group">
-                  <div class="form-floating">
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="birthday"
-                      bind:value={birthday}
-                    />
+              <div class="mb-3 input-group">
+                <div class="form-floating">
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="birthday"
+                    bind:value={birthday}
+                  />
 
-                    <label for="birthday">Birthday</label>
-                  </div>
-                  <button
-                    class="input-group-text btn btn-secondary"
-                    on:click={() => {
-                      birthday = null;
-                      profileChange = true;
-                    }}
-                    disabled={!birthday}
-                    type="button"><i class="fa-solid fa-x" /></button
-                  >
+                  <label for="birthday">Birthday</label>
                 </div>
-                <div class="form-text">
-                  Your birthday will be public. This field is not required.
-                </div>
+                <button
+                  class="input-group-text btn btn-secondary"
+                  on:click={() => {
+                    birthday = null;
+                    profileChange = true;
+                  }}
+                  disabled={!birthday}
+                  type="button"><i class="fa-solid fa-x" /></button
+                >
+              </div>
+              <div class="form-text">
+                Your birthday will be public. This field is not required.
               </div>
             </div>
             <div class="card-footer">
