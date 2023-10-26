@@ -188,65 +188,69 @@
             {log.identification}
           </div>
           {#if allowModification}
-            <div class="col-md mb-2 mb-md-0 row">
-              <div class="col-auto d-md-none">
-                <i class=" fa-solid fa-user" title="Publicity Status" />
-              </div>
-              <div class="col col-md-12 px-md-0">
-                <select
-                  class="form-select"
-                  disabled={inProgress || !allowModification}
-                  on:input={() => changeVisibility(log.id, !log.public)}
-                  ><option selected={log.public}>Public</option>
-                  <option selected={!log.public}>Private</option></select
-                >
+            <div class="col-md mb-2 mb-md-0">
+              <div class="row">
+                <div class="col-auto d-md-none">
+                  <i class=" fa-solid fa-user" title="Publicity Status" />
+                </div>
+                <div class="col col-md-12 px-md-0">
+                  <select
+                    class="form-select"
+                    disabled={inProgress || !allowModification}
+                    on:input={() => changeVisibility(log.id, !log.public)}
+                    ><option selected={log.public}>Public</option>
+                    <option selected={!log.public}>Private</option></select
+                  >
+                </div>
               </div>
             </div>
           {/if}
-          <div class="col-md mb-2 mb-md-0 row">
-            <div class="col-auto">
-              <i
-                class="d-md-none fa-solid fa-circle-info"
-                title="Flight Options"
-              />
-            </div>
-            <div class="col">
-              <div class="btn-group">
-                <a
-                  href={addParamsString(hrefs.logbook.viewer.link, {
-                    logId: log.id,
-                    ref: refUrl,
-                  })}
-                  class="btn btn-secondary">View</a
-                >
-                {#if allowModification}
-                  <button
-                    type="button"
-                    class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    disabled={inProgress}
+          <div class="col-md mb-2 mb-md-0">
+            <div class="row">
+              <div class="col-auto">
+                <i
+                  class="d-md-none fa-solid fa-circle-info"
+                  title="Flight Options"
+                />
+              </div>
+              <div class="col">
+                <div class="btn-group">
+                  <a
+                    href={addParamsString(hrefs.logbook.viewer.link, {
+                      logId: log.id,
+                      ref: refUrl,
+                    })}
+                    class="btn btn-secondary">View</a
                   >
-                    <span class="visually-hidden">Toggle Dropdown</span>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <button
-                        class="btn btn-danger dropdown-item"
-                        on:click={() => {
-                          currentFlight.id = log.id;
-                          currentFlight.dep = log.dep;
-                          currentFlight.des = log.des;
-                          currentFlight.time = formatDuration(
-                            new Date(log.depDate),
-                            new Date(log.desDate)
-                          );
-                          toggleModal();
-                        }}>Delete Flight</button
-                      >
-                    </li>
-                  </ul>
-                {/if}
+                  {#if allowModification}
+                    <button
+                      type="button"
+                      class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      disabled={inProgress}
+                    >
+                      <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <button
+                          class="btn btn-danger dropdown-item"
+                          on:click={() => {
+                            currentFlight.id = log.id;
+                            currentFlight.dep = log.dep;
+                            currentFlight.des = log.des;
+                            currentFlight.time = formatDuration(
+                              new Date(log.depDate),
+                              new Date(log.desDate)
+                            );
+                            toggleModal();
+                          }}>Delete Flight</button
+                        >
+                      </li>
+                    </ul>
+                  {/if}
+                </div>
               </div>
             </div>
           </div>
