@@ -157,19 +157,22 @@
                   {maxLen(log.notes, 200)}
                 </p>
               </div>
-              {#if log.notes.length > 200}
-                <div class="card-footer btn-group">
-                  <button
-                    class="btn btn-primary w-100 fw-bold"
-                    on:click={toggleNotesModal}>Show More</button
-                  >
+
+              <div class="card-footer">
+                <div class="btn-group w-100">
+                  {#if log.notes.length > 200}
+                    <button
+                      class="btn btn-primary w-100 fw-bold"
+                      on:click={toggleNotesModal}>Show More</button
+                    >
+                  {/if}
                   <button
                     class="btn btn-secondary w-100 fw-bold"
                     on:click={() => navigator.clipboard.writeText(log.notes)}
                     >Copy</button
                   >
                 </div>
-              {/if}
+              </div>
             </div>
           </div>
           <div
