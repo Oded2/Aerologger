@@ -73,6 +73,14 @@
           >
         </div>
       </ExploreCard>
+      <ExploreCard
+        title={hrefs.explore.feed.title}
+        desc={hrefs.explore.feed.description}
+        href={hrefs.explore.feed.link}
+        icon="user"
+        disabled={inProgress}
+        comingSoon={true}
+      />
     </div>
   </div>
 </main>

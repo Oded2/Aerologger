@@ -65,6 +65,11 @@
             "title": "Profile Search",
             "link": "/explore/profile/slug",
             "description": "Explore any AeroLogger pilot's logbook. Only flights set public by the pilot are shown."
+        },
+        "feed": {
+            "title": "AeroPost",
+            "link": "/explore/feed",
+            "description": "Share your experiences in the air with other AeroLogger users!"
         }
     },
     "contact": {
