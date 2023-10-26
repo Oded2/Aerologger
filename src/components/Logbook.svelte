@@ -156,11 +156,14 @@
       {#if index < currentPage * maxLogs && index >= currentPage * maxLogs - maxLogs}
         <div class="row mb-3 border-bottom">
           <div class="col-md mb-2 mb-md-0 fw-bold">
-            <i
-              class="d-md-none fa-solid fa-calendar-days"
-              title="Flight Date"
-            />
-            {formatDateStr(log.depDate)}
+            <div>
+              <i
+                class="d-md-none fa-solid fa-calendar-days"
+                title="Flight Date"
+              />
+              {formatDateStr(log.depDate)}
+            </div>
+            <div class="fs-6 fw-normal">ID: {log.id}</div>
           </div>
           <div class="col-md mb-2 mb-md-0">
             <i class="d-md-none fa-solid fa-map" title="Flight Route" />
