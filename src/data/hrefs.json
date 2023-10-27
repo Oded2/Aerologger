@@ -50,10 +50,6 @@
         "home": {
             "title": "Log New Flight",
             "link": "/protected/newflight"
-        },
-        "submit": {
-            "title": "Submit Flight",
-            "link": "/protected/newflight/submit"
         }
     },
     "explore": {

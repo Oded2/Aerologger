@@ -11,21 +11,23 @@
   import Switch from "../../../components/Switch.svelte";
   import hrefs from "../../../data/hrefs.json";
   import logo from "../../../data/images/logo_simplified.png";
+  import { goto } from "$app/navigation";
   export let data;
-  const { supabase, session } = data;
+  const { supabase, session, log } = data;
+  let { logId } = data;
   const apiRef = hrefs.apis;
   let toast;
-  let dep = "",
-    des = "";
-  let dateStr = dateToStr();
-  let depTimeStr = getTimeStr(),
-    desTimeStr = getTimeStr();
-  let planeType = "airplane",
-    planeManu = "",
-    planeModel = "",
-    planeId = "";
-  let userNotes = "";
-  let isPublic = true;
+  let dep = log ? log.dep.icao : "",
+    des = log ? log.des.icao : "";
+  let dateStr = log ? dateToStr(new Date(log.depDate)) : dateToStr();
+  let depTimeStr = log ? getTimeStr(new Date(log.depDate)) : getTimeStr(),
+    desTimeStr = log ? getTimeStr(new Date(log.desDate)) : getTimeStr();
+  let planeType = log ? log.type : "airplane",
+    planeManu = log ? log.plane.manufacturer : "",
+    planeModel = log ? log.plane.model : "",
+    planeId = log ? log.identification : "";
+  let userNotes = log ? log.notes : "";
+  let isPublic = log ? log.public : true;
   let inProgress = false,
     isComplete = false;
   let submitText = "Submit Flight";
@@ -80,24 +82,23 @@
       return;
     }
     submitText = "Inserting Into Database";
-    const { data, error } = await supabase
-      .from("Logs")
-      .insert({
-        user_id: session.user.id,
-        dep: depAirport[0],
-        des: desAirport[0],
-        depDate: depDate.toISOString(),
-        desDate: desDate.toISOString(),
-        type: planeType,
-        plane: plane[0],
-        identification: planeId,
-        notes: userNotes,
-        public: isPublic,
-      })
-      .select();
-    submitText = "Submit Flight";
+    const toInsert = {
+      user_id: session.user.id,
+      dep: depAirport[0],
+      des: desAirport[0],
+      depDate: depDate.toISOString(),
+      desDate: desDate.toISOString(),
+      type: planeType,
+      plane: plane[0],
+      identification: planeId,
+      notes: userNotes,
+      public: isPublic,
+    };
+    const { data, error } = logId
+      ? await supabase.from("Logs").update(toInsert).eq("id", logId)
+      : await supabase.from("Logs").insert(toInsert).select();
     inProgress = false;
-    logNumber = data[0].id;
+    logNumber = data ? data[0].id : logId;
     if (error) {
       showError(error.message);
       return;
@@ -161,13 +162,18 @@
           <a
             href={addParamsString(hrefs.logbook.viewer.link, {
               logId: logNumber,
+              ref: hrefs.newFlight.home.link,
             })}
             class="btn btn-primary btn-lg fs-2 w-100 h-100">View Flight</a
           >
         </div>
         <div class="col">
           <button
-            on:click={() => (isComplete = false)}
+            on:click={() => {
+              logId = null;
+              isComplete = false;
+              if (logId) goto(hrefs.newFlight.home.link);
+            }}
             class="btn btn-outline-primary btn-lg fs-2 w-100 h-100"
             >Log New Flight</button
           >

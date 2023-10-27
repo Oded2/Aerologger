@@ -237,6 +237,14 @@
                     </button>
                     <ul class="dropdown-menu">
                       <li>
+                        <a
+                          href={addParamsString(hrefs.newFlight.home.link, {
+                            logId: log.id,
+                          })}
+                          class="btn btn-info dropdown-item">Edit Flight</a
+                        >
+                      </li>
+                      <li>
                         <button
                           class="btn btn-danger dropdown-item"
                           on:click={() => {
