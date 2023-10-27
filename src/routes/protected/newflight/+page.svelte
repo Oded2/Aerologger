@@ -170,9 +170,9 @@
         <div class="col">
           <button
             on:click={() => {
-              logId = null;
               isComplete = false;
               if (logId) goto(hrefs.newFlight.home.link);
+              logId = null;
             }}
             class="btn btn-outline-primary btn-lg fs-2 w-100 h-100"
             >Log New Flight</button
