@@ -16,6 +16,9 @@
   export let supabase;
   export let allowModification = true;
   const maxLogs = 10;
+  const maxPage = parseInt(
+    logs.length / maxLogs + (logs.length % maxLogs != 0 ? 1 : 0)
+  );
   let currentPage = 1;
   let userPage = currentPage;
   const dispatch = createEventDispatcher();
@@ -127,7 +130,41 @@
       >Please note that date and times are relative to your time zone.</span
     >
   </div>
-
+  {#if logs.length > maxLogs}
+    <div class="mb-3">
+      <div>
+        Page {currentPage}
+      </div>
+      <div class="mb-1">
+        <button
+          class="btn btn-secondary btn-sm"
+          on:click={() => currentPage--}
+          disabled={currentPage == 1}>Back</button
+        >
+        <button
+          class="btn btn-secondary btn-sm"
+          on:click={() => currentPage++}
+          disabled={logs.length / currentPage <= maxLogs}>Next</button
+        >
+      </div>
+      <div class="input-group mw-custom">
+        <span class="input-group-text">Skip to Page</span>
+        <input
+          type="number"
+          class="form-control"
+          bind:value={userPage}
+          min={1}
+          max={maxPage}
+        />
+        <button
+          class="btn btn-primary input-group-text"
+          on:click={() => (currentPage = userPage)}
+          disabled={userPage == currentPage || !userPage || userPage > maxPage}
+          ><i class="fa-solid fa-check" /></button
+        >
+      </div>
+    </div>
+  {/if}
   <div class="fs-5">
     <div class="row p-2 mb-2 border-bottom d-none d-md-flex">
       <div class="col-md mb-2 mb-md-0 fw-bold">
@@ -268,44 +305,11 @@
         </div>
       {/if}
     {/each}
-    {#if logs.length > maxLogs}
-      <div class="m-auto">
-        <div class="mb-2 fs-6">
-          Page {currentPage}
-        </div>
-        <div class="btn-group w-100 mb-2">
-          <button
-            class="btn btn-secondary btn-lg"
-            on:click={() => currentPage--}
-            disabled={currentPage == 1}
-            ><i class="fa-solid fa-backward" /></button
-          >
-          <button
-            class="btn btn-secondary btn-lg"
-            on:click={() => currentPage++}
-            disabled={logs.length / currentPage <= maxLogs}
-            ><i class="fa-solid fa-forward" /></button
-          >
-        </div>
-        <div class="row">
-          <div class="col-auto">Go to page</div>
-          <div class="col-auto">
-            <div class="input-group">
-              <input type="number" class="form-control" bind:value={userPage} />
-              <button
-                class="btn btn-primary input-group-text"
-                on:click={() => (currentPage = userPage)}
-                disabled={userPage == currentPage ||
-                  !userPage ||
-                  userPage >
-                    logs.length / maxLogs +
-                      (logs.length % maxLogs != 0 ? 1 : 0)}
-                ><i class="fa-solid fa-check" /></button
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-    {/if}
   </div>
 </div>
+
+<style>
+  div.mw-custom {
+    max-width: 250px;
+  }
+</style>
