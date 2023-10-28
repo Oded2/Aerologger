@@ -147,22 +147,32 @@
           disabled={logs.length / currentPage <= maxLogs}>Next</button
         >
       </div>
-      <div class="input-group mw-custom">
-        <span class="input-group-text">Skip to Page</span>
-        <input
-          type="number"
-          class="form-control"
-          bind:value={userPage}
-          min={1}
-          max={maxPage}
-        />
-        <button
-          class="btn btn-primary input-group-text"
-          on:click={() => (currentPage = userPage)}
-          disabled={userPage == currentPage || !userPage || userPage > maxPage}
-          ><i class="fa-solid fa-check" /></button
-        >
-      </div>
+      <form
+        on:submit|preventDefault={() => {
+          currentPage = userPage;
+        }}
+      >
+        <div class="input-group mw-custom">
+          <span class="input-group-text">Skip to Page</span>
+          <input
+            type="number"
+            class="form-control"
+            bind:value={userPage}
+            min={1}
+            max={maxPage}
+          />
+          <button
+            type="submit"
+            class="btn btn-primary input-group-text"
+            on:click={() => (currentPage = userPage)}
+            disabled={userPage == currentPage ||
+              !userPage ||
+              userPage > maxPage}
+          >
+            <i class="fa-solid fa-check" />
+          </button>
+        </div>
+      </form>
     </div>
   {/if}
   <div class="fs-5">
