@@ -12,6 +12,7 @@
   import hrefs from "../../../data/hrefs.json";
   import logo from "../../../data/images/logo_simplified.png";
   import { goto } from "$app/navigation";
+  import FloatElement from "../../../components/FloatElement.svelte";
   export let data;
   const { supabase, session, log } = data;
   let { logId } = data;
@@ -200,6 +201,7 @@
                   id="dep"
                   class="form-control"
                   bind:value={dep}
+                  required
                 />
                 <span class="form-text">Name, IATA, or ICAO code</span>
               </div>
@@ -212,6 +214,7 @@
                   id="des"
                   class="form-control"
                   bind:value={des}
+                  required
                 />
                 <span class="form-text">Name, IATA, or ICAO code</span>
               </div>
@@ -231,6 +234,8 @@
                     id="depdate"
                     class="form-control"
                     bind:value={dateStr}
+                    required
+                    max="9999-12-31"
                   />
                 </div>
               </div>
@@ -244,6 +249,7 @@
                   id="deptime"
                   class="form-control"
                   bind:value={depTimeStr}
+                  required
                 />
               </div>
 
@@ -256,6 +262,7 @@
                   id="destime"
                   class="form-control"
                   bind:value={desTimeStr}
+                  required
                 />
               </div>
 
@@ -268,6 +275,7 @@
                   class="form-control"
                   bind:value={planeManu}
                   placeholder={'"Cessna"'}
+                  required
                 />
               </div>
               <div class="col-md-6 col-xl-3 pb-3 text-nowrap">
@@ -279,6 +287,7 @@
                   class="form-control"
                   bind:value={planeModel}
                   placeholder={'"172"'}
+                  required
                 />
               </div>
 
@@ -301,6 +310,7 @@
                   id="planetype"
                   class="form-select"
                   bind:value={planeType}
+                  required
                 >
                   <option value="airplane" selected>Airplane</option>
                   <option value="helicopter">Helicopter</option>
@@ -337,6 +347,14 @@
     {/if}
   </div>
 </main>
+<FloatElement visible={logId}>
+  <div class="input-group shadow">
+    <span class="input-group-text">Editing Log {logId}</span>
+    <a href={hrefs.logbook.home.link} class="btn btn-secondary"
+      ><i class="fa-solid fa-arrow-left" /></a
+    >
+  </div>
+</FloatElement>
 <ToastSetup {toast} />
 
 <style>
