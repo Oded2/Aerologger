@@ -74,7 +74,7 @@
 
 <main>
   <div class="container mt-3 mb-5">
-    <form on:submit|preventDefault={onSubmit} novalidate>
+    <form on:submit|preventDefault={onSubmit}>
       <div class="card shadow-lg">
         <div class="card-header">
           <h1 class="font-google-quicksand fw-bold text-center">Contact</h1>
