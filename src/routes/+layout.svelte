@@ -16,7 +16,9 @@
   export let data;
   $: supabase = data.supabase;
   $: session = data.session;
+
   onMount(() => {
+    if (getTheme() === "dark") document.getElementById("darkSwitch").click();
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, _session) => {
@@ -24,9 +26,19 @@
         invalidate("supabase:auth");
       }
     });
-
     return () => subscription.unsubscribe();
   });
+
+  function toggleDarkMode() {
+    darkMode = !darkMode;
+    document.cookie = `theme=${darkMode ? "dark" : "light"};max-age=31536000`;
+  }
+  function getTheme() {
+    const first = document.cookie
+      .split(";")
+      .find((row) => row.includes("theme"));
+    return first ? first.split("=")[1] : "light";
+  }
   function findTitle() {
     for (let key in hrefs) {
       const current = hrefs[key];
@@ -110,7 +122,7 @@
             class:active={darkMode}
             aria-pressed={darkMode}
             id="darkSwitch"
-            on:click={() => (darkMode = !darkMode)}
+            on:click={toggleDarkMode}
             >{#if darkMode}
               <i class="fa-solid fa-sun" style="color: #f3bc24;" />
             {:else}
