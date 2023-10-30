@@ -126,7 +126,6 @@
               class:disabled={pageHref == hrefs.account.home.link}>Account</a
             >
           </li>
-
           <li class="nav-item mb-1 mb-lg-0">
             <a
               href={hrefs.signout.home.link}
