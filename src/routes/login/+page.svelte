@@ -4,6 +4,7 @@
   import { goto } from "$app/navigation";
   import Modal from "../../components/Modal.svelte";
   import { createToast } from "../../hooks.client.js";
+  import MidScreen from "../../components/MidScreen.svelte";
   export let data;
   const { supabase } = data;
   let toast;
@@ -95,59 +96,61 @@
 </Modal>
 <main>
   <div class="container my-5 font-google-quicksand">
-    <form on:submit|preventDefault={submit}>
-      <div class="card">
-        <div class="card-header">
-          <span
-            >Don't have an account? <a
-              href={hrefs.signup.home.link}
-              class="text-reset">Sign Up</a
-            ></span
-          >
-        </div>
-        <div class="card-body fs-3">
-          <div class="mb-3">
-            <label for="email" class="form-label"
-              >Email <span title="Required field" class="required">*</span
-              ></label
+    <MidScreen maxWidth={true}>
+      <form on:submit|preventDefault={submit}>
+        <div class="card">
+          <div class="card-header">
+            <span
+              >Don't have an account? <a
+                href={hrefs.signup.home.link}
+                class="text-reset">Sign Up</a
+              ></span
             >
-            <input
-              type="email"
-              id="email"
-              class="form-control"
-              bind:value={email}
-              required
-            />
           </div>
+          <div class="card-body fs-3">
+            <div class="mb-3">
+              <label for="email" class="form-label"
+                >Email <span title="Required field" class="required">*</span
+                ></label
+              >
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                bind:value={email}
+                required
+              />
+            </div>
 
-          <div>
-            <label for="password" class="form-label"
-              >Password <span title="Required field" class="required">*</span
-              ></label
-            >
-            <input
-              type="password"
-              id="password"
-              class="form-control"
-              bind:value={password}
-              required
-            />
+            <div>
+              <label for="password" class="form-label"
+                >Password <span title="Required field" class="required">*</span
+                ></label
+              >
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                bind:value={password}
+                required
+              />
+              <button
+                class="btn btn-outline-danger mt-3 fw-600"
+                type="reset"
+                on:click={toggleModal}>Forgot Password?</button
+              >
+            </div>
+          </div>
+          <div class="card-footer px-sm-5">
             <button
-              class="btn btn-outline-danger mt-3 fw-600"
-              type="reset"
-              on:click={toggleModal}>Forgot Password?</button
+              class="btn btn-primary btn-lg fs-4 fw-bold w-100"
+              disabled={inProgress}
+              type="submit">Login</button
             >
           </div>
         </div>
-        <div class="card-footer px-sm-5">
-          <button
-            class="btn btn-primary btn-lg fs-4 fw-bold w-100"
-            disabled={inProgress}
-            type="submit">Login</button
-          >
-        </div>
-      </div>
-    </form>
+      </form></MidScreen
+    >
   </div>
 </main>
 <ToastSetup {toast} />

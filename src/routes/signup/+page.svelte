@@ -113,9 +113,9 @@
 <main>
   <div class="container my-5 font-google-quicksand">
     {#if !isComplete}
-      <MidScreen>
+      <MidScreen maxWidth={true}>
         <form on:submit|preventDefault={submit}>
-          <div class="card">
+          <div class="card shadow-sm">
             <div class="card-header">
               <span
                 >Already have an account? <a
