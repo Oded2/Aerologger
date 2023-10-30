@@ -28,7 +28,6 @@
         desc={hrefs.explore.profile.description}
         icon="magnifying-glass"
         submitText="Search"
-        disabled={profileSearch.length == 0}
         on:submit={() =>
           goto(hrefs.explore.profile.link.replace("slug", profileSearch))}
       >
@@ -40,6 +39,7 @@
               id="search"
               placeholder="Enter a pilot's username"
               bind:value={profileSearch}
+              required
             /> <label for="search">Pilot's Username</label>
           </div>
           <button
@@ -56,7 +56,6 @@
         desc="View any log by typing it's Log Id."
         icon="plane"
         submitText="Search"
-        disabled={logSearch.length == 0}
         on:submit={() =>
           goto(
             addParamsString(hrefs.logbook.viewer.link, {
@@ -73,6 +72,7 @@
               id="logsearch"
               placeholder="Enter a pilot's username"
               bind:value={logSearch}
+              required
             /> <label for="logsearch">Log Id</label>
           </div>
           <button
