@@ -5,33 +5,10 @@
   import hrefs from "../../data/hrefs.json";
   import { addParamsString, createToast } from "../../hooks.client.js";
   export let data;
-  const { userProfile, supabase } = data;
+  const { userProfile } = data;
   let toast;
   let profileSearch = userProfile ? userProfile.username : "";
   let logSearch = "";
-  let inProgress = false;
-  async function findPilot() {
-    if (profileSearch.length == 0) {
-      toast = createToast("error", "Error", "Search cannot be empty.");
-      return;
-    }
-    inProgress = true;
-    const { data } = await supabase
-      .from("Profiles")
-      .select()
-      .eq("username", profileSearch);
-    if (data.length > 0) {
-      const ref = hrefs.explore.profile.link.replace("slug", profileSearch);
-      goto(ref);
-      return;
-    }
-    inProgress = false;
-    toast = createToast(
-      "error",
-      "User not found",
-      `User "${profileSearch}" does not exist.`
-    );
-  }
 </script>
 
 <main>
@@ -51,8 +28,9 @@
         desc={hrefs.explore.profile.description}
         icon="magnifying-glass"
         submitText="Search"
-        disabled={profileSearch.length == 0 || inProgress}
-        on:submit={findPilot}
+        disabled={profileSearch.length == 0}
+        on:submit={() =>
+          goto(hrefs.explore.profile.link.replace("slug", profileSearch))}
       >
         <div class="mb-3 input-group">
           <div class="form-floating">
@@ -78,16 +56,14 @@
         desc="View any log by typing it's Log Id."
         icon="plane"
         submitText="Search"
-        disabled={logSearch.length == 0 || inProgress}
-        on:submit={() => {
-          inProgress = true;
+        disabled={logSearch.length == 0}
+        on:submit={() =>
           goto(
             addParamsString(hrefs.logbook.viewer.link, {
               logId: logSearch,
               ref: hrefs.explore.home.link,
             })
-          );
-        }}
+          )}
       >
         <div class="mb-3 input-group">
           <div class="form-floating">

@@ -5,9 +5,7 @@
     iconType = "solid";
   export let submitText = "Explore";
   export let visible = true;
-  export let comingSoon = false;
   export let disabled = false;
-  disabled = disabled || comingSoon;
 </script>
 
 {#if visible}
@@ -18,10 +16,6 @@
           <h4><i class={`fa-${iconType} fa-${icon}`} /> {title}</h4>
         </div>
         <div class="card-body">
-          {#if comingSoon}
-            <h5 class="fw-bold"><em>Coming Soon</em></h5>
-          {/if}
-
           <slot />
           <p class="fs-5">{desc}</p>
         </div>
