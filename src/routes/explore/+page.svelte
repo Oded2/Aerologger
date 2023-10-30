@@ -51,7 +51,6 @@
         desc={hrefs.explore.profile.description}
         icon="magnifying-glass"
         submitText="Search"
-        link={false}
         disabled={profileSearch.length == 0 || inProgress}
         on:submit={findPilot}
       >
@@ -80,10 +79,15 @@
         icon="plane"
         submitText="Search"
         disabled={logSearch.length == 0 || inProgress}
-        href={addParamsString(hrefs.logbook.viewer.link, {
-          logId: logSearch,
-          ref: hrefs.explore.home.link,
-        })}
+        on:submit={() => {
+          inProgress = true;
+          goto(
+            addParamsString(hrefs.logbook.viewer.link, {
+              logId: logSearch,
+              ref: hrefs.explore.home.link,
+            })
+          );
+        }}
       >
         <div class="mb-3 input-group">
           <div class="form-floating">

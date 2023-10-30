@@ -3,9 +3,7 @@
   export let desc = "";
   export let icon = "",
     iconType = "solid";
-  export let href = "";
   export let submitText = "Explore";
-  export let link = true;
   export let visible = true;
   export let comingSoon = false;
   export let disabled = false;
@@ -28,17 +26,9 @@
           <p class="fs-5">{desc}</p>
         </div>
         <div class="card-footer">
-          {#if link}
-            <a {href} class="btn btn-primary btn-lg w-100" class:disabled
-              >{submitText}</a
-            >
-          {:else}
-            <button
-              class="btn btn-primary btn-lg w-100"
-              {disabled}
-              type="submit">{submitText}</button
-            >
-          {/if}
+          <button class="btn btn-primary btn-lg w-100" {disabled} type="submit"
+            >{submitText}</button
+          >
         </div>
       </div>
     </form>
