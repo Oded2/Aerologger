@@ -1,7 +1,43 @@
+
 # AeroLogger
 
-In progress flight logger website, mainly for fun. Might make private in the future.
+[Website](https://aerologger.netlify.app)
 
-## Contact
+This is a project is made from my passion of aviation. It's a SvelteKit developed web application, allowing for easy flight logging. It's worth noting that this project is always being updated. 
 
-For any questions, feedback, or support, you can reach out to me at odedconnect@gmail.com.
+## Prerequisites
+
+- Node.js
+
+## Usage
+
+To use AeroLogger, simply create an account or login, go to the new flight  page, and simply log your flight. You can then view your notebook, view other people's profiles, and more.
+
+## Privacy
+
+*Please do not share **any** personal information with AeroLogger.* Each log has the ability to be public or private, but regardless of the status anyone with access to the database has the option to view any log, regardless of its publicity status.
+
+Also note that the only person with access to the database is me, and the database is protected under several authentication methods. 
+
+*Publicity Status*
+- Public - Anyone can view your log either from your profile, or with the log Id.
+- Private - Only you can view your log.
+
+Publicity status can be changed at any time, as well as being able to make all flights in the logbook public or private at one time.
+
+## Development
+
+AeroLogger is developed using many different apps and libraries. To mention a few: 
+* SvelteKit
+* Bootstrap CSS and Bootstrap Javascript
+* Supabase
+* Font Awesome
+
+## License
+
+This project is licensed under the MIT License.
+
+Feel free to modify and enhance the code according to your requirements.
+
+For further details, refer to the official NASA APOD API documentation at https://api.nasa.gov/.
+
