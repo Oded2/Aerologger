@@ -21,12 +21,12 @@
   const { profile, log } = data;
   const url = $page.url;
   const ref = url.searchParams.get("ref");
+  const isPlane = log.type === "airplane";
+  const profileRef = hrefs.explore.profile.link.replace(
+    "slug",
+    profile.username
+  );
 
-  const valid = !!log;
-  const isPlane = valid ? log.type === "airplane" : false;
-  const profileRef = valid
-    ? hrefs.explore.profile.link.replace("slug", profile.username)
-    : hrefs.home.home.link;
   url.searchParams.set("ref", profileRef);
   function formatDateTime(string = "") {
     const date = new Date(string);
@@ -52,166 +52,162 @@
 
 <main>
   <div class="container py-5">
-    {#if valid}
-      <div class="font-google-gabarito">
-        <div class="text-center">
-          <h1>{log.dep.city} to {log.des.city}</h1>
-          <h2>
-            Logged by: <a href={profileRef} class="text-reset"
-              >{profile.display_name}</a
-            >
-          </h2>
+    <div class="font-google-gabarito">
+      <div class="text-center">
+        <h1>{log.dep.city} to {log.des.city}</h1>
+        <h2>
+          Logged by: <a href={profileRef} class="text-reset"
+            >{profile.display_name}</a
+          >
+        </h2>
+      </div>
+      <div class="row fs-3 my-5">
+        <div class="col-lg-4 mb-5">
+          <div class="card shadow h-100">
+            <div class="card-header text-center">
+              <h3>
+                <i class="fa-solid fa-plane-circle-exclamation" /> Plane Information
+              </h3>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  Aircraft Type: <span class="text-capitalize text-aerologger"
+                    >{log.type}</span
+                  >
+                </li>
+                <li class="list-group-item">
+                  Aircraft Manufacturer: <span
+                    class="text-capitalize text-aerologger"
+                  >
+                    {log.plane.manufacturer}</span
+                  >
+                </li>
+                <li class="list-group-item">
+                  Aircraft Model: <span class="text-capitalize text-aerologger">
+                    {log.plane.model}</span
+                  >
+                </li>
+                <li class="list-group-item">
+                  Tail Number: <span class=" text-aerologger">
+                    {log.identification.length > 1
+                      ? log.identification
+                      : "None"}</span
+                  >
+                </li>
+              </ul>
+            </div>
+            {#if log.type !== "other"}
+              <div class="card-footer">
+                <button
+                  class="btn btn-primary w-100 fw-bold"
+                  on:click={toggleAircraftModal}>Advanced</button
+                >
+              </div>
+            {/if}
+          </div>
         </div>
-        <div class="row fs-3 my-5">
-          <div class="col-lg-4 mb-5">
-            <div class="card shadow h-100">
-              <div class="card-header text-center">
-                <h3>
-                  <i class="fa-solid fa-plane-circle-exclamation" /> Plane Information
-                </h3>
-              </div>
-              <div class="card-body">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">
-                    Aircraft Type: <span class="text-capitalize text-aerologger"
-                      >{log.type}</span
-                    >
-                  </li>
-                  <li class="list-group-item">
-                    Aircraft Manufacturer: <span
-                      class="text-capitalize text-aerologger"
-                    >
-                      {log.plane.manufacturer}</span
-                    >
-                  </li>
-                  <li class="list-group-item">
-                    Aircraft Model: <span
-                      class="text-capitalize text-aerologger"
-                    >
-                      {log.plane.model}</span
-                    >
-                  </li>
-                  <li class="list-group-item">
-                    Tail Number: <span class=" text-aerologger">
-                      {log.identification.length > 1
-                        ? log.identification
-                        : "None"}</span
-                    >
-                  </li>
-                </ul>
-              </div>
-              {#if log.type !== "other"}
-                <div class="card-footer">
+        <div class="col-lg-4 mb-5">
+          <div class="card shadow h-100">
+            <div class="card-header text-center">
+              <h3>
+                <i class="fa-solid fa-plane" /> Flight Information
+              </h3>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item fw-bold">
+                  {log.dep.icao} to {log.des.icao}
+                </li>
+                <li class="list-group-item">
+                  Time of Departure: <span class="text-aerologger">
+                    {formatDateTime(log.depDate)}</span
+                  >
+                </li>
+
+                <li class="list-group-item">
+                  Time of Arrival: <span class="text-aerologger">
+                    {formatDateTime(log.desDate)}</span
+                  >
+                </li>
+                <li class="list-group-item">
+                  Total Duration: <span class="text-aerologger">
+                    {formatDuration(
+                      new Date(log.depDate),
+                      new Date(log.desDate)
+                    )}</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-5">
+          <div class="card shadow h-100">
+            <div class="card-header text-center">
+              <h3>
+                <i class="fa-solid fa-note-sticky" /> Notes
+              </h3>
+            </div>
+            <div class="card-body">
+              <p class="font-google-quicksand" dir="auto">
+                {maxLen(log.notes, 200)}
+              </p>
+            </div>
+
+            <div class="card-footer">
+              <div class="btn-group w-100">
+                {#if log.notes.length > 200}
                   <button
                     class="btn btn-primary w-100 fw-bold"
-                    on:click={toggleAircraftModal}>Advanced</button
+                    on:click={toggleNotesModal}>Show More</button
                   >
-                </div>
-              {/if}
-            </div>
-          </div>
-          <div class="col-lg-4 mb-5">
-            <div class="card shadow h-100">
-              <div class="card-header text-center">
-                <h3>
-                  <i class="fa-solid fa-plane" /> Flight Information
-                </h3>
-              </div>
-              <div class="card-body">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item fw-bold">
-                    {log.dep.icao} to {log.des.icao}
-                  </li>
-                  <li class="list-group-item">
-                    Time of Departure: <span class="text-aerologger">
-                      {formatDateTime(log.depDate)}</span
-                    >
-                  </li>
-
-                  <li class="list-group-item">
-                    Time of Arrival: <span class="text-aerologger">
-                      {formatDateTime(log.desDate)}</span
-                    >
-                  </li>
-                  <li class="list-group-item">
-                    Total Duration: <span class="text-aerologger">
-                      {formatDuration(
-                        new Date(log.depDate),
-                        new Date(log.desDate)
-                      )}</span
-                    >
-                  </li>
-                </ul>
+                {/if}
+                <button
+                  class="btn btn-secondary w-100 fw-bold"
+                  on:click={() => navigator.clipboard.writeText(log.notes)}
+                  >Copy</button
+                >
               </div>
             </div>
           </div>
-          <div class="col-lg-4 mb-5">
-            <div class="card shadow h-100">
-              <div class="card-header text-center">
-                <h3>
-                  <i class="fa-solid fa-note-sticky" /> Notes
-                </h3>
-              </div>
-              <div class="card-body">
-                <p class="font-google-quicksand" dir="auto">
-                  {maxLen(log.notes, 200)}
-                </p>
-              </div>
-
-              <div class="card-footer">
-                <div class="btn-group w-100">
-                  {#if log.notes.length > 200}
-                    <button
-                      class="btn btn-primary w-100 fw-bold"
-                      on:click={toggleNotesModal}>Show More</button
-                    >
-                  {/if}
-                  <button
-                    class="btn btn-secondary w-100 fw-bold"
-                    on:click={() => navigator.clipboard.writeText(log.notes)}
-                    >Copy</button
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="{log.dep.icao === log.des.icao
-              ? 'col-lg-12'
-              : 'col-lg-6'} mb-5"
-          >
+        </div>
+        <div
+          class="{log.dep.icao === log.des.icao
+            ? 'col-lg-12'
+            : 'col-lg-6'} mb-5"
+        >
+          <AirportCard
+            airportData={log.dep}
+            cardTitle={log.dep.icao === log.des.icao
+              ? "Airport Information"
+              : "Departure Airport Information"}
+            icon="plane-departure"
+          />
+        </div>
+        {#if log.dep.icao !== log.des.icao}
+          <div class="col-lg-6 mb-5">
             <AirportCard
-              airportData={log.dep}
-              cardTitle={log.dep.icao === log.des.icao
-                ? "Airport Information"
-                : "Departure Airport Information"}
-              icon="plane-departure"
+              airportData={log.des}
+              cardTitle="Arrival Airport Information"
+              icon="plane-arrival"
             />
           </div>
-          {#if log.dep.icao !== log.des.icao}
-            <div class="col-lg-6 mb-5">
-              <AirportCard
-                airportData={log.des}
-                cardTitle="Arrival Airport Information"
-                icon="plane-arrival"
-              />
-            </div>
-          {/if}
-        </div>
+        {/if}
       </div>
-    {:else}
-      <h1>
-        This log is either private or non-existent. If this is a private log
-        belonging to you, try <a href={hrefs.login.home.link} class="text-reset"
-          >logging in</a
-        >.
-      </h1>
-      <h6>Log Id: {url.searchParams.get("logId")}</h6>
-      {#if ref}
-        <a href={ref} class="btn btn-primary btn-lg fs-2 fw-bold"
-          >Click to Return</a
-        >
-      {/if}
+    </div>
+
+    <h1>
+      This log is either private or non-existent. If this is a private log
+      belonging to you, try <a href={hrefs.login.home.link} class="text-reset"
+        >logging in</a
+      >.
+    </h1>
+    <h6>Log Id: {url.searchParams.get("logId")}</h6>
+    {#if ref}
+      <a href={ref} class="btn btn-primary btn-lg fs-2 fw-bold"
+        >Click to Return</a
+      >
     {/if}
   </div>
 </main>
@@ -399,13 +395,9 @@
     <p class="font-google-quicksand fs-4">{log.notes}</p>
   </div>
 </Modal>
-<Title
-  title={valid
-    ? `Flight from ${log.dep.city} to ${log.des.city}`
-    : "Invalid Flight"}
-/>
+<Title title={`Flight from ${log.dep.city} to ${log.des.city}`} />
 
-<FloatElement visible={valid}>
+<FloatElement>
   {#if log.public}
     <button class="btn btn-primary btn-lg me-3" on:click={toggleShareModal}
       ><i class="fa-solid fa-share-from-square" /> Share</button

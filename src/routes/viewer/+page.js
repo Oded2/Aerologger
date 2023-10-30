@@ -1,11 +1,13 @@
+import { error } from "@sveltejs/kit";
+
 export async function load({ parent, url }) {
   const { supabase } = await parent();
-  const { data: log } = await supabase
-    .from("Logs")
-    .select()
-    .eq("id", url.searchParams.get("logId"));
-  if (!log[0]) {
-    return;
+  const logId = url.searchParams.get("logId");
+  const { data: log } = await supabase.from("Logs").select().eq("id", logId);
+  if (log.length == 0) {
+    throw error(404, {
+      message: `Log "${logId}" is either set private by the owner or does not exist. If you believe this is your log, please login.`,
+    });
   }
   const { data: profile } = await supabase
     .from("Profiles")
