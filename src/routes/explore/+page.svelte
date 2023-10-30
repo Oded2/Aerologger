@@ -3,7 +3,7 @@
   import ExploreCard from "../../components/ExploreCard.svelte";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import hrefs from "../../data/hrefs.json";
-  import { addParamsString, createToast } from "../../hooks.client.js";
+  import { addParamsString } from "../../hooks.client.js";
   export let data;
   const { userProfile } = data;
   let toast;
