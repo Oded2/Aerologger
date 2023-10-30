@@ -196,19 +196,6 @@
         {/if}
       </div>
     </div>
-
-    <h1>
-      This log is either private or non-existent. If this is a private log
-      belonging to you, try <a href={hrefs.login.home.link} class="text-reset"
-        >logging in</a
-      >.
-    </h1>
-    <h6>Log Id: {url.searchParams.get("logId")}</h6>
-    {#if ref}
-      <a href={ref} class="btn btn-primary btn-lg fs-2 fw-bold"
-        >Click to Return</a
-      >
-    {/if}
   </div>
 </main>
 
