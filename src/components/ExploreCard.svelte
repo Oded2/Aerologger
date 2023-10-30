@@ -5,7 +5,6 @@
     iconType = "solid";
   export let href = "";
   export let submitText = "Explore";
-
   export let link = true;
   export let visible = true;
   export let comingSoon = false;
@@ -24,13 +23,17 @@
           {#if comingSoon}
             <h5 class="fw-bold"><em>Coming Soon</em></h5>
           {/if}
-          <p class="fs-5">{desc}</p>
+
           <slot />
+          <p class="fs-5">{desc}</p>
         </div>
         <div class="card-footer">
           {#if link}
-            <a {href} class="btn btn-primary btn-lg w-100" class:disabled
-              >{submitText}</a
+            <a
+              {href}
+              data-sveltekit-preload-data="off"
+              class="btn btn-primary btn-lg w-100"
+              class:disabled>{submitText}</a
             >
           {:else}
             <button

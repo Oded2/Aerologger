@@ -12,22 +12,22 @@
   import ShareModal from "../../components/ShareModal.svelte";
   import AirportCard from "../../components/AirportCard.svelte";
   import Modal from "../../components/Modal.svelte";
+  import Title from "../../components/Title.svelte";
   export let data;
   let toast;
   let showAircraftModal = false,
     showNotesModal = false,
     showShareModal = false;
   const { profile, log } = data;
-  const profileRef = hrefs.explore.profile.link.replace(
-    "slug",
-    profile.username
-  );
   const url = $page.url;
   const ref = url.searchParams.get("ref");
-  url.searchParams.set("ref", profileRef);
-  const valid = !!log;
-  const isPlane = log.type === "airplane";
 
+  const valid = !!log;
+  const isPlane = valid ? log.type === "airplane" : false;
+  const profileRef = valid
+    ? hrefs.explore.profile.link.replace("slug", profile.username)
+    : hrefs.home.home.link;
+  url.searchParams.set("ref", profileRef);
   function formatDateTime(string = "") {
     const date = new Date(string);
     return `${formatDate(date)} at ${getTimeStr(date)}`;
@@ -201,10 +201,17 @@
       </div>
     {:else}
       <h1>
-        Access denied, try <a href={hrefs.login.home.link} class="text-reset"
+        This log is either private or non-existent. If this is a private log
+        belonging to you, try <a href={hrefs.login.home.link} class="text-reset"
           >logging in</a
         >.
       </h1>
+      <h6>Log Id: {url.searchParams.get("logId")}</h6>
+      {#if ref}
+        <a href={ref} class="btn btn-primary btn-lg fs-2 fw-bold"
+          >Click to Return</a
+        >
+      {/if}
     {/if}
   </div>
 </main>
@@ -392,9 +399,11 @@
     <p class="font-google-quicksand fs-4">{log.notes}</p>
   </div>
 </Modal>
-<svelte:head>
-  <title>Flight from {log.dep.city} to {log.des.city}</title>
-</svelte:head>
+<Title
+  title={valid
+    ? `Flight from ${log.dep.city} to ${log.des.city}`
+    : "Invalid Flight"}
+/>
 
 <FloatElement visible={valid}>
   {#if log.public}

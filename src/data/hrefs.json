@@ -42,7 +42,6 @@
             "link": "/protected/logbook"
         },
         "viewer": {
-            "title": "Flight Viewer",
             "link": "/viewer"
         }
     },

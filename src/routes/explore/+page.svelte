@@ -3,11 +3,12 @@
   import ExploreCard from "../../components/ExploreCard.svelte";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import hrefs from "../../data/hrefs.json";
-  import { createToast } from "../../hooks.client.js";
+  import { addParamsString, createToast } from "../../hooks.client.js";
   export let data;
   const { userProfile, supabase } = data;
   let toast;
   let profileSearch = userProfile ? userProfile.username : "";
+  let logSearch = "";
   let inProgress = false;
   async function findPilot() {
     if (profileSearch.length == 0) {
@@ -70,6 +71,35 @@
             on:click={() => (profileSearch = "")}
             disabled={profileSearch.length == 0}
             ><i class="fa-solid fa-x" /></button
+          >
+        </div>
+      </ExploreCard>
+      <ExploreCard
+        title="Log Search"
+        desc="View any log by typing it's Log Id."
+        icon="plane"
+        submitText="Search"
+        disabled={logSearch.length == 0 || inProgress}
+        href={addParamsString(hrefs.logbook.viewer.link, {
+          logId: logSearch,
+          ref: hrefs.explore.home.link,
+        })}
+      >
+        <div class="mb-3 input-group">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control input-num-clean"
+              id="logsearch"
+              placeholder="Enter a pilot's username"
+              bind:value={logSearch}
+            /> <label for="logsearch">Log Id</label>
+          </div>
+          <button
+            class="input-group-text btn btn-secondary"
+            type="button"
+            on:click={() => (logSearch = "")}
+            disabled={logSearch.length == 0}><i class="fa-solid fa-x" /></button
           >
         </div>
       </ExploreCard>
