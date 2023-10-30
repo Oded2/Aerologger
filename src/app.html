@@ -42,11 +42,6 @@
     <div>%sveltekit.body%</div>
   </body>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      if (isDark()) {
-        toggleDarkMode();
-      }
-    });
     document
       .getElementById("darkSwitch")
       .addEventListener("click", toggleDarkMode);
@@ -56,13 +51,6 @@
       } else {
         document.documentElement.setAttribute("data-bs-theme", "light");
       }
-    }
-    function isDark() {
-      return document
-        .getElementById("darkSwitch")
-        .getAttribute("aria-pressed") === "true"
-        ? true
-        : false;
     }
   </script>
 </html>
