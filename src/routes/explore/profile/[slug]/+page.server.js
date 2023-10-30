@@ -1,10 +1,16 @@
-export async function load({ params, parent, url }) {
+import { supabase } from "$lib/supabaseClient.js";
+import { error } from "@sveltejs/kit";
+export async function load({ params }) {
   const user = params.slug;
-  const { supabase } = await parent();
   const { data: userProfile } = await supabase
     .from("Profiles")
     .select()
     .eq("username", user);
+  if (userProfile.length == 0) {
+    throw error(404, {
+      message: `User "${user}" not found.`,
+    });
+  }
   const { data: userLogs } = await supabase
     .from("Logs")
     .select()
