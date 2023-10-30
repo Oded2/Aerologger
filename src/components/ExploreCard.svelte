@@ -29,11 +29,8 @@
         </div>
         <div class="card-footer">
           {#if link}
-            <a
-              {href}
-              data-sveltekit-preload-data="off"
-              class="btn btn-primary btn-lg w-100"
-              class:disabled>{submitText}</a
+            <a {href} class="btn btn-primary btn-lg w-100" class:disabled
+              >{submitText}</a
             >
           {:else}
             <button
