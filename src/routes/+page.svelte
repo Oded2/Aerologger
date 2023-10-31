@@ -93,7 +93,9 @@
               <ul>
                 <li>
                   To log a flight, simply go to the <a
-                    href={hrefs.newFlight.home.link}
+                    href={session
+                      ? hrefs.newFlight.home.link
+                      : hrefs.login.home.link}
                     class="text-reset">new flight</a
                   > page, and fill out the simple form, and your logbook will automatically
                   get the most information about your time in the air.
