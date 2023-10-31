@@ -9,6 +9,12 @@
   let toast;
   let profileSearch = userProfile ? userProfile.username : "";
   let logSearch = "";
+  let inProgress = false;
+
+  function gotoProgress(link = "") {
+    inProgress = true;
+    goto(link);
+  }
 </script>
 
 <main>
@@ -28,8 +34,11 @@
         desc={hrefs.explore.profile.description}
         icon="magnifying-glass"
         submitText="Search"
+        disabled={inProgress}
         on:submit={() =>
-          goto(hrefs.explore.profile.link.replace("slug", profileSearch))}
+          gotoProgress(
+            hrefs.explore.profile.link.replace("slug", profileSearch)
+          )}
       >
         <div class="mb-3 input-group">
           <div class="form-floating">
@@ -56,8 +65,9 @@
         desc="View any log by typing it's Log Id."
         icon="plane"
         submitText="Search"
+        disabled={inProgress}
         on:submit={() =>
-          goto(
+          gotoProgress(
             addParamsString(hrefs.logbook.viewer.link, {
               logId: logSearch,
               ref: hrefs.explore.home.link,
