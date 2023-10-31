@@ -26,8 +26,7 @@
     "slug",
     profile.username
   );
-
-  url.searchParams.set("ref", profileRef);
+  url.searchParams.delete("ref");
   function formatDateTime(string = "") {
     const date = new Date(string);
     return `${formatDate(date)} at ${getTimeStr(date)}`;
@@ -390,9 +389,11 @@
       ><i class="fa-solid fa-share-from-square" /> Share</button
     >
   {/if}
-  <a href={ref ?? hrefs.logbook.home.link} class="btn btn-secondary btn-lg"
-    ><i class="fa-solid fa-rotate-left" /> Return</a
-  >
+  {#if ref}
+    <a href={ref} class="btn btn-secondary btn-lg"
+      ><i class="fa-solid fa-rotate-left" /> Return</a
+    >
+  {/if}
 </FloatElement>
 
 <ToastSetup {toast} />
