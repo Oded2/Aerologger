@@ -25,14 +25,14 @@
           <h4>User Details</h4>
           <div>
             <ul>
-              {#if profile.birthday}
-                <li>Age: <span class="fw-bold">{userAge}</span></li>
-              {/if}
               <li>Username: <span class="fw-bold">{profile.username}</span></li>
               <li>
                 Display Name: <span class="fw-bold">{profile.display_name}</span
                 >
               </li>
+              {#if profile.birthday}
+                <li>Age: <span class="fw-bold">{userAge}</span></li>
+              {/if}
             </ul>
           </div>
         </div>
