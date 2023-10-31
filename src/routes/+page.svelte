@@ -54,11 +54,7 @@
           <h1>What is Aerologger?</h1>
           <p class="fs-5">
             AeroLogger is a project made to log flights conveniently, fast, and
-            free. It is inspired by my other project, <a
-              target="_blank"
-              href="https://oded.benamotz.com"
-              class="text-reset">Code Vault</a
-            >, where I feature fun gimmicks on the web.
+            free.
           </p>
         </div>
         <div class="col-md-6 col-xl-4 mb-3">
