@@ -12,8 +12,7 @@
       <div class="card shadow-lg">
         <div class="card-body">
           <h2 class="card-title">There's been an error!</h2>
-          <h3>Status: {url.status}</h3>
-          <h3>Message:</h3>
+          <h3>{url.status}</h3>
           <h4>{url.error.message}</h4>
         </div>
         <div class="card-img-bottom d-flex justify-content-center">
