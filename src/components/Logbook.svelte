@@ -319,6 +319,9 @@
 </div>
 
 <style>
+  button {
+    z-index: 1 !important;
+  }
   div.mw-custom {
     max-width: 250px;
   }
