@@ -41,4 +41,4 @@
   </div>
 </main>
 
-<svelte:head><title>{profile.display_name}'s Profile</title></svelte:head>
+<svelte:head><title>{`${profile.display_name}'s`} Profile</title></svelte:head>
