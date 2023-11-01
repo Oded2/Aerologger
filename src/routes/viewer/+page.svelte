@@ -12,7 +12,6 @@
   import ShareModal from "../../components/ShareModal.svelte";
   import AirportCard from "../../components/AirportCard.svelte";
   import Modal from "../../components/Modal.svelte";
-  import Title from "../../components/Title.svelte";
   export let data;
   let toast;
   let showAircraftModal = false,
@@ -382,7 +381,9 @@
     <p class="font-google-quicksand fs-4">{log.notes}</p>
   </div>
 </Modal>
-<Title title={`Flight from ${log.dep.city} to ${log.des.city}`} />
+<svelte:head>
+  <title>{`${log.dep.city} to ${log.des.city}`}</title>
+</svelte:head>
 
 <FloatElement>
   {#if log.public}

@@ -27,7 +27,7 @@
 </main>
 
 <svelte:head>
-  <title>Error - AeroLogger</title>
+  <title>Error</title>
 </svelte:head>
 
 <style>
