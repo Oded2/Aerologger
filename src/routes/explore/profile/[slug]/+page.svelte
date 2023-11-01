@@ -14,7 +14,7 @@
 <main>
   <div class="container mt-5 font-google-gabarito">
     <h1>
-      <span class="text-aerologger">{profile.display_name}'s</span> Profile
+      <span class="text-aerologger">{`${profile.display_name}'s'`}</span> Profile
     </h1>
   </div>
   <Logbook {logs} allowModification={false} />
