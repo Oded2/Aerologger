@@ -15,9 +15,9 @@
           toPublic ? "public" : "private"
         }. Are you sure you want to do this?`
       )
-    ) {
+    )
       return;
-    }
+
     inProgress = true;
     const { error } = await supabase
       .from("Logs")
@@ -28,13 +28,42 @@
       toast = createToast("error", "Error", error.message);
       return;
     }
-    for (const i in logs) {
-      logs[i].public = toPublic;
-    }
+    for (const i in logs) logs[i].public = toPublic;
+
     toast = createToast(
       "success",
       "Success",
       `All your logs are now ${toPublic ? "public" : "private"}`
+    );
+  }
+  async function purgePublic(isPublic = false) {
+    if (
+      !confirm(
+        `This action will delete ALL of your ${
+          isPublic ? "public" : "private"
+        } logs. This action cannot be undone.`
+      )
+    )
+      return;
+    inProgress = true;
+    const { error } = await supabase
+      .from("Logs")
+      .delete()
+      .eq("public", isPublic)
+      .eq("user_id", session.user.id);
+    inProgress = false;
+    if (error) {
+      toast = createToast("error", "Error", error.message);
+      return;
+    }
+    for (const i in logs) if (logs[i].public == isPublic) logs.splice(i, 1);
+    logs = logs;
+    toast = createToast(
+      "success",
+      "Success",
+      `All ${
+        isPublic ? "public" : "private"
+      } logs are deleted from your logbook.`
     );
   }
   async function purge() {
@@ -42,9 +71,9 @@
       !confirm(
         "Are you sure you want to purge your logbook? This action will delete ALL your flight logs and CANNOT be undone."
       )
-    ) {
+    )
       return;
-    }
+
     inProgress = true;
     const { error } = await supabase
       .from("Logs")
@@ -91,14 +120,14 @@
             <div class="my-3">
               <h5>Privacy</h5>
               <div class="row">
-                <div class="col-sm mb-3">
+                <div class="col-sm-6 mb-3">
                   <button
                     class="btn btn-dark w-100 shadow"
                     on:click={() => changeVisibility(false)}
                     disabled={inProgress}>Make Logs Private</button
                   >
                 </div>
-                <div class="col-sm mb-3">
+                <div class="col-sm-6 mb-3">
                   <button
                     class="btn btn-dark w-100 shadow"
                     on:click={() => changeVisibility(true)}
@@ -109,15 +138,32 @@
             </div>
             <div class="mb-3">
               <h5>Danger Zone</h5>
-              <div>
-                <button class="btn btn-outline-danger w-100" on:click={purge}
-                  >Purge Logbook</button
-                >
+              <div class="row">
+                <div class="col-sm-6 mb-3">
+                  <button
+                    class="btn btn-outline-danger w-100 shadow"
+                    on:click={() => purgePublic(false)}
+                    disabled={inProgress}>Delete Private Logs</button
+                  >
+                </div>
+                <div class="col-sm-6 mb-3">
+                  <button
+                    class="btn btn-outline-danger w-100 shadow"
+                    on:click={() => purgePublic(true)}
+                    disabled={inProgress}>Delete Public Logs</button
+                  >
+                </div>
+                <div class="col-sm-12">
+                  <button class="btn btn-danger w-100 shadow" on:click={purge}
+                    >Purge Logbook</button
+                  >
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </MidScreen>{/if}
+      </MidScreen>
+    {/if}
   </div>
 </main>
 <ToastSetup {toast} />
