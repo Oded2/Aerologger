@@ -245,7 +245,7 @@
                     class="form-control"
                     bind:value={dateStr}
                     required
-                    max="9999-12-31"
+                    max={dateToStr()}
                   />
                 </div>
               </div>
