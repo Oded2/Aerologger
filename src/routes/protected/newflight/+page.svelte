@@ -284,6 +284,7 @@
                   id="planemanu"
                   class="form-control"
                   bind:value={planeManu}
+                  on:blur={() => (planeManu = planeManu.trim())}
                   placeholder={'"Cessna"'}
                   required
                 />
@@ -296,6 +297,7 @@
                   id="planemodel"
                   class="form-control"
                   bind:value={planeModel}
+                  on:blur={() => (planeModel = planeModel.trim())}
                   placeholder={'"172"'}
                   required
                 />
@@ -309,6 +311,7 @@
                   id="planeid"
                   class="form-control"
                   bind:value={planeId}
+                  on:blur={() => (planeId = planeId.trim())}
                   placeholder={'"4X-CHA"'}
                 />
               </div>
@@ -335,6 +338,7 @@
                   rows="4"
                   class="form-control fs-5"
                   bind:value={userNotes}
+                  on:blur={() => (userNotes = userNotes.trim())}
                 />
               </div>
               <div class="col-auto">
