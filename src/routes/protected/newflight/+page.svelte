@@ -202,6 +202,7 @@
                   class="form-control"
                   bind:value={dep}
                   on:blur={() => {
+                    dep = dep.trim();
                     if (dep.length == 3 || dep.length == 4)
                       dep = dep.toUpperCase();
                   }}
@@ -219,6 +220,7 @@
                   class="form-control"
                   bind:value={des}
                   on:blur={() => {
+                    des = des.trim();
                     if (des.length == 3 || des.length == 4)
                       des = des.toUpperCase();
                   }}
