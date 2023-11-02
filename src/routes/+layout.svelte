@@ -55,7 +55,7 @@
 
 <nav class="navbar navbar-expand-lg font-google-quicksand">
   <div class="container">
-    <a href={hrefs.home.home.link} class="navbar-brand fw-600"
+    <a href={hrefs.home.home.link} class="navbar-brand fw-600 py-0"
       ><img src={logo} alt="AeroLogger Logo" class="img-fluid" /></a
     >
     <button
