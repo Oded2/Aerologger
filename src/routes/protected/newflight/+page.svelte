@@ -58,9 +58,9 @@
             desTimeStr
           );
     inProgress = true;
-    submitText = "Fetching Aircraft";
+    if (planeType !== "other") submitText = "Fetching Aircraft";
     const plane =
-      planeType == "other"
+      planeType === "other"
         ? [{ manufacturer: planeManu, model: planeModel }]
         : await fetchPlane();
     if (plane.length < 1) {
