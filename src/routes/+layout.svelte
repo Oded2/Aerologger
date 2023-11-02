@@ -5,6 +5,7 @@
   import { page } from "$app/stores";
   import "../global.css";
   import Title from "../components/Title.svelte";
+  import logo from "../data/images/logo_simplified_lowres.png";
 
   $: pageUrl = new URL($page.url);
   $: pageHref = pageUrl.pathname;
@@ -54,7 +55,9 @@
 
 <nav class="navbar navbar-expand-lg font-google-quicksand">
   <div class="container">
-    <a href={hrefs.home.home.link} class="navbar-brand fw-600">AeroLogger</a>
+    <a href={hrefs.home.home.link} class="navbar-brand fw-600"
+      ><img src={logo} alt="AeroLogger Logo" class="img-fluid" /></a
+    >
     <button
       class="navbar-toggler"
       type="button"
@@ -174,3 +177,9 @@
 {#if title}
   <Title {title} />
 {/if}
+
+<style>
+  img {
+    height: 3rem;
+  }
+</style>
