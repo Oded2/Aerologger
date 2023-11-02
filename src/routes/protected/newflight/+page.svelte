@@ -201,6 +201,10 @@
                   id="dep"
                   class="form-control"
                   bind:value={dep}
+                  on:blur={() => {
+                    if (dep.length == 3 || dep.length == 4)
+                      dep = dep.toUpperCase();
+                  }}
                   required
                 />
                 <span class="form-text">Name, IATA, or ICAO code</span>
@@ -214,6 +218,10 @@
                   id="des"
                   class="form-control"
                   bind:value={des}
+                  on:blur={() => {
+                    if (des.length == 3 || des.length == 4)
+                      des = des.toUpperCase();
+                  }}
                   required
                 />
                 <span class="form-text">Name, IATA, or ICAO code</span>
