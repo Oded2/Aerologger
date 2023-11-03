@@ -31,8 +31,8 @@
   let isPublic = log ? log.public : true;
   let inProgress = false,
     isComplete = false;
-  let submitText = "Submit Flight";
-  $: submitText = inProgress ? submitText : "Submit Flight";
+  const ogProgress = { message: "", value: 0 };
+  let progress = ogProgress;
   let logNumber = NaN;
   $: planeId = planeId.toUpperCase();
   $: depDate = parseDateAndTime(dateStr, depTimeStr);
@@ -58,7 +58,8 @@
             desTimeStr
           );
     inProgress = true;
-    if (planeType !== "other") submitText = "Fetching Aircraft";
+    if (planeType !== "other")
+      progress = { message: "Fetching Aircraft", value: 25 };
     const plane =
       planeType === "other"
         ? [{ manufacturer: planeManu, model: planeModel }]
@@ -66,23 +67,26 @@
     if (plane.length < 1) {
       showError("Plane not found.");
       inProgress = false;
+      progress = ogProgress;
       return;
     }
-    submitText = "Fetching Departure Airport";
+    progress = { message: "Fetching Departure Airport", value: 50 };
     const depAirport = await getAirportDetails(dep);
     if (depAirport.length != 1) {
       showError("Departure airport not found.");
       inProgress = false;
+      progress = ogProgress;
       return;
     }
-    submitText = "Fetching Destination Airport";
+    progress = { message: "Fetching Destination Airport", value: 75 };
     const desAirport = await getAirportDetails(des);
     if (desAirport.length != 1) {
       showError("Destination airport not found");
       inProgress = false;
+      progress = ogProgress;
       return;
     }
-    submitText = "Inserting Into Database";
+    progress = { message: "Inserting Into Database", value: 100 };
     const toInsert = {
       user_id: session.user.id,
       dep: depAirport[0],
@@ -99,6 +103,7 @@
       ? await supabase.from("Logs").update(toInsert).eq("id", logId)
       : await supabase.from("Logs").insert(toInsert).select();
     inProgress = false;
+    progress = ogProgress;
     logNumber = data ? data[0].id : logId;
     if (error) {
       showError(error.message);
@@ -350,11 +355,29 @@
             </div>
           </div>
           <div class="card-footer">
-            <button
-              class="btn btn-primary btn-lg w-100 fs-4"
-              type="submit"
-              disabled={inProgress}>{submitText}</button
-            >
+            {#if inProgress}
+              <div
+                class="progress mb-2"
+                role="progressbar"
+                style="height: 40px"
+              >
+                <div
+                  class="progress-bar progress-bar-striped progress-bar-animated"
+                  style="width: {progress.value}%"
+                >
+                  {`${progress.value}%`}
+                </div>
+              </div>
+              <div class="text-center font-google-quicksand fw-600 fst-italic">
+                {progress.message}
+              </div>
+            {:else}
+              <button
+                class="btn btn-primary btn-lg w-100 fs-4"
+                type="submit"
+                disabled={inProgress}>Submit Flight</button
+              >
+            {/if}
           </div>
         </div>
       </form>
