@@ -11,7 +11,7 @@ export async function load({ url, parent }) {
       .eq("id", logId)
       .eq("user_id", session.user.id);
     if (data.length == 0)
-      throw error(404, { message: `Log ${logId} does not belong to you` });
+      throw error(401, { message: `Log ${logId} does not belong to you` });
     log = data[0];
   }
   return { logId, log };
