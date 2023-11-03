@@ -1,6 +1,5 @@
 <script>
   import { page } from "$app/stores";
-  import hrefs from "../data/hrefs.json";
   const url = $page;
 </script>
 
