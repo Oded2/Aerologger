@@ -9,12 +9,6 @@
     <div class="my-5 text-center font-google-quicksand">
       <h1 class="fw-600">{`${url.status} Error`}</h1>
       <h2 class="fw-600">{url.error.message}</h2>
-      <h6>
-        If this was unexpected, please <a
-          href={hrefs.contact.home.link}
-          class="text-reset">contact me</a
-        >
-      </h6>
     </div>
   </div>
 </main>
