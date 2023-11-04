@@ -133,6 +133,11 @@
                     )}</span
                   >
                 </li>
+                <li class="list-group-item">
+                  Date Logged: <span class="text-aerologger"
+                    >{formatDateTime(log.created_at)}</span
+                  >
+                </li>
               </ul>
             </div>
           </div>
