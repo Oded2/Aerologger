@@ -20,7 +20,7 @@
   <Logbook {logs} allowModification={false} />
   <div class="container">
     <MidScreen>
-      <div class="card fs-5 my-4">
+      <div class="card fs-5 my-4 shadow">
         <div class="card-body">
           <h4>User Details</h4>
           <div>
