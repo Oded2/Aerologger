@@ -2,7 +2,7 @@ import { error } from "@sveltejs/kit";
 
 export async function load({ parent, url }) {
   const { supabase } = await parent();
-  const logId = url.searchParams.get("logId");
+  const logId = url.searchParams.get("logid");
   const { data: log } = await supabase.from("Logs").select().eq("id", logId);
   if (log.length == 0) {
     throw error(404, {

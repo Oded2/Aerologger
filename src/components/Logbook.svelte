@@ -267,7 +267,7 @@
                 <div class="btn-group">
                   <a
                     href={addParamsString(hrefs.logbook.viewer.link, {
-                      logId: log.id,
+                      logid: log.id,
                       ref: refUrl,
                     })}
                     class="btn btn-secondary">View</a
