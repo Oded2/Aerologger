@@ -272,26 +272,26 @@
                     })}
                     class="btn btn-secondary">View</a
                   >
-                  {#if allowModification}
-                    <button
-                      type="button"
-                      class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      disabled={inProgress}
-                    >
-                      <span class="visually-hidden">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          href={addParamsString(hrefs.newFlight.home.link, {
-                            logId: log.id,
-                            edit: false,
-                          })}
-                          class="btn btn-info dropdown-item">Preset Flight</a
-                        >
-                      </li>
+
+                  <button
+                    type="button"
+                    class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    disabled={inProgress}
+                  >
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a
+                        href={addParamsString(hrefs.newFlight.home.link, {
+                          logId: log.id,
+                        })}
+                        class="btn btn-info dropdown-item">Preset Flight</a
+                      >
+                    </li>
+                    {#if allowModification}
                       <li>
                         <a
                           href={addParamsString(hrefs.newFlight.home.link, {
@@ -316,8 +316,8 @@
                           }}>Delete Flight</button
                         >
                       </li>
-                    </ul>
-                  {/if}
+                    {/if}
+                  </ul>
                 </div>
               </div>
             </div>
