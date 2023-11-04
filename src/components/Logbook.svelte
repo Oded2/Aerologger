@@ -15,6 +15,7 @@
   export let logs = [];
   export let supabase;
   export let allowModification = true;
+  export let session = true;
   const maxLogs = 10;
   const maxPage = parseInt(
     logs.length / maxLogs + (logs.length % maxLogs != 0 ? 1 : 0)
@@ -305,7 +306,8 @@
                         href={addParamsString(hrefs.newFlight.home.link, {
                           preset: log.id,
                         })}
-                        class="btn btn-info dropdown-item">Preset Flight</a
+                        class="btn btn-info dropdown-item"
+                        class:disabled={!session}>Preset Flight</a
                       >
                     </li>
                     {#if allowModification}
