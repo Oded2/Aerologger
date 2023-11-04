@@ -69,7 +69,7 @@
         on:submit={() =>
           gotoProgress(
             addParamsString(hrefs.logbook.viewer.link, {
-              logId: logSearch,
+              logid: logSearch,
               ref: hrefs.explore.home.link,
             })
           )}
