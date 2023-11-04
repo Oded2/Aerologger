@@ -23,7 +23,6 @@
     profile.username
   );
   url.searchParams.delete("ref");
-  console.log(url.href);
   function formatDateTime(string = "") {
     const date = new Date(string);
     return `${formatDate(date)} at ${getTimeStr(date)}`;
