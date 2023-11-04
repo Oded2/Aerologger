@@ -286,7 +286,7 @@
                     <li>
                       <a
                         href={addParamsString(hrefs.newFlight.home.link, {
-                          logid: log.id,
+                          preset: log.id,
                         })}
                         class="btn btn-info dropdown-item">Preset Flight</a
                       >
@@ -295,7 +295,7 @@
                       <li>
                         <a
                           href={addParamsString(hrefs.newFlight.home.link, {
-                            logid: log.id,
+                            preset: log.id,
                             edit: true,
                           })}
                           class="btn btn-warning dropdown-item">Edit Flight</a

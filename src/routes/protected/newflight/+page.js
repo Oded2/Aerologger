@@ -2,7 +2,7 @@ import { error } from "@sveltejs/kit";
 
 export async function load({ url, parent }) {
   const { supabase, session } = await parent();
-  const logId = url.searchParams.get("logid");
+  const logId = url.searchParams.get("preset");
   const edit = url.searchParams.get("edit") === "true";
   let log = null;
   if (logId) {
