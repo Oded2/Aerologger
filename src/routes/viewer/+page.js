@@ -3,6 +3,7 @@ import { error } from "@sveltejs/kit";
 export async function load({ parent, url }) {
   const { supabase } = await parent();
   const logId = url.searchParams.get("logid");
+  if (isNaN(logId) || !logId) throw error(400, "Invalid Parameters");
   const { data: log } = await supabase.from("Logs").select().eq("id", logId);
   if (log.length == 0) {
     throw error(404, {
