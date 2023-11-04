@@ -143,7 +143,7 @@
           logs = logs;
         }}
         ><option value="depDate">Flight Date</option>
-        <option value="created_at">Date logged</option>
+        <option value="created_at">Date Logged</option>
       </select>
     </div>
   </div>
