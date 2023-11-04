@@ -3,6 +3,7 @@ import { error } from "@sveltejs/kit";
 export async function load({ url, parent }) {
   const { supabase, session } = await parent();
   const logId = url.searchParams.get("logId");
+  const preset = url.searchParams.get("preset") === "true";
   let log = null;
   if (logId) {
     const { data } = await supabase
@@ -14,5 +15,5 @@ export async function load({ url, parent }) {
       throw error(401, { message: `Log ${logId} does not belong to you.` });
     log = data[0];
   }
-  return { logId, log };
+  return { logId, log, preset };
 }

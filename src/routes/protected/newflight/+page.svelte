@@ -14,7 +14,7 @@
   import { goto } from "$app/navigation";
   import FloatElement from "../../../components/FloatElement.svelte";
   export let data;
-  const { supabase, session, log } = data;
+  const { supabase, session, log, preset } = data;
   let { logId } = data;
   const apiRef = hrefs.apis;
   let toast;
@@ -99,9 +99,10 @@
       notes: userNotes,
       public: isPublic,
     };
-    const { data, error } = logId
-      ? await supabase.from("Logs").update(toInsert).eq("id", logId)
-      : await supabase.from("Logs").insert(toInsert).select();
+    const { data, error } =
+      logId && !preset
+        ? await supabase.from("Logs").update(toInsert).eq("id", logId)
+        : await supabase.from("Logs").insert(toInsert).select();
     inProgress = false;
     progress = ogProgress;
     logNumber = data ? data[0].id : logId;
@@ -384,7 +385,7 @@
     {/if}
   </div>
 </main>
-<FloatElement visible={logId}>
+<FloatElement visible={logId && !preset}>
   <div class="input-group shadow">
     <span class="input-group-text">Editing Log {logId}</span>
     <a href={hrefs.logbook.home.link} class="btn btn-secondary"
