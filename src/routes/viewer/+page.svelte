@@ -1,5 +1,4 @@
 <script>
-  import { page } from "$app/stores";
   import {
     formatDate,
     getTimeStr,
@@ -17,15 +16,14 @@
   let showAircraftModal = false,
     showNotesModal = false,
     showShareModal = false;
-  const { profile, log } = data;
-  const url = $page.url;
-  const ref = url.searchParams.get("ref");
+  const { log, profile, ref, url } = data;
   const isPlane = log.type === "airplane";
   const profileRef = hrefs.explore.profile.link.replace(
     "slug",
     profile.username
   );
   url.searchParams.delete("ref");
+  console.log(url.href);
   function formatDateTime(string = "") {
     const date = new Date(string);
     return `${formatDate(date)} at ${getTimeStr(date)}`;

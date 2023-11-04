@@ -3,14 +3,14 @@
   import { addParamsString, copyToClipboard } from "../hooks.client.js";
   import Modal from "./Modal.svelte";
   export let showModal = false;
-  export const url = $page.url;
+  export let url = $page.url;
   export let shareText =
     "Check out AeroLogger, a fast, free, and convenient flight logging website.";
-  let href = url.href;
+  let copyText = url.href;
   function copy() {
     copyToClipboard(url.href);
-    href = "Link copied to clipboard";
-    setTimeout(() => (href = url.href), 3000);
+    copyText = "Link copied to clipboard";
+    setTimeout(() => (copyText = url.href), 3000);
   }
   const twitterLink = addParamsString("https://twitter.com/intent/tweet", {
     text: shareText,
@@ -35,7 +35,7 @@
           type="text"
           class="form-control fs-5"
           disabled
-          bind:value={href}
+          bind:value={copyText}
         />
       </div>
       <div class="text-center my-3">
