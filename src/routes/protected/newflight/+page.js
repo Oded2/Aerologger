@@ -6,14 +6,10 @@ export async function load({ url, parent }) {
   const preset = url.searchParams.get("preset") === "true";
   let log = null;
   if (logId) {
-    const { data } = await supabase
-      .from("Logs")
-      .select()
-      .eq("id", logId)
-      .eq("user_id", session.user.id);
-    if (data.length == 0)
-      throw error(401, { message: `Log ${logId} does not belong to you.` });
+    const { data } = await supabase.from("Logs").select().eq("id", logId);
     log = data[0];
+    if (!log || (log.user_id !== session.user.id && preset == false))
+      throw error(401, { message: `Log ${logId} does not belong to you.` });
   }
   return { logId, log, preset };
 }
