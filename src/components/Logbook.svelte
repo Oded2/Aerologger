@@ -21,6 +21,7 @@
   );
   let currentPage = 1;
   let userPage = currentPage;
+  let sortby = "depDate";
   const dispatch = createEventDispatcher();
   const refUrl = $page.url.href;
   let inProgress = false,
@@ -28,7 +29,7 @@
   let currentFlight = { id: NaN, dep: {}, des: {}, time: "" };
   let totalMinutes = 0,
     totalFlights = 0;
-  logs.sort(GetSortOrder("depDate", true));
+  logs.sort(GetSortOrder(sortby, true));
   $: hours = Math.floor(totalMinutes / 60);
   $: minutes = totalMinutes % 60;
   for (const i of logs) {
@@ -125,10 +126,26 @@
       >
     </h4>
   </div>
+
   <div class="mb-3">
     <span class="font-reset fw-light fs-6"
       >Please note that date and times are relative to your time zone.</span
     >
+  </div>
+  <div class="mb-3">
+    <div class="input-group shadow-sm mw-custom">
+      <span class="input-group-text">Sort By</span>
+      <select
+        class="form-select"
+        bind:value={sortby}
+        on:change={() => {
+          logs.sort(GetSortOrder(sortby, true));
+          logs = logs;
+        }}
+        ><option value="depDate">Flight Date</option>
+        <option value="created_at">Date logged</option>
+      </select>
+    </div>
   </div>
   {#if logs.length > maxLogs}
     <div class="mb-3">
