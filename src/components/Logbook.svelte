@@ -257,7 +257,7 @@
           {/if}
           <div class="col-md mb-2 mb-md-0">
             <div class="row">
-              <div class="col-auto">
+              <div class="col-auto d-md-none">
                 <i
                   class="d-md-none fa-solid fa-circle-info"
                   title="Flight Options"
