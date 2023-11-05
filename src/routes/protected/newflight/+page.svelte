@@ -11,10 +11,10 @@
   import Switch from "../../../components/Switch.svelte";
   import hrefs from "../../../data/hrefs.json";
   import logo from "../../../data/images/logo_simplified.png";
-  import { goto } from "$app/navigation";
   import FloatElement from "../../../components/FloatElement.svelte";
   export let data;
-  const { supabase, session, log, edit } = data;
+  const { supabase, session, log } = data;
+  let { edit } = data;
   const apiRef = hrefs.apis;
   let toast;
   let dep = log ? log.dep.icao : "",
@@ -176,7 +176,7 @@
           <button
             on:click={() => {
               isComplete = false;
-              if (log) goto(hrefs.newFlight.home.link);
+              edit = false;
             }}
             class="btn btn-outline-primary btn-lg fs-2 w-100 h-100"
             >Log New Flight</button
@@ -382,7 +382,7 @@
     {/if}
   </div>
 </main>
-<FloatElement visible={edit}>
+<FloatElement visible={edit && !isComplete}>
   <div class="input-group shadow">
     <span class="input-group-text">Editing Log {log.id}</span>
     <a href={hrefs.logbook.home.link} class="btn btn-secondary"
