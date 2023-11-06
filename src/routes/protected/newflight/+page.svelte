@@ -103,11 +103,11 @@
       : await supabase.from("Logs").insert(toInsert).select();
     inProgress = false;
     progress = ogProgress;
-    logId = data[0].id;
     if (error) {
       showError(error.message);
       return;
     }
+    logId = data[0].id;
     isComplete = true;
     dep = "";
     des = "";
@@ -166,7 +166,7 @@
         <div class="col">
           <a
             href={addParamsString(hrefs.logbook.viewer.link, {
-              logId: logId,
+              logid: logId,
               ref: hrefs.newFlight.home.link,
             })}
             class="btn btn-primary btn-lg fs-2 w-100 h-100">View Flight</a
@@ -342,7 +342,14 @@
                   class="form-control fs-5"
                   bind:value={userNotes}
                   on:blur={() => (userNotes = userNotes.trim())}
+                  maxlength="10000"
                 />
+                <div
+                  class="form-text"
+                  class:text-danger={userNotes.length >= 9000}
+                >
+                  {`${userNotes.length.toLocaleString()}/${(10000).toLocaleString()}`}
+                </div>
               </div>
               <div class="col-auto">
                 <Switch bind:checked={isPublic} text="Make public" />
