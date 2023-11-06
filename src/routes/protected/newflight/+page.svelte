@@ -140,6 +140,10 @@
       showError("Plane model cannot be empty.");
       return false;
     }
+    if (planeId.length > 20) {
+      showError("Tail Number cannot be more than 20 characters long.");
+      return false;
+    }
     if (isNaN(depDate.valueOf())) {
       showError("Date or time is invalid");
       return false;
