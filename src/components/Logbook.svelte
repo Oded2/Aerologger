@@ -440,7 +440,7 @@
       {/if}
     {/each}
   </div>
-  {#if logs.length > 0}
+  {#if logs.length > 0 && allowModification}
     <div class="my-5">
       <MidScreen
         ><div class="card shadow">
