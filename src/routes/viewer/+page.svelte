@@ -23,6 +23,7 @@
     "slug",
     profile.username
   );
+  let copyIcon = "copy";
   url.searchParams.delete("ref");
   function formatDateTimeStr(string = "") {
     const date = new Date(string);
@@ -148,27 +149,30 @@
                 <i class="fa-solid fa-note-sticky" /> Notes
               </h3>
             </div>
-            <div class="card-body notes-card">
+            <div class="card-body notes-card position-relative">
               <p class="font-google-quicksand" dir="auto">
                 {maxLen(log.notes, 200)}
               </p>
-            </div>
-
-            <div class="card-footer">
-              <div class="btn-group w-100">
-                {#if log.notes.length > 200}
-                  <button
-                    class="btn btn-primary w-100 fw-bold"
-                    on:click={toggleNotesModal}>Show More</button
-                  >
-                {/if}
+              <div class="btn-copy pe-2 pb-2">
                 <button
-                  class="btn btn-secondary w-100 fw-bold"
-                  on:click={() => navigator.clipboard.writeText(log.notes)}
-                  >Copy</button
+                  class="btn btn-secondary"
+                  on:click={() => {
+                    navigator.clipboard.writeText(log.notes);
+                      copyIcon = "check";
+                    setTimeout(() => (copyIcon = "copy"), 3000);
+                  
+                  }}><i class="fa-solid fa-{copyIcon}" /></button
                 >
               </div>
             </div>
+            {#if log.notes.length > 200}
+              <div class="card-footer">
+                <button
+                  class="btn btn-primary w-100 fw-bold"
+                  on:click={toggleNotesModal}>Show More</button
+                >
+              </div>
+            {/if}
           </div>
         </div>
         <div
@@ -403,5 +407,10 @@
 <style>
   div.notes-card {
     min-height: 200px;
+  }
+  .btn-copy {
+    bottom: 0;
+    right: 0;
+    position: absolute;
   }
 </style>
