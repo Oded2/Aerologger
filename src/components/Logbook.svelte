@@ -27,6 +27,7 @@
   let currentPage = 1;
   let userPage = currentPage;
   let sortby = "depDate";
+  let showDateLogged = false;
   const refUrl = $page.url.href;
   let inProgress = false,
     delConfirm = false;
@@ -223,7 +224,6 @@
       >
     </h4>
   </div>
-
   <div class="mb-3">
     <span class="font-reset fw-light fs-6"
       >Please note that date and times are relative to your time zone.</span
@@ -231,17 +231,34 @@
   </div>
   <div class="mb-3">
     <div class="input-group shadow-sm mw-custom">
-      <span class="input-group-text">Sort By</span>
+      <label for="sortby" class="input-group-text">Sort By</label>
       <select
+        id="sortby"
         class="form-select"
         bind:value={sortby}
         on:change={() => {
+          sortby === "created_at"
+            ? (showDateLogged = true)
+            : (showDateLogged = false);
           logs.sort(GetSortOrder(sortby, true));
           logs = logs;
         }}
         ><option value="depDate">Flight Date</option>
         <option value="created_at">Date Logged</option>
       </select>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div class="form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="showdatelogged"
+        bind:checked={showDateLogged}
+      />
+      <label for="showdatelogged" class="form-check-label"
+        >Show Date Logged</label
+      >
     </div>
   </div>
   {#if logs.length > maxLogs}
@@ -324,12 +341,13 @@
               />
               {formatDateStr(log.depDate)}
             </div>
-            {#if sortby === "created_at"}
+
+            <div class="fs-6 fw-normal">ID: {log.id}</div>
+            {#if showDateLogged}
               <div class="fs-6 fw-normal">
                 Date Logged: {formatDateTime(new Date(log.created_at))}
               </div>
             {/if}
-            <div class="fs-6 fw-normal">ID: {log.id}</div>
           </div>
           <div class="col-md mb-2 mb-md-0">
             <i class="d-md-none fa-solid fa-map" title="Flight Route" />
