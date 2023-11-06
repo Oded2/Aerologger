@@ -11,19 +11,21 @@
   } from "../hooks.client.js";
   import hrefs from "../data/hrefs.json";
   import { page } from "$app/stores";
-  import { createEventDispatcher } from "svelte";
+  import MidScreen from "./MidScreen.svelte";
+  import ToastSetup from "./setup/ToastSetup.svelte";
+  import { supabase as supabaseClient } from "$lib/supabaseClient.js";
   export let logs = [];
-  export let supabase;
   export let allowModification = true;
-  export let session = true;
+  export let supabase = supabaseClient;
+  export let userId = "";
   const maxLogs = 10;
   const maxPage = parseInt(
     logs.length / maxLogs + (logs.length % maxLogs != 0 ? 1 : 0)
   );
+  let toast;
   let currentPage = 1;
   let userPage = currentPage;
   let sortby = "depDate";
-  const dispatch = createEventDispatcher();
   const refUrl = $page.url.href;
   let inProgress = false,
     delConfirm = false;
@@ -37,6 +39,34 @@
     totalFlights++;
     totalMinutes += calculateMinutes(new Date(i.depDate), new Date(i.desDate));
   }
+  async function changeMassVisibility(toPublic = true) {
+    if (
+      !confirm(
+        `This action will make all your logs ${
+          toPublic ? "public" : "private"
+        }. Are you sure you want to do this?`
+      )
+    )
+      return;
+
+    inProgress = true;
+    const { error } = await supabase
+      .from("Logs")
+      .update({ public: toPublic })
+      .eq("user_id", userId);
+    inProgress = false;
+    if (error) {
+      toast = createToast("error", "Error", error.message);
+      return;
+    }
+    for (const i in logs) logs[i].public = toPublic;
+
+    toast = createToast(
+      "success",
+      "Success",
+      `All your logs are now ${toPublic ? "public" : "private"}`
+    );
+  }
   async function changeVisibility(id = "", makePublic = false) {
     inProgress = true;
     const { error } = await supabase
@@ -48,11 +78,7 @@
       toast = createToast("error", "Error", error.message);
       return;
     }
-    for (const i in logs) {
-      if (logs[i].id === id) {
-        logs[i].public = makePublic;
-      }
-    }
+    for (const i in logs) if (logs[i].id === id) logs[i].public = makePublic;
   }
   function toggleModal() {
     delConfirm = !delConfirm;
@@ -75,10 +101,79 @@
         totalFlights--;
         logs.splice(i, 1);
         logs = logs;
-        dispatch("delete");
+        toast = createToast(
+          "success",
+          "Flight Deleted",
+          "Your flight has been deleted from your logbook."
+        );
       }
     }
     delConfirm = false;
+  }
+  async function purge() {
+    if (
+      !confirm(
+        "Are you sure you want to purge your logbook? This action will delete ALL your flight logs and CANNOT be undone."
+      )
+    )
+      return;
+
+    inProgress = true;
+    const { error } = await supabase
+      .from("Logs")
+      .delete()
+      .eq("user_id", userId);
+    inProgress = false;
+    if (error) {
+      toast = createToast("error", "Error", error.message);
+      return;
+    }
+    logs = [];
+    totalFlights = 0;
+    totalMinutes = 0;
+    toast = createToast(
+      "success",
+      "Success",
+      "All your logs have been deleted from your logbook"
+    );
+  }
+  async function purgePublic(isPublic = false) {
+    if (
+      !confirm(
+        `This action will delete ALL of your ${
+          isPublic ? "public" : "private"
+        } logs. This action cannot be undone.`
+      )
+    )
+      return;
+    inProgress = true;
+    const { error } = await supabase
+      .from("Logs")
+      .delete()
+      .eq("public", isPublic)
+      .eq("user_id", userId);
+    inProgress = false;
+    if (error) {
+      toast = createToast("error", "Error", error.message);
+      return;
+    }
+    for (const i in logs)
+      if (logs[i].public == isPublic) {
+        totalFlights--;
+        totalMinutes -= calculateMinutes(
+          new Date(logs[i].depDate),
+          new Date(logs[i].desDate)
+        );
+        logs.splice(i, 1);
+      }
+    logs = logs;
+    toast = createToast(
+      "success",
+      "Success",
+      `All ${
+        isPublic ? "public" : "private"
+      } logs are deleted from your logbook.`
+    );
   }
 </script>
 
@@ -307,7 +402,7 @@
                           preset: log.id,
                         })}
                         class="btn btn-info dropdown-item"
-                        class:disabled={!session}>Preset Flight</a
+                        class:disabled={userId.length == 0}>Preset Flight</a
                       >
                     </li>
                     {#if allowModification}
@@ -345,7 +440,64 @@
       {/if}
     {/each}
   </div>
+  {#if logs.length > 0}
+    <div class="my-5">
+      <MidScreen
+        ><div class="card shadow">
+          <div class="card-header">
+            <span class="font-google-quicksand">Logbook settings</span>
+          </div>
+          <div class="card-body">
+            <div class="my-3">
+              <h5>Privacy</h5>
+              <div class="row">
+                <div class="col-sm-6 mb-3">
+                  <button
+                    class="btn btn-dark w-100 shadow"
+                    on:click={() => changeMassVisibility(false)}
+                    disabled={inProgress}>Make Logs Private</button
+                  >
+                </div>
+                <div class="col-sm-6 mb-3">
+                  <button
+                    class="btn btn-dark w-100 shadow"
+                    on:click={() => changeMassVisibility(true)}
+                    disabled={inProgress}>Make Logs Public</button
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <h5>Danger Zone</h5>
+              <div class="row">
+                <div class="col-sm-6 mb-3">
+                  <button
+                    class="btn btn-outline-danger w-100 shadow"
+                    on:click={() => purgePublic(false)}
+                    disabled={inProgress}>Delete Private Logs</button
+                  >
+                </div>
+                <div class="col-sm-6 mb-3">
+                  <button
+                    class="btn btn-outline-danger w-100 shadow"
+                    on:click={() => purgePublic(true)}
+                    disabled={inProgress}>Delete Public Logs</button
+                  >
+                </div>
+                <div class="col-sm-12">
+                  <button class="btn btn-danger w-100 shadow" on:click={purge}
+                    >Purge Logbook</button
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </MidScreen>
+    </div>
+  {/if}
 </div>
+<ToastSetup {toast} />
 
 <style>
   button {
