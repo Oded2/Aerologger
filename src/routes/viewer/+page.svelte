@@ -58,7 +58,7 @@
         </h2>
       </div>
       <div class="row fs-3 my-5">
-        <div class="col-lg-4 mb-5">
+        <div class="col-lg-5 mb-5">
           <div class="card shadow h-100">
             <div class="card-header text-center">
               <h3>
@@ -101,7 +101,7 @@
             {/if}
           </div>
         </div>
-        <div class="col-lg-4 mb-5">
+        <div class="col-lg-7 mb-5">
           <div class="card shadow h-100">
             <div class="card-header text-center">
               <h3>
@@ -141,14 +141,14 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 mb-5">
+        <div class="col-lg-12 mb-5">
           <div class="card shadow h-100">
             <div class="card-header text-center">
               <h3>
                 <i class="fa-solid fa-note-sticky" /> Notes
               </h3>
             </div>
-            <div class="card-body">
+            <div class="card-body notes-card">
               <p class="font-google-quicksand" dir="auto">
                 {maxLen(log.notes, 200)}
               </p>
@@ -399,3 +399,9 @@
 </FloatElement>
 
 <ToastSetup {toast} />
+
+<style>
+  div.notes-card {
+    min-height: 200px;
+  }
+</style>
