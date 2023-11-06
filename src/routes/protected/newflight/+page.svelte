@@ -352,7 +352,9 @@
                   class="form-text"
                   class:text-danger={userNotes.length >= 9000}
                 >
-                  {`${userNotes.length.toLocaleString()}/${(10000).toLocaleString()}`}
+                  {`${userNotes
+                    .trim()
+                    .length.toLocaleString()}/${(10000).toLocaleString()}`}
                 </div>
               </div>
               <div class="col-auto">
