@@ -8,6 +8,7 @@
     createToast,
     GetSortOrder,
     calculateMinutes,
+    formatDateTime,
   } from "../hooks.client.js";
   import hrefs from "../data/hrefs.json";
   import { page } from "$app/stores";
@@ -323,6 +324,11 @@
               />
               {formatDateStr(log.depDate)}
             </div>
+            {#if sortby === "created_at"}
+              <div class="fs-6 fw-normal">
+                Date Logged: {formatDateTime(new Date(log.created_at))}
+              </div>
+            {/if}
             <div class="fs-6 fw-normal">ID: {log.id}</div>
           </div>
           <div class="col-md mb-2 mb-md-0">

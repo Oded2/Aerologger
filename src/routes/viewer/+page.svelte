@@ -4,6 +4,7 @@
     getTimeStr,
     formatDuration,
     maxLen,
+    formatDateTime,
   } from "../../hooks.client.js";
   import hrefs from "../../data/hrefs.json";
   import FloatElement from "../../components/FloatElement.svelte";
@@ -23,9 +24,9 @@
     profile.username
   );
   url.searchParams.delete("ref");
-  function formatDateTime(string = "") {
+  function formatDateTimeStr(string = "") {
     const date = new Date(string);
-    return `${formatDate(date)} at ${getTimeStr(date)}`;
+    return formatDateTime(date);
   }
   function toggleShareModal() {
     showShareModal = !showShareModal;
@@ -116,13 +117,13 @@
                 </li>
                 <li class="list-group-item">
                   Time of Departure: <span class="text-aerologger">
-                    {formatDateTime(log.depDate)}</span
+                    {formatDateTimeStr(log.depDate)}</span
                   >
                 </li>
 
                 <li class="list-group-item">
                   Time of Arrival: <span class="text-aerologger">
-                    {formatDateTime(log.desDate)}</span
+                    {formatDateTimeStr(log.desDate)}</span
                   >
                 </li>
                 <li class="list-group-item">
@@ -135,7 +136,7 @@
                 </li>
                 <li class="list-group-item">
                   Date Logged: <span class="text-aerologger"
-                    >{formatDateTime(log.created_at)}</span
+                    >{formatDateTimeStr(log.created_at)}</span
                   >
                 </li>
               </ul>

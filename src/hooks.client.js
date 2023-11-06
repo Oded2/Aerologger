@@ -67,6 +67,10 @@ export function formatDate(date = new Date()) {
   return formatDate;
 }
 
+export function formatDateTime(date = new Date()) {
+  return `${formatDate(date)} at ${getTimeStr(date)}`;
+}
+
 export function dateToStr(date = new Date()) {
   return date.toISOString().split("T")[0];
 }
