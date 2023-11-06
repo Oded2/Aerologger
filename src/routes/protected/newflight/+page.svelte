@@ -315,6 +315,7 @@
                   bind:value={planeId}
                   on:blur={() => (planeId = planeId.trim())}
                   placeholder={'"4X-CHA"'}
+                  maxlength="20"
                 />
               </div>
               <div class="col-md-12 col-xl-3 pb-3 text-nowrap">
