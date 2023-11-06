@@ -212,6 +212,7 @@
                     class="form-control"
                     id="birthday"
                     bind:value={birthday}
+                    max={dateToStr()}
                   />
 
                   <label for="birthday">Birthday</label>
