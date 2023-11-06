@@ -68,19 +68,17 @@
             <div class="card-body">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                  Aircraft Type: <span class="text-capitalize text-aerologger"
+                  Type: <span class="text-capitalize text-aerologger"
                     >{log.type}</span
                   >
                 </li>
                 <li class="list-group-item">
-                  Aircraft Manufacturer: <span
-                    class="text-capitalize text-aerologger"
-                  >
+                  Manufacturer: <span class="text-capitalize text-aerologger">
                     {log.plane.manufacturer}</span
                   >
                 </li>
                 <li class="list-group-item">
-                  Aircraft Model: <span class="text-capitalize text-aerologger">
+                  Model: <span class="text-capitalize text-aerologger">
                     {log.plane.model}</span
                   >
                 </li>
