@@ -149,30 +149,25 @@
                 <i class="fa-solid fa-note-sticky" /> Notes
               </h3>
             </div>
-            <div class="card-body notes-card position-relative">
-              <p class="font-google-quicksand" dir="auto">
-                {maxLen(log.notes, 200)}
-              </p>
-              <div class="btn-copy pe-2 pb-2">
+            <div class="card-body position-relative">
+              <div class="notes-card">
+                <p class="font-google-quicksand" dir="auto">
+                  {log.notes}
+                </p>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="d-flex justify-content-end">
                 <button
                   class="btn btn-secondary"
                   on:click={() => {
                     navigator.clipboard.writeText(log.notes);
-                      copyIcon = "check";
+                    copyIcon = "check";
                     setTimeout(() => (copyIcon = "copy"), 3000);
-                  
                   }}><i class="fa-solid fa-{copyIcon}" /></button
                 >
               </div>
             </div>
-            {#if log.notes.length > 200}
-              <div class="card-footer">
-                <button
-                  class="btn btn-primary w-100 fw-bold"
-                  on:click={toggleNotesModal}>Show More</button
-                >
-              </div>
-            {/if}
           </div>
         </div>
         <div
@@ -407,10 +402,7 @@
 <style>
   div.notes-card {
     min-height: 200px;
-  }
-  .btn-copy {
-    bottom: 0;
-    right: 0;
-    position: absolute;
+    max-height: 400px;
+    overflow: auto;
   }
 </style>
