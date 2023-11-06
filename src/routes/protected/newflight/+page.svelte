@@ -8,7 +8,6 @@
     parseDateAndTime,
   } from "../../../hooks.client.js";
   import ToastSetup from "../../../components/setup/ToastSetup.svelte";
-  import Switch from "../../../components/Switch.svelte";
   import hrefs from "../../../data/hrefs.json";
   import logo from "../../../data/images/logo_simplified.png";
   import FloatElement from "../../../components/FloatElement.svelte";
