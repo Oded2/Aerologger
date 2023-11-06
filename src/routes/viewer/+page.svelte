@@ -23,7 +23,9 @@
     "slug",
     profile.username
   );
+  const minLen = 800;
   let copyIcon = "copy";
+  let notesExpand = false;
   url.searchParams.delete("ref");
   function formatDateTimeStr(string = "") {
     const date = new Date(string);
@@ -34,9 +36,6 @@
   }
   function toggleAircraftModal() {
     showAircraftModal = !showAircraftModal;
-  }
-  function toggleNotesModal() {
-    showNotesModal = !showNotesModal;
   }
 </script>
 
@@ -150,22 +149,37 @@
               </h3>
             </div>
             <div class="card-body position-relative">
-              <div class="notes-card">
+              <div
+                class="notes-card"
+                class:h-200px={log.notes.length < minLen}
+                class:h-400px={log.notes.length >= minLen}
+                class:overflow-hidden={!notesExpand}
+                class:overflow-auto={notesExpand}
+              >
                 <p class="font-google-quicksand" dir="auto">
-                  {log.notes}
+                  {notesExpand ? log.notes : maxLen(log.notes, minLen)}
                 </p>
               </div>
             </div>
             <div class="card-footer">
               <div class="d-flex justify-content-end">
                 <button
-                  class="btn btn-secondary"
+                  class="btn btn-secondary me-2"
                   on:click={() => {
                     navigator.clipboard.writeText(log.notes);
                     copyIcon = "check";
                     setTimeout(() => (copyIcon = "copy"), 3000);
                   }}><i class="fa-solid fa-{copyIcon}" /></button
                 >
+                {#if log.notes.length >= minLen}
+                  <button
+                    class="btn btn-primary"
+                    on:click={() => (notesExpand = !notesExpand)}
+                    ><i
+                      class="fa-solid fa-{notesExpand ? 'compress' : 'expand'}"
+                    /></button
+                  >
+                {/if}
               </div>
             </div>
           </div>
@@ -375,11 +389,6 @@
     </div>
   </div>
 </Modal>
-<Modal showModal={showNotesModal} on:click={toggleNotesModal}>
-  <div class="px-sm-5">
-    <p class="font-google-quicksand fs-4">{log.notes}</p>
-  </div>
-</Modal>
 <svelte:head>
   <title>{`${log.dep.city} to ${log.des.city}`}</title>
 </svelte:head>
@@ -400,9 +409,10 @@
 <ToastSetup {toast} />
 
 <style>
-  div.notes-card {
-    min-height: 200px;
-    max-height: 400px;
-    overflow: auto;
+  div.h-400px {
+    height: 400px;
+  }
+  div.h-200px {
+    height: 200px;
   }
 </style>
