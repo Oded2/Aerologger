@@ -192,199 +192,211 @@
         <h1>Welcome back.</h1>
       </div>
       <form on:submit|preventDefault={submit}>
-        <div class="card">
-          <div class="card-body fs-3">
-            <div class="row">
-              <div class="col-md-6 pb-3 text-nowrap">
-                <label for="dep" class="form-label"
-                  ><i class="fa-solid fa-plane-departure" /> Airport of Departure</label
-                >
-                <input
-                  type="text"
-                  id="dep"
-                  class="form-control"
-                  bind:value={dep}
-                  on:blur={() => {
-                    dep = dep.trim();
-                    if (dep.length == 3 || dep.length == 4)
-                      dep = dep.toUpperCase();
-                  }}
-                  required
-                />
-                <span class="form-text">Name, IATA, or ICAO code</span>
-              </div>
-              <div class="col-md-6 pb-3 text-nowrap">
-                <label for="des" class="form-label"
-                  ><i class="fa-solid fa-plane-arrival" /> Airport of Destination
-                </label>
-                <input
-                  type="text"
-                  id="des"
-                  class="form-control"
-                  bind:value={des}
-                  on:blur={() => {
-                    des = des.trim();
-                    if (des.length == 3 || des.length == 4)
-                      des = des.toUpperCase();
-                  }}
-                  required
-                />
-                <span class="form-text">Name, IATA, or ICAO code</span>
-              </div>
-              <div class="col-md-6 col-xl-4 pb-3 text-nowrap">
-                <label for="depdate" class="form-label"
-                  ><i class="fa-solid fa-calendar-days" /> Date</label
-                >
-                <div class="input-group">
-                  <button
-                    class="input-group-text btn btn-secondary"
-                    type="button"
-                    disabled={dateStr == dateToStr()}
-                    on:click={() => (dateStr = dateToStr())}>Today</button
+        <fieldset disabled={inProgress}>
+          <div class="card">
+            <div class="card-body fs-3">
+              <div class="row">
+                <div class="col-md-6 pb-3 text-nowrap">
+                  <label for="dep" class="form-label"
+                    ><i class="fa-solid fa-plane-departure" /> Airport of Departure</label
                   >
                   <input
-                    type="date"
-                    id="depdate"
+                    type="text"
+                    id="dep"
                     class="form-control"
-                    bind:value={dateStr}
+                    bind:value={dep}
+                    on:blur={() => {
+                      dep = dep.trim();
+                      if (dep.length == 3 || dep.length == 4)
+                        dep = dep.toUpperCase();
+                    }}
                     required
-                    max={dateToStr()}
+                  />
+                  <span class="form-text">Name, IATA, or ICAO code</span>
+                </div>
+                <div class="col-md-6 pb-3 text-nowrap">
+                  <label for="des" class="form-label"
+                    ><i class="fa-solid fa-plane-arrival" /> Airport of Destination
+                  </label>
+                  <input
+                    type="text"
+                    id="des"
+                    class="form-control"
+                    bind:value={des}
+                    on:blur={() => {
+                      des = des.trim();
+                      if (des.length == 3 || des.length == 4)
+                        des = des.toUpperCase();
+                    }}
+                    required
+                  />
+                  <span class="form-text">Name, IATA, or ICAO code</span>
+                </div>
+                <div class="col-md-6 col-xl-4 pb-3 text-nowrap">
+                  <label for="depdate" class="form-label"
+                    ><i class="fa-solid fa-calendar-days" /> Date</label
+                  >
+                  <div class="input-group">
+                    <button
+                      class="input-group-text btn btn-secondary"
+                      type="button"
+                      disabled={dateStr == dateToStr()}
+                      on:click={() => (dateStr = dateToStr())}>Today</button
+                    >
+                    <input
+                      type="date"
+                      id="depdate"
+                      class="form-control"
+                      bind:value={dateStr}
+                      required
+                      max={dateToStr()}
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 col-xl-4 pb-3 text-nowrap">
+                  <label for="deptime" class="form-label"
+                    ><i class="fa-solid fa-clock" /> Time of Departure</label
+                  >
+
+                  <input
+                    type="time"
+                    id="deptime"
+                    class="form-control"
+                    bind:value={depTimeStr}
+                    required
                   />
                 </div>
-              </div>
-              <div class="col-md-6 col-xl-4 pb-3 text-nowrap">
-                <label for="deptime" class="form-label"
-                  ><i class="fa-solid fa-clock" /> Time of Departure</label
-                >
 
-                <input
-                  type="time"
-                  id="deptime"
-                  class="form-control"
-                  bind:value={depTimeStr}
-                  required
-                />
-              </div>
-
-              <div class="col-md-6 col-xl-4 pb-3 text-nowrap">
-                <label for="destime" class="form-label"
-                  ><i class="fa-regular fa-clock" /> Time of Arrival</label
-                >
-                <input
-                  type="time"
-                  id="destime"
-                  class="form-control"
-                  bind:value={desTimeStr}
-                  required
-                />
-              </div>
-
-              <div class="col-md-6 col-xl-3 pb-3 text-nowrap">
-                <label for="planemanu" class="form-label"
-                  ><i class="fa-solid fa-globe" /> Aircraft Manufacturer</label
-                >
-                <input
-                  id="planemanu"
-                  class="form-control"
-                  bind:value={planeManu}
-                  on:blur={() => (planeManu = planeManu.trim())}
-                  placeholder={'"Cessna"'}
-                  required
-                />
-              </div>
-              <div class="col-md-6 col-xl-3 pb-3 text-nowrap">
-                <label for="planemodel" class="form-label"
-                  ><i class="fa-solid fa-plane-circle-exclamation" /> Aircraft Model</label
-                >
-                <input
-                  id="planemodel"
-                  class="form-control"
-                  bind:value={planeModel}
-                  on:blur={() => (planeModel = planeModel.trim())}
-                  placeholder={'"172"'}
-                  required
-                />
-              </div>
-
-              <div class="col-md-6 col-xl-3 pb-3 text-nowrap">
-                <label for="planeid" class="form-label"
-                  ><i class="fa-solid fa-hashtag" /> Tail Number</label
-                >
-                <input
-                  id="planeid"
-                  class="form-control"
-                  bind:value={planeId}
-                  on:blur={() => (planeId = planeId.trim())}
-                  placeholder={'"4X-CHA"'}
-                />
-              </div>
-              <div class="col-md-12 col-xl-3 pb-3 text-nowrap">
-                <label for="planetype" class="form-label"
-                  ><i class="fa-solid fa-plane" /> Aircraft Type</label
-                >
-                <select
-                  id="planetype"
-                  class="form-select"
-                  bind:value={planeType}
-                  required
-                >
-                  <option value="airplane" selected>Airplane</option>
-                  <option value="helicopter">Helicopter</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div class="col-12 pb-3 text-nowrap">
-                <label for="notes" class="form-label">Notes</label>
-                <textarea
-                  dir="auto"
-                  id="notes"
-                  rows="4"
-                  class="form-control fs-5"
-                  bind:value={userNotes}
-                  on:blur={() => (userNotes = userNotes.trim())}
-                  maxlength="10000"
-                />
-                <div
-                  class="form-text"
-                  class:text-danger={userNotes.length >= 9000}
-                >
-                  {`${userNotes.length.toLocaleString()}/${(10000).toLocaleString()}`}
+                <div class="col-md-6 col-xl-4 pb-3 text-nowrap">
+                  <label for="destime" class="form-label"
+                    ><i class="fa-regular fa-clock" /> Time of Arrival</label
+                  >
+                  <input
+                    type="time"
+                    id="destime"
+                    class="form-control"
+                    bind:value={desTimeStr}
+                    required
+                  />
                 </div>
-              </div>
-              <div class="col-auto">
-                <Switch bind:checked={isPublic} text="Make public" />
-                <span class="font-reset fw-light fs-6"
-                  >You can always change this later.</span
-                >
+
+                <div class="col-md-6 col-xl-3 pb-3 text-nowrap">
+                  <label for="planemanu" class="form-label"
+                    ><i class="fa-solid fa-globe" /> Aircraft Manufacturer</label
+                  >
+                  <input
+                    id="planemanu"
+                    class="form-control"
+                    bind:value={planeManu}
+                    on:blur={() => (planeManu = planeManu.trim())}
+                    placeholder={'"Cessna"'}
+                    required
+                  />
+                </div>
+                <div class="col-md-6 col-xl-3 pb-3 text-nowrap">
+                  <label for="planemodel" class="form-label"
+                    ><i class="fa-solid fa-plane-circle-exclamation" /> Aircraft
+                    Model</label
+                  >
+                  <input
+                    id="planemodel"
+                    class="form-control"
+                    bind:value={planeModel}
+                    on:blur={() => (planeModel = planeModel.trim())}
+                    placeholder={'"172"'}
+                    required
+                  />
+                </div>
+
+                <div class="col-md-6 col-xl-3 pb-3 text-nowrap">
+                  <label for="planeid" class="form-label"
+                    ><i class="fa-solid fa-hashtag" /> Tail Number</label
+                  >
+                  <input
+                    id="planeid"
+                    class="form-control"
+                    bind:value={planeId}
+                    on:blur={() => (planeId = planeId.trim())}
+                    placeholder={'"4X-CHA"'}
+                  />
+                </div>
+                <div class="col-md-12 col-xl-3 pb-3 text-nowrap">
+                  <label for="planetype" class="form-label"
+                    ><i class="fa-solid fa-plane" /> Aircraft Type</label
+                  >
+                  <select
+                    id="planetype"
+                    class="form-select"
+                    bind:value={planeType}
+                    required
+                  >
+                    <option value="airplane" selected>Airplane</option>
+                    <option value="helicopter">Helicopter</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="col-12 pb-3 text-nowrap">
+                  <label for="notes" class="form-label">Notes</label>
+                  <textarea
+                    dir="auto"
+                    id="notes"
+                    rows="4"
+                    class="form-control fs-5"
+                    bind:value={userNotes}
+                    on:blur={() => (userNotes = userNotes.trim())}
+                    maxlength="10000"
+                  />
+                  <div
+                    class="form-text"
+                    class:text-danger={userNotes.length >= 9000}
+                  >
+                    {`${userNotes.length.toLocaleString()}/${(10000).toLocaleString()}`}
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="form-check fs-4">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="ispublic"
+                      bind:checked={isPublic}
+                    /><label for="ispublic" class="form-check-label"
+                      >Public</label
+                    >
+                  </div>
+                  <div class="form-text">This can always be changed later.</div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="card-footer">
-            {#if inProgress}
-              <div
-                class="progress mb-2"
-                role="progressbar"
-                style="height: 40px"
-              >
+            <div class="card-footer">
+              {#if inProgress}
                 <div
-                  class="progress-bar progress-bar-striped progress-bar-animated"
-                  style="width: {progress.value}%"
+                  class="progress mb-2"
+                  role="progressbar"
+                  style="height: 40px"
                 >
-                  {`${progress.value}%`}
+                  <div
+                    class="progress-bar progress-bar-striped progress-bar-animated"
+                    style="width: {progress.value}%"
+                  >
+                    {`${progress.value}%`}
+                  </div>
                 </div>
-              </div>
-              <div class="text-center font-google-quicksand fw-600 fst-italic">
-                {progress.message}
-              </div>
-            {:else}
-              <button
-                class="btn btn-primary btn-lg w-100 fs-4"
-                type="submit"
-                disabled={inProgress}>Submit Flight</button
-              >
-            {/if}
+                <div
+                  class="text-center font-google-quicksand fw-600 fst-italic"
+                >
+                  {progress.message}
+                </div>
+              {:else}
+                <button
+                  class="btn btn-primary btn-lg w-100 fs-4"
+                  type="submit"
+                  disabled={inProgress}>Submit Flight</button
+                >
+              {/if}
+            </div>
           </div>
-        </div>
+        </fieldset>
       </form>
     {/if}
   </div>
