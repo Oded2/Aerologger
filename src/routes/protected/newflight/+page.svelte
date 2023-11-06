@@ -218,7 +218,7 @@
                     type="button"
                     class="input-group-text btn btn-secondary"
                     disabled={dep.trim().toLowerCase() ===
-                      des.trim().toLowerCase()}
+                      des.trim().toLowerCase() || inProgress}
                     on:click={() => {
                       const temp = dep;
                       dep = des;
@@ -254,7 +254,7 @@
                   <button
                     class="input-group-text btn btn-secondary"
                     type="button"
-                    disabled={dateStr == dateToStr()}
+                    disabled={dateStr == dateToStr() || inProgress}
                     on:click={() => (dateStr = dateToStr())}>Today</button
                   >
                   <input
