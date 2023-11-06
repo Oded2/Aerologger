@@ -198,7 +198,7 @@
         <div class="card">
           <div class="card-body fs-3">
             <div class="row">
-              <div class="col-md-6 pb-3 text-nowrap">
+              <div class="col-md-5 pb-3 text-nowrap">
                 <label for="dep" class="form-label"
                   ><i class="fa-solid fa-plane-departure" /> Airport of Departure</label
                 >
@@ -216,7 +216,22 @@
                 />
                 <span class="form-text">Name, IATA, or ICAO code</span>
               </div>
-              <div class="col-md-6 pb-3 text-nowrap">
+              <div class="col-md-2 pb-3 text-nowrap">
+                <div
+                  class="d-flex justify-content-center align-items-center h-100 w-100"
+                >
+                  <button
+                    class="btn btn-secondary btn-lg"
+                    type="button"
+                    on:click={() => {
+                      const temp = dep;
+                      dep = des;
+                      des = temp;
+                    }}><i class="fa-solid fa-arrows-rotate" /></button
+                  >
+                </div>
+              </div>
+              <div class="col-md-5 pb-3 text-nowrap">
                 <label for="des" class="form-label"
                   ><i class="fa-solid fa-plane-arrival" /> Airport of Destination
                 </label>
