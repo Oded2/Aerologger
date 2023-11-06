@@ -17,7 +17,7 @@
       <span class="text-aerologger">{`${profile.display_name}'s`}</span> Profile
     </h1>
   </div>
-  <Logbook {logs} {session} allowModification={false} />
+  <Logbook {logs} userId={session.user.id} allowModification={false} />
   <div class="container">
     <MidScreen>
       <div class="card fs-5 my-4 shadow">
