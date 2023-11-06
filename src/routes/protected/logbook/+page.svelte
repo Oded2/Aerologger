@@ -1,13 +1,8 @@
 <script>
   import Logbook from "../../../components/Logbook.svelte";
-  import MidScreen from "../../../components/MidScreen.svelte";
-  import ToastSetup from "../../../components/setup/ToastSetup.svelte";
-  import { createToast } from "../../../hooks.client.js";
   export let data;
   const { supabase, session } = data;
   let { logs } = data;
-  let toast;
-  let inProgress = false;
 </script>
 
 <main>
