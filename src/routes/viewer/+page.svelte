@@ -15,7 +15,6 @@
   export let data;
   let toast;
   let showAircraftModal = false,
-    showNotesModal = false,
     showShareModal = false;
   const { log, profile, ref, url } = data;
   const isPlane = log.type === "airplane";
@@ -23,7 +22,7 @@
     "slug",
     profile.username
   );
-  const minLen = 800;
+  const minLen = 200;
   let copyIcon = "copy";
   let notesExpand = false;
   url.searchParams.delete("ref");
@@ -158,6 +157,12 @@
               >
                 <p class="font-google-quicksand" dir="auto">
                   {notesExpand ? log.notes : maxLen(log.notes, minLen)}
+                  {#if !notesExpand}
+                    <button
+                      class="btn btn-link fs-5"
+                      on:click={() => (notesExpand = true)}>Show More</button
+                    >
+                  {/if}
                 </p>
               </div>
             </div>
