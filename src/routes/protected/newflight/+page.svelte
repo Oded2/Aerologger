@@ -357,6 +357,7 @@
                     class="form-check-input"
                     id="ispublic"
                     bind:checked={isPublic}
+                    disabled={inProgress}
                   /><label for="ispublic" class="form-check-label">Public</label
                   >
                 </div>
