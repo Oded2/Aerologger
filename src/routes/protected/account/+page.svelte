@@ -3,7 +3,7 @@
   import {
     createToast,
     dateToStr,
-    hasSpecialCharacters,
+    hasNormalCharacters,
   } from "../../../hooks.client.js";
   import ToastSetup from "../../../components/setup/ToastSetup.svelte";
   export let data;
@@ -30,7 +30,7 @@
     if (!verifyInput(username, "Username")) {
       return;
     }
-    if (!hasSpecialCharacters(username)) {
+    if (!hasNormalCharacters(username)) {
       toast = createToast(
         "error",
         "Invalid Username",

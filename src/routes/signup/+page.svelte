@@ -4,7 +4,7 @@
   import {
     dateToStr,
     createToast,
-    hasSpecialCharacters,
+    hasNormalCharacters,
   } from "../../hooks.client.js";
   import MidScreen from "../../components/MidScreen.svelte";
   export let data;
@@ -85,7 +85,7 @@
       errorToast("Email cannot be empty");
       return false;
     }
-    if (!verifyInput(username) || !hasSpecialCharacters(username)) {
+    if (!verifyInput(username) || !hasNormalCharacters(username)) {
       errorToast("Username is invalid");
       return false;
     }

@@ -155,6 +155,6 @@ export async function fetchFromEndpoint(ref = "", params = {}) {
   });
   return await response.json();
 }
-export function hasSpecialCharacters(inputString = "") {
+export function hasNormalCharacters(inputString = "") {
   return inputString.length == 0 ? true : /^[a-zA-Z0-9]+$/.test(inputString);
 }
