@@ -157,7 +157,7 @@
               >
                 <p class="font-google-quicksand" dir="auto">
                   {notesExpand ? log.notes : maxLen(log.notes, minLen)}
-                  {#if !notesExpand}
+                  {#if log.notes.length >= minLen && !notesExpand}
                     <button
                       class="btn btn-link fs-5"
                       on:click={() => (notesExpand = true)}>Show More</button
@@ -169,7 +169,7 @@
             <div class="card-footer">
               <div class="d-flex justify-content-end">
                 <button
-                  class="btn btn-secondary me-2"
+                  class="btn btn-secondary"
                   on:click={() => {
                     navigator.clipboard.writeText(log.notes);
                     copyIcon = "check";
@@ -178,7 +178,7 @@
                 >
                 {#if log.notes.length >= minLen}
                   <button
-                    class="btn btn-primary"
+                    class="btn btn-primary ms-2"
                     on:click={() => (notesExpand = !notesExpand)}
                     ><i
                       class="fa-solid fa-{notesExpand ? 'compress' : 'expand'}"
