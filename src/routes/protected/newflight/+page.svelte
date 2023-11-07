@@ -279,6 +279,9 @@
                   bind:value={depTimeStr}
                   required
                 />
+                <div class="form-text">
+                  Times are relative to your current time zone.
+                </div>
               </div>
 
               <div class="col-md-6 col-xl-4 pb-3 text-nowrap">
