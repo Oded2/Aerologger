@@ -425,7 +425,7 @@
                         href={addParamsString(hrefs.newFlight.home.link, {
                           preset: log.id,
                         })}
-                        class="btn btn-info dropdown-item"
+                        class="dropdown-item"
                         class:disabled={userId.length == 0}>Preset Flight</a
                       >
                     </li>
@@ -436,12 +436,12 @@
                             preset: log.id,
                             edit: true,
                           })}
-                          class="btn btn-warning dropdown-item">Edit Flight</a
+                          class="dropdown-item">Edit Flight</a
                         >
                       </li>
                       <li>
                         <button
-                          class="btn btn-danger dropdown-item"
+                          class="dropdown-item"
                           on:click={() => {
                             currentFlight.id = log.id;
                             currentFlight.dep = log.dep;
