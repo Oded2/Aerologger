@@ -23,7 +23,7 @@
       </li>
       <li class="list-group-item">
         IATA: <span class="fw-bold">
-          {airportData.iata.length > 0 ? airportData.iata : "Not found"}</span
+          {airportData.iata.length > 0 ? airportData.iata : "N/A"}</span
         >
       </li>
       <li class="list-group-item">
