@@ -4,8 +4,6 @@
   export let cardTitle = "";
   export let icon = "",
     iconType = "solid";
-
-  console.log(airportData.country);
 </script>
 
 <div class="card shadow h-100">
