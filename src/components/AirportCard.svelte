@@ -4,6 +4,8 @@
   export let cardTitle = "";
   export let icon = "",
     iconType = "solid";
+
+  console.log(airportData.country);
 </script>
 
 <div class="card shadow h-100">
@@ -30,9 +32,7 @@
         City: <span class="fw-bold">{airportData.city}</span>
       </li>
       <li class="list-group-item">
-        {`${
-          airportData.icao.toLowerCase().startsWith("k") ? "State" : "Region"
-        }:`}
+        {`${airportData.country === "US" ? "State" : "Region"}:`}
         <span class="fw-bold">{airportData.region}</span>
       </li>
       <li class="list-group-item">
