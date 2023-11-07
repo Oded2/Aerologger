@@ -12,18 +12,20 @@
   let email = session.user.email;
   let displayName = profile ? profile.display_name : "";
   let username = profile ? profile.username : "";
+  let bio = profile ? profile.bio : "";
   let birthday = profile
     ? profile.birthday
       ? dateToStr(new Date(profile.birthday))
       : null
     : null;
-  let og = { email, displayName, username, birthday };
+  let og = { email, displayName, username, bio, birthday };
   let inProgress = false;
   const maxlength = 50;
   $: accountChange = email !== og.email;
   $: profileChange =
     displayName !== og.displayName ||
     username !== og.username ||
+    bio !== og.bio ||
     birthday !== og.birthday;
 
   async function editProfile() {
@@ -54,6 +56,7 @@
       user_id: session.user.id,
       username: username,
       display_name: displayName,
+      bio,
       birthday: birthday ? new Date(birthday).toISOString() : null,
     });
     inProgress = false;
@@ -67,6 +70,7 @@
     }
     og.displayName = displayName;
     og.username = username;
+    og.bio = bio;
     og.birthday = birthday;
     toast = createToast(
       "success",
@@ -123,7 +127,7 @@
       </h5>
     </div>
     <div class="row">
-      <div class="col-lg mb-5">
+      <div class="col-lg-6 mb-5">
         <form on:submit|preventDefault={editAccount} class="h-100">
           <div class="card shadow my-5 h-100">
             <div class="card-header">
@@ -137,6 +141,7 @@
                   id="email"
                   placeholder="Your email"
                   bind:value={email}
+                  on:blur={() => (email = email.trim())}
                   required
                 />
                 <label for="email"
@@ -163,7 +168,7 @@
           </div>
         </form>
       </div>
-      <div class="col-lg mb-5">
+      <div class="col-lg-6 mb-5">
         <form on:submit|preventDefault={editProfile} class="h-100">
           <div class="card shadow my-5 h-100">
             <div class="card-header">
@@ -177,6 +182,7 @@
                   id="username"
                   placeholder="Your username"
                   bind:value={username}
+                  on:blur={() => (username = username.trim())}
                   required
                   {maxlength}
                 />
@@ -195,6 +201,7 @@
                   id="displayname"
                   placeholder="Your public name"
                   bind:value={displayName}
+                  on:blur={() => (displayName = displayName.trim())}
                   required
                   {maxlength}
                 />
@@ -205,30 +212,53 @@
                   The name you will be publicly known as.
                 </div>
               </div>
-              <div class="mb-3 input-group">
-                <div class="form-floating">
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="birthday"
-                    bind:value={birthday}
-                    max={dateToStr()}
-                  />
-
-                  <label for="birthday">Birthday</label>
+              <div class="mb-3">
+                <div class="input-group">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="bio"
+                      placeholder="Your profile bio"
+                      bind:value={bio}
+                      on:blur={() => (bio = bio.trim())}
+                      {maxlength}
+                    />
+                    <label for="bio">Bio</label>
+                  </div>
+                  <button
+                    class="input-group-text btn btn-secondary"
+                    on:click={() => (bio = "")}
+                    disabled={bio.length == 0}
+                    ><i class="fa-solid fa-x" /></button
+                  >
                 </div>
-                <button
-                  class="input-group-text btn btn-secondary"
-                  on:click={() => {
-                    birthday = null;
-                    profileChange = true;
-                  }}
-                  disabled={!birthday}
-                  type="button"><i class="fa-solid fa-x" /></button
-                >
+                <div class="form-text">{`${bio.length}/150`}</div>
               </div>
-              <div class="form-text">
-                Your birthday will be public. This field is not required.
+              <div class="mb-3">
+                <div class=" input-group">
+                  <div class="form-floating">
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="birthday"
+                      bind:value={birthday}
+                      max={dateToStr()}
+                      placeholder="Birthday"
+                    />
+
+                    <label for="birthday">Birthday</label>
+                  </div>
+                  <button
+                    class="input-group-text btn btn-secondary"
+                    on:click={() => (birthday = null)}
+                    disabled={!birthday}
+                    type="button"><i class="fa-solid fa-x" /></button
+                  >
+                </div>
+                <div class="form-text">
+                  Your birthday will be public. This field is not required.
+                </div>
               </div>
             </div>
             <div class="card-footer">

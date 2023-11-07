@@ -13,9 +13,14 @@
 
 <main>
   <div class="container mt-5 font-google-gabarito">
-    <h1>
-      <span class="text-aerologger">{`${profile.display_name}'s`}</span> Profile
-    </h1>
+    <div class="mb-3">
+      <h1>
+        <span class="text-aerologger">{`${profile.display_name}'s`}</span> Profile
+      </h1>
+      {#if profile.bio.length > 0}
+        <h5>{profile.bio}</h5>
+      {/if}
+    </div>
   </div>
   <Logbook {logs} userId={session.user.id} allowModification={false} />
   <div class="container">
