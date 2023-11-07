@@ -30,7 +30,10 @@
         City: <span class="fw-bold">{airportData.city}</span>
       </li>
       <li class="list-group-item">
-        Region: <span class="fw-bold">{airportData.region}</span>
+        {`${
+          airportData.icao.toLowerCase().startsWith("k") ? "State" : "Region"
+        }:`}
+        <span class="fw-bold">{airportData.region}</span>
       </li>
       <li class="list-group-item">
         Country: <span class="fw-bold"
