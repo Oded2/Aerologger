@@ -172,7 +172,12 @@
         <form on:submit|preventDefault={editProfile} class="h-100">
           <div class="card shadow my-5 h-100">
             <div class="card-header">
-              <span class="font-google-quicksand">Profile Settings</span>
+              <span class="font-google-quicksand"
+                >Profile Settings - <a
+                  href={hrefs.explore.profile.link.replace("slug", og.username)}
+                  >View Profile</a
+                ></span
+              >
             </div>
             <div class="card-body">
               <div class="mb-3 form-floating">
