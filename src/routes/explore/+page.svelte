@@ -4,10 +4,8 @@
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import hrefs from "../../data/hrefs.json";
   import { addParamsString } from "../../hooks.client.js";
-  export let data;
-  const { userProfile } = data;
   let toast;
-  let profileSearch = userProfile ? userProfile.username : "";
+  let profileSearch = "";
   let logSearch = "";
   let inProgress = false;
 
