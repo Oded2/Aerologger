@@ -1,5 +1,4 @@
 <script>
-  import MidScreen from "./../../../../components/MidScreen.svelte";
   import Logbook from "../../../../components/Logbook.svelte";
   import { calculateMinutes } from "../../../../hooks.client.js";
   export let data;
@@ -20,30 +19,11 @@
       {#if profile.bio.length > 0}
         <h5>{profile.bio}</h5>
       {/if}
+      <h5>{userAge.toLocaleString()} Years Old</h5>
+      <h6>Pilot's Username: {profile.username}</h6>
     </div>
   </div>
   <Logbook {logs} userId={session.user.id} allowModification={false} />
-  <div class="container">
-    <MidScreen>
-      <div class="card fs-5 my-4 shadow">
-        <div class="card-body">
-          <h4>User Details</h4>
-          <div>
-            <ul>
-              <li>Username: <span class="fw-bold">{profile.username}</span></li>
-              <li>
-                Display Name: <span class="fw-bold">{profile.display_name}</span
-                >
-              </li>
-              {#if profile.birthday}
-                <li>Age: <span class="fw-bold">{userAge}</span></li>
-              {/if}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </MidScreen>
-  </div>
 </main>
 
 <svelte:head><title>{`${profile.display_name}'s`} Profile</title></svelte:head>
