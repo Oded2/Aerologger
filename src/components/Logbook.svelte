@@ -264,7 +264,7 @@
   {#if logs.length > maxLogs}
     <div class="mb-3">
       <div>
-        Page {currentPage}
+        Page {currentPage} out of {maxPage}
       </div>
       <div class="mb-1">
         <button
