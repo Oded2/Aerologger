@@ -464,7 +464,7 @@
       {/if}
     {/each}
   </div>
-  {#if logs.length > 0 && allowModification}
+  {#if logs.length > 0}
     <div class="my-5">
       <MidScreen
         ><div class="card shadow">
@@ -472,49 +472,64 @@
             <span class="font-google-quicksand">Logbook settings</span>
           </div>
           <div class="card-body">
-            <div class="my-3">
-              <h5>Privacy</h5>
+            <div>
+              <h5>Options</h5>
               <div class="row">
-                <div class="col-sm-6 mb-3">
-                  <button
+                <div class="col-sm mb-3">
+                  <a
                     class="btn btn-dark w-100 shadow"
-                    on:click={() => changeMassVisibility(false)}
-                    disabled={inProgress}>Make Logs Private</button
-                  >
-                </div>
-                <div class="col-sm-6 mb-3">
-                  <button
-                    class="btn btn-dark w-100 shadow"
-                    on:click={() => changeMassVisibility(true)}
-                    disabled={inProgress}>Make Logs Public</button
+                    class:disabled={inProgress}
+                    href="data:text/json;charset=utf-8,{JSON.stringify(logs)}"
+                    download="logbook.json">Export Logbook (JSON)</a
                   >
                 </div>
               </div>
             </div>
-            <div class="mb-3">
-              <h5>Danger Zone</h5>
-              <div class="row">
-                <div class="col-sm-6 mb-3">
-                  <button
-                    class="btn btn-outline-danger w-100 shadow"
-                    on:click={() => purgePublic(false)}
-                    disabled={inProgress}>Delete Private Logs</button
-                  >
-                </div>
-                <div class="col-sm-6 mb-3">
-                  <button
-                    class="btn btn-outline-danger w-100 shadow"
-                    on:click={() => purgePublic(true)}
-                    disabled={inProgress}>Delete Public Logs</button
-                  >
-                </div>
-                <div class="col-sm-12">
-                  <button class="btn btn-danger w-100 shadow" on:click={purge}
-                    >Purge Logbook</button
-                  >
+            {#if allowModification}
+              <div>
+                <h5>Privacy</h5>
+                <div class="row">
+                  <div class="col-sm-6 mb-3">
+                    <button
+                      class="btn btn-dark w-100 shadow"
+                      on:click={() => changeMassVisibility(false)}
+                      disabled={inProgress}>Make Logs Private</button
+                    >
+                  </div>
+                  <div class="col-sm-6 mb-3">
+                    <button
+                      class="btn btn-dark w-100 shadow"
+                      on:click={() => changeMassVisibility(true)}
+                      disabled={inProgress}>Make Logs Public</button
+                    >
+                  </div>
                 </div>
               </div>
-            </div>
+              <div>
+                <h5>Danger Zone</h5>
+                <div class="row">
+                  <div class="col-sm-6 mb-3">
+                    <button
+                      class="btn btn-outline-danger w-100 shadow"
+                      on:click={() => purgePublic(false)}
+                      disabled={inProgress}>Delete Private Logs</button
+                    >
+                  </div>
+                  <div class="col-sm-6 mb-3">
+                    <button
+                      class="btn btn-outline-danger w-100 shadow"
+                      on:click={() => purgePublic(true)}
+                      disabled={inProgress}>Delete Public Logs</button
+                    >
+                  </div>
+                  <div class="col-sm-12">
+                    <button class="btn btn-danger w-100 shadow" on:click={purge}
+                      >Purge Logbook</button
+                    >
+                  </div>
+                </div>
+              </div>
+            {/if}
           </div>
         </div>
       </MidScreen>
