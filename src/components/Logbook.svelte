@@ -275,7 +275,7 @@
         <button
           class="btn btn-secondary btn-sm"
           on:click={() => currentPage++}
-          disabled={logs.length / currentPage <= maxLogs}>Next</button
+          disabled={currentPage == maxPage}>Next</button
         >
       </div>
       <form
