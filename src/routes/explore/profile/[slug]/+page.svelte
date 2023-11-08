@@ -20,7 +20,7 @@
         <h5>{profile.bio}</h5>
       {/if}
       <h5>{userAge.toLocaleString()} Years Old</h5>
-      <h6>Pilot's Username: {profile.username}</h6>
+      <h6>Pilot's username: {profile.username}</h6>
     </div>
   </div>
   <Logbook {logs} userId={session.user.id} allowModification={false} />
