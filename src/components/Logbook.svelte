@@ -323,7 +323,7 @@
       </div>
       {#if allowModification}
         <div class="col-md mb-2 mb-md-0 fw-bold">
-          <i class="fa-solid fa-user" title="Publicity Status" /> Status
+          <i class="fa-solid fa-lock" title="Publicity Status" /> Status
         </div>
       {/if}
       <div class="col-md mb-2 mb-md-0 fw-bold">
@@ -377,10 +377,14 @@
           {#if allowModification}
             <div class="col-md mb-2 mb-md-0">
               <div class="row">
-                <div class="col-auto d-md-none">
-                  <i class=" fa-solid fa-user" title="Publicity Status" />
+                <div class="col-auto">
+                  <i
+                    class="fa-solid {log.public ? 'fa-lock-open' : 'fa-lock'}"
+                    title={log.public ? "Public Log" : "Private Log"}
+                  />
                 </div>
-                <div class="col col-md-12 px-md-0">
+
+                <div class="col px-md-0">
                   <select
                     class="form-select"
                     disabled={inProgress || !allowModification}
