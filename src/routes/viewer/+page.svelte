@@ -367,11 +367,5 @@
       class="btn btn-outline-primary">Export as TXT</a
     >
   </div>
-  <div><p class="fs-5">{log.notes}</p></div>
+  <div><p class="fs-5 white-space-prewrap">{log.notes}</p></div>
 </Offcanvas>
-
-<style>
-  p {
-    white-space: pre-wrap;
-  }
-</style>
