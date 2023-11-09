@@ -379,7 +379,7 @@
     <a
       href="data:text;charset=utf-8,{log.notes}"
       download="notes.txt"
-      class="btn btn-outline-primary">Export to TXT</a
+      class="btn btn-outline-primary">Export as TXT</a
     >
   </div>
   <div><p class="fs-5">{log.notes}</p></div>

@@ -484,7 +484,7 @@
                     class="btn btn-dark w-100 shadow"
                     class:disabled={inProgress}
                     href="data:text/json;charset=utf-8,{JSON.stringify(logs)}"
-                    download="logbook.json">Export Logbook (JSON)</a
+                    download="logbook.json">Export Logbook as JSON</a
                   >
                 </div>
               </div>
