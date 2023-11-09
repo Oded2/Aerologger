@@ -171,7 +171,7 @@
   {/if}
 </FloatElement>
 
-<Offcanvas header="Aircraft Information" id="aircraftinfo" scroll={false}>
+<Offcanvas header="Aircraft Information" id="aircraftinfo">
   <ul class="font-google-quicksand py-2 fs-4">
     <li>
       Manufacturer: <span class="fw-bold">
@@ -349,11 +349,7 @@
   <title>{`${log.dep.city} to ${log.des.city}`}</title>
 </svelte:head>
 
-<Offcanvas
-  id="notes"
-  header={`${log.dep.city} to ${log.des.city} Notes`}
-  scroll={false}
->
+<Offcanvas id="notes" header={`${log.dep.city} to ${log.des.city} Notes`}>
   <div class="mb-3">
     <button
       class="btn btn-primary"
