@@ -3,7 +3,6 @@
     formatDate,
     getTimeStr,
     formatDuration,
-    maxLen,
     formatDateTime,
   } from "../../hooks.client.js";
   import hrefs from "$lib/hrefs.json";
@@ -23,7 +22,6 @@
     "slug",
     profile.username
   );
-  let copyIcon = "copy";
   url.searchParams.delete("ref");
   function formatDateTimeStr(string = "") {
     const date = new Date(string);

@@ -1,5 +1,5 @@
 <script>
-  import Modal from "./Modal.svelte";
+  import Modal from "../../components/Modal.svelte";
   import {
     addParamsString,
     formatDateStr,
@@ -9,11 +9,11 @@
     GetSortOrder,
     calculateMinutes,
     formatDateTime,
-  } from "../hooks.client.js";
+  } from "../../hooks.client.js";
   import hrefs from "$lib/hrefs.json";
   import { page } from "$app/stores";
-  import MidScreen from "./MidScreen.svelte";
-  import ToastSetup from "./setup/ToastSetup.svelte";
+  import MidScreen from "../../components/MidScreen.svelte";
+  import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import { supabase as supabaseClient } from "$lib/supabaseClient.js";
   export let logs = [];
   export let allowModification = true;

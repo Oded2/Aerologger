@@ -1,5 +1,5 @@
 <script>
-  import Logbook from "../../../components/Logbook.svelte";
+  import Logbook from "$lib/components/Logbook.svelte";
   export let data;
   const { supabase, session } = data;
   let { logs } = data;

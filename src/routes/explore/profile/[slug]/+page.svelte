@@ -1,5 +1,5 @@
 <script>
-  import Logbook from "../../../../components/Logbook.svelte";
+  import Logbook from "$lib/components/Logbook.svelte";
   import { calculateMinutes } from "../../../../hooks.client.js";
   export let data;
   const { profile, logs, session } = data;
