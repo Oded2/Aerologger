@@ -12,7 +12,7 @@
   } from "../../hooks.client.js";
   import hrefs from "$lib/hrefs.json";
   import { page } from "$app/stores";
-  import MidScreen from "../../components/MidScreen.svelte";
+  import MidScreen from "./MidScreen.svelte";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import { supabase as supabaseClient } from "$lib/supabaseClient.js";
   export let logs = [];

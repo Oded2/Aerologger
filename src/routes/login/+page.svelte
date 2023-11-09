@@ -4,7 +4,7 @@
   import { goto } from "$app/navigation";
   import Modal from "../../components/Modal.svelte";
   import { createToast } from "../../hooks.client.js";
-  import MidScreen from "../../components/MidScreen.svelte";
+  import MidScreen from "$lib/components/MidScreen.svelte";
   export let data;
   const { supabase } = data;
   let toast;

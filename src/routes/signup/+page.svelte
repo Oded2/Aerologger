@@ -6,7 +6,7 @@
     createToast,
     hasNormalCharacters,
   } from "../../hooks.client.js";
-  import MidScreen from "../../components/MidScreen.svelte";
+  import MidScreen from "$lib/components/MidScreen.svelte";
   export let data;
   const { supabase } = data;
   let toast;
