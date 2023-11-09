@@ -1,7 +1,7 @@
 <script>
   import { page } from "$app/stores";
-  import { addParamsString, copyToClipboard } from "../hooks.client.js";
-  import Modal from "../lib/components/Modal.svelte";
+  import { addParamsString, copyToClipboard } from "../../hooks.client.js";
+  import Modal from "./Modal.svelte";
   export let showModal = false;
   export let url = $page.url;
   export let shareText =
