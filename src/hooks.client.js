@@ -97,13 +97,6 @@ export function parseDateAndTime(dateString, timeString) {
   return new Date(year, month - 1, day, hours, minutes);
 }
 
-export function copyToClipboard(text = "") {
-  try {
-    navigator.clipboard.writeText(text);
-  } catch (error) {
-    console.error(error);
-  }
-}
 export function formatDuration(startDate = new Date(), endDate = new Date()) {
   const timeDifference = endDate.getTime() - startDate.getTime();
   const hours = Math.floor(timeDifference / 3600000);

@@ -6,7 +6,6 @@
   import AirportCard from "$lib/components/AirportCard.svelte";
   import Offcanvas from "$lib/components/Offcanvas.svelte";
   export let data;
-  let showShareModal = false;
   const { log, profile, ref, url } = data;
   const isPlane = log.type === "airplane";
   const profileRef = hrefs.explore.profile.link.replace(
@@ -18,15 +17,11 @@
     const date = new Date(string);
     return formatDateTime(date);
   }
-  function toggleShareModal() {
-    showShareModal = !showShareModal;
-  }
 </script>
 
 <ShareModal
-  showModal={showShareModal}
+  id="share"
   {url}
-  on:click={toggleShareModal}
   shareText="Check out this flight from Aerologger. "
 />
 
@@ -162,7 +157,10 @@
 
 <FloatElement>
   {#if log.public}
-    <button class="btn btn-primary btn-lg me-3" on:click={toggleShareModal}
+    <button
+      class="btn btn-primary btn-lg me-3"
+      data-bs-toggle="modal"
+      data-bs-target="#share"
       ><i class="fa-solid fa-share-from-square" /> Share</button
     >
   {/if}

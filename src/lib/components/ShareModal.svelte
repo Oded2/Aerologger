@@ -1,14 +1,13 @@
 <script>
   import { page } from "$app/stores";
-  import { addParamsString, copyToClipboard } from "../../hooks.client.js";
-  import Modal from "./Modal.svelte";
-  export let showModal = false;
+  import { addParamsString } from "../../hooks.client.js";
+  export let id = "";
   export let url = $page.url;
   export let shareText =
     "Check out AeroLogger, a fast, free, and convenient flight logging website.";
   let copyText = url.href;
   function copy() {
-    copyToClipboard(url.href);
+    navigator.clipboard.writeText(url.href);
     copyText = "Link copied to clipboard";
     setTimeout(() => (copyText = url.href), 3000);
   }
@@ -23,33 +22,56 @@
   });
 </script>
 
-<Modal on:click {showModal}
-  ><div class="font-google-gabarito">
-    <div class="text-center"><h1>Share</h1></div>
-    <div class="p-md-5">
-      <div class="input-group">
-        <button class="input-group-text btn btn-primary fs-5" on:click={copy}
-          >Copy Link</button
-        >
-        <input
-          type="text"
-          class="form-control fs-5"
-          disabled
-          bind:value={copyText}
+<div
+  class="modal fade"
+  {id}
+  tabindex="-1"
+  aria-labelledby={`${id}Label`}
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id={`${id}Label`}>Share</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
         />
       </div>
-      <div class="text-center my-3">
-        <h2>Or</h2>
+      <div class="modal-body">
+        <div class="mb-3">
+          <h5>Link</h5>
+          <div class="input-group">
+            <button class="btn btn-primary" on:click={copy}
+              ><i class="fa-solid fa-copy" /></button
+            >
+            <input
+              type="text"
+              class="form-control"
+              bind:value={copyText}
+              disabled
+            />
+          </div>
+        </div>
+        <div>
+          <h5>Other</h5>
+          <div class="d-flex justify-content-around">
+            <a href={twitterLink} class="text-reset fs-4" title="X/Twitter"
+              ><i class="fa-brands fa-x-twitter" /></a
+            >
+            <a href={mailLink} class="text-reset fs-4" title="Email"
+              ><i class="fa-solid fa-envelope" /></a
+            >
+          </div>
+        </div>
       </div>
-      <div class="my-2 d-flex justify-content-around">
-        <a class="btn btn-light btn-lg fs-1" href={twitterLink} target="_blank"
-          ><i class="fa-brands fa-x-twitter" style="color: #000000;" /> Twitter /
-          X
-        </a>
-        <a class="btn btn-light btn-lg fs-1" href={mailLink} target="_blank"
-          ><i class="fa-solid fa-envelope" /> Email
-        </a>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          >Close</button
+        >
       </div>
     </div>
   </div>
-</Modal>
+</div>

@@ -179,18 +179,18 @@
   }
 </script>
 
-<Modal showModal={delConfirm} on:click={toggleModal}>
+<Modal id="deleteflight" title="Delete Flight" size="lg">
   <div class="font-google-quicksand">
     <div class="text-center">
-      <h1>Are you sure you want to delete this flight?</h1>
-      <h4>This action cannot be undone.</h4>
+      <h3 class="fw-bold">Are you sure you want to delete this flight?</h3>
+      <h6>This action cannot be undone.</h6>
       <div class="mt-4">
-        <h2>Flight Info</h2>
-        <h3>
+        <h4 class="fw-600">Flight Info</h4>
+        <h5>
           <span class="fw-bold">{currentFlight.dep.city}</span> to
           <span class="fw-bold">{currentFlight.des.city}</span>;
           <span class="fw-bold">{currentFlight.time}</span>
-        </h3>
+        </h5>
       </div>
     </div>
 
@@ -198,6 +198,7 @@
       <div class="col-sm mb-2 mb-sm-0">
         <button
           class="btn btn-primary btn-lg w-100 fw-bold h-100"
+          data-bs-dismiss="modal"
           on:click={toggleModal}>Cancel</button
         >
       </div>
@@ -446,6 +447,8 @@
                       <li>
                         <button
                           class="dropdown-item"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteflight"
                           on:click={() => {
                             currentFlight.id = log.id;
                             currentFlight.dep = log.dep;
@@ -454,7 +457,6 @@
                               new Date(log.depDate),
                               new Date(log.desDate)
                             );
-                            toggleModal();
                           }}>Delete Flight</button
                         >
                       </li>

@@ -1,39 +1,50 @@
 <script>
-  import { fly } from "svelte/transition";
-  import { fade } from "svelte/transition";
-  export let showModal = false;
+  export let id = "";
+  export let title = "";
+  export let submit = false;
+  export let disabled = false;
+  export let submitText = "Submit";
+  export let size = "";
 </script>
 
-{#if showModal}
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+<div
+  class="modal fade"
+  {id}
+  tabindex="-1"
+  aria-labelledby={`${id}Label`}
+  aria-hidden="true"
+>
   <div
-    class="backdrop d-flex align-items-center justify-content-center"
-    transition:fade={{ duration: 100 }}
-    on:click|self
+    class="modal-dialog"
+    class:modal-sm={size === "sm"}
+    class:modal-lg={size === "lg"}
+    class:modal-xl={size === "xl"}
   >
-    <div class=" container rounded card" in:fly={{ duration: 300, y: 200 }}>
-      <div class="card-body overflow-auto d-grid">
-        <slot />
-      </div>
-      <div class="card-footer text-center">
-        <span class="fw-light">Click anywhere outside the modal to close.</span>
-      </div>
+    <div class="modal-content">
+      <form on:submit|preventDefault>
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id={`${id}Label`}>{title}</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          />
+        </div>
+        <div class="modal-body"><slot /></div>
+        {#if submit}
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal">Close</button
+            >
+            <button type="submit" class="btn btn-primary" {disabled}
+              >{submitText}</button
+            >
+          </div>
+        {/if}
+      </form>
     </div>
   </div>
-{/if}
-
-<style>
-  .backdrop {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 2;
-  }
-  .card {
-    min-height: 50%;
-    max-height: 85%;
-  }
-</style>
+</div>

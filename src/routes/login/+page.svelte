@@ -47,9 +47,6 @@
 
     return true;
   }
-  function toggleModal() {
-    showModal = !showModal;
-  }
   async function resetPass() {
     if (resetEmail.length == 0) {
       toast = createToast("error", "Error", "Email cannot be empty");
@@ -73,8 +70,15 @@
   }
 </script>
 
-<Modal {showModal} on:click={toggleModal}>
-  <div class="p-sm-5 fs-2">
+<Modal
+  id="forgotpass"
+  title="Password Reset"
+  submitText="Send Link"
+  submit={true}
+  on:submit={resetPass}
+  disabled={inProgress}
+>
+  <div>
     <label for="resetEmail" class="font-google-quicksand fw-600"
       >Enter your email</label
     >
@@ -82,13 +86,9 @@
       type="email"
       class="form-control"
       id="resetEmail"
+      required
       bind:value={resetEmail}
     />
-    <button
-      class="btn btn-primary font-google-quicksand fw-bold fs-4 my-2 w-100"
-      disabled={inProgress}
-      on:click={resetPass}>Send link</button
-    >
     <div class="form-text">
       Email might can take up to a few moments to send.
     </div>
@@ -137,7 +137,8 @@
               <button
                 class="btn btn-outline-danger mt-3 fw-600"
                 type="reset"
-                on:click={toggleModal}>Forgot Password?</button
+                data-bs-toggle="modal"
+                data-bs-target="#forgotpass">Forgot Password?</button
               >
             </div>
           </div>
