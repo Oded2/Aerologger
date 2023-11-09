@@ -5,7 +5,7 @@
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import ShareModal from "../../components/ShareModal.svelte";
   import AirportCard from "$lib/components/AirportCard.svelte";
-  import Modal from "../../components/Modal.svelte";
+  import Modal from "$lib/components/Modal.svelte";
   import Offcanvas from "$lib/components/Offcanvas.svelte";
   export let data;
   let toast;

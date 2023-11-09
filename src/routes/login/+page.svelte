@@ -2,7 +2,7 @@
   import hrefs from "$lib/hrefs.json";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import { goto } from "$app/navigation";
-  import Modal from "../../components/Modal.svelte";
+  import Modal from "$lib/components/Modal.svelte";
   import { createToast } from "../../hooks.client.js";
   import MidScreen from "$lib/components/MidScreen.svelte";
   export let data;
