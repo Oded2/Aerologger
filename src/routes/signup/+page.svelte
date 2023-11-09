@@ -1,6 +1,6 @@
 <script>
   import hrefs from "$lib/hrefs.json";
-  import ToastSetup from "../../components/setup/ToastSetup.svelte";
+  import ToastSetup from "$lib/components/ToastSetup.svelte";
   import {
     dateToStr,
     createToast,

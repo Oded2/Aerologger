@@ -1,5 +1,5 @@
 import { toasts } from "svelte-toasts";
-import countries from "./data/countries.json";
+import countries from "$lib/countries.json";
 export function randomNum(min, max) {
   return parseInt(Math.random() * (max - min) + min);
 }

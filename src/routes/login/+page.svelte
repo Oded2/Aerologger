@@ -1,6 +1,6 @@
 <script>
   import hrefs from "$lib/hrefs.json";
-  import ToastSetup from "../../components/setup/ToastSetup.svelte";
+  import ToastSetup from "$lib/components/ToastSetup.svelte";
   import { goto } from "$app/navigation";
   import Modal from "$lib/components/Modal.svelte";
   import { createToast } from "../../hooks.client.js";

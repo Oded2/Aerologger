@@ -1,7 +1,7 @@
 <script>
   import hrefs from "$lib/hrefs.json";
   import { createToast } from "../../hooks.client.js";
-  import ToastSetup from "../../components/setup/ToastSetup.svelte";
+  import ToastSetup from "$lib/components/ToastSetup.svelte";
   export let data;
 
   const url = data.url;

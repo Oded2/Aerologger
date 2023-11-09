@@ -2,7 +2,7 @@
   import { formatDuration, formatDateTime } from "../../hooks.client.js";
   import hrefs from "$lib/hrefs.json";
   import FloatElement from "$lib/components/FloatElement.svelte";
-  import ToastSetup from "../../components/setup/ToastSetup.svelte";
+  import ToastSetup from "$lib/components/ToastSetup.svelte";
   import ShareModal from "$lib/components/ShareModal.svelte";
   import AirportCard from "$lib/components/AirportCard.svelte";
   import Modal from "$lib/components/Modal.svelte";

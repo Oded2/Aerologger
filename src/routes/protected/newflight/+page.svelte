@@ -7,7 +7,7 @@
     getTimeStr,
     parseDateAndTime,
   } from "../../../hooks.client.js";
-  import ToastSetup from "../../../components/setup/ToastSetup.svelte";
+  import ToastSetup from "$lib/components/ToastSetup.svelte";
   import hrefs from "$lib/hrefs.json";
   import logo from "$lib/images/logo_simplified.png";
   import FloatElement from "$lib/components/FloatElement.svelte";
