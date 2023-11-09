@@ -10,7 +10,7 @@
   import FloatElement from "../../components/FloatElement.svelte";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import ShareModal from "../../components/ShareModal.svelte";
-  import AirportCard from "../../components/AirportCard.svelte";
+  import AirportCard from "$lib/components/AirportCard.svelte";
   import Modal from "../../components/Modal.svelte";
   import Offcanvas from "$lib/components/Offcanvas.svelte";
   export let data;

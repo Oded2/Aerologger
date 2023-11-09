@@ -1,5 +1,5 @@
 <script>
-  import { getOpenStreetMap, getCountryByCode } from "../hooks.client.js";
+  import { getOpenStreetMap, getCountryByCode } from "../../hooks.client.js";
   export let airportData = {};
   export let cardTitle = "";
   export let icon = "",
