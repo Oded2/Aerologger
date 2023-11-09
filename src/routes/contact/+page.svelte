@@ -1,5 +1,5 @@
 <script>
-  import hrefs from "../../data/hrefs.json";
+  import hrefs from "$lib/hrefs.json";
   import { createToast } from "../../hooks.client.js";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   export let data;

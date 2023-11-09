@@ -2,7 +2,7 @@
 import { PUBLIC_SUPABASE, PUBLIC_SBURL } from "$env/static/public";
 import { createSupabaseServerClient } from "@supabase/auth-helpers-sveltekit";
 import { redirect } from "@sveltejs/kit";
-import hrefs from "./data/hrefs.json";
+import hrefs from "$lib/hrefs.json";
 
 export const handle = async ({ event, resolve }) => {
   event.locals.supabase = createSupabaseServerClient({

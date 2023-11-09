@@ -1,5 +1,5 @@
 <script>
-  import hrefs from "../../../data/hrefs.json";
+  import hrefs from "$lib/hrefs.json";
   import {
     createToast,
     dateToStr,

@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import MidScreen from "../../../components/MidScreen.svelte";
   import ToastSetup from "../../../components/setup/ToastSetup.svelte";
-  import hrefs from "../../../data/hrefs.json";
+  import hrefs from "$lib/hrefs.json";
   import { createToast } from "../../../hooks.client.js";
   export let data;
   const { supabase, session } = data;

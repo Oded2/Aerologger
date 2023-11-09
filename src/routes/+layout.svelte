@@ -1,7 +1,7 @@
 <script lang="ts">
   import { invalidate } from "$app/navigation";
   import { onMount } from "svelte";
-  import hrefs from "../data/hrefs.json";
+  import hrefs from "$lib/hrefs.json";
   import { page } from "$app/stores";
   import "../global.css";
   import Title from "../components/Title.svelte";

@@ -1,7 +1,7 @@
 <script>
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
-  import hrefs from "../../data/hrefs.json";
+  import hrefs from "$lib/hrefs.json";
   export let data;
   const { supabase } = data;
   onMount(async () => {

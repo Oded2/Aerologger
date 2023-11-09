@@ -6,7 +6,7 @@
     maxLen,
     formatDateTime,
   } from "../../hooks.client.js";
-  import hrefs from "../../data/hrefs.json";
+  import hrefs from "$lib/hrefs.json";
   import FloatElement from "../../components/FloatElement.svelte";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import ShareModal from "../../components/ShareModal.svelte";
