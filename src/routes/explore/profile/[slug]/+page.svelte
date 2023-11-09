@@ -23,7 +23,11 @@
       <h6>Pilot's username: {profile.username}</h6>
     </div>
   </div>
-  <Logbook {logs} userId={session.user.id} allowModification={false} />
+  <Logbook
+    {logs}
+    userId={session ? session.user.id : ""}
+    allowModification={false}
+  />
 </main>
 
 <svelte:head><title>{`${profile.display_name}'s`} Profile</title></svelte:head>

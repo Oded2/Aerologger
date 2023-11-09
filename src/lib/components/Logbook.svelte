@@ -461,6 +461,16 @@
                         >
                       </li>
                     {/if}
+                    <li><hr class="dropdown-divider" /></li>
+                    <li>
+                      <a
+                        href="data:text/json;charset=utf-8,{JSON.stringify(
+                          log
+                        )}"
+                        download={`log ${log.id}.json`}
+                        class="dropdown-item">Export Flight as JSON</a
+                      >
+                    </li>
                   </ul>
                 </div>
               </div>
