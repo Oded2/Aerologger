@@ -9,7 +9,7 @@
   } from "../../../hooks.client.js";
   import ToastSetup from "../../../components/setup/ToastSetup.svelte";
   import hrefs from "../../../data/hrefs.json";
-  import logo from "../../../data/images/logo_simplified.png";
+  import logo from "$lib/images/logo_simplified.png";
   import FloatElement from "../../../components/FloatElement.svelte";
   export let data;
   const { supabase, session, log } = data;

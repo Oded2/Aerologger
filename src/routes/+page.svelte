@@ -1,6 +1,6 @@
 <script>
   import hrefs from "../data/hrefs.json";
-  import logo from "../data/images/logo.png";
+  import logo from "$lib/images/logo.png";
   export let data;
   const { session } = data;
 </script>
