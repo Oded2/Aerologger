@@ -1,6 +1,6 @@
 <script>
   import { goto } from "$app/navigation";
-  import ExploreCard from "../../components/ExploreCard.svelte";
+  import ExploreCard from "$lib/components/ExploreCard.svelte";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import hrefs from "$lib/hrefs.json";
   import { addParamsString } from "../../hooks.client.js";
