@@ -2,10 +2,11 @@
   export let id = "";
   export let header = "";
   export let scroll = true;
+  export let position = "start";
 </script>
 
 <div
-  class="offcanvas offcanvas-start"
+  class="offcanvas offcanvas-{position}"
   data-bs-scroll={scroll}
   tabindex="-1"
   {id}
