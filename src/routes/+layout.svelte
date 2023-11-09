@@ -4,7 +4,7 @@
   import hrefs from "$lib/hrefs.json";
   import { page } from "$app/stores";
   import "../global.css";
-  import Title from "../components/Title.svelte";
+  import Title from "$lib/components/Title.svelte";
   import logo from "$lib/images/logo_simplified_lowres.png";
 
   $: pageUrl = new URL($page.url);
