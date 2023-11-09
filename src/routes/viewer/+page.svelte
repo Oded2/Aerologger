@@ -359,7 +359,11 @@
   {/if}
 </FloatElement>
 
-<Offcanvas id="notes" header={`${log.dep.city} to ${log.des.city} Notes`}>
+<Offcanvas
+  id="notes"
+  header={`${log.dep.city} to ${log.des.city} Notes`}
+  scroll={false}
+>
   <div class="mb-3">
     <button
       class="btn btn-primary"

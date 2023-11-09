@@ -1,11 +1,12 @@
 <script>
   export let id = "";
   export let header = "";
+  export let scroll = true;
 </script>
 
 <div
   class="offcanvas offcanvas-start"
-  data-bs-scroll="true"
+  data-bs-scroll={scroll}
   tabindex="-1"
   {id}
   aria-labelledby={`${id}Label`}
