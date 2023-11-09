@@ -10,9 +10,9 @@ export function addParams(link = new URL(), params) {
   }
 }
 export function addParamsString(string = "", params = {}) {
-  const link = new URL("https://codevault.com");
+  const link = new URL("https://youtube.com");
   addParams(link, params);
-  return link.toString().replace("https://codevault.com", string);
+  return link.href.replace("https://youtube.com", string);
 }
 export function delelteAllParams(link = new URL()) {
   link.searchParams.forEach((_value, key) => {
