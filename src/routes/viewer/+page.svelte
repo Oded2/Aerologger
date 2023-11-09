@@ -12,6 +12,7 @@
   import ShareModal from "../../components/ShareModal.svelte";
   import AirportCard from "../../components/AirportCard.svelte";
   import Modal from "../../components/Modal.svelte";
+  import Offcanvas from "$lib/components/Offcanvas.svelte";
   export let data;
   let toast;
   let showAircraftModal = false,
@@ -22,9 +23,7 @@
     "slug",
     profile.username
   );
-  const minLen = 200;
   let copyIcon = "copy";
-  let notesExpand = false;
   url.searchParams.delete("ref");
   function formatDateTimeStr(string = "") {
     const date = new Date(string);
@@ -93,7 +92,7 @@
             {#if log.type !== "other"}
               <div class="card-footer">
                 <button
-                  class="btn btn-primary w-100 fw-bold"
+                  class="btn btn-primary w-100"
                   on:click={toggleAircraftModal}>Advanced</button
                 >
               </div>
@@ -138,54 +137,12 @@
                 </li>
               </ul>
             </div>
-          </div>
-        </div>
-        <div class="col-lg-12 mb-5">
-          <div class="card shadow h-100">
-            <div class="card-header text-center">
-              <h3>
-                <i class="fa-solid fa-note-sticky" /> Notes
-              </h3>
-            </div>
-            <div class="card-body position-relative">
-              <div
-                class="notes-card"
-                class:h-200px={log.notes.length < minLen}
-                class:h-400px={log.notes.length >= minLen}
-                class:overflow-hidden={!notesExpand}
-                class:overflow-auto={notesExpand}
-              >
-                <p class="font-google-quicksand" dir="auto">
-                  {notesExpand ? log.notes : maxLen(log.notes, minLen)}
-                  {#if log.notes.length >= minLen && !notesExpand}
-                    <button
-                      class="btn btn-link fs-5"
-                      on:click={() => (notesExpand = true)}>Show More</button
-                    >
-                  {/if}
-                </p>
-              </div>
-            </div>
             <div class="card-footer">
-              <div class="d-flex justify-content-end">
-                <button
-                  class="btn btn-secondary"
-                  on:click={() => {
-                    navigator.clipboard.writeText(log.notes);
-                    copyIcon = "check";
-                    setTimeout(() => (copyIcon = "copy"), 3000);
-                  }}><i class="fa-solid fa-{copyIcon}" /></button
-                >
-                {#if log.notes.length >= minLen}
-                  <button
-                    class="btn btn-primary ms-2"
-                    on:click={() => (notesExpand = !notesExpand)}
-                    ><i
-                      class="fa-solid fa-{notesExpand ? 'compress' : 'expand'}"
-                    /></button
-                  >
-                {/if}
-              </div>
+              <button
+                class="btn btn-primary w-100"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#notes">Show Notes</button
+              >
             </div>
           </div>
         </div>
@@ -413,11 +370,6 @@
 
 <ToastSetup {toast} />
 
-<style>
-  div.h-400px {
-    height: 400px;
-  }
-  div.h-200px {
-    height: 200px;
-  }
-</style>
+<Offcanvas id="notes" header={`${log.dep.city} to ${log.des.city} Notes`}
+  ><p class="fs-5">{log.notes}</p></Offcanvas
+>
