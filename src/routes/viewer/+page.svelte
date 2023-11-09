@@ -2,13 +2,11 @@
   import { formatDuration, formatDateTime } from "../../hooks.client.js";
   import hrefs from "$lib/hrefs.json";
   import FloatElement from "$lib/components/FloatElement.svelte";
-  import ToastSetup from "$lib/components/ToastSetup.svelte";
   import ShareModal from "$lib/components/ShareModal.svelte";
   import AirportCard from "$lib/components/AirportCard.svelte";
   import Modal from "$lib/components/Modal.svelte";
   import Offcanvas from "$lib/components/Offcanvas.svelte";
   export let data;
-  let toast;
   let showAircraftModal = false,
     showShareModal = false;
   const { log, profile, ref, url } = data;
@@ -360,8 +358,6 @@
     >
   {/if}
 </FloatElement>
-
-<ToastSetup {toast} />
 
 <Offcanvas id="notes" header={`${log.dep.city} to ${log.des.city} Notes`}>
   <div class="mb-3">
