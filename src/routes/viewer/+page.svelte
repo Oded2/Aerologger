@@ -370,6 +370,17 @@
 
 <ToastSetup {toast} />
 
-<Offcanvas id="notes" header={`${log.dep.city} to ${log.des.city} Notes`}
-  ><p class="fs-5">{log.notes}</p></Offcanvas
->
+<Offcanvas id="notes" header={`${log.dep.city} to ${log.des.city} Notes`}>
+  <div class="mb-3">
+    <button
+      class="btn btn-primary"
+      on:click={() => navigator.clipboard.writeText(log.notes)}>Copy</button
+    >
+    <a
+      href="data:text;charset=utf-8,{log.notes}"
+      download="notes.txt"
+      class="btn btn-outline-primary">Export to TXT</a
+    >
+  </div>
+  <div><p class="fs-5">{log.notes}</p></div>
+</Offcanvas>
