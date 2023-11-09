@@ -160,6 +160,19 @@
   </div>
 </main>
 
+<FloatElement>
+  {#if log.public}
+    <button class="btn btn-primary btn-lg me-3" on:click={toggleShareModal}
+      ><i class="fa-solid fa-share-from-square" /> Share</button
+    >
+  {/if}
+  {#if ref}
+    <a href={ref} class="btn btn-secondary btn-lg"
+      ><i class="fa-solid fa-rotate-left" /> Return</a
+    >
+  {/if}
+</FloatElement>
+
 <Offcanvas header="Aircraft Information" id="aircraftinfo" scroll={false}>
   <ul class="font-google-quicksand py-2 fs-4">
     <li>
@@ -337,19 +350,6 @@
 <svelte:head>
   <title>{`${log.dep.city} to ${log.des.city}`}</title>
 </svelte:head>
-
-<FloatElement>
-  {#if log.public}
-    <button class="btn btn-primary btn-lg me-3" on:click={toggleShareModal}
-      ><i class="fa-solid fa-share-from-square" /> Share</button
-    >
-  {/if}
-  {#if ref}
-    <a href={ref} class="btn btn-secondary btn-lg"
-      ><i class="fa-solid fa-rotate-left" /> Return</a
-    >
-  {/if}
-</FloatElement>
 
 <Offcanvas
   id="notes"
