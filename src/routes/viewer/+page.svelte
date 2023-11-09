@@ -1,10 +1,5 @@
 <script>
-  import {
-    formatDate,
-    getTimeStr,
-    formatDuration,
-    formatDateTime,
-  } from "../../hooks.client.js";
+  import { formatDuration, formatDateTime } from "../../hooks.client.js";
   import hrefs from "$lib/hrefs.json";
   import FloatElement from "$lib/components/FloatElement.svelte";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
