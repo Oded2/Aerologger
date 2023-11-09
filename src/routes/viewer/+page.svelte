@@ -7,7 +7,7 @@
     formatDateTime,
   } from "../../hooks.client.js";
   import hrefs from "$lib/hrefs.json";
-  import FloatElement from "../../components/FloatElement.svelte";
+  import FloatElement from "$lib/components/FloatElement.svelte";
   import ToastSetup from "../../components/setup/ToastSetup.svelte";
   import ShareModal from "../../components/ShareModal.svelte";
   import AirportCard from "$lib/components/AirportCard.svelte";

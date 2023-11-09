@@ -10,7 +10,7 @@
   import ToastSetup from "../../../components/setup/ToastSetup.svelte";
   import hrefs from "$lib/hrefs.json";
   import logo from "$lib/images/logo_simplified.png";
-  import FloatElement from "../../../components/FloatElement.svelte";
+  import FloatElement from "$lib/components/FloatElement.svelte";
   export let data;
   const { supabase, session, log } = data;
   let { edit } = data;
