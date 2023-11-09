@@ -43,7 +43,7 @@
       </li>
     </ul>
   </div>
-  <div class="card-footer">
+  <div class="card-img-bottom">
     <iframe
       src={getOpenStreetMap(
         parseFloat(airportData.latitude),
@@ -52,6 +52,9 @@
       frameborder="0"
       title="Open Street Map"
     />
+  </div>
+  <div class="card-footer fs-6">
+    {`${airportData.latitude}, ${airportData.longitude}`}
   </div>
 </div>
 
