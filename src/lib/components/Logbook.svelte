@@ -19,7 +19,7 @@
   export let allowModification = true;
   export let supabase = supabaseClient;
   export let userId = "";
-  const maxLogs = 10;
+  const maxLogs = 12;
   const pageBreakpoint = 5;
   const maxPage = parseInt(
     logs.length / maxLogs + (logs.length % maxLogs != 0 ? 1 : 0)
