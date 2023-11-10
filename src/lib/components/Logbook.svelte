@@ -20,6 +20,7 @@
   export let supabase = supabaseClient;
   export let userId = "";
   const maxLogs = 10;
+  const pageBreakpoint = 5;
   const maxPage = parseInt(
     logs.length / maxLogs + (logs.length % maxLogs != 0 ? 1 : 0)
   );
@@ -37,6 +38,7 @@
   logs.sort(GetSortOrder(sortby, true));
   $: hours = Math.floor(totalMinutes / 60);
   $: minutes = totalMinutes % 60;
+  $: divider = parseInt((currentPage - 1) / pageBreakpoint) * pageBreakpoint;
   for (const i of logs) {
     totalFlights++;
     totalMinutes += calculateMinutes(new Date(i.depDate), new Date(i.desDate));
@@ -264,47 +266,63 @@
   </div>
   {#if logs.length > maxLogs}
     <div class="mb-3">
-      <div>
-        Page {currentPage} out of {maxPage}
+      <div class="mb-1">Total Pages: {maxPage}</div>
+      <div class="mb-3 mw-custom">
+        <form on:submit|preventDefault={() => (currentPage = userPage)}>
+          <div class="input-group">
+            <label for="pageskip" class="input-group-text">Go to Page</label>
+            <input
+              type="number"
+              class="form-control"
+              id="pageskip"
+              bind:value={userPage}
+              min="1"
+              max={maxPage}
+              required
+            />
+            <button
+              type="submit"
+              class="input-group-text btn btn-primary"
+              disabled={userPage < 1 ||
+                userPage > maxPage ||
+                isNaN(userPage) ||
+                currentPage == userPage}><i class="fa-solid fa-check" /></button
+            >
+          </div>
+        </form>
       </div>
-      <div class="mb-1">
-        <button
-          class="btn btn-secondary btn-sm"
-          on:click={() => currentPage--}
-          disabled={currentPage == 1}>Back</button
-        >
-        <button
-          class="btn btn-secondary btn-sm"
-          on:click={() => currentPage++}
-          disabled={currentPage == maxPage}>Next</button
-        >
-      </div>
-      <form
-        on:submit|preventDefault={() => {
-          currentPage = userPage;
-        }}
-      >
-        <div class="input-group mw-custom">
-          <span class="input-group-text">Skip to Page</span>
-          <input
-            type="number"
-            class="form-control"
-            bind:value={userPage}
-            min={1}
-            max={maxPage}
-          />
-          <button
-            type="submit"
-            class="btn btn-primary input-group-text"
-            on:click={() => (currentPage = userPage)}
-            disabled={userPage == currentPage ||
-              !userPage ||
-              userPage > maxPage}
-          >
-            <i class="fa-solid fa-check" />
-          </button>
-        </div>
-      </form>
+      <nav aria-label="Logbook Pages">
+        <ul class="pagination">
+          <li class="page-item">
+            <button
+              class="page-link"
+              class:disabled={currentPage == 1}
+              on:click={() => currentPage--}>&laquo;</button
+            >
+          </li>
+          {#each { length: maxPage + (maxPage > pageBreakpoint ? pageBreakpoint % maxPage : 0) } as _, index}
+            {#if divider + pageBreakpoint >= index + 1 && index + 1 > divider}
+              <li class="page-item">
+                <button
+                  class="page-link"
+                  class:active={index + 1 == currentPage}
+                  class:disabled={index + 1 > maxPage}
+                  disabled={index + 1 == currentPage}
+                  on:click={() => (currentPage = index + 1)}
+                  >{index + 1 <= maxPage ? index + 1 : "-"}</button
+                >
+              </li>
+            {/if}
+          {/each}
+          <li class="page-item">
+            <button
+              class="page-link"
+              class:disabled={currentPage == maxPage}
+              on:click={() => currentPage++}>&raquo;</button
+            >
+          </li>
+        </ul>
+      </nav>
     </div>
   {/if}
   <div class="fs-5">
@@ -560,5 +578,8 @@
   }
   div.mw-custom {
     max-width: 250px;
+  }
+  nav {
+    user-select: none;
   }
 </style>
