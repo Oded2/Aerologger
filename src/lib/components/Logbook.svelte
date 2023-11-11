@@ -207,6 +207,7 @@
       <div class="col-sm">
         <button
           class="btn btn-danger btn-lg w-100 fw-bold h-100"
+          data-bs-dismiss="modal"
           disabled={inProgress}
           on:click={() => deleteFlight(currentFlight.id)}>Delete Flight</button
         >
