@@ -264,6 +264,15 @@
         >Show Date Logged</label
       >
     </div>
+    <div class="form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="reverselogbook"
+        on:input={() => (logs = logs.reverse())}
+      />
+      <label for="reverselogbook" class="form-check-label">Reverse Order</label>
+    </div>
   </div>
   {#if logs.length > maxLogs}
     <div class="mb-3">
