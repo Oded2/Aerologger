@@ -28,7 +28,13 @@
   id="share"
   {url}
   shareText="Check out this flight from Aerologger. "
-/>
+>
+  <a
+    href="data:text/json;charset=utf-8,{JSON.stringify(log)}"
+    download="{`log ${log.id}`}.json"
+    class="btn btn-dark w-100 shadow">Export Log as JSON</a
+  ></ShareModal
+>
 
 <main>
   <div class="container py-5">
@@ -41,7 +47,7 @@
           >
         </h2>
       </div>
-      <div class="row fs-3 my-5">
+      <div class="row fs-3 mt-5">
         <div class="col-lg-5 mb-5">
           <div class="card shadow h-100">
             <div class="card-header text-center">
@@ -178,13 +184,23 @@
     >
   {/if}
   {#if ref}
-    <a href={ref} class="btn btn-secondary btn-lg"
+    <a
+      href={ref}
+      class="btn btn-secondary btn-lg"
+      download="{`log ${log.id} aircraft info`}.json"
       ><i class="fa-solid fa-rotate-left" /> Return</a
     >
   {/if}
 </FloatElement>
 
 <Offcanvas header="Aircraft Information" id="aircraftinfo">
+  <div class="mb-3">
+    <a
+      href="data:text/json;charset=utf-8,{JSON.stringify(log.plane)}"
+      download="{`log ${log.id} aircraft info`}.json"
+      class="btn btn-outline-primary">Export as JSON</a
+    >
+  </div>
   <ul class="font-google-quicksand py-2 fs-4">
     <li>
       Manufacturer: <span class="fw-bold">

@@ -55,7 +55,7 @@
             />
           </div>
         </div>
-        <div>
+        <div class="mb-3">
           <h5>Other</h5>
           <div class="d-flex justify-content-around">
             <a href={twitterLink} class="text-reset fs-4" title="X/Twitter"
@@ -66,6 +66,7 @@
             >
           </div>
         </div>
+        <div><slot /></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
