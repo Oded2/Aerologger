@@ -1,5 +1,9 @@
 <script>
-  import { formatDuration, formatDateTime } from "../../hooks.client.js";
+  import {
+    formatDuration,
+    formatDateTime,
+    maxLen,
+  } from "../../hooks.client.js";
   import hrefs from "$lib/hrefs.json";
   import FloatElement from "$lib/components/FloatElement.svelte";
   import ShareModal from "$lib/components/ShareModal.svelte";
@@ -12,6 +16,7 @@
     "slug",
     profile.username
   );
+  const min = 200;
   url.searchParams.delete("ref");
   function formatDateTimeStr(string = "") {
     const date = new Date(string);
@@ -119,11 +124,19 @@
                 </li>
               </ul>
             </div>
-            <div class="card-footer">
+          </div>
+        </div>
+        <div class="col-12 mb-5">
+          <div class="card fs-5">
+            <div class="card-body">
+              <h4 class="card-title">Notes</h4>
+              <p class="card-text white-space-prewrap">
+                {maxLen(log.notes, min)}
+              </p>
               <button
-                class="btn btn-primary w-100"
+                class="btn btn-primary"
                 data-bs-toggle="offcanvas"
-                data-bs-target="#notes">Show Notes</button
+                data-bs-target="#notes">Expand / Options</button
               >
             </div>
           </div>
