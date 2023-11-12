@@ -523,7 +523,7 @@
               <div class="row">
                 <div class="col-sm mb-3">
                   <a
-                    class="btn btn-dark w-100 shadow"
+                    class="btn btn-dark w-100"
                     class:disabled={inProgress}
                     href="data:text/json;charset=utf-8,{JSON.stringify(logs)}"
                     download="logbook.json">Export Logbook as JSON</a
@@ -537,14 +537,14 @@
                 <div class="row">
                   <div class="col-sm-6 mb-3">
                     <button
-                      class="btn btn-dark w-100 shadow"
+                      class="btn btn-dark w-100"
                       on:click={() => changeMassVisibility(false)}
                       disabled={inProgress}>Make Logs Private</button
                     >
                   </div>
                   <div class="col-sm-6 mb-3">
                     <button
-                      class="btn btn-dark w-100 shadow"
+                      class="btn btn-dark w-100"
                       on:click={() => changeMassVisibility(true)}
                       disabled={inProgress}>Make Logs Public</button
                     >
@@ -556,20 +556,20 @@
                 <div class="row">
                   <div class="col-sm-6 mb-3">
                     <button
-                      class="btn btn-outline-danger w-100 shadow"
+                      class="btn btn-outline-danger w-100"
                       on:click={() => purgePublic(false)}
                       disabled={inProgress}>Delete Private Logs</button
                     >
                   </div>
                   <div class="col-sm-6 mb-3">
                     <button
-                      class="btn btn-outline-danger w-100 shadow"
+                      class="btn btn-outline-danger w-100"
                       on:click={() => purgePublic(true)}
                       disabled={inProgress}>Delete Public Logs</button
                     >
                   </div>
                   <div class="col-sm-12">
-                    <button class="btn btn-danger w-100 shadow" on:click={purge}
+                    <button class="btn btn-danger w-100" on:click={purge}
                       >Purge Logbook</button
                     >
                   </div>

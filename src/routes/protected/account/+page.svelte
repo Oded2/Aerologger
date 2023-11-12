@@ -227,7 +227,7 @@
                       placeholder="Your profile bio"
                       bind:value={bio}
                       on:blur={() => (bio = bio.trim())}
-                      {maxlength}
+                      maxlength="150"
                     />
                     <label for="bio">Bio</label>
                   </div>
