@@ -15,9 +15,7 @@ To use AeroLogger, simply create an account or login, go to the new flight  page
 
 ## Privacy
 
-*Please do not share **any** personal information with AeroLogger.* Each log has the ability to be public or private, but regardless of the status anyone with access to the database has the option to view any log, regardless of its publicity status.
-
-Also note that the only person with access to the database is me, and the database is protected under several authentication methods. 
+*Please do not share any personal information with AeroLogger.* Each log has the ability to be public or private. Please note that while the database is protected, logs are not encrypted inside the database.
 
 *Publicity Status*
 - Public - Anyone can view your log either from your profile, or with the log Id.
