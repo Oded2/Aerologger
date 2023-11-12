@@ -28,6 +28,7 @@
   let currentPage = 1;
   let userPage = currentPage;
   let sortby = "depDate";
+  let reversed = false;
   let showDateLogged = false;
   const refUrl = $page.url.href;
   let inProgress = false,
@@ -244,7 +245,7 @@
           sortby === "created_at"
             ? (showDateLogged = true)
             : (showDateLogged = false);
-          logs.sort(GetSortOrder(sortby, true));
+          logs.sort(GetSortOrder(sortby, !reversed));
           logs = logs;
         }}
         ><option value="depDate">Flight Date</option>
@@ -269,6 +270,7 @@
         type="checkbox"
         class="form-check-input"
         id="reverselogbook"
+        bind:checked={reversed}
         on:input={() => (logs = logs.reverse())}
       />
       <label for="reverselogbook" class="form-check-label">Reverse Order</label>
