@@ -370,7 +370,7 @@
     >
     <a
       href="data:text;charset=utf-8,{log.notes}"
-      download="notes.txt"
+      download="{`log ${log.id} notes`}.txt"
       class="btn btn-outline-primary">Export as TXT</a
     >
   </div>
