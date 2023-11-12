@@ -184,10 +184,7 @@
     >
   {/if}
   {#if ref}
-    <a
-      href={ref}
-      class="btn btn-secondary btn-lg"
-      download="{`log ${log.id} aircraft info`}.json"
+    <a href={ref} class="btn btn-secondary btn-lg"
       ><i class="fa-solid fa-rotate-left" /> Return</a
     >
   {/if}
