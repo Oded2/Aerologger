@@ -3,6 +3,7 @@
     formatDuration,
     formatDateTime,
     maxLen,
+    formatDateStr,
   } from "../../hooks.client.js";
   import hrefs from "$lib/hrefs.json";
   import FloatElement from "$lib/components/FloatElement.svelte";
@@ -41,11 +42,14 @@
     <div class="font-google-gabarito">
       <div class="text-center">
         <h1>{log.dep.city} to {log.des.city}</h1>
-        <h2>
+        <h3>
+          {formatDateStr(log.depDate)}
+        </h3>
+        <h4>
           Logged by: <a href={profileRef} class="text-reset"
             >{profile.display_name}</a
           >
-        </h2>
+        </h4>
       </div>
       <div class="row fs-3 mt-5">
         <div class="col-lg-5 mb-5">
