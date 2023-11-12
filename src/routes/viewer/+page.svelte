@@ -32,7 +32,7 @@
   <a
     href="data:text/json;charset=utf-8,{JSON.stringify(log)}"
     download="{`log ${log.id}`}.json"
-    class="btn btn-dark w-100 shadow">Export Log as JSON</a
+    class="btn btn-dark w-100">Export Log as JSON</a
   ></ShareModal
 >
 
