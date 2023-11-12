@@ -17,7 +17,7 @@
     hashtags: ["aerologger"],
   });
   const mailLink = addParamsString("mailto:", {
-    subject: "Check out Aerologger",
+    subject: "Check out AeroLogger",
     body: `${shareText} ${url.href}`,
   });
 </script>

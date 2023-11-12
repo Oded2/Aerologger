@@ -27,7 +27,7 @@
 <ShareModal
   id="share"
   {url}
-  shareText="Check out this flight from Aerologger. "
+  shareText={`Check out this flight from ${log.dep.city} to ${log.des.city}`}
 >
   <a
     href="data:text/json;charset=utf-8,{JSON.stringify(log)}"
