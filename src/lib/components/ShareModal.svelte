@@ -58,10 +58,10 @@
         <div class="mb-3">
           <h5>Other</h5>
           <div class="d-flex justify-content-around">
-            <a href={twitterLink} class="text-reset fs-4" title="X/Twitter"
+            <a href={twitterLink} class="btn fs-4" title="X/Twitter"
               ><i class="fa-brands fa-x-twitter" /></a
             >
-            <a href={mailLink} class="text-reset fs-4" title="Email"
+            <a href={mailLink} class="btn fs-4" title="Email"
               ><i class="fa-solid fa-envelope" /></a
             >
           </div>
