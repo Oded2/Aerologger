@@ -19,9 +19,12 @@
   );
   const min = 200;
   url.searchParams.delete("ref");
-  function formatDateTimeStr(string = "") {
+  function formatDateTimeStr(
+    string = "",
+    options = { month: "long", day: "numeric", year: "numeric" }
+  ) {
     const date = new Date(string);
-    return formatDateTime(date);
+    return formatDateTime(date, options);
   }
 </script>
 
@@ -110,13 +113,19 @@
                 </li>
                 <li class="list-group-item">
                   Time of Departure: <span class="text-aerologger">
-                    {formatDateTimeStr(log.depDate)}</span
+                    {formatDateTimeStr(log.depDate, {
+                      month: "long",
+                      day: "numeric",
+                    })}</span
                   >
                 </li>
 
                 <li class="list-group-item">
                   Time of Arrival: <span class="text-aerologger">
-                    {formatDateTimeStr(log.desDate)}</span
+                    {formatDateTimeStr(log.desDate, {
+                      month: "long",
+                      day: "numeric",
+                    })}</span
                   >
                 </li>
                 <li class="list-group-item">

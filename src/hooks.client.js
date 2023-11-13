@@ -1,5 +1,7 @@
 import { toasts } from "svelte-toasts";
 import countries from "$lib/countries.json";
+const dateOptions = { month: "long", day: "numeric", year: "numeric" };
+
 export function randomNum(min, max) {
   return parseInt(Math.random() * (max - min) + min);
 }
@@ -61,14 +63,13 @@ export function maxLen(string = "", maxLen = NaN) {
 export function formatDateStr(dateStr) {
   return formatDate(new Date(dateStr));
 }
-export function formatDate(date = new Date()) {
-  const dateOptions = { month: "long", day: "numeric", year: "numeric" };
-  const formatDate = date.toLocaleDateString("en-US", dateOptions);
+export function formatDate(date = new Date(), options = dateOptions) {
+  const formatDate = date.toLocaleDateString("en-US", options);
   return formatDate;
 }
 
-export function formatDateTime(date = new Date()) {
-  return `${formatDate(date)} at ${getTimeStr(date)}`;
+export function formatDateTime(date = new Date(), options = dateOptions) {
+  return `${formatDate(date, options)} at ${getTimeStr(date)}`;
 }
 
 export function dateToStr(date = new Date()) {
