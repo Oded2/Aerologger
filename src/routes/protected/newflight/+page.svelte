@@ -193,7 +193,7 @@
       <div>
         <h1>Welcome back.</h1>
       </div>
-      <form on:submit|preventDefault={submit} novalidate>
+      <form on:submit|preventDefault={submit}>
         <div class="card">
           <div class="card-body fs-3">
             <div class="row">
