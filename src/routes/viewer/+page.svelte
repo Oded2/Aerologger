@@ -145,21 +145,23 @@
             </div>
           </div>
         </div>
-        <div class="col-12 mb-5">
-          <div class="card fs-5">
-            <div class="card-body">
-              <h4 class="card-title">Notes</h4>
-              <p class="card-text white-space-prewrap">
-                {maxLen(log.notes, min)}
-              </p>
-              <button
-                class="btn btn-primary"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#notes">Expand / Options</button
-              >
+        {#if log.notes.length > 0}
+          <div class="col-12 mb-5">
+            <div class="card fs-5">
+              <div class="card-body">
+                <h4 class="card-title">Notes</h4>
+                <p class="card-text white-space-prewrap">
+                  {maxLen(log.notes, min)}
+                </p>
+                <button
+                  class="btn btn-primary"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#notes">Expand / Options</button
+                >
+              </div>
             </div>
           </div>
-        </div>
+        {/if}
         <div
           class="{log.dep.icao === log.des.icao
             ? 'col-lg-12'
