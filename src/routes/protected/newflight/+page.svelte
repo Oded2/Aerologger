@@ -48,13 +48,12 @@
     if (!verify()) {
       return;
     }
+    const tempDate = parseDateAndTime(dateStr, desTimeStr);
     const desDate =
-      parseDateAndTime(dateStr, desTimeStr).valueOf() >= depDate.valueOf()
-        ? parseDateAndTime(dateStr, desTimeStr)
-        : parseDateAndTime(
-            dateToStr(new Date(depDate.valueOf() + 86400000)),
-            desTimeStr
-          );
+      tempDate.valueOf() >= depDate.valueOf()
+        ? tempDate
+        : new Date(tempDate.valueOf() + 86400000);
+
     inProgress = true;
     if (planeType !== "other")
       progress = { message: "Fetching Aircraft", value: 25 };
@@ -194,7 +193,7 @@
       <div>
         <h1>Welcome back.</h1>
       </div>
-      <form on:submit|preventDefault={submit}>
+      <form on:submit|preventDefault={submit} novalidate>
         <div class="card">
           <div class="card-body fs-3">
             <div class="row">
