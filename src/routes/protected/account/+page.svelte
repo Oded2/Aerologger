@@ -232,6 +232,7 @@
                     <label for="bio">Bio</label>
                   </div>
                   <button
+                    type="button"
                     class="input-group-text btn btn-secondary"
                     on:click={() => (bio = "")}
                     disabled={bio.length == 0}
@@ -255,10 +256,10 @@
                     <label for="birthday">Birthday</label>
                   </div>
                   <button
+                    type="button"
                     class="input-group-text btn btn-secondary"
                     on:click={() => (birthday = null)}
-                    disabled={!birthday}
-                    type="button"><i class="fa-solid fa-x" /></button
+                    disabled={!birthday}><i class="fa-solid fa-x" /></button
                   >
                 </div>
                 <div class="form-text">
