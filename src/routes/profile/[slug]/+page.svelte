@@ -1,6 +1,6 @@
 <script>
   import Logbook from "$lib/components/Logbook.svelte";
-  import { calculateMinutes } from "../../../../hooks.client.js";
+  import { calculateMinutes } from "../../../hooks.client.js";
   export let data;
   const { profile, logs, session } = data;
   const userAge = calculateAge(new Date(profile.birthday));
