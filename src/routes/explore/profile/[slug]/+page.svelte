@@ -8,7 +8,6 @@
     const minutes = calculateMinutes(date, new Date());
     return Math.floor(minutes / 60 / 24 / 365.25);
   }
-  console.log(profile.birthday);
 </script>
 
 <main>
