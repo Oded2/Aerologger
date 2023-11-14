@@ -8,6 +8,7 @@
     const minutes = calculateMinutes(date, new Date());
     return Math.floor(minutes / 60 / 24 / 365.25);
   }
+  console.log(profile.birthday);
 </script>
 
 <main>
@@ -19,7 +20,9 @@
       {#if profile.bio.length > 0}
         <h5>{profile.bio}</h5>
       {/if}
-      <h5>{userAge.toLocaleString()} Years Old</h5>
+      {#if profile.birthday}
+        <h5>{userAge.toLocaleString()} Years Old</h5>
+      {/if}
       <h6>Pilot's username: {profile.username}</h6>
     </div>
   </div>
