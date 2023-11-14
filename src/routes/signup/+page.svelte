@@ -13,7 +13,7 @@
   let email = "",
     username = "",
     displayName = "",
-    dob = dateToStr(),
+    dob = "",
     password = "",
     confirmpass = "";
   let inProgress = false,
