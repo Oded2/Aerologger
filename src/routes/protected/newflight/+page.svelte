@@ -332,7 +332,7 @@
                   class="form-control"
                   bind:value={planeId}
                   on:blur={() => (planeId = planeId.trim())}
-                  placeholder={'"4X-CHA"'}
+                  placeholder={'"CHA"'}
                   maxlength="20"
                 />
               </div>
