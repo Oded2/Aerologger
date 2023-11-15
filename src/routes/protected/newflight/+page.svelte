@@ -270,14 +270,25 @@
                 <label for="deptime" class="form-label"
                   ><i class="fa-solid fa-clock" /> Time of Departure</label
                 >
-
-                <input
-                  type="time"
-                  id="deptime"
-                  class="form-control"
-                  bind:value={depTimeStr}
-                  required
-                />
+                <div class="input-group">
+                  <input
+                    type="time"
+                    id="deptime"
+                    class="form-control"
+                    bind:value={depTimeStr}
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="input-group-text btn btn-secondary"
+                    disabled={depTimeStr === desTimeStr}
+                    on:click={() => {
+                      const temp = depTimeStr;
+                      depTimeStr = desTimeStr;
+                      desTimeStr = temp;
+                    }}><i class="fa-solid fa-right-left" /></button
+                  >
+                </div>
                 <div class="form-text">
                   Times are relative to your current time zone.
                 </div>
