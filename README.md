@@ -36,6 +36,3 @@ AeroLogger is developed using many different apps and libraries. To mention a fe
 This project is licensed under the MIT License.
 
 Feel free to modify and enhance the code according to your requirements.
-
-For further details, refer to the official NASA APOD API documentation at https://api.nasa.gov/.
-
