@@ -5,7 +5,7 @@
     maxLen,
     formatDateStr,
   } from "../../hooks.client.js";
-  import hrefs from "$lib/hrefs.json";
+  import { hrefs } from "$lib/index.js";
   import FloatElement from "$lib/components/FloatElement.svelte";
   import ShareModal from "$lib/components/ShareModal.svelte";
   import AirportCard from "$lib/components/AirportCard.svelte";

@@ -1,4 +1,4 @@
-import { supabase } from "$lib/supabaseClient.js";
+import { supabase } from "$lib/index.js";
 import { error } from "@sveltejs/kit";
 export async function load({ params }) {
   const user = params.slug;

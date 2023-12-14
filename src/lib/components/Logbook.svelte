@@ -10,7 +10,7 @@
     calculateMinutes,
     formatDateTime,
   } from "../../hooks.client.js";
-  import hrefs from "$lib/hrefs.json";
+  import { hrefs } from "$lib/index.js";
   import { page } from "$app/stores";
   import MidScreen from "./MidScreen.svelte";
   import ToastSetup from "./ToastSetup.svelte";

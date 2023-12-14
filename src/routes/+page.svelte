@@ -1,5 +1,5 @@
 <script>
-  import hrefs from "$lib/hrefs.json";
+  import { hrefs } from "$lib/index.js";
   import logo from "$lib/images/logo.png";
   export let data;
   const { session } = data;

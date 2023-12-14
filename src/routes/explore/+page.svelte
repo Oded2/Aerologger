@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import ExploreCard from "$lib/components/ExploreCard.svelte";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
-  import hrefs from "$lib/hrefs.json";
+  import { hrefs } from "$lib/index.js";
   import { addParamsString } from "../../hooks.client.js";
   let toast;
   let profileSearch = "";

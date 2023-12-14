@@ -1,5 +1,5 @@
 import { redirect } from "@sveltejs/kit";
-import hrefs from "$lib/hrefs.json";
+import { hrefs } from "$lib/index.js";
 
 export function load() {
   throw redirect(301, hrefs.home.home.link);
