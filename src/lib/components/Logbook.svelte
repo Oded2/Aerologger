@@ -14,7 +14,7 @@
   import { page } from "$app/stores";
   import MidScreen from "./MidScreen.svelte";
   import ToastSetup from "./ToastSetup.svelte";
-  import { supabase as supabaseClient } from "$lib/supabaseClient.js";
+  import { supabase as supabaseClient } from "$lib/index.js";
   export let logs = [];
   export let allowModification = true;
   export let supabase = supabaseClient;
