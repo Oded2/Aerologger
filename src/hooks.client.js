@@ -1,5 +1,5 @@
 import { toasts } from "svelte-toasts";
-import countries from "$lib/countries.json";
+import { countries } from "$lib/index.js";
 const dateOptions = { month: "long", day: "numeric", year: "numeric" };
 
 export function randomNum(min, max) {
