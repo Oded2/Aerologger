@@ -17,5 +17,6 @@ export async function load({ url, parent }) {
         message: `Log ${logId} can only be edited by its owner.`,
       });
   }
-  return { logId, log, edit };
+  const { data: airplanes } = await supabase.from("Airplanes").select();
+  return { logId, log, edit, airplanes };
 }

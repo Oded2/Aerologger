@@ -403,7 +403,7 @@
           </div>
           <div class="col-md mb-2 mb-md-0">
             <i class="d-md-none fa-solid fa-hashtag" title="Tail Number" />
-            {log.identification}
+            {log.tail}
           </div>
           {#if allowModification}
             <div class="col-md mb-2 mb-md-0">

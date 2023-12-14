@@ -12,7 +12,7 @@
   import logo from "$lib/images/logo_simplified.png";
   import FloatElement from "$lib/components/FloatElement.svelte";
   export let data;
-  const { supabase, session, log } = data;
+  const { supabase, session, log, airplanes } = data;
   let { edit } = data;
   const apiRef = hrefs.apis;
   let toast;
@@ -21,10 +21,8 @@
   let dateStr = log ? dateToStr(new Date(log.depDate)) : dateToStr();
   let depTimeStr = log ? getTimeStr(new Date(log.depDate)) : getTimeStr(),
     desTimeStr = log ? getTimeStr(new Date(log.desDate)) : getTimeStr();
-  let planeType = log ? log.type : "airplane",
-    planeManu = log ? log.plane.manufacturer : "",
-    planeModel = log ? log.plane.model : "",
-    planeId = log ? log.identification : "";
+  let plane = log ? log.plane : "",
+    planeId = log ? log.tail : "";
   let userNotes = log ? log.notes : "";
   let isPublic = log ? log.public : true;
   let inProgress = false,
@@ -55,18 +53,6 @@
         : new Date(tempDate.valueOf() + 86400000);
 
     inProgress = true;
-    if (planeType !== "other")
-      progress = { message: "Fetching Aircraft", value: 25 };
-    const plane =
-      planeType === "other"
-        ? [{ manufacturer: planeManu, model: planeModel }]
-        : await fetchPlane();
-    if (plane.length < 1) {
-      showError("Plane not found.");
-      inProgress = false;
-      progress = ogProgress;
-      return;
-    }
     progress = { message: "Fetching Departure Airport", value: 50 };
     const depAirport = await getAirportDetails(dep);
     if (depAirport.length != 1) {
@@ -90,11 +76,11 @@
       des: desAirport[0],
       depDate: depDate.toISOString(),
       desDate: desDate.toISOString(),
-      type: planeType,
       plane: plane[0],
-      identification: planeId,
+      tail: planeId,
       notes: userNotes,
       public: isPublic,
+      plane_id: plane,
     };
     const { data, error } = edit
       ? await supabase.from("Logs").update(toInsert).eq("id", log.id).select()
@@ -112,31 +98,16 @@
     dateStr = dateToStr();
     depTimeStr = getTimeStr();
     desTimeStr = getTimeStr();
-    planeType = "airplane";
-    planeManu = "";
-    planeModel = "";
     planeId = "";
     userNotes = "";
   }
   function verify() {
-    if (!planeType || planeType.length == 0) {
-      showError("Aircraft type cannot be empty");
-      return false;
-    }
     if (!dep || dep.length == 0) {
       showError("Airport of departure cannot be empty");
       return false;
     }
     if (!dep || des.length == 0) {
       showError("Airport of destination cannot be empty");
-      return false;
-    }
-    if (!planeManu || planeManu.length == 0) {
-      showError("Plane manufacturer cannot be empty");
-      return false;
-    }
-    if (!planeModel || planeModel.length == 0) {
-      showError("Plane model cannot be empty.");
       return false;
     }
     if (planeId.length > 20) {
@@ -307,34 +278,20 @@
                 />
               </div>
 
-              <div class="col-md-6 col-xl-3 pb-3 text-nowrap">
-                <label for="planemanu" class="form-label"
+              <div class="col-md-6 pb-3 text-nowrap">
+                <label for="airplane" class="form-label"
                   ><i class="fa-solid fa-globe" /> Aircraft Manufacturer</label
                 >
-                <input
-                  id="planemanu"
-                  class="form-control"
-                  bind:value={planeManu}
-                  on:blur={() => (planeManu = planeManu.trim())}
-                  placeholder={'"Cessna"'}
-                  required
-                />
-              </div>
-              <div class="col-md-6 col-xl-3 pb-3 text-nowrap">
-                <label for="planemodel" class="form-label"
-                  ><i class="fa-solid fa-plane-circle-exclamation" /> Aircraft Model</label
-                >
-                <input
-                  id="planemodel"
-                  class="form-control"
-                  bind:value={planeModel}
-                  on:blur={() => (planeModel = planeModel.trim())}
-                  placeholder={'"172"'}
-                  required
-                />
+                <select bind:value={plane} id="airplane" class="form-select">
+                  {#each airplanes as airplane, index}
+                    <option selected={index == 0} value={airplane.id}
+                      >{airplane.make} {airplane.model}</option
+                    >
+                  {/each}
+                </select>
               </div>
 
-              <div class="col-md-6 col-xl-3 pb-3 text-nowrap">
+              <div class="col-md-6 pb-3 text-nowrap">
                 <label for="planeid" class="form-label"
                   ><i class="fa-solid fa-hashtag" /> Tail Number</label
                 >
@@ -346,21 +303,6 @@
                   placeholder={'"CHA"'}
                   maxlength="20"
                 />
-              </div>
-              <div class="col-md-12 col-xl-3 pb-3 text-nowrap">
-                <label for="planetype" class="form-label"
-                  ><i class="fa-solid fa-plane" /> Aircraft Type</label
-                >
-                <select
-                  id="planetype"
-                  class="form-select"
-                  bind:value={planeType}
-                  required
-                >
-                  <option value="airplane" selected>Airplane</option>
-                  <option value="helicopter">Helicopter</option>
-                  <option value="other">Other</option>
-                </select>
               </div>
               <div class="col-12 pb-3 text-nowrap">
                 <label for="notes" class="form-label">Notes</label>
