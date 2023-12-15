@@ -30,14 +30,9 @@
     return () => subscription.unsubscribe();
   });
   function findTitle() {
-    for (let key in oldHrefs) {
-      const current = oldHrefs[key];
-      for (let secondKey in current) {
-        const secondCurrent = current[secondKey];
-        if (secondCurrent["link"] == pageHref) {
-          return secondCurrent["title"];
-        }
-      }
+    for (const key in hrefs) {
+      const item = hrefs[key];
+      if (item.link === pageHref) return item.title;
     }
   }
 </script>
@@ -45,7 +40,7 @@
 <div class="navbar bg-base-300">
   <div class="navbar-start">
     <div class="dropdown">
-      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost sm:hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5"
@@ -61,7 +56,7 @@
         >
       </div>
       <ul
-        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-2xl bg-base-100 rounded-box w-52"
       >
         <NavItemsLi></NavItemsLi>
       </ul>
@@ -70,7 +65,7 @@
       ><img src={logo} alt="Logo" /></a
     >
   </div>
-  <div class="navbar-center hidden lg:flex">
+  <div class="navbar-center hidden sm:flex">
     <ul class="menu menu-horizontal px-1">
       <NavItemsLi></NavItemsLi>
     </ul>
