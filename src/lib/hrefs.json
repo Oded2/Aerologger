@@ -18,5 +18,21 @@
     "explore": {
         "link": "/explore",
         "title": "Explore"
+    },
+    "login": {
+        "link": "/login",
+        "title": "Login"
+    },
+    "signup": {
+        "link": "/signup",
+        "title": "Sign Up"
+    },
+    "redProfile": {
+        "link": "/profile",
+        "title": "My Profile"
+    },
+    "signout": {
+        "link": "/signout",
+        "title": "Sign Out"
     }
 }

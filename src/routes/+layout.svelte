@@ -7,6 +7,7 @@
   import Title from "$lib/components/Title.svelte";
   import logo from "$lib/images/logo_simplified_lowres.png";
   import NavItemsLi from "$lib/components/NavItemsLi.svelte";
+  import Dropdown from "$lib/components/Dropdown.svelte";
 
   $: pageUrl = new URL($page.url);
   $: pageHref = pageUrl.pathname;
@@ -75,7 +76,17 @@
     </ul>
   </div>
   <div class="navbar-end">
-    <a class="btn">Button</a>
+    {#if session}
+      <Dropdown title="My Space" className=" btn btn-primary">
+        <li><a href={hrefs.redProfile.link}>Profile</a></li>
+        <li>
+          <a href={hrefs.account.link}>Account</a>
+        </li>
+        <li><a href={hrefs.signout.link}>Sign Out</a></li>
+      </Dropdown>
+    {:else}
+      <a href={hrefs.signup.link} class="btn btn-primary">Sign Up</a>
+    {/if}
   </div>
 </div>
 
