@@ -1,8 +1,36 @@
 <script>
+  import Card from "$lib/components/Card.svelte";
+  import CardGrid from "$lib/components/CardGrid.svelte";
   import Container from "$lib/components/Container.svelte";
   import { hrefs } from "$lib/index.js";
   export let data;
   const { session } = data;
+  const cards = [
+    {
+      title: "Easy Flight Logging",
+      details: [
+        "To log a flight, simply go to the new flight page, and fill out the simple form, and your logbook will automatically get the most information about your time in the air.",
+        "Your logbook automatically counts your hours for you, and display your data in a user-friendly way.",
+      ],
+    },
+    {
+      title: "Free and Secure",
+      details: [
+        "AeroLogger is a completely free service, with the source code available on Github.",
+        "Enjoy a user-friendly experience with no intrusive advertisements.",
+        "Make your flight logs public or private to the public.",
+      ],
+    },
+    {
+      title: "Notices",
+      details: [
+        "AeroLogger may or may not stay open source in the future.",
+        "AeroLogger is still a demo project, nothing is 100% complete.",
+        "Please do not share sensitive information with AeroLogger.",
+        "While the public may not see any users logs (unless deemed public by the user), trusted admins have access to each log, regardless of its public status.",
+      ],
+    },
+  ];
 </script>
 
 <main>
@@ -37,7 +65,12 @@
       </div>
     </div>
     <div>
-      <h1 class="text-4xl">About AeroLogger</h1>
+      <h1 class="text-4xl mb-10 font-bold">About AeroLogger</h1>
+      <CardGrid>
+        {#each cards as card}
+          <Card title={card.title} list={card.details} actions={false}></Card>
+        {/each}
+      </CardGrid>
     </div>
   </Container>
 </main>
