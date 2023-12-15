@@ -29,9 +29,9 @@ export default {
       },
       {
         alDark: {
-          primary: "#1d4ed8",
+          primary: "#2563eb",
 
-          secondary: "#4b5563",
+          secondary: "#6b7280",
 
           accent: "#b45309",
 
@@ -43,7 +43,7 @@ export default {
 
           success: "#15803d",
 
-          warning: "#a16207",
+          warning: "#b45309",
 
           error: "#b91c1c",
         },

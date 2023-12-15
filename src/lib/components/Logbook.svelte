@@ -216,15 +216,15 @@
     </div>
   </div>
 </Modal>
-<div class="container font-google-gabarito">
+<div>
   <div class="mb-3">
     <h3>
-      Air time: <span class="text-aerologger"
+      Air time: <span class="text-primary"
         >{hours.toLocaleString()} hours and {minutes} minutes</span
       >
     </h3>
     <h4>
-      Total flights: <span class="text-aerologger"
+      Total flights: <span class="text-primary"
         >{totalFlights.toLocaleString()}</span
       >
     </h4>
