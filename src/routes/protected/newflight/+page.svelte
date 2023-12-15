@@ -21,7 +21,7 @@
   let dateStr = log ? dateToStr(new Date(log.depDate)) : dateToStr();
   let depTimeStr = log ? getTimeStr(new Date(log.depDate)) : getTimeStr(),
     desTimeStr = log ? getTimeStr(new Date(log.desDate)) : getTimeStr();
-  let plane = log ? log.plane : "",
+  let plane = log ? log.plane : 1,
     planeId = log ? log.tail : "";
   let userNotes = log ? log.notes : "";
   let isPublic = log ? log.public : true;
@@ -34,13 +34,6 @@
   $: depDate = parseDateAndTime(dateStr, depTimeStr);
   async function getAirportDetails(airport = "") {
     return await fetchFromEndpoint(apiRef.airport.link, { airport });
-  }
-  async function fetchPlane() {
-    return await fetchFromEndpoint(apiRef.airplane.link, {
-      type: planeType,
-      manu: planeManu,
-      model: planeModel,
-    });
   }
   async function submit() {
     if (!verify()) {
@@ -280,15 +273,17 @@
 
               <div class="col-md-6 pb-3 text-nowrap">
                 <label for="airplane" class="form-label"
-                  ><i class="fa-solid fa-globe" /> Aircraft Manufacturer</label
+                  ><i class="fa-solid fa-globe" /> Aircraft</label
                 >
-                <select bind:value={plane} id="airplane" class="form-select">
-                  {#each airplanes as airplane, index}
-                    <option selected={index == 0} value={airplane.id}
-                      >{airplane.make} {airplane.model}</option
-                    >
-                  {/each}
-                </select>
+                {#if airplanes.length > 0}
+                  <select bind:value={plane} id="airplane" class="form-select">
+                    {#each airplanes as airplane}
+                      <option value={airplane.id}
+                        >{airplane.make} {airplane.model}</option
+                      >
+                    {/each}
+                  </select>
+                {/if}
               </div>
 
               <div class="col-md-6 pb-3 text-nowrap">
