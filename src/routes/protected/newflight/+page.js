@@ -1,4 +1,5 @@
 import { error } from "@sveltejs/kit";
+import { GetSortOrder } from "../../../hooks.client.js";
 
 export async function load({ url, parent }) {
   const { supabase, session } = await parent();
@@ -18,5 +19,6 @@ export async function load({ url, parent }) {
       });
   }
   const { data: airplanes } = await supabase.from("Airplanes").select();
+  airplanes.sort(GetSortOrder("make"));
   return { logId, log, edit, airplanes };
 }
