@@ -6,7 +6,7 @@
   export let buttonText = "";
   export let href = "";
   export let list = [];
-  export let className = "card w-96 bg-base-200 shadow-2xl";
+  export let className = "card w-96 bg-base-200 shadow-lg";
 </script>
 
 <div class={className}>
