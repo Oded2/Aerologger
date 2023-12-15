@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import ExploreCard from "$lib/components/ExploreCard.svelte";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
-  import { hrefs } from "$lib/index.js";
+  import { oldHrefs } from "$lib/index.js";
   import { addParamsString } from "../../hooks.client.js";
   let toast;
   let profileSearch = "";
@@ -28,14 +28,14 @@
     </div>
     <div class="row">
       <ExploreCard
-        title={hrefs.explore.profile.title}
-        desc={hrefs.explore.profile.description}
+        title={oldHrefs.explore.profile.title}
+        desc={oldHrefs.explore.profile.description}
         icon="magnifying-glass"
         submitText="Search"
         disabled={inProgress}
         on:submit={() =>
           gotoProgress(
-            hrefs.explore.profile.link.replace("slug", profileSearch)
+            oldHrefs.explore.profile.link.replace("slug", profileSearch)
           )}
       >
         <div class="mb-3 input-group">
@@ -66,9 +66,9 @@
         disabled={inProgress}
         on:submit={() =>
           gotoProgress(
-            addParamsString(hrefs.logbook.viewer.link, {
+            addParamsString(oldHrefs.logbook.viewer.link, {
               logid: logSearch,
-              ref: hrefs.explore.home.link,
+              ref: oldHrefs.explore.home.link,
             })
           )}
       >

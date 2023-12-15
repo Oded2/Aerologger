@@ -5,14 +5,14 @@
     maxLen,
     formatDateStr,
   } from "../../hooks.client.js";
-  import { hrefs } from "$lib/index.js";
+  import { oldHrefs } from "$lib/index.js";
   import FloatElement from "$lib/components/FloatElement.svelte";
   import ShareModal from "$lib/components/ShareModal.svelte";
   import AirportCard from "$lib/components/AirportCard.svelte";
   import Offcanvas from "$lib/components/Offcanvas.svelte";
   export let data;
   const { log, profile, ref, url } = data;
-  const profileRef = hrefs.explore.profile.link.replace(
+  const profileRef = oldHrefs.explore.profile.link.replace(
     "slug",
     profile.username
   );

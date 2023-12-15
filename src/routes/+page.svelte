@@ -1,5 +1,5 @@
 <script>
-  import { hrefs } from "$lib/index.js";
+  import { oldHrefs } from "$lib/index.js";
   import logo from "$lib/images/logo.png";
   export let data;
   const { session } = data;
@@ -16,12 +16,12 @@
         <div class="col-sm mb-2">
           {#if session}
             <a
-              href={hrefs.newFlight.home.link}
+              href={oldHrefs.newFlight.home.link}
               class="btn btn-primary btn-lg w-100">Log New Flight</a
             >
           {:else}
             <a
-              href={hrefs.signup.home.link}
+              href={oldHrefs.signup.home.link}
               class="btn btn-primary btn-lg w-100">Join AeroLogger</a
             >
           {/if}
@@ -29,14 +29,14 @@
         <div class="col-sm mb-2">
           {#if session}
             <a
-              href={hrefs.logbook.home.link}
+              href={oldHrefs.logbook.home.link}
               class="btn btn-outline-primary btn-lg w-100"
             >
               View Logbook</a
             >
           {:else}
             <a
-              href={hrefs.explore.home.link}
+              href={oldHrefs.explore.home.link}
               class="btn btn-outline-primary btn-lg w-100">Explore AeroLogger</a
             >
           {/if}
@@ -72,11 +72,12 @@
             Feel free to contact me if you want to request features, find bugs,
             or have a suggestion. You can either email me directly at <a
               class="text-light"
-              href={`mailto:${hrefs.contact.home.mail}`}
-              >{hrefs.contact.home.mail}</a
+              href={`mailto:${oldHrefs.contact.home.mail}`}
+              >{oldHrefs.contact.home.mail}</a
             >
             or use the fast and simple one click
-            <a href={hrefs.contact.home.link} class="text-light">contact form</a
+            <a href={oldHrefs.contact.home.link} class="text-light"
+              >contact form</a
             >.
           </p>
         </div>
@@ -90,8 +91,8 @@
                 <li>
                   To log a flight, simply go to the <a
                     href={session
-                      ? hrefs.newFlight.home.link
-                      : hrefs.login.home.link}
+                      ? oldHrefs.newFlight.home.link
+                      : oldHrefs.login.home.link}
                     class="text-reset">new flight</a
                   > page, and fill out the simple form, and your logbook will automatically
                   get the most information about your time in the air.

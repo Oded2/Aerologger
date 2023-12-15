@@ -1,5 +1,5 @@
 <script>
-  import { hrefs } from "$lib/index.js";
+  import { oldHrefs } from "$lib/index.js";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
   import { goto } from "$app/navigation";
   import Modal from "$lib/components/Modal.svelte";
@@ -30,7 +30,7 @@
       toast = createToast("error", "Error", error.message);
       return;
     }
-    goto(hrefs.home.home.link);
+    goto(oldHrefs.home.home.link);
   }
   function validateForm() {
     const errorToast = (description) => {
@@ -54,7 +54,7 @@
     }
     inProgress = true;
     const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-      redirectTo: hrefs.passwordreset.home.weblink,
+      redirectTo: oldHrefs.passwordreset.home.weblink,
     });
     inProgress = false;
     if (error) {
@@ -102,7 +102,7 @@
           <div class="card-header">
             <span
               >Don't have an account? <a
-                href={hrefs.signup.home.link}
+                href={oldHrefs.signup.home.link}
                 class="text-reset">Sign Up</a
               ></span
             >

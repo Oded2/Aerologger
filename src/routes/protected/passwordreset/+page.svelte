@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import MidScreen from "$lib/components/MidScreen.svelte";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
-  import { hrefs } from "$lib/index.js";
+  import { oldHrefs } from "$lib/index.js";
   import { createToast } from "../../../hooks.client.js";
   export let data;
   const { supabase, session } = data;
@@ -43,7 +43,7 @@
       "You will be automatically redirected in 5 seconds."
     );
     setTimeout(() => {
-      goto(hrefs.home.home.link);
+      goto(oldHrefs.home.home.link);
     }, 5000);
   }
 </script>

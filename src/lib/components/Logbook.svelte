@@ -10,7 +10,7 @@
     calculateMinutes,
     formatDateTime,
   } from "../../hooks.client.js";
-  import { hrefs } from "$lib/index.js";
+  import { oldHrefs } from "$lib/index.js";
   import { page } from "$app/stores";
   import MidScreen from "./MidScreen.svelte";
   import ToastSetup from "./ToastSetup.svelte";
@@ -438,7 +438,7 @@
               <div class="col">
                 <div class="btn-group">
                   <a
-                    href={addParamsString(hrefs.logbook.viewer.link, {
+                    href={addParamsString(oldHrefs.logbook.viewer.link, {
                       logid: log.id,
                       ref: refUrl,
                     })}
@@ -457,7 +457,7 @@
                   <ul class="dropdown-menu">
                     <li>
                       <a
-                        href={addParamsString(hrefs.newFlight.home.link, {
+                        href={addParamsString(oldHrefs.newFlight.home.link, {
                           preset: log.id,
                         })}
                         class="dropdown-item"
@@ -467,7 +467,7 @@
                     {#if allowModification}
                       <li>
                         <a
-                          href={addParamsString(hrefs.newFlight.home.link, {
+                          href={addParamsString(oldHrefs.newFlight.home.link, {
                             preset: log.id,
                             edit: true,
                           })}

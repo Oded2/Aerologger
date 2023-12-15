@@ -1,5 +1,5 @@
 <script>
-  import { hrefs } from "$lib/index.js";
+  import { oldHrefs } from "$lib/index.js";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
   import {
     dateToStr,
@@ -119,7 +119,7 @@
             <div class="card-header">
               <span
                 >Already have an account? <a
-                  href={hrefs.login.home.link}
+                  href={oldHrefs.login.home.link}
                   class="text-reset">Login</a
                 ></span
               >

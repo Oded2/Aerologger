@@ -8,13 +8,13 @@
     parseDateAndTime,
   } from "../../../hooks.client.js";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
-  import { hrefs } from "$lib/index.js";
+  import { oldHrefs } from "$lib/index.js";
   import logo from "$lib/images/logo_simplified.png";
   import FloatElement from "$lib/components/FloatElement.svelte";
   export let data;
   const { supabase, session, log, airplanes } = data;
   let { edit } = data;
-  const apiRef = hrefs.apis;
+  const apiRef = oldHrefs.apis;
   let toast;
   let dep = log ? log.dep.icao : "",
     des = log ? log.des.icao : "";
@@ -123,7 +123,7 @@
     {#if isComplete}
       <h1 class="text-success">Success!</h1>
       <h2>
-        Your flight has been added to your <a href={hrefs.logbook.home.link}
+        Your flight has been added to your <a href={oldHrefs.logbook.home.link}
           >logbook</a
         >.
       </h2>
@@ -131,9 +131,9 @@
       <div class="row my-4">
         <div class="col">
           <a
-            href={addParamsString(hrefs.logbook.viewer.link, {
+            href={addParamsString(oldHrefs.logbook.viewer.link, {
               logid: logId,
-              ref: hrefs.newFlight.home.link,
+              ref: oldHrefs.newFlight.home.link,
             })}
             class="btn btn-primary btn-lg fs-2 w-100 h-100">View Flight</a
           >
@@ -365,7 +365,7 @@
 <FloatElement visible={edit && !isComplete}>
   <div class="input-group shadow">
     <span class="input-group-text">Editing Log {log.id}</span>
-    <a href={hrefs.logbook.home.link} class="btn btn-secondary"
+    <a href={oldHrefs.logbook.home.link} class="btn btn-secondary"
       ><i class="fa-solid fa-arrow-left" /></a
     >
   </div>

@@ -1,12 +1,12 @@
 <script>
-  import { hrefs } from "$lib/index.js";
+  import { oldHrefs } from "$lib/index.js";
   import { createToast } from "../../hooks.client.js";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
   export let data;
 
   const url = data.url;
   const { session } = data;
-  const mail = hrefs.contact.home.mail;
+  const mail = oldHrefs.contact.home.mail;
 
   let email = session ? session.user.email : "",
     name = "",

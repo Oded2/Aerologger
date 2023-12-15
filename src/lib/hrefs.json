@@ -1,80 +1,22 @@
 {
     "home": {
-        "home": {
-            "title": "AeroLogger",
-            "link": "/"
-        }
+        "link": "/",
+        "title": "Home"
     },
-    "signup": {
-        "home": {
-            "title": "Sign Up",
-            "link": "/signup"
-        }
-    },
-    "login": {
-        "home": {
-            "title": "Log In",
-            "link": "/login"
-        }
-    },
-    "signout": {
-        "home": {
-            "title": "Sign Out",
-            "link": "/signout"
-        }
-    },
-    "passwordreset": {
-        "home": {
-            "title": "Password Reset",
-            "link": "/protected/passwordreset",
-            "weblink": "https://aerologger.netlify.app/passwordreset"
-        }
-    },
-    "account": {
-        "home": {
-            "title": "Account",
-            "link": "/protected/account"
-        }
+    "newflight": {
+        "link": "/protected/newflight",
+        "title": "New Flight"
     },
     "logbook": {
-        "home": {
-            "title": "Logbook",
-            "link": "/protected/logbook"
-        },
-        "viewer": {
-            "link": "/viewer"
-        }
+        "link": "/protected/logbook",
+        "title": "Logbook"
     },
-    "newFlight": {
-        "home": {
-            "title": "Log New Flight",
-            "link": "/protected/newflight"
-        }
+    "account": {
+        "link": "/protected/account",
+        "title": "Account"
     },
     "explore": {
-        "home": {
-            "title": "Explore",
-            "link": "/explore"
-        },
-        "profile": {
-            "title": "Profile Search",
-            "link": "/profile/slug",
-            "description": "Explore any AeroLogger pilot's logbook. Only flights set public by the pilot are shown."
-        }
-    },
-    "contact": {
-        "home": {
-            "title": "Contact",
-            "link": "/contact",
-            "mail": "odedconnect@gmail.com"
-        }
-    },
-    "apis": {
-        "airport": {
-            "link": "/apis/airports"
-        },
-        "airplane": {
-            "link": "/apis/airplane"
-        }
+        "link": "/explore",
+        "title": "Explore"
     }
 }

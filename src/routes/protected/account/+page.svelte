@@ -1,5 +1,5 @@
 <script>
-  import { hrefs } from "$lib/index.js";
+  import { oldHrefs } from "$lib/index.js";
   import {
     createToast,
     dateToStr,
@@ -153,7 +153,7 @@
               </div>
               <div class="mb-3">
                 <a
-                  href={hrefs.passwordreset.home.link}
+                  href={oldHrefs.passwordreset.home.link}
                   class="btn btn-outline-danger btn-lg w-100">Reset Password</a
                 >
               </div>
@@ -174,8 +174,10 @@
             <div class="card-header">
               <span class="font-google-quicksand"
                 >Profile Settings - <a
-                  href={hrefs.explore.profile.link.replace("slug", og.username)}
-                  >View Profile</a
+                  href={oldHrefs.explore.profile.link.replace(
+                    "slug",
+                    og.username
+                  )}>View Profile</a
                 ></span
               >
             </div>
