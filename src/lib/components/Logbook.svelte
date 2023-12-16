@@ -327,7 +327,7 @@
                     >
                   </li>
                   <!-- TODO: Add Modal -->
-                  <li class="border-b">
+                  <li class="border-b sm:hover:bg-error-content">
                     <button
                       on:click={() => {
                         currentFlight.id = log.id;
