@@ -40,7 +40,7 @@
 </script>
 
 <Container margin={false}>
-  <div class="navbar">
+  <div class="navbar mb-10">
     <div class="navbar-start">
       <div class="dropdown">
         <div tabindex="0" role="button" class="btn btn-ghost sm:hidden">
@@ -58,11 +58,13 @@
             /></svg
           >
         </div>
-        <ul
-          class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-2xl bg-base-100 rounded-box w-52"
-        >
-          <NavItemsLi></NavItemsLi>
-        </ul>
+        {#if session}
+          <ul
+            class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-2xl bg-base-100 rounded-box w-52"
+          >
+            <NavItemsLi></NavItemsLi>
+          </ul>
+        {/if}
       </div>
       <a class="btn btn-ghost avatar" href={hrefs.home.link}
         ><img src={logo} alt="Logo" /></a
@@ -70,7 +72,9 @@
     </div>
     <div class="navbar-center hidden sm:flex">
       <ul class="menu menu-horizontal px-1">
-        <NavItemsLi></NavItemsLi>
+        {#if session}
+          <NavItemsLi></NavItemsLi>
+        {/if}
       </ul>
     </div>
     <div class="navbar-end">
@@ -93,6 +97,7 @@
           </li>
         </Dropdown>
       {:else}
+        <a href={hrefs.login.link} class="btn btn-secondary me-3">Log In</a>
         <a href={hrefs.signup.link} class="btn btn-primary">Sign Up</a>
       {/if}
     </div>
