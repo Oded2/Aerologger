@@ -11,6 +11,7 @@
   export let rows = "10";
   export let cols = "30";
   export let required = false;
+  export let disabled = false;
 
   const dispatch = createEventDispatcher();
 </script>
@@ -26,6 +27,7 @@
       type="date"
       {placeholder}
       class="input input-bordered w-full"
+      {disabled}
     />
     {#if text.length > 0}
       <div class="label">
@@ -48,6 +50,7 @@
         value = value.trim();
         dispatch("blur");
       }}
+      {disabled}
     />
     {#if text.length > 0}
       <div class="label">
@@ -69,6 +72,7 @@
       on:blur={() => {
         dispatch("blur");
       }}
+      {disabled}
     />
     {#if text.length > 0}
       <div class="label">
@@ -87,6 +91,7 @@
       type="time"
       {placeholder}
       class="input input-bordered w-full"
+      {disabled}
     />
     {#if text.length > 0}
       <div class="label">
@@ -108,6 +113,7 @@
         value = value.trim();
         dispatch("blur");
       }}
+      {disabled}
     ></textarea>
     {#if text.length > 0}
       <div class="label">
@@ -115,6 +121,13 @@
       </div>
     {/if}
   </label>
+{:else if type === "checkbox"}
+  <div class="form-control max-w-[10rem]">
+    <label class="label cursor-pointer">
+      <span class="label-text text-base">{text}</span>
+      <input type="checkbox" bind:checked={value} class="checkbox" {disabled} />
+    </label>
+  </div>
 {:else}
   <label class="form-control w-full max-w-xs">
     <input

@@ -130,6 +130,7 @@
         title="Thank you for logging with Aerologger!"
         className="card mx-auto w-96 shadow-2xl"
         actions={false}
+        marginAuto
         ><p>
           Your flight is now ready in your <a
             class="link"
@@ -183,7 +184,7 @@
               placeholder="ATL"
               bind:value={des}
               on:blur={() => {
-                if (des.length == 3 || dep.length == 4) des = des.toUpperCase();
+                if (des.length == 3 || des.length == 4) des = des.toUpperCase();
               }}
             />
           </div>
@@ -237,17 +238,12 @@
             />
           </div>
           <div class="col-span-full">
-            <div class="form-control max-w-[10rem]">
-              <label class="label cursor-pointer">
-                <span class="label-text font-semibold text-base">Public</span>
-                <input
-                  type="checkbox"
-                  class="checkbox"
-                  bind:checked={isPublic}
-                  disabled={inProgress}
-                />
-              </label>
-            </div>
+            <FormInput
+              type="checkbox"
+              bind:value={isPublic}
+              disabled={inProgress}
+              text="Public"
+            ></FormInput>
           </div>
         </div>
         <div class="card-actions justify-end">

@@ -14,6 +14,7 @@
   } ${background} shadow-lg h-full`;
   export let marginAuto = false;
   export let disabled = false;
+  export let iframeUrl = "";
 </script>
 
 <div class={className} class:mx-auto={marginAuto}>
@@ -30,7 +31,7 @@
       {#if list.length > 0}
         <ul class="list-disc text-xl">
           {#each list as item}
-            <li>{item}</li>
+            <li class="list-item">{item}</li>
           {/each}
         </ul>
       {/if}
@@ -51,6 +52,11 @@
   {#if imgBottom}
     <figure>
       <img src={imgUrl} alt={title} />
+    </figure>
+  {/if}
+  {#if iframeUrl.length > 0}
+    <figure>
+      <iframe class="w-full min-h-[500px]" src={iframeUrl} {title}></iframe>
     </figure>
   {/if}
 </div>

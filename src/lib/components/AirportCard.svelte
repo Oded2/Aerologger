@@ -1,49 +1,49 @@
 <script>
   import { getOpenStreetMap, getCountryByCode } from "../../hooks.client.js";
+  import Card from "./Card.svelte";
   export let airportData = {};
   export let cardTitle = "";
-  export let icon = "",
-    iconType = "solid";
 </script>
 
-<div class="card shadow h-100">
-  <div class="card-header text-center">
-    <h3>
-      <i class="fa-{iconType} fa-{icon}" />
-      {cardTitle}
-    </h3>
-  </div>
-  <div class="card-body">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item fw-bold">
-        {airportData.name}
-      </li>
-      <li class="list-group-item">
-        ICAO: <span class="fw-bold">{airportData.icao}</span>
-      </li>
-      <li class="list-group-item">
-        IATA: <span class="fw-bold">
-          {airportData.iata.length > 0 ? airportData.iata : "N/A"}</span
-        >
-      </li>
-      <li class="list-group-item">
-        City: <span class="fw-bold">{airportData.city}</span>
-      </li>
-      <li class="list-group-item">
-        {`${airportData.country === "US" ? "State" : "Region"}:`}
-        <span class="fw-bold">{airportData.region}</span>
-      </li>
-      <li class="list-group-item">
-        Country: <span class="fw-bold"
-          >{getCountryByCode(airportData.country)}</span
-        >
-      </li>
-      <li class="list-group-item">
-        Elevation: <span class="fw-bold">{airportData.elevation_ft} ft</span>
-      </li>
-    </ul>
-  </div>
-  <div class="card-img-bottom">
+<Card
+  title={cardTitle}
+  actions={false}
+  className="bg-base-100 shadow-lg rounded-xl"
+  iframeUrl={getOpenStreetMap(
+    parseFloat(airportData.latitude),
+    parseFloat(airportData.longitude)
+  )}
+>
+  <ul class="list-disc">
+    <li class="list-item font-bold">
+      {airportData.name}
+    </li>
+    <li class="list-item">
+      ICAO: <span class="font-bold">{airportData.icao}</span>
+    </li>
+    <li class="list-item">
+      IATA: <span class="font-bold">
+        {airportData.iata.length > 0 ? airportData.iata : "N/A"}</span
+      >
+    </li>
+    <li class="list-item">
+      City: <span class="font-bold">{airportData.city}</span>
+    </li>
+    <li class="list-item">
+      {`${airportData.country === "US" ? "State" : "Region"}:`}
+      <span class="font-bold">{airportData.region}</span>
+    </li>
+    <li class="list-item">
+      Country: <span class="font-bold"
+        >{getCountryByCode(airportData.country)}</span
+      >
+    </li>
+    <li class="list-item">
+      Elevation: <span class="font-bold">{airportData.elevation_ft} ft</span>
+    </li>
+  </ul>
+
+  <!-- <div class="card-img-bottom">
     <iframe
       src={getOpenStreetMap(
         parseFloat(airportData.latitude),
@@ -55,12 +55,12 @@
   </div>
   <div class="card-footer fs-6">
     {`${airportData.latitude}, ${airportData.longitude}`}
-  </div>
-</div>
-
+  </div> -->
+</Card>
+<!-- 
 <style>
   iframe {
     width: 100%;
     height: 400px;
   }
-</style>
+</style> -->
