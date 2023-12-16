@@ -1,12 +1,14 @@
 <script>
-  import { oldHrefs } from "$lib/index.js";
+  import { hrefs } from "$lib/index.js";
+  import FormInput from "$lib/components/FormInput.svelte";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
   import {
     dateToStr,
     createToast,
     hasNormalCharacters,
   } from "../../hooks.client.js";
-  import MidScreen from "$lib/components/MidScreen.svelte";
+  import Card from "$lib/components/Card.svelte";
+  import Container from "$lib/components/Container.svelte";
   export let data;
   const { supabase } = data;
   let toast;
@@ -111,115 +113,80 @@
 </script>
 
 <main>
-  <div class="container my-5 font-google-quicksand">
+  <Container>
     {#if !isComplete}
-      <MidScreen maxWidth={true}>
-        <form on:submit|preventDefault={submit}>
-          <div class="card shadow-sm">
-            <div class="card-header">
-              <span
-                >Already have an account? <a
-                  href={oldHrefs.login.home.link}
-                  class="text-reset">Login</a
-                ></span
-              >
+      <Card
+        allowWide
+        on:submit={submit}
+        marginAuto
+        title="Sign Up"
+        buttonText="Sign Up"
+      >
+        <div class="mb-3">
+          Already have an account? <a href={hrefs.login.link} class="link"
+            >login</a
+          >.
+        </div>
+        <div class="text-xl grid md:grid-cols-2 gap-2">
+          <div>
+            <div class="mb-3">
+              <label for="email" class="label">Email</label>
+              <FormInput
+                id="email"
+                bind:value={email}
+                required
+                type="email"
+                text="You will have to verify this email afterwards."
+              />
             </div>
-            <div class="card-body fs-3 row">
-              <div class="col-md-6 mb-3">
-                <label for="email" class="form-label"
-                  >Email <span title="Required field" class="required">*</span
-                  ></label
-                >
-                <input
-                  type="email"
-                  id="email"
-                  class="form-control"
-                  bind:value={email}
-                  required
-                />
-
-                <div class="form-text">
-                  You will have to verify this email afterwards.
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="dob" class="form-label">Date of Birth</label>
-                <div class="input-group">
-                  <input
-                    type="date"
-                    id="dob"
-                    class="form-control"
-                    bind:value={dob}
-                    max={dateToStr()}
-                  />
-                  <button
-                    class="btn btn-secondary input-group-text"
-                    type="button"
-                    on:click={() => (dob = null)}
-                    disabled={dob == null}><i class="fa-solid fa-x" /></button
-                  >
-                </div>
-                <div class="form-text">
-                  Your birthday will be public. This field is not required.
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="username" class="form-label"
-                  >Username <span title="Required field" class="required"
-                    >*</span
-                  ></label
-                >
-                <input
-                  type="text"
-                  id="username"
-                  class="form-control"
-                  bind:value={username}
-                  required
-                  max="50"
-                />
-
-                <div class="form-text">
-                  Your username must be unique and cannot contain any special
-                  characters.
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="displayName" class="form-label"
-                  >Display Name <span title="Required field" class="required"
-                    >*</span
-                  ></label
-                >
-                <input
-                  type="text"
-                  id="displayName"
-                  class="form-control"
-                  bind:value={displayName}
-                  required
-                  max="50"
-                />
-
-                <div class="form-text">Your display name will be public.</div>
-              </div>
-
-              <div class="col-md-6 mb-3">
-                <label for="password" class="form-label"
-                  >Password <span title="Required field" class="required"
-                    >*</span
-                  ></label
-                >
-                <input
-                  type="password"
-                  id="password"
-                  class="form-control"
-                  bind:value={password}
-                  required
-                  minlength="8"
-                  maxlength="72"
-                />
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="confirmpass" class="form-label"
-                  >Confirm Password {#if passMatch}
+            <div class="mb-3">
+              <label for="username" class="label">Username</label>
+              <FormInput
+                id="username"
+                bind:value={username}
+                required
+                text="Must be unique and up to 50 letters."
+              ></FormInput>
+            </div>
+            <div class="mb-3">
+              <label for="displayName" class="label">Display Name</label>
+              <FormInput
+                id="displayName"
+                bind:value={displayName}
+                required
+                text="Can be whatever you want up to 50 letters."
+              ></FormInput>
+            </div>
+          </div>
+          <div>
+            <div class="mb-3">
+              <label for="birthday" class="label">Birthday</label>
+              <FormInput
+                id="birthday"
+                bind:value={dob}
+                max={dateToStr()}
+                required
+                type="date"
+                text="Your birthday will be public. This field is not required."
+              />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="label">Password</label>
+              <FormInput
+                type="password"
+                id="password"
+                bind:value={password}
+                required
+                min="8"
+                max="50"
+                text="Must be between 8 to 50 characters long."
+              ></FormInput>
+            </div>
+            <div class="mb-3">
+              <label for="confirmpass" class="label">
+                <span
+                  >Confirm Password
+                  {#if passMatch}
                     <i
                       class="fa-solid fa-circle-check"
                       style="color: #198754;"
@@ -231,29 +198,21 @@
                       style="color: #dc3545;"
                       title="Your passwords do not match"
                     />
-                  {/if}</label
+                  {/if}</span
                 >
-                <input
-                  type="password"
-                  id="confirmpass"
-                  class="form-control"
-                  bind:value={confirmpass}
-                  required
-                  minlength="8"
-                  maxlength="72"
-                />
-              </div>
-            </div>
-            <div class="card-footer px-sm-5">
-              <button
-                class="btn btn-primary btn-lg fs-4 fw-bold w-100"
-                disabled={inProgress}
-                type="submit">Sign Up</button
-              >
+              </label>
+              <FormInput
+                id="confirmpass"
+                type="password"
+                bind:value={confirmpass}
+                min="8"
+                max="50"
+                required
+              ></FormInput>
             </div>
           </div>
-        </form></MidScreen
-      >
+        </div>
+      </Card>
     {:else}
       <div class="text-center">
         <h1 class=" fw-bold">Hello, Pilot.</h1>
@@ -265,12 +224,6 @@
         <h6>Email might take a few moments to arrive.</h6>
       </div>
     {/if}
-  </div>
+  </Container>
 </main>
 <ToastSetup {toast} />
-
-<style>
-  span.required {
-    color: red;
-  }
-</style>

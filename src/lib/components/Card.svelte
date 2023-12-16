@@ -8,7 +8,10 @@
   export let href = "";
   export let list = [];
   export let background = "bg-base-100";
-  export let className = `card w-96 ${background} shadow-lg h-full`;
+  export let allowWide = false;
+  export let className = `card ${
+    allowWide ? "max-w-4xl" : "w-96"
+  } ${background} shadow-lg h-full`;
   export let marginAuto = false;
   export let disabled = false;
 </script>

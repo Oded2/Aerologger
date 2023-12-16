@@ -96,19 +96,21 @@
           >sign up</a
         >.
       </div>
-      <div class="mb-3">
-        <label for="email" class="label">Email</label>
-        <FormInput id="email" bind:value={email} required type="email" />
-      </div>
-      <div class="mb-3">
-        <label for="password" class="label">Password</label>
-        <FormInput
-          id="password"
-          bind:value={password}
-          required
-          type="password"
-          max="50"
-        />
+      <div class="text-xl">
+        <div class="mb-3">
+          <label for="email" class="label">Email</label>
+          <FormInput id="email" bind:value={email} required type="email" />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="label">Password</label>
+          <FormInput
+            id="password"
+            bind:value={password}
+            required
+            type="password"
+            max="50"
+          />
+        </div>
       </div>
     </Card>
   </Container>
