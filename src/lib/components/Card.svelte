@@ -1,5 +1,6 @@
 <script>
   export let imgTop = false;
+  export let imgBottom = false;
   export let imgUrl = "";
   export let title = "";
   export let actions = true;
@@ -12,7 +13,7 @@
 <div class={className}>
   {#if imgTop}
     <figure>
-      <img src={imgUrl} alt="Shoes" />
+      <img src={imgUrl} alt={title} />
     </figure>
   {/if}
   <div class="card-body">
@@ -39,4 +40,9 @@
       </div>
     {/if}
   </div>
+  {#if imgBottom}
+    <figure>
+      <img src={imgUrl} alt={title} />
+    </figure>
+  {/if}
 </div>

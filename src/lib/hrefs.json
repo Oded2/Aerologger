@@ -34,5 +34,8 @@
     "signout": {
         "link": "/signout",
         "title": "Sign Out"
+    },
+    "viewer": {
+        "link": "/viewer"
     }
 }

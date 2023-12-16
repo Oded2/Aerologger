@@ -8,11 +8,12 @@
     parseDateAndTime,
   } from "../../../hooks.client.js";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
-  import { oldHrefs } from "$lib/index.js";
+  import { hrefs, oldHrefs } from "$lib/index.js";
   import logo from "$lib/images/logo_simplified.png";
   import FloatElement from "$lib/components/FloatElement.svelte";
   import Container from "$lib/components/Container.svelte";
   import Input from "$lib/components/Input.svelte";
+  import Card from "$lib/components/Card.svelte";
   export let data;
   const { supabase, session, log, airplanes } = data;
   let { edit } = data;
@@ -122,117 +123,152 @@
 
 <main>
   <Container>
-    <div class="mb-5 text-center">
-      <h1 class="text-4xl font-bold">
-        Welcome back, <span class="text-primary">Pilot</span>.
-      </h1>
-    </div>
-    <form
-      class="card card-body shadow-2xl mx-auto max-w-2xl text-xl"
-      on:submit|preventDefault={submit}
-    >
-      <div class="md:grid grid-cols-12 gap-4 px-5">
-        <div class="col-span-6">
-          <label for="dep" class="label">Departure Airport</label>
-          <Input
-            id="dep"
-            placeholder="TLV"
-            text={"Name, ICAO, or IATA code"}
-            bind:value={dep}
-            on:blur={() => {
-              if (dep.length == 3 || dep.length == 4) dep = dep.toUpperCase();
+    {#if isComplete}
+      <Card
+        imgBottom
+        imgUrl={logo}
+        title="Thank you for logging with Aerologger!"
+        className="card mx-auto w-96 shadow-2xl"
+        actions={false}
+        ><p>
+          Your flight is now ready in your <a
+            class="link"
+            href={hrefs.logbook.link}>logbook</a
+          >.
+        </p>
+        <div class="card-actions justify-end mt-5">
+          <button
+            on:click={() => {
+              edit = false;
+              isComplete = false;
             }}
-          />
-        </div>
-        <div class="col-span-6">
-          <label for="des" class="label">Destination Airport</label>
-          <Input
-            id="des"
-            placeholder="ATL"
-            bind:value={des}
-            on:blur={() => {
-              if (des.length == 3 || dep.length == 4) des = des.toUpperCase();
-            }}
-          />
-        </div>
-        <div class="col-span-4">
-          <label for="date" class="label">Date</label>
-          <Input type="date" id="date" bind:value={dateStr} />
-        </div>
-        <div class="col-span-4">
-          <label for="depTime" class="label">Takeoff</label>
-          <Input id="depTime" type="time" bind:value={depTimeStr} />
-        </div>
-        <div class="col-span-4">
-          <label for="desTime" class="label">Landing</label>
-          <Input
-            id="desTime"
-            type="time"
-            bind:value={desTimeStr}
-            text="Relative to the takeoff time zone"
-          />
-        </div>
-        <div class="col-span-6">
-          <label for="aircraft" class="label">Aircraft</label>
-          <select
-            id="aircraft"
-            bind:value={plane}
-            class="select select-bordered w-full max-w-xs"
+            class="btn btn-secondary">Log New Flight</button
           >
-            {#each airplanes as airplane}
-              <option value={airplane.id}
-                >{airplane.make} {airplane.model}</option
-              >
-            {/each}
-          </select>
+          <a
+            href={addParamsString(hrefs.viewer.link, {
+              logid: logId,
+              ref: hrefs.newflight.link,
+            })}
+            class="btn btn-primary">View Flight</a
+          >
         </div>
-        <div class="col-span-6">
-          <label for="tail" class="label">Tail Number</label>
-          <Input
-            id="tail"
-            max="20"
-            bind:value={planeId}
-            placeholder={'"CHA"'}
-          />
-        </div>
-        <div class="col-span-full">
-          <label for="notes" class="label">Notes</label>
-          <Input
-            id="notes"
-            type="textarea"
-            bind:value={userNotes}
-            text={`${userNotes.length}/${(10000).toLocaleString()}`}
-          />
-        </div>
-        <div class="col-span-full">
-          <div class="form-control max-w-[10rem]">
-            <label class="label cursor-pointer">
-              <span class="label-text font-semibold text-base">Public</span>
-              <input
-                type="checkbox"
-                class="checkbox"
-                bind:checked={isPublic}
-                disabled={inProgress}
-              />
-            </label>
+      </Card>
+    {:else}
+      <div class="mb-5 text-center">
+        <h1 class="text-4xl font-bold">
+          Welcome back, <span class="text-primary">Pilot</span>.
+        </h1>
+      </div>
+      <form
+        class="card card-body shadow-2xl mx-auto max-w-2xl text-xl"
+        on:submit|preventDefault={submit}
+      >
+        <div class="md:grid grid-cols-12 gap-4 px-5">
+          <div class="col-span-6">
+            <label for="dep" class="label">Departure Airport</label>
+            <Input
+              id="dep"
+              placeholder="TLV"
+              text={"Name, ICAO, or IATA code"}
+              bind:value={dep}
+              on:blur={() => {
+                if (dep.length == 3 || dep.length == 4) dep = dep.toUpperCase();
+              }}
+            />
+          </div>
+          <div class="col-span-6">
+            <label for="des" class="label">Destination Airport</label>
+            <Input
+              id="des"
+              placeholder="ATL"
+              bind:value={des}
+              on:blur={() => {
+                if (des.length == 3 || dep.length == 4) des = des.toUpperCase();
+              }}
+            />
+          </div>
+          <div class="col-span-4">
+            <label for="date" class="label">Date</label>
+            <Input type="date" id="date" bind:value={dateStr} />
+          </div>
+          <div class="col-span-4">
+            <label for="depTime" class="label">Takeoff</label>
+            <Input id="depTime" type="time" bind:value={depTimeStr} />
+          </div>
+          <div class="col-span-4">
+            <label for="desTime" class="label">Landing</label>
+            <Input
+              id="desTime"
+              type="time"
+              bind:value={desTimeStr}
+              text="Relative to the takeoff time zone"
+            />
+          </div>
+          <div class="col-span-6">
+            <label for="aircraft" class="label">Aircraft</label>
+            <select
+              id="aircraft"
+              bind:value={plane}
+              class="select select-bordered w-full max-w-xs"
+            >
+              {#each airplanes as airplane}
+                <option value={airplane.id}
+                  >{airplane.make} {airplane.model}</option
+                >
+              {/each}
+            </select>
+          </div>
+          <div class="col-span-6">
+            <label for="tail" class="label">Tail Number</label>
+            <Input
+              id="tail"
+              max="20"
+              bind:value={planeId}
+              placeholder={'"CHA"'}
+            />
+          </div>
+          <div class="col-span-full">
+            <label for="notes" class="label">Notes</label>
+            <Input
+              id="notes"
+              type="textarea"
+              bind:value={userNotes}
+              text={`${userNotes.length}/${(10000).toLocaleString()}`}
+            />
+          </div>
+          <div class="col-span-full">
+            <div class="form-control max-w-[10rem]">
+              <label class="label cursor-pointer">
+                <span class="label-text font-semibold text-base">Public</span>
+                <input
+                  type="checkbox"
+                  class="checkbox"
+                  bind:checked={isPublic}
+                  disabled={inProgress}
+                />
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="card-actions justify-end">
-        <button class="btn btn-secondary" disabled={inProgress} type="reset"
-          >Clear</button
-        >
-        <button class="btn btn-primary" disabled={inProgress} type="submit"
-          >Submit</button
-        >
-      </div>
-    </form>
+        <div class="card-actions justify-end">
+          <button class="btn btn-secondary" disabled={inProgress} type="reset"
+            >Clear</button
+          >
+          <button class="btn btn-primary" disabled={inProgress} type="submit"
+            >Submit</button
+          >
+        </div>
+      </form>
+    {/if}
   </Container>
 </main>
 <FloatElement visible={edit && !isComplete}>
-  <div class="input-group shadow">
-    <span class="input-group-text">Editing Log {log.id}</span>
-    <a href={oldHrefs.logbook.home.link} class="btn btn-secondary"
+  <div class="join shadow bg-base-100">
+    <div class="join-item flex justify-center items-center px-5">
+      Editing Log {log.id}
+    </div>
+
+    <a href={hrefs.logbook.link} class="btn btn-secondary join-item"
       ><i class="fa-solid fa-arrow-left" /></a
     >
   </div>
