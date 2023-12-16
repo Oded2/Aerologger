@@ -1,4 +1,5 @@
 <script>
+  import Container from "$lib/components/Container.svelte";
   import Logbook from "$lib/components/Logbook.svelte";
   import { calculateMinutes } from "../../../hooks.client.js";
   export let data;
@@ -11,25 +12,26 @@
 </script>
 
 <main>
-  <div class="container mt-5 font-google-gabarito">
+  <Container>
     <div class="mb-3">
-      <h1>
-        <span class="text-aerologger">{`${profile.display_name}'s`}</span> Profile
+      <h1 class="text-4xl">
+        <span class="text-primary">{`${profile.display_name}'s`}</span> Profile
       </h1>
       {#if profile.bio.length > 0}
-        <h5>{profile.bio}</h5>
+        <h5 class="text-xl">{profile.bio}</h5>
       {/if}
       {#if profile.birthday}
-        <h5>{userAge.toLocaleString()} Years Old</h5>
+        <h5 class="text-xl">{userAge.toLocaleString()} Years Old</h5>
       {/if}
-      <h6>Pilot's username: {profile.username}</h6>
+      <h6 class="text-lg">Pilot's username: {profile.username}</h6>
     </div>
-  </div>
-  <Logbook
-    {logs}
-    userId={session ? session.user.id : ""}
-    allowModification={false}
-  />
+
+    <Logbook
+      {logs}
+      userId={session ? session.user.id : ""}
+      allowModification={false}
+    />
+  </Container>
 </main>
 
 <svelte:head><title>{`${profile.display_name}'s`} Profile</title></svelte:head>

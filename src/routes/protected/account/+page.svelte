@@ -129,7 +129,7 @@
         User Id: {session.user.id}
       </h5>
     </div>
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid md:grid-cols-2 gap-4">
       <form on:submit|preventDefault={editAccount} class="text-xl">
         <Card
           buttonText="Update Account"

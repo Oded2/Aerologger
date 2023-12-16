@@ -7,7 +7,7 @@
   class="container mx-auto"
   class:px-2={padding}
   class:sm:px-0={padding}
-  class:my-10={margin}
+  class:mb-10={margin}
 >
   <slot />
 </div>
