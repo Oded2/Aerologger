@@ -15,6 +15,7 @@
   import ToastSetup from "./ToastSetup.svelte";
   import { supabase as supabaseClient } from "$lib/index.js";
   import Dropdown from "./Dropdown.svelte";
+  import FormInput from "./FormInput.svelte";
   export let logs = [];
   export let allowModification = true;
   export let supabase = supabaseClient;
@@ -214,23 +215,17 @@
         <option value="created_at">Date Logged</option>
       </select>
     </label>
-    <div class="form-control">
-      <label class="label cursor-pointer">
-        <span class="label-text font-semibold text-base">Reverse Order</span>
-        <input
-          type="checkbox"
-          class="checkbox"
-          bind:checked={reversed}
-          on:input={() => (logs = logs.reverse())}
-        />
-      </label>
-    </div>
-    <div class="form-control">
-      <label class="label cursor-pointer">
-        <span class="label-text font-semibold text-base">Show Date Logged</span>
-        <input type="checkbox" class="checkbox" bind:checked={showDateLogged} />
-      </label>
-    </div>
+    <FormInput
+      type="checkbox"
+      bind:value={reversed}
+      on:input={() => (logs = logs.reverse())}
+      text="Reverse Order"
+    ></FormInput>
+    <FormInput
+      type="checkbox"
+      bind:value={showDateLogged}
+      text="Show Date Logged"
+    ></FormInput>
   </div>
   <!-- TODO: PAGINATION -->
   <div class="mb-10">

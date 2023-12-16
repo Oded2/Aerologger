@@ -122,10 +122,16 @@
     {/if}
   </label>
 {:else if type === "checkbox"}
-  <div class="form-control max-w-[10rem]">
+  <div class="form-control max-w-[15rem]">
     <label class="label cursor-pointer">
-      <span class="label-text text-base">{text}</span>
-      <input type="checkbox" bind:checked={value} class="checkbox" {disabled} />
+      <span class="label-text text-base font-semibold">{text}</span>
+      <input
+        type="checkbox"
+        bind:checked={value}
+        class="checkbox"
+        {disabled}
+        on:input
+      />
     </label>
   </div>
 {:else}
