@@ -2,6 +2,8 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/8636c3ff-332c-4393-b1e6-95b355e3a441/deploy-status)](https://app.netlify.com/sites/aerologger/deploys)
 
+[Website](https://aerologger.netlify.app/)
+
 This is a project is made from my passion of aviation. It's a SvelteKit developed web application, allowing for easy flight logging. It's worth noting that this project is always being updated.
 
 ## Prerequisites
