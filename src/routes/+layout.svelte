@@ -86,7 +86,11 @@
           <li>
             <a href={hrefs.account.link}>Account</a>
           </li>
-          <li><a href={hrefs.signout.link}>Sign Out</a></li>
+          <li>
+            <a data-sveltekit-preload-data="off" href={hrefs.signout.link}
+              >Sign Out</a
+            >
+          </li>
         </Dropdown>
       {:else}
         <a href={hrefs.signup.link} class="btn btn-primary">Sign Up</a>
