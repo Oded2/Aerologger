@@ -172,6 +172,59 @@
             text="Relative to the takeoff time zone"
           />
         </div>
+        <div class="col-span-6">
+          <label for="aircraft" class="label">Aircraft</label>
+          <select
+            id="aircraft"
+            bind:value={plane}
+            class="select select-bordered w-full max-w-xs"
+          >
+            {#each airplanes as airplane}
+              <option value={airplane.id}
+                >{airplane.make} {airplane.model}</option
+              >
+            {/each}
+          </select>
+        </div>
+        <div class="col-span-6">
+          <label for="tail" class="label">Tail Number</label>
+          <Input
+            id="tail"
+            max="20"
+            bind:value={planeId}
+            placeholder={'"CHA"'}
+          />
+        </div>
+        <div class="col-span-full">
+          <label for="notes" class="label">Notes</label>
+          <Input
+            id="notes"
+            type="textarea"
+            bind:value={userNotes}
+            text={`${userNotes.length}/${(10000).toLocaleString()}`}
+          />
+        </div>
+        <div class="col-span-full">
+          <div class="form-control max-w-[10rem]">
+            <label class="label cursor-pointer">
+              <span class="label-text font-semibold text-base">Public</span>
+              <input
+                type="checkbox"
+                class="checkbox"
+                bind:checked={isPublic}
+                disabled={inProgress}
+              />
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="card-actions justify-end">
+        <button class="btn btn-secondary" disabled={inProgress} type="reset"
+          >Clear</button
+        >
+        <button class="btn btn-primary" disabled={inProgress} type="submit"
+          >Submit</button
+        >
       </div>
     </form>
   </Container>

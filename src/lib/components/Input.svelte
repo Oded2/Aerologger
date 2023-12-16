@@ -6,6 +6,10 @@
   export let placeholder = "";
   export let text = "";
   export let type = "text";
+  export let min = "";
+  export let max = "";
+  export let rows = "10";
+  export let cols = "30";
 
   const dispatch = createEventDispatcher();
 </script>
@@ -14,6 +18,8 @@
   <label class="form-control w-full max-w-xs">
     <input
       bind:value
+      {min}
+      {max}
       {id}
       type="date"
       {placeholder}
@@ -29,6 +35,8 @@
   <label class="form-control w-full max-w-xs">
     <input
       bind:value
+      {min}
+      {max}
       {id}
       type="time"
       {placeholder}
@@ -40,10 +48,32 @@
       </div>
     {/if}
   </label>
+{:else if type === "textarea"}
+  <label class="form-control">
+    <textarea
+      {rows}
+      {cols}
+      bind:value
+      class="textarea textarea-bordered resize-none"
+      {placeholder}
+      {id}
+      on:blur={() => {
+        value = value.trim();
+        dispatch("blur");
+      }}
+    ></textarea>
+    {#if text.length > 0}
+      <div class="label">
+        <span class="label-text-alt">{text}</span>
+      </div>
+    {/if}
+  </label>
 {:else}
   <label class="form-control w-full max-w-xs">
     <input
       bind:value
+      minlength={min}
+      maxlength={max}
       {id}
       type="text"
       {placeholder}

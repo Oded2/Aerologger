@@ -85,9 +85,6 @@
     }
     for (const i in logs) if (logs[i].id === id) logs[i].public = makePublic;
   }
-  function toggleModal() {
-    delConfirm = !delConfirm;
-  }
   async function deleteFlight(id = "") {
     for (const i in logs) {
       const current = logs[i];
