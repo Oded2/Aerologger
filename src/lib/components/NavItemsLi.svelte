@@ -2,7 +2,6 @@
   import { hrefs } from "$lib/index.js";
 
   export let activeUrl = "";
-  console.log(activeUrl);
 
   const links = [hrefs.newflight, hrefs.logbook, hrefs.explore];
 </script>

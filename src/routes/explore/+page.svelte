@@ -1,8 +1,10 @@
 <script>
   import { goto } from "$app/navigation";
+  import Container from "$lib/components/Container.svelte";
   import ExploreCard from "$lib/components/ExploreCard.svelte";
+  import FormInput from "$lib/components/FormInput.svelte";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
-  import { oldHrefs } from "$lib/index.js";
+  import { hrefs, oldHrefs } from "$lib/index.js";
   import { addParamsString } from "../../hooks.client.js";
   let toast;
   let profileSearch = "";
@@ -16,83 +18,57 @@
 </script>
 
 <main>
-  <div class="container mt-5 font-google-gabarito">
+  <Container>
     <div class="my-5">
-      <h1>
-        Welcome to <span class="text-aerologger">AeroLogger Explore</span>!
+      <h1 class="text-4xl">
+        Welcome to AeroLogger <span class="text-primary">Explore</span>!
       </h1>
-      <p class="font-google-quicksand fs-4">
+      <p class="text-lg">
         AeroLogger Explore allows pilots to explore outside of their personal
         logbook, and take inspirations from other pilots around the world.
       </p>
     </div>
-    <div class="row">
+    <div class="grid md:grid-cols-2 gap-4">
       <ExploreCard
         title={oldHrefs.explore.profile.title}
-        desc={oldHrefs.explore.profile.description}
-        icon="magnifying-glass"
+        desc="Explore any AeroLogger pilot's logbook. Only flights set public by the pilot are shown."
         submitText="Search"
         disabled={inProgress}
         on:submit={() =>
-          gotoProgress(
-            oldHrefs.explore.profile.link.replace("slug", profileSearch)
-          )}
+          gotoProgress(hrefs.profile.link.replace("slug", profileSearch))}
       >
-        <div class="mb-3 input-group">
-          <div class="form-floating">
-            <input
-              type="text"
-              class="form-control"
-              id="search"
-              placeholder="Enter a pilot's username"
-              bind:value={profileSearch}
-              required
-            /> <label for="search">Pilot's Username</label>
-          </div>
-          <button
-            class="input-group-text btn btn-secondary"
-            type="button"
-            on:click={() => (profileSearch = "")}
-            disabled={profileSearch.length == 0}
-            ><i class="fa-solid fa-x" /></button
+        <div class="mb-3">
+          <label for="pilotSearch" class="label">Enter a pilot's username</label
           >
+          <FormInput
+            id="pilotSearch"
+            required
+            max="50"
+            bind:value={profileSearch}
+          ></FormInput>
         </div>
       </ExploreCard>
       <ExploreCard
         title="Log Search"
         desc="View any log by typing it's Log Id."
-        icon="plane"
         submitText="Search"
         disabled={inProgress}
         on:submit={() =>
           gotoProgress(
-            addParamsString(oldHrefs.logbook.viewer.link, {
+            addParamsString(hrefs.viewer.link, {
               logid: logSearch,
-              ref: oldHrefs.explore.home.link,
+              ref: hrefs.explore.link,
             })
           )}
       >
-        <div class="mb-3 input-group">
-          <div class="form-floating">
-            <input
-              type="text"
-              class="form-control input-num-clean"
-              id="logsearch"
-              placeholder="Enter a pilot's username"
-              bind:value={logSearch}
-              required
-            /> <label for="logsearch">Log Id</label>
-          </div>
-          <button
-            class="input-group-text btn btn-secondary"
-            type="button"
-            on:click={() => (logSearch = "")}
-            disabled={logSearch.length == 0}><i class="fa-solid fa-x" /></button
-          >
+        <div class="mb-3">
+          <label for="logId" class="label">Log ID</label>
+          <FormInput id="logId" required max="50" bind:value={logSearch}
+          ></FormInput>
         </div>
       </ExploreCard>
     </div>
-  </div>
+  </Container>
 </main>
 
 <ToastSetup {toast} />
