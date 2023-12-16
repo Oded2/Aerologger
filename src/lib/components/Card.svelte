@@ -21,7 +21,7 @@
     {/if}
     <div>
       {#if list.length > 0}
-        <ul class="list-disc font-semibold text-xl">
+        <ul class="list-disc text-xl">
           {#each list as item}
             <li>{item}</li>
           {/each}
