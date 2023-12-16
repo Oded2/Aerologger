@@ -129,82 +129,81 @@
         User Id: {session.user.id}
       </h5>
     </div>
-    <div class="grid md:grid-cols-2 gap-4">
-      <form on:submit|preventDefault={editAccount} class="text-xl">
-        <Card
-          buttonText="Update Account"
-          title="Account Settings"
-          disabled={inProgress || !accountChange}
-          marginAuto
-        >
-          <div>
-            <label for="email" class="label">Email</label>
-            <Input
-              type="email"
-              id="email"
-              bind:value={email}
-              required
-              text="You will be sent a verification email to your new email."
-            />
-          </div>
-          <div>
-            <a
-              href={hrefs.passwordreset.link}
-              class="btn btn-error btn-outline w-full">Reset Password</a
-            >
-          </div>
-        </Card>
-      </form>
-      <form on:submit|preventDefault={editProfile} class="text-xl">
-        <Card
-          buttonText="Update Profile"
-          title="Profile Settings"
-          disabled={inProgress || !profileChange}
-          marginAuto
-        >
-          <div class="mb-3">
-            <label for="username" class="label">Username</label>
-            <Input
-              id="username"
-              required
-              placeholder="Your username"
-              bind:value={username}
-              max="50"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="displayName" class="label">Display Name</label>
-            <Input
-              id="displayName"
-              required
-              placeholder="Public display name"
-              bind:value={displayName}
-              max="50"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="displayName" class="label">Bio</label>
-            <Input
-              id="displayName"
-              required
-              placeholder="Tell about yourself"
-              bind:value={bio}
-              max="150"
-              text={`${bio.length}/${(150).toLocaleString()}`}
-            />
-          </div>
-          <div class="mb-3">
-            <label for="birthday" class="label">Birthday</label>
-            <Input
-              id="birthday"
-              type="date"
-              bind:value={bio}
-              max={dateToStr()}
-              text="Your birthday will be public. This field is not required."
-            />
-          </div>
-        </Card>
-      </form>
+    <div class="grid md:grid-cols-2 gap-4 text-xl">
+      <Card
+        on:submit={editAccount}
+        buttonText="Update Account"
+        title="Account Settings"
+        disabled={inProgress || !accountChange}
+        marginAuto
+      >
+        <div>
+          <label for="email" class="label">Email</label>
+          <Input
+            type="email"
+            id="email"
+            bind:value={email}
+            required
+            text="You will be sent a verification email to your new email."
+          />
+        </div>
+        <div>
+          <a
+            href={hrefs.passwordreset.link}
+            class="btn btn-error btn-outline w-full">Reset Password</a
+          >
+        </div>
+      </Card>
+
+      <Card
+        on:submit={editProfile}
+        buttonText="Update Profile"
+        title="Profile Settings"
+        disabled={inProgress || !profileChange}
+        marginAuto
+      >
+        <div class="mb-3">
+          <label for="username" class="label">Username</label>
+          <Input
+            id="username"
+            required
+            placeholder="Your username"
+            bind:value={username}
+            max="50"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="displayName" class="label">Display Name</label>
+          <Input
+            id="displayName"
+            required
+            placeholder="Public display name"
+            bind:value={displayName}
+            max="50"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="displayName" class="label">Bio</label>
+          <Input
+            id="displayName"
+            required
+            placeholder="Tell about yourself"
+            bind:value={bio}
+            max="150"
+            text={`${bio.length}/${(150).toLocaleString()}`}
+          />
+        </div>
+        <div class="mb-3">
+          <label for="birthday" class="label">Birthday</label>
+          <Input
+            id="birthday"
+            type="date"
+            bind:value={bio}
+            max={dateToStr()}
+            text="Your birthday will be public. This field is not required."
+          />
+        </div>
+      </Card>
     </div>
   </Container>
 </main>
