@@ -24,8 +24,8 @@
   let dateStr = log ? dateToStr(new Date(log.depDate)) : dateToStr();
   let depTimeStr = log ? getTimeStr(new Date(log.depDate)) : getTimeStr(),
     desTimeStr = log ? getTimeStr(new Date(log.desDate)) : getTimeStr();
-  let plane = log ? log.plane : 1,
-    planeId = log ? log.tail : "";
+  let plane = log ? log.plane_id : 1,
+    tailNum = log ? log.tail : "";
   let userNotes = log ? log.notes : "";
   let isPublic = log ? log.public : true;
   let inProgress = false,
@@ -33,7 +33,7 @@
   const ogProgress = { message: "", value: 0 };
   let progress = ogProgress;
   let logId = NaN;
-  $: planeId = planeId.toUpperCase();
+  $: tailNum = tailNum.toUpperCase();
   $: depDate = parseDateAndTime(dateStr, depTimeStr);
   async function getAirportDetails(airport = "") {
     return await fetchFromEndpoint(apiRef.airport.link, { airport });
@@ -73,7 +73,7 @@
       depDate: depDate.toISOString(),
       desDate: desDate.toISOString(),
       plane: plane[0],
-      tail: planeId,
+      tail: tailNum,
       notes: userNotes,
       public: isPublic,
       plane_id: plane,
@@ -94,7 +94,7 @@
     dateStr = dateToStr();
     depTimeStr = getTimeStr();
     desTimeStr = getTimeStr();
-    planeId = "";
+    tailNum = "";
     userNotes = "";
   }
   function verify() {
@@ -106,7 +106,7 @@
       showError("Airport of destination cannot be empty");
       return false;
     }
-    if (planeId.length > 20) {
+    if (tailNum.length > 20) {
       showError("Tail Number cannot be more than 20 characters long.");
       return false;
     }
@@ -224,7 +224,7 @@
             <FormInput
               id="tail"
               max="20"
-              bind:value={planeId}
+              bind:value={tailNum}
               placeholder={'"CHA"'}
             />
           </div>
