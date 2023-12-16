@@ -7,10 +7,13 @@
   export let buttonText = "";
   export let href = "";
   export let list = [];
-  export let className = "card w-96 bg-base-200 shadow-lg";
+  export let background = "bg-base-100";
+  export let className = `card w-96 ${background} shadow-lg h-full`;
+  export let marginAuto = false;
+  export let disabled = false;
 </script>
 
-<div class={className}>
+<div class={className} class:mx-auto={marginAuto}>
   {#if imgTop}
     <figure>
       <img src={imgUrl} alt={title} />
@@ -35,7 +38,9 @@
         {#if href.length > 0}
           <a {href} class="btn btn-primary">{buttonText}</a>
         {:else}
-          <button class="btn btn-primary" on:click>{buttonText}</button>
+          <button class="btn btn-primary" {disabled} on:click
+            >{buttonText}</button
+          >
         {/if}
       </div>
     {/if}

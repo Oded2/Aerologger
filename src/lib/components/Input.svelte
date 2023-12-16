@@ -10,6 +10,7 @@
   export let max = "";
   export let rows = "10";
   export let cols = "30";
+  export let required = false;
 
   const dispatch = createEventDispatcher();
 </script>
@@ -17,6 +18,7 @@
 {#if type === "date"}
   <label class="form-control w-full max-w-xs">
     <input
+      {required}
       bind:value
       {min}
       {max}
@@ -31,9 +33,32 @@
       </div>
     {/if}
   </label>
+{:else if type === "email"}
+  <label class="form-control w-full max-w-xs">
+    <input
+      {required}
+      bind:value
+      minlength={min}
+      maxlength={max}
+      {id}
+      type="email"
+      {placeholder}
+      class="input input-bordered w-full"
+      on:blur={() => {
+        value = value.trim();
+        dispatch("blur");
+      }}
+    />
+    {#if text.length > 0}
+      <div class="label">
+        <span class="label-text-alt">{text}</span>
+      </div>
+    {/if}
+  </label>
 {:else if type === "time"}
   <label class="form-control w-full max-w-xs">
     <input
+      {required}
       bind:value
       {min}
       {max}
@@ -51,6 +76,7 @@
 {:else if type === "textarea"}
   <label class="form-control">
     <textarea
+      {required}
       {rows}
       {cols}
       bind:value
@@ -71,6 +97,7 @@
 {:else}
   <label class="form-control w-full max-w-xs">
     <input
+      {required}
       bind:value
       minlength={min}
       maxlength={max}

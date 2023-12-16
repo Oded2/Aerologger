@@ -37,5 +37,12 @@
     },
     "viewer": {
         "link": "/viewer"
+    },
+    "passwordreset": {
+        "link": "/protected/passwordreset",
+        "title": "Password Reset"
+    },
+    "profile": {
+        "link": "/profile/slug"
     }
 }

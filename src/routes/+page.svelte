@@ -45,21 +45,25 @@
       <div class="grid grid-cols-2 gap-10 place-content-center">
         {#if session}
           <div>
-            <a href={hrefs.logbook.link} class="btn btn-secondary w-full"
+            <a href={hrefs.logbook.link} class="btn btn-secondary w-full btn-lg"
               >View Logbook</a
             >
           </div>
           <div>
-            <a href={hrefs.logbook.link} class="btn btn-primary w-full"
+            <a href={hrefs.logbook.link} class="btn btn-primary w-full btn-lg"
               >Log New Flight</a
             >
           </div>
         {:else}
           <div>
-            <a href={hrefs.login.link} class="btn btn-secondary">Login</a>
+            <a href={hrefs.login.link} class="btn btn-secondary w-full btn-lg"
+              >Login</a
+            >
           </div>
           <div>
-            <a href={hrefs.signup.link} class="btn btn-primary">Sign Up</a>
+            <a href={hrefs.signup.link} class="btn btn-primary w-full btn-lg"
+              >Sign Up</a
+            >
           </div>
         {/if}
       </div>
@@ -68,7 +72,12 @@
       <h1 class="text-4xl mb-10 font-bold">About AeroLogger</h1>
       <CardGrid>
         {#each cards as card}
-          <Card title={card.title} list={card.details} actions={false}></Card>
+          <Card
+            background="bg-base-200"
+            title={card.title}
+            list={card.details}
+            actions={false}
+          ></Card>
         {/each}
       </CardGrid>
     </div>

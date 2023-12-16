@@ -1,11 +1,14 @@
 <script>
-  import { oldHrefs } from "$lib/index.js";
+  import { hrefs, oldHrefs } from "$lib/index.js";
   import {
     createToast,
     dateToStr,
     hasNormalCharacters,
   } from "../../../hooks.client.js";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
+  import Container from "$lib/components/Container.svelte";
+  import Card from "$lib/components/Card.svelte";
+  import Input from "$lib/components/Input.svelte";
   export let data;
   const { supabase, session, profile } = data;
   let toast;
@@ -119,168 +122,91 @@
 </script>
 
 <main>
-  <div class="container my-5">
-    <div class="font-google-gabarito">
-      <h1>Welcome back.</h1>
-      <h5 class="fw-normal">
+  <Container>
+    <div>
+      <h1 class="text-4xl text-center sm:text-start">Welcome Back.</h1>
+      <h5 class="text-xl text-center sm:text-start">
         User Id: {session.user.id}
       </h5>
     </div>
-    <div class="row">
-      <div class="col-lg-6 mb-5">
-        <form on:submit|preventDefault={editAccount} class="h-100">
-          <div class="card shadow my-5 h-100">
-            <div class="card-header">
-              <span class="font-google-quicksand">Account Settings</span>
-            </div>
-            <div class="card-body">
-              <div class="mb-3 form-floating">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="email"
-                  placeholder="Your email"
-                  bind:value={email}
-                  on:blur={() => (email = email.trim())}
-                  required
-                />
-                <label for="email"
-                  >Email <span class="text-danger">*</span></label
-                >
-                <div class="form-text">
-                  You will be sent a verification email to your new email.
-                </div>
-              </div>
-              <div class="mb-3">
-                <a
-                  href={oldHrefs.passwordreset.home.link}
-                  class="btn btn-outline-danger btn-lg w-100">Reset Password</a
-                >
-              </div>
-            </div>
-            <div class="card-footer">
-              <button
-                disabled={inProgress || !accountChange}
-                type="submit"
-                class="btn btn-primary btn-lg w-100">Update Account</button
-              >
-            </div>
+    <div class="grid grid-cols-2 gap-4">
+      <form on:submit|preventDefault={editAccount} class="text-xl">
+        <Card
+          buttonText="Update Account"
+          title="Account Settings"
+          disabled={inProgress || !accountChange}
+          marginAuto
+        >
+          <div>
+            <label for="email" class="label">Email</label>
+            <Input
+              type="email"
+              id="email"
+              bind:value={email}
+              required
+              text="You will be sent a verification email to your new email."
+            />
           </div>
-        </form>
-      </div>
-      <div class="col-lg-6 mb-5">
-        <form on:submit|preventDefault={editProfile} class="h-100">
-          <div class="card shadow my-5 h-100">
-            <div class="card-header">
-              <span class="font-google-quicksand"
-                >Profile Settings - <a
-                  href={oldHrefs.explore.profile.link.replace(
-                    "slug",
-                    og.username
-                  )}>View Profile</a
-                ></span
-              >
-            </div>
-            <div class="card-body">
-              <div class="mb-3 form-floating">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="username"
-                  placeholder="Your username"
-                  bind:value={username}
-                  on:blur={() => (username = username.trim())}
-                  required
-                  {maxlength}
-                />
-                <label for="username"
-                  >Username <span class="text-danger">*</span></label
-                >
-                <div class="form-text">
-                  Your username must be unique, and only contain letters from
-                  the latin alphabet and numbers.
-                </div>
-              </div>
-              <div class="mb-3 form-floating">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="displayname"
-                  placeholder="Your public name"
-                  bind:value={displayName}
-                  on:blur={() => (displayName = displayName.trim())}
-                  required
-                  {maxlength}
-                />
-                <label for="displayname"
-                  >Display Name <span class="text-danger">*</span></label
-                >
-                <div class="form-text">
-                  The name you will be publicly known as.
-                </div>
-              </div>
-              <div class="mb-3">
-                <div class="input-group">
-                  <div class="form-floating">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="bio"
-                      placeholder="Your profile bio"
-                      bind:value={bio}
-                      on:blur={() => (bio = bio.trim())}
-                      maxlength="150"
-                    />
-                    <label for="bio">Bio</label>
-                  </div>
-                  <button
-                    type="button"
-                    class="input-group-text btn btn-secondary"
-                    on:click={() => (bio = "")}
-                    disabled={bio.length == 0}
-                    ><i class="fa-solid fa-x" /></button
-                  >
-                </div>
-                <div class="form-text">{`${bio.length}/150`}</div>
-              </div>
-              <div class="mb-3">
-                <div class=" input-group">
-                  <div class="form-floating">
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="birthday"
-                      bind:value={birthday}
-                      max={dateToStr()}
-                      placeholder="Birthday"
-                    />
-
-                    <label for="birthday">Birthday</label>
-                  </div>
-                  <button
-                    type="button"
-                    class="input-group-text btn btn-secondary"
-                    on:click={() => (birthday = null)}
-                    disabled={!birthday}><i class="fa-solid fa-x" /></button
-                  >
-                </div>
-                <div class="form-text">
-                  Your birthday will be public. This field is not required.
-                </div>
-              </div>
-            </div>
-            <div class="card-footer">
-              <button
-                disabled={inProgress || !profileChange}
-                type="submit"
-                class="btn btn-primary btn-lg w-100">Update Profile</button
-              >
-            </div>
+          <div>
+            <a
+              href={hrefs.passwordreset.link}
+              class="btn btn-error btn-outline w-full">Reset Password</a
+            >
           </div>
-        </form>
-      </div>
+        </Card>
+      </form>
+      <form on:submit|preventDefault={editProfile} class="text-xl">
+        <Card
+          buttonText="Update Profile"
+          title="Profile Settings"
+          disabled={inProgress || !profileChange}
+          marginAuto
+        >
+          <div class="mb-3">
+            <label for="username" class="label">Username</label>
+            <Input
+              id="username"
+              required
+              placeholder="Your username"
+              bind:value={username}
+              max="50"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="displayName" class="label">Display Name</label>
+            <Input
+              id="displayName"
+              required
+              placeholder="Public display name"
+              bind:value={displayName}
+              max="50"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="displayName" class="label">Bio</label>
+            <Input
+              id="displayName"
+              required
+              placeholder="Tell about yourself"
+              bind:value={bio}
+              max="150"
+              text={`${bio.length}/${(150).toLocaleString()}`}
+            />
+          </div>
+          <div class="mb-3">
+            <label for="birthday" class="label">Birthday</label>
+            <Input
+              id="birthday"
+              type="date"
+              bind:value={bio}
+              max={dateToStr()}
+              text="Your birthday will be public. This field is not required."
+            />
+          </div>
+        </Card>
+      </form>
     </div>
-  </div>
+  </Container>
 </main>
 
 <ToastSetup {toast} />
