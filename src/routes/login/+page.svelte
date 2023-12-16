@@ -90,7 +90,13 @@
 </Modal>
 <main>
   <Container>
-    <Card on:submit={submit} marginAuto title="Login" buttonText="Login">
+    <Card
+      on:submit={submit}
+      marginAuto
+      title="Login"
+      buttonText="Login"
+      disabled={inProgress}
+    >
       <div class="mb-3">
         Don't have an account? <a href={hrefs.signup.link} class="link"
           >sign up</a

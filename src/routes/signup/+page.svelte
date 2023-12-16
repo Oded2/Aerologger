@@ -121,6 +121,7 @@
         marginAuto
         title="Sign Up"
         buttonText="Sign Up"
+        disabled={inProgress}
       >
         <div class="mb-3">
           Already have an account? <a href={hrefs.login.link} class="link"
