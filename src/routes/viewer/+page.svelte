@@ -10,6 +10,7 @@
   import ShareModal from "$lib/components/ShareModal.svelte";
   import AirportCard from "$lib/components/AirportCard.svelte";
   import Offcanvas from "$lib/components/Offcanvas.svelte";
+  import Title from "$lib/components/Title.svelte";
   export let data;
   const { log, profile, ref, url } = data;
   const profileRef = oldHrefs.explore.profile.link.replace(
@@ -26,18 +27,6 @@
     return formatDateTime(date, options);
   }
 </script>
-
-<ShareModal
-  id="share"
-  {url}
-  shareText={`Check out this flight from ${log.dep.city} to ${log.des.city}`}
->
-  <a
-    href="data:text/json;charset=utf-8,{JSON.stringify(log)}"
-    download="{`log ${log.id}`}.json"
-    class="btn btn-dark w-100">Export Log as JSON</a
-  ></ShareModal
->
 
 <main>
   <div class="container py-5">
@@ -172,25 +161,32 @@
   </div>
 </main>
 
+<ShareModal
+  id="share"
+  {url}
+  shareText={`Check out this flight from ${log.dep.city} to ${log.des.city}`}
+>
+  <a
+    href="data:text/json;charset=utf-8,{JSON.stringify(log)}"
+    download="{`log ${log.id}`}.json"
+    class="btn btn-secondary w-full">Export Log as JSON</a
+  ></ShareModal
+>
+
 <FloatElement>
   {#if log.public}
-    <button
-      class="btn btn-primary btn-lg me-3"
-      data-bs-toggle="modal"
-      data-bs-target="#share"
+    <button class="btn btn-primary me-3" onclick="share.showModal()"
       ><i class="fa-solid fa-share-from-square" /> Share</button
     >
   {/if}
   {#if ref}
-    <a href={ref} class="btn btn-secondary btn-lg"
+    <a href={ref} class="btn btn-secondary"
       ><i class="fa-solid fa-rotate-left" /> Return</a
     >
   {/if}
 </FloatElement>
 
-<svelte:head>
-  <title>{`${log.dep.city} to ${log.des.city}`}</title>
-</svelte:head>
+<Title title={`${log.dep.city} to ${log.des.city}`}></Title>
 
 <Offcanvas id="notes" header={`${log.dep.city} to ${log.des.city} Notes`}>
   <div class="mb-3">
