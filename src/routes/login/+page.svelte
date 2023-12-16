@@ -1,5 +1,5 @@
 <script>
-  import Input from "$lib/components/Input.svelte";
+  import FormInput from "$lib/components/FormInput.svelte";
   import { hrefs, oldHrefs } from "$lib/index.js";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
   import { goto } from "$app/navigation";
@@ -76,7 +76,7 @@
 <Modal id="forgotpass" title="Password Reset">
   <form on:submit|preventDefault={resetPass}>
     <label for="resetEmail" class="label">Enter your email</label>
-    <Input
+    <FormInput
       type="email"
       id="resetEmail"
       bind:value={resetEmail}
@@ -98,11 +98,11 @@
       </div>
       <div class="mb-3">
         <label for="email" class="label">Email</label>
-        <Input id="email" bind:value={email} required type="email" />
+        <FormInput id="email" bind:value={email} required type="email" />
       </div>
       <div class="mb-3">
         <label for="password" class="label">Password</label>
-        <Input
+        <FormInput
           id="password"
           bind:value={password}
           required

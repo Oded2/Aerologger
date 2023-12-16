@@ -8,7 +8,7 @@
   import ToastSetup from "$lib/components/ToastSetup.svelte";
   import Container from "$lib/components/Container.svelte";
   import Card from "$lib/components/Card.svelte";
-  import Input from "$lib/components/Input.svelte";
+  import FormInput from "$lib/components/FormInput.svelte";
   export let data;
   const { supabase, session, profile } = data;
   let toast;
@@ -139,7 +139,7 @@
       >
         <div>
           <label for="email" class="label">Email</label>
-          <Input
+          <FormInput
             type="email"
             id="email"
             bind:value={email}
@@ -164,7 +164,7 @@
       >
         <div class="mb-3">
           <label for="username" class="label">Username</label>
-          <Input
+          <FormInput
             id="username"
             required
             placeholder="Your username"
@@ -174,7 +174,7 @@
         </div>
         <div class="mb-3">
           <label for="displayName" class="label">Display Name</label>
-          <Input
+          <FormInput
             id="displayName"
             required
             placeholder="Public display name"
@@ -184,7 +184,7 @@
         </div>
         <div class="mb-3">
           <label for="displayName" class="label">Bio</label>
-          <Input
+          <FormInput
             id="displayName"
             required
             placeholder="Tell about yourself"
@@ -195,7 +195,7 @@
         </div>
         <div class="mb-3">
           <label for="birthday" class="label">Birthday</label>
-          <Input
+          <FormInput
             id="birthday"
             type="date"
             bind:value={bio}

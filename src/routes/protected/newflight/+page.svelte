@@ -12,7 +12,7 @@
   import logo from "$lib/images/logo_simplified.png";
   import FloatElement from "$lib/components/FloatElement.svelte";
   import Container from "$lib/components/Container.svelte";
-  import Input from "$lib/components/Input.svelte";
+  import FormInput from "$lib/components/FormInput.svelte";
   import Card from "$lib/components/Card.svelte";
   export let data;
   const { supabase, session, log, airplanes } = data;
@@ -166,7 +166,7 @@
         <div class="md:grid grid-cols-12 gap-4 px-5">
           <div class="col-span-6">
             <label for="dep" class="label">Departure Airport</label>
-            <Input
+            <FormInput
               id="dep"
               placeholder="TLV"
               text={"Name, ICAO, or IATA code"}
@@ -178,7 +178,7 @@
           </div>
           <div class="col-span-6">
             <label for="des" class="label">Destination Airport</label>
-            <Input
+            <FormInput
               id="des"
               placeholder="ATL"
               bind:value={des}
@@ -189,15 +189,15 @@
           </div>
           <div class="col-span-4">
             <label for="date" class="label">Date</label>
-            <Input type="date" id="date" bind:value={dateStr} />
+            <FormInput type="date" id="date" bind:value={dateStr} />
           </div>
           <div class="col-span-4">
             <label for="depTime" class="label">Takeoff</label>
-            <Input id="depTime" type="time" bind:value={depTimeStr} />
+            <FormInput id="depTime" type="time" bind:value={depTimeStr} />
           </div>
           <div class="col-span-4">
             <label for="desTime" class="label">Landing</label>
-            <Input
+            <FormInput
               id="desTime"
               type="time"
               bind:value={desTimeStr}
@@ -220,7 +220,7 @@
           </div>
           <div class="col-span-6">
             <label for="tail" class="label">Tail Number</label>
-            <Input
+            <FormInput
               id="tail"
               max="20"
               bind:value={planeId}
@@ -229,7 +229,7 @@
           </div>
           <div class="col-span-full">
             <label for="notes" class="label">Notes</label>
-            <Input
+            <FormInput
               id="notes"
               type="textarea"
               bind:value={userNotes}
