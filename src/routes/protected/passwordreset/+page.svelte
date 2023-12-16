@@ -1,6 +1,9 @@
 <script>
+  import { hrefs } from "$lib/index.js";
   import { goto } from "$app/navigation";
-  import MidScreen from "$lib/components/MidScreen.svelte";
+  import Card from "$lib/components/Card.svelte";
+  import Container from "$lib/components/Container.svelte";
+  import FormInput from "$lib/components/FormInput.svelte";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
   import { oldHrefs } from "$lib/index.js";
   import { createToast } from "../../../hooks.client.js";
@@ -9,8 +12,6 @@
   let toast;
   let password = "",
     confirmPass = "";
-  $: isValid =
-    password === confirmPass && password.length >= 8 && confirmPass.length >= 8;
   let inProgress = false;
   function showErrorToast(desc) {
     toast = createToast("error", "Error", desc);
@@ -49,65 +50,50 @@
 </script>
 
 <main>
-  <div class="container py-5 font-google-quicksand fs-4">
-    {#if session}
-      <MidScreen maxWidth={true}>
-        <form on:submit|preventDefault={submit}>
-          <div class="card">
-            <div class="card-header fs-6">
-              <span>Account: {session.user.email}</span>
-            </div>
-            <div class="card-body fs-3">
-              <div class="mb-3">
-                <label class="fw-bold" for="password">New Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  class="form-control"
-                  minlength="8"
-                  required
-                  bind:value={password}
-                />
-                <div class="form-text">Minimum 8 characters.</div>
-              </div>
-              <div class="mb-3">
-                <label class="fw-bold" for="confirmpass"
-                  >Confirm New Password {#if password == confirmPass}
-                    <i
-                      class="fa-solid fa-circle-check"
-                      style="color: #198754;"
-                    />
-                  {:else}
-                    <i
-                      class="fa-solid fa-circle-xmark"
-                      style="color: #dc3545;"
-                    />
-                  {/if}</label
-                >
-                <input
-                  type="password"
-                  id="confirmpass"
-                  class="form-control"
-                  minlength="8"
-                  required
-                  bind:value={confirmPass}
-                />
-              </div>
-            </div>
-            <div class="card-footer">
-              <button
-                class="btn btn-primary fs-4 fw-bold w-100"
-                type="submit"
-                disabled={!isValid || inProgress}>Reset Password</button
-              >
-            </div>
-          </div>
-        </form></MidScreen
-      >
-    {:else}
-      <h1>You are not signed in.</h1>
-    {/if}
-  </div>
+  <Container>
+    <Card
+      on:submit={submit}
+      marginAuto
+      title="Password Reset"
+      buttonText="Reset Password"
+      disabled={inProgress}
+    >
+      <div class="text-xl">
+        <div class="mb-3">
+          <label for="password" class="label">Password</label>
+          <FormInput
+            id="password"
+            bind:value={password}
+            required
+            type="password"
+            min="8"
+            max="50"
+            text="Must be between 8 to 50 charactersl long."
+          />
+        </div>
+        <div class="mb-3">
+          <label for="confirmpass" class="label">
+            <span
+              >Confirm New Password
+              {#if password == confirmPass}
+                <i class="fa-solid fa-circle-check" style="color: #198754;" />
+              {:else}
+                <i class="fa-solid fa-circle-xmark" style="color: #dc3545;" />
+              {/if}
+            </span>
+          </label>
+          <FormInput
+            id="confirmpass"
+            bind:value={confirmPass}
+            required
+            type="password"
+            min="8"
+            max="50"
+          />
+        </div>
+      </div>
+    </Card>-
+  </Container>
 </main>
 
 <ToastSetup {toast} />
