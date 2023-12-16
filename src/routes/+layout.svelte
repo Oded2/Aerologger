@@ -97,8 +97,16 @@
           </li>
         </Dropdown>
       {:else}
-        <a href={hrefs.login.link} class="btn btn-secondary me-3">Log In</a>
-        <a href={hrefs.signup.link} class="btn btn-primary">Sign Up</a>
+        <a
+          href={hrefs.login.link}
+          class="btn btn-secondary me-3"
+          class:btn-disabled={activeUrl === hrefs.login.link}>Log In</a
+        >
+        <a
+          href={hrefs.signup.link}
+          class="btn btn-primary"
+          class:btn-disabled={activeUrl === hrefs.signup.link}>Sign Up</a
+        >
       {/if}
     </div>
   </div>
