@@ -1,5 +1,4 @@
 <script>
-  import { hrefs } from "$lib/index.js";
   import { goto } from "$app/navigation";
   import Card from "$lib/components/Card.svelte";
   import Container from "$lib/components/Container.svelte";
