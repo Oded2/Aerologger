@@ -19,7 +19,7 @@
       <img src={imgUrl} alt={title} />
     </figure>
   {/if}
-  <div class="card-body">
+  <form on:submit|preventDefault class="card-body">
     {#if title.length > 0}
       <h2 class="card-title border-b pb-2 text-2xl">{title}</h2>
     {/if}
@@ -38,13 +38,13 @@
         {#if href.length > 0}
           <a {href} class="btn btn-primary">{buttonText}</a>
         {:else}
-          <button class="btn btn-primary" {disabled} on:click
+          <button class="btn btn-primary" type="submit" {disabled}
             >{buttonText}</button
           >
         {/if}
       </div>
     {/if}
-  </div>
+  </form>
   {#if imgBottom}
     <figure>
       <img src={imgUrl} alt={title} />

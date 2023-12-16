@@ -55,6 +55,27 @@
       </div>
     {/if}
   </label>
+{:else if type === "password"}
+  <label class="form-control w-full max-w-xs">
+    <input
+      {required}
+      bind:value
+      minlength={min}
+      maxlength={max}
+      {id}
+      type="password"
+      {placeholder}
+      class="input input-bordered w-full"
+      on:blur={() => {
+        dispatch("blur");
+      }}
+    />
+    {#if text.length > 0}
+      <div class="label">
+        <span class="label-text-alt">{text}</span>
+      </div>
+    {/if}
+  </label>
 {:else if type === "time"}
   <label class="form-control w-full max-w-xs">
     <input

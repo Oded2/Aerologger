@@ -1,10 +1,13 @@
 <script>
-  import { oldHrefs } from "$lib/index.js";
+  import Input from "$lib/components/Input.svelte";
+  import { hrefs, oldHrefs } from "$lib/index.js";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
   import { goto } from "$app/navigation";
   import Modal from "$lib/components/Modal.svelte";
   import { createToast } from "../../hooks.client.js";
   import MidScreen from "$lib/components/MidScreen.svelte";
+  import Container from "$lib/components/Container.svelte";
+  import Card from "$lib/components/Card.svelte";
   export let data;
   const { supabase } = data;
   let toast;
@@ -70,94 +73,95 @@
   }
 </script>
 
-<Modal
-  id="forgotpass"
-  title="Password Reset"
-  submitText="Send Link"
-  submit={true}
-  on:submit={resetPass}
-  disabled={inProgress}
->
-  <div>
-    <label for="resetEmail" class="font-google-quicksand fw-600"
-      >Enter your email</label
-    >
-    <input
+<Modal id="forgotpass" title="Password Reset">
+  <form on:submit|preventDefault={resetPass}>
+    <label for="resetEmail" class="label">Enter your email</label>
+    <Input
       type="email"
-      class="form-control"
       id="resetEmail"
-      required
       bind:value={resetEmail}
+      required
+      text="Email might can take up to a few moments to send."
     />
-    <div class="form-text">
-      Email might can take up to a few moments to send.
-    </div>
-  </div>
+    <form method="dialog" class="card-actions justify-end">
+      <button class="btn btn-primary">Send Email</button>
+    </form>
+  </form>
 </Modal>
 <main>
-  <div class="container my-5 font-google-quicksand">
-    <MidScreen maxWidth={true}>
-      <form on:submit|preventDefault={submit}>
-        <div class="card">
-          <div class="card-header">
-            <span
-              >Don't have an account? <a
-                href={oldHrefs.signup.home.link}
-                class="text-reset">Sign Up</a
-              ></span
+  <Container>
+    <Card on:submit={submit} marginAuto title="Login" buttonText="Login">
+      <div class="mb-3">
+        Don't have an account? <a href={hrefs.signup.link} class="link"
+          >sign up</a
+        >.
+      </div>
+      <div class="mb-3">
+        <label for="email" class="label">Email</label>
+        <Input id="email" bind:value={email} required type="email" />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="label">Password</label>
+        <Input
+          id="password"
+          bind:value={password}
+          required
+          type="password"
+          max="50"
+        />
+      </div>
+    </Card>
+    <!-- <div class="card">
+        <div class="card-header">
+          <span
+            >Don't have an account? <a
+              href={oldHrefs.signup.home.link}
+              class="text-reset">Sign Up</a
+            ></span
+          >
+        </div>
+        <div class="card-body fs-3">
+          <div class="mb-3">
+            <label for="email" class="form-label"
+              >Email <span title="Required field" class="required">*</span
+              ></label
             >
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              bind:value={email}
+              required
+            />
           </div>
-          <div class="card-body fs-3">
-            <div class="mb-3">
-              <label for="email" class="form-label"
-                >Email <span title="Required field" class="required">*</span
-                ></label
-              >
-              <input
-                type="email"
-                id="email"
-                class="form-control"
-                bind:value={email}
-                required
-              />
-            </div>
 
-            <div>
-              <label for="password" class="form-label"
-                >Password <span title="Required field" class="required">*</span
-                ></label
-              >
-              <input
-                type="password"
-                id="password"
-                class="form-control"
-                bind:value={password}
-                required
-              />
-              <button
-                class="btn btn-outline-danger mt-3 fw-600"
-                type="reset"
-                data-bs-toggle="modal"
-                data-bs-target="#forgotpass">Forgot Password?</button
-              >
-            </div>
-          </div>
-          <div class="card-footer px-sm-5">
+          <div>
+            <label for="password" class="form-label"
+              >Password <span title="Required field" class="required">*</span
+              ></label
+            >
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              bind:value={password}
+              required
+            />
             <button
-              class="btn btn-primary btn-lg fs-4 fw-bold w-100"
-              disabled={inProgress}
-              type="submit">Login</button
+              class="btn btn-error btn-outline mt-3"
+              type="reset"
+              onclick="forgotpass.showModal()">Forgot Password?</button
             >
           </div>
         </div>
-      </form></MidScreen
-    >
-  </div>
+        <div class="card-footer px-sm-5">
+          <button
+            class="btn btn-primary btn-lg fs-4 fw-bold w-100"
+            disabled={inProgress}
+            type="submit">Login</button
+          >
+        </div>
+      </div> -->
+  </Container>
 </main>
 <ToastSetup {toast} />
-
-<style>
-  span.required {
-    color: red;
-  }
-</style>
