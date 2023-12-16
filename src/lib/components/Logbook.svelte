@@ -12,7 +12,6 @@
   } from "../../hooks.client.js";
   import { oldHrefs } from "$lib/index.js";
   import { page } from "$app/stores";
-  import MidScreen from "./MidScreen.svelte";
   import ToastSetup from "./ToastSetup.svelte";
   import { supabase as supabaseClient } from "$lib/index.js";
   import Dropdown from "./Dropdown.svelte";
@@ -326,9 +325,9 @@
                       })}>Edit Flight</a
                     >
                   </li>
-                  <!-- TODO: Add Modal -->
                   <li class="border-b sm:hover:bg-error-content">
                     <button
+                      onclick="delModal.showModal()"
                       on:click={() => {
                         currentFlight.id = log.id;
                         currentFlight.dep = log.dep;
@@ -370,3 +369,30 @@
     {/each}
   </div>
 </div>
+<Modal id="delModal" title="Are you sure you want to delete this flight?">
+  <div class="px-5 text-lg">
+    <ul class="list-disc">
+      <li class="list-item">
+        Flight ID: <span class="font-bold">{currentFlight.id}</span>
+      </li>
+      <li class="list-item">
+        Route: <span class="font-bold"
+          >{currentFlight.dep.icao} to {currentFlight.des.icao}</span
+        >
+      </li>
+      <li class="list-item">
+        Duration: <span class="font-bold">{currentFlight.time}</span>
+      </li>
+    </ul>
+    <div class="flex justify-end mt-3">
+      <form method="dialog">
+        <button
+          class="btn btn-error"
+          on:click={() => deleteFlight(currentFlight.id)}>Delete</button
+        >
+      </form>
+    </div>
+  </div>
+</Modal>
+
+<ToastSetup {toast}></ToastSetup>
