@@ -37,7 +37,7 @@
   }
 </script>
 
-<div class="navbar bg-base-300">
+<div class="navbar">
   <div class="navbar-start">
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost sm:hidden">
