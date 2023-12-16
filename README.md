@@ -30,7 +30,7 @@ Publicity status can be changed at any time, as well as being able to make all f
 AeroLogger is developed using many different apps and libraries. To mention a few:
 
 - SvelteKit
-- Bootstrap CSS and Bootstrap Javascript
+- DaisyUI & TailwindCSS
 - Supabase
 - Font Awesome
 
