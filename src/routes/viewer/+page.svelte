@@ -5,7 +5,7 @@
     maxLen,
     formatDateStr,
   } from "../../hooks.client.js";
-  import { oldHrefs } from "$lib/index.js";
+  import { hrefs } from "$lib/index.js";
   import FloatElement from "$lib/components/FloatElement.svelte";
   import ShareModal from "$lib/components/ShareModal.svelte";
   import AirportCard from "$lib/components/AirportCard.svelte";
@@ -16,10 +16,7 @@
   import FormInput from "$lib/components/FormInput.svelte";
   export let data;
   const { log, profile, ref, url } = data;
-  const profileRef = oldHrefs.explore.profile.link.replace(
-    "slug",
-    profile.username
-  );
+  const profileRef = hrefs.profile.link.replace("slug", profile.username);
   const min = 200;
   url.searchParams.delete("ref");
 
@@ -47,7 +44,7 @@
           >
         </h4>
       </div>
-      <div class="grid grid-cols-12 text-xl mt-5 gap-4">
+      <div class="grid grid-cols-2 md:grid-cols-12 text-xl mt-5 gap-4">
         <div class="col-span-5 mb-5">
           <Card actions={false} title="Plane Information" allowWide>
             <ul class="list-disc">
