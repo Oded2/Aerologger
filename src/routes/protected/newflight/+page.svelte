@@ -11,6 +11,8 @@
   import { oldHrefs } from "$lib/index.js";
   import logo from "$lib/images/logo_simplified.png";
   import FloatElement from "$lib/components/FloatElement.svelte";
+  import Container from "$lib/components/Container.svelte";
+  import Input from "$lib/components/Input.svelte";
   export let data;
   const { supabase, session, log, airplanes } = data;
   let { edit } = data;
@@ -119,248 +121,60 @@
 </script>
 
 <main>
-  <div class="container my-5 font-google-gabarito">
-    {#if isComplete}
-      <h1 class="text-success">Success!</h1>
-      <h2>
-        Your flight has been added to your <a href={oldHrefs.logbook.home.link}
-          >logbook</a
-        >.
-      </h2>
-
-      <div class="row my-4">
-        <div class="col">
-          <a
-            href={addParamsString(oldHrefs.logbook.viewer.link, {
-              logid: logId,
-              ref: oldHrefs.newFlight.home.link,
-            })}
-            class="btn btn-primary btn-lg fs-2 w-100 h-100">View Flight</a
-          >
-        </div>
-        <div class="col">
-          <button
-            on:click={() => {
-              isComplete = false;
-              edit = false;
+  <Container>
+    <div class="mb-5 text-center">
+      <h1 class="text-4xl font-bold">
+        Welcome back, <span class="text-primary">Pilot</span>.
+      </h1>
+    </div>
+    <form
+      class="card card-body shadow-2xl mx-auto max-w-2xl text-xl"
+      on:submit|preventDefault={submit}
+    >
+      <div class="md:grid grid-cols-12 gap-4 px-5">
+        <div class="col-span-6">
+          <label for="dep" class="label">Departure Airport</label>
+          <Input
+            id="dep"
+            placeholder="TLV"
+            text={"Name, ICAO, or IATA code"}
+            bind:value={dep}
+            on:blur={() => {
+              if (dep.length == 3 || dep.length == 4) dep = dep.toUpperCase();
             }}
-            class="btn btn-outline-primary btn-lg fs-2 w-100 h-100"
-            >Log New Flight</button
-          >
+          />
         </div>
-
-        <div class="d-flex justify-content-center">
-          <img src={logo} alt="AeroLogger's Logo" class="img-fluid" />
+        <div class="col-span-6">
+          <label for="des" class="label">Destination Airport</label>
+          <Input
+            id="des"
+            placeholder="ATL"
+            bind:value={des}
+            on:blur={() => {
+              if (des.length == 3 || dep.length == 4) des = des.toUpperCase();
+            }}
+          />
+        </div>
+        <div class="col-span-4">
+          <label for="date" class="label">Date</label>
+          <Input type="date" id="date" bind:value={dateStr} />
+        </div>
+        <div class="col-span-4">
+          <label for="depTime" class="label">Takeoff</label>
+          <Input id="depTime" type="time" bind:value={depTimeStr} />
+        </div>
+        <div class="col-span-4">
+          <label for="desTime" class="label">Landing</label>
+          <Input
+            id="desTime"
+            type="time"
+            bind:value={desTimeStr}
+            text="Relative to the takeoff time zone"
+          />
         </div>
       </div>
-    {:else}
-      <div>
-        <h1>Welcome back.</h1>
-      </div>
-      <form on:submit|preventDefault={submit}>
-        <div class="card">
-          <div class="card-body fs-3">
-            <div class="row">
-              <div class="col-md-6 pb-3 text-nowrap">
-                <label for="dep" class="form-label"
-                  ><i class="fa-solid fa-plane-departure" /> Airport of Departure</label
-                >
-                <div class="input-group">
-                  <input
-                    type="text"
-                    id="dep"
-                    class="form-control"
-                    bind:value={dep}
-                    on:blur={() => {
-                      dep = dep.trim();
-                      if (dep.length == 3 || dep.length == 4)
-                        dep = dep.toUpperCase();
-                    }}
-                    required
-                  /><button
-                    type="button"
-                    class="input-group-text btn btn-secondary"
-                    disabled={dep.trim().toLowerCase() ===
-                      des.trim().toLowerCase() || inProgress}
-                    on:click={() => {
-                      const temp = dep;
-                      dep = des;
-                      des = temp;
-                    }}><i class="fa-solid fa-right-left" /></button
-                  >
-                </div>
-                <span class="form-text">Name, IATA, or ICAO code</span>
-              </div>
-              <div class="col-md-6 pb-3 text-nowrap">
-                <label for="des" class="form-label"
-                  ><i class="fa-solid fa-plane-arrival" /> Airport of Destination
-                </label>
-                <input
-                  type="text"
-                  id="des"
-                  class="form-control"
-                  bind:value={des}
-                  on:blur={() => {
-                    des = des.trim();
-                    if (des.length == 3 || des.length == 4)
-                      des = des.toUpperCase();
-                  }}
-                  required
-                />
-                <span class="form-text">Name, IATA, or ICAO code</span>
-              </div>
-              <div class="col-md-6 col-xl-4 pb-3 text-nowrap">
-                <label for="depdate" class="form-label"
-                  ><i class="fa-solid fa-calendar-days" /> Date</label
-                >
-                <div class="input-group">
-                  <button
-                    class="input-group-text btn btn-secondary"
-                    type="button"
-                    disabled={dateStr == dateToStr() || inProgress}
-                    on:click={() => (dateStr = dateToStr())}>Today</button
-                  >
-                  <input
-                    type="date"
-                    id="depdate"
-                    class="form-control"
-                    bind:value={dateStr}
-                    required
-                    max="9999-12-31"
-                  />
-                </div>
-              </div>
-              <div class="col-md-6 col-xl-4 pb-3 text-nowrap">
-                <label for="deptime" class="form-label"
-                  ><i class="fa-solid fa-clock" /> Time of Departure</label
-                >
-                <div class="input-group">
-                  <input
-                    type="time"
-                    id="deptime"
-                    class="form-control"
-                    bind:value={depTimeStr}
-                    required
-                  />
-                  <button
-                    type="button"
-                    class="input-group-text btn btn-secondary"
-                    disabled={depTimeStr === desTimeStr}
-                    on:click={() => {
-                      const temp = depTimeStr;
-                      depTimeStr = desTimeStr;
-                      desTimeStr = temp;
-                    }}><i class="fa-solid fa-right-left" /></button
-                  >
-                </div>
-                <div class="form-text">
-                  Times are relative to your current time zone.
-                </div>
-              </div>
-
-              <div class="col-md-6 col-xl-4 pb-3 text-nowrap">
-                <label for="destime" class="form-label"
-                  ><i class="fa-regular fa-clock" /> Time of Arrival</label
-                >
-                <input
-                  type="time"
-                  id="destime"
-                  class="form-control"
-                  bind:value={desTimeStr}
-                  required
-                />
-              </div>
-
-              <div class="col-md-6 pb-3 text-nowrap">
-                <label for="airplane" class="form-label"
-                  ><i class="fa-solid fa-globe" /> Aircraft</label
-                >
-                {#if airplanes.length > 0}
-                  <select bind:value={plane} id="airplane" class="form-select">
-                    {#each airplanes as airplane}
-                      <option value={airplane.id}
-                        >{airplane.make} {airplane.model}</option
-                      >
-                    {/each}
-                  </select>
-                {/if}
-              </div>
-
-              <div class="col-md-6 pb-3 text-nowrap">
-                <label for="planeid" class="form-label"
-                  ><i class="fa-solid fa-hashtag" /> Tail Number</label
-                >
-                <input
-                  id="planeid"
-                  class="form-control"
-                  bind:value={planeId}
-                  on:blur={() => (planeId = planeId.trim())}
-                  placeholder={'"CHA"'}
-                  maxlength="20"
-                />
-              </div>
-              <div class="col-12 pb-3 text-nowrap">
-                <label for="notes" class="form-label">Notes</label>
-                <textarea
-                  dir="auto"
-                  id="notes"
-                  rows="4"
-                  class="form-control fs-5"
-                  bind:value={userNotes}
-                  on:blur={() => (userNotes = userNotes.trim())}
-                  maxlength="10000"
-                />
-                <div
-                  class="form-text"
-                  class:text-danger={userNotes.length >= 9000}
-                >
-                  {`${userNotes.length.toLocaleString()}/${(10000).toLocaleString()}`}
-                </div>
-              </div>
-              <div class="col-auto">
-                <div class="form-check fs-4">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    id="ispublic"
-                    bind:checked={isPublic}
-                    disabled={inProgress}
-                  /><label for="ispublic" class="form-check-label">Public</label
-                  >
-                </div>
-                <div class="form-text">This can always be changed later.</div>
-              </div>
-            </div>
-          </div>
-          <div class="card-footer">
-            {#if inProgress}
-              <div
-                class="progress mb-2"
-                role="progressbar"
-                style="height: 40px"
-              >
-                <div
-                  class="progress-bar progress-bar-striped progress-bar-animated"
-                  style="width: {progress.value}%"
-                >
-                  {`${progress.value}%`}
-                </div>
-              </div>
-              <div class="text-center font-google-quicksand fw-600 fst-italic">
-                {progress.message}
-              </div>
-            {:else}
-              <button
-                class="btn btn-primary btn-lg w-100 fs-4"
-                type="submit"
-                disabled={inProgress}>Submit Flight</button
-              >
-            {/if}
-          </div>
-        </div>
-      </form>
-    {/if}
-  </div>
+    </form>
+  </Container>
 </main>
 <FloatElement visible={edit && !isComplete}>
   <div class="input-group shadow">
@@ -371,16 +185,3 @@
   </div>
 </FloatElement>
 <ToastSetup {toast} />
-
-<style>
-  textarea {
-    resize: none;
-  }
-
-  img {
-    max-height: 60vh;
-  }
-  div.text-nowrap {
-    overflow: auto;
-  }
-</style>
