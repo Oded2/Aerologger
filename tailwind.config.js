@@ -12,7 +12,7 @@ export default {
 
           secondary: "#4b5563",
 
-          accent: "#67e8f9",
+          accent: "#d97706",
 
           neutral: "#182619",
 
@@ -33,7 +33,7 @@ export default {
 
           secondary: "#6b7280",
 
-          accent: "#67e8f9",
+          accent: "#d97706",
 
           neutral: "#182619",
 

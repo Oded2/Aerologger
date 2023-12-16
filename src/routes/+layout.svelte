@@ -12,9 +12,9 @@
   import { addParamsString } from "../hooks.client.js";
 
   $: pageUrl = new URL($page.url);
-  $: pageHref = pageUrl.pathname;
+  $: activeUrl = pageUrl.pathname;
   let title = "AeroLogger";
-  $: if (pageHref) {
+  $: if (activeUrl) {
     title = findTitle();
   }
   export let data;
@@ -34,7 +34,7 @@
   function findTitle() {
     for (const key in hrefs) {
       const item = hrefs[key];
-      if (item.link === pageHref) return item.title;
+      if (item.link === activeUrl) return item.title;
     }
   }
 </script>
@@ -62,7 +62,7 @@
           <ul
             class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-2xl bg-base-100 rounded-box w-52"
           >
-            <NavItemsLi></NavItemsLi>
+            <NavItemsLi {activeUrl}></NavItemsLi>
           </ul>
         {/if}
       </div>
@@ -73,7 +73,7 @@
     <div class="navbar-center hidden sm:flex">
       <ul class="menu menu-horizontal px-1">
         {#if session}
-          <NavItemsLi></NavItemsLi>
+          <NavItemsLi {activeUrl}></NavItemsLi>
         {/if}
       </ul>
     </div>
