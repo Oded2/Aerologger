@@ -3,6 +3,5 @@
 @tailwind utilities;
 
 html {
-  font-family: Quicksand, sans-serif;
-  font-weight: 500;
+  font-family: "Gabarito", sans-serif;
 }
