@@ -1,6 +1,5 @@
 <script>
   import Card from "$lib/components/Card.svelte";
-  import CardGrid from "$lib/components/CardGrid.svelte";
   import Container from "$lib/components/Container.svelte";
   import { hrefs } from "$lib/index.js";
   export let data;
@@ -37,7 +36,7 @@
   <Container>
     <div class="grid grid-cols-2 gap-2 mb-24">
       <div>
-        <h1 class="text-6xl text-center sm:text-left">
+        <h1 class="text-6xl">
           Hello <span class="text-primary">Pilot</span>.
         </h1>
         <h2 class="text-4xl">What would you like to do today?</h2>
@@ -70,7 +69,9 @@
     </div>
     <div>
       <h1 class="text-4xl mb-10 font-bold">About AeroLogger</h1>
-      <CardGrid>
+      <div
+        class="grid place-content-center md:grid-cols-2 xl:grid-cols-3 gap-4"
+      >
         {#each cards as card}
           <Card
             background="bg-base-200"
@@ -79,7 +80,7 @@
             actions={false}
           ></Card>
         {/each}
-      </CardGrid>
+      </div>
     </div>
   </Container>
 </main>
