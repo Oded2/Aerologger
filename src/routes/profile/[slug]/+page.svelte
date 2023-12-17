@@ -13,8 +13,8 @@
 
 <main>
   <Container>
-    <div class="mb-3">
-      <h1 class="text-4xl">
+    <div class="mb-3 text-center md:text-start">
+      <h1 class="text-4xl font-bold">
         <span class="text-primary">{`${profile.display_name}'s`}</span> Profile
       </h1>
       {#if profile.bio.length > 0}

@@ -181,7 +181,7 @@
 </script>
 
 <div>
-  <div class="mb-5 text-xl">
+  <div class="mb-5 text-xl text-center md:text-start">
     <h3>
       Air Time: <span class="text-primary"
         >{hours.toLocaleString()} hours and {minutes} minutes</span
@@ -339,22 +339,23 @@
                   </li>
                 {/if}
               </Dropdown>
+              {#if allowModification}
+                <button
+                  class="join-item"
+                  disabled={inProgress}
+                  on:click={() => changeVisibility(log.id, !log.public)}
+                >
+                  <i
+                    class="fa-solid ps-3 text-2xl"
+                    class:fa-lock={!log.public}
+                    class:fa-lock-open={log.public}
+                    title={log.public
+                      ? "This log is public"
+                      : "This log is private"}
+                  ></i></button
+                >
+              {/if}
             </div>
-            {#if allowModification}
-              <button
-                disabled={inProgress}
-                on:click={() => changeVisibility(log.id, !log.public)}
-              >
-                <i
-                  class="fa-solid ps-3"
-                  class:fa-lock={!log.public}
-                  class:fa-lock-open={log.public}
-                  title={log.public
-                    ? "This log is public"
-                    : "This log is private"}
-                ></i></button
-              >
-            {/if}
           </div>
         </div>
       {/if}

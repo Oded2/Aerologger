@@ -9,7 +9,7 @@
 <main>
   <Container>
     <div>
-      <h1 class="text-4xl">
+      <h1 class="text-4xl font-bold">
         Welcome to your <span class="text-primary">logbook</span>.
       </h1>
     </div>

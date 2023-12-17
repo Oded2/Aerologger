@@ -123,9 +123,9 @@
 
 <main>
   <Container>
-    <div>
-      <h1 class="text-4xl text-center sm:text-start">Welcome Back.</h1>
-      <h5 class="text-xl text-center sm:text-start">
+    <div class="mb-10 text-center md:text-start">
+      <h1 class="text-4xl">Welcome Back.</h1>
+      <h5 class="text-xl">
         User Id: {session.user.id}
       </h5>
     </div>
