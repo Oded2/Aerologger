@@ -119,7 +119,7 @@
                   bind:value={notesExpand}
                 ></FormInput>
               {/if}
-              <p class="whitespace-pre-wrap">
+              <p class:whitespace-pre-wrap={notesExpand}>
                 {notesExpand ? log.notes : maxLen(log.notes, min)}
               </p>
               <div class="mt-5">
