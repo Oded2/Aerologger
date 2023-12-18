@@ -10,17 +10,21 @@
   export let background = "bg-base-100";
   export let defaultWidth = true;
   export let wider = false;
-  export let className = "card shadow-lg h-full";
   export let marginAuto = false;
   export let disabled = false;
+  export let largeShadow = false;
+  export let rounded = false;
   export let iframeUrl = "";
 </script>
 
 <div
-  class={`${className} ${background}`}
+  class={`card h-full ${background}`}
   class:max-w-4xl={wider}
   class:w-96={defaultWidth}
   class:mx-auto={marginAuto}
+  class:shadow-lg={!largeShadow}
+  class:shadow-2xl={largeShadow}
+  class:rounded-xl={rounded}
 >
   {#if imgTop}
     <figure>

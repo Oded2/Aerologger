@@ -8,7 +8,7 @@
 <Card
   title={cardTitle}
   actions={false}
-  className="bg-base-100 shadow-lg rounded-xl"
+  rounded
   iframeUrl={getOpenStreetMap(
     parseFloat(airportData.latitude),
     parseFloat(airportData.longitude)

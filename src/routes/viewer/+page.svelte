@@ -107,11 +107,7 @@
         </div>
         {#if log.notes.length > 0}
           <div class="col-span-full mb-5">
-            <Card
-              actions={false}
-              className="bg-base-100 shadow-lg h-full rounded-xl"
-              title="Notes"
-            >
+            <Card actions={false} rounded title="Notes">
               {#if log.notes.length > min}
                 <FormInput
                   type="checkbox"

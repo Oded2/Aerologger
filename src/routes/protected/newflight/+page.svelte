@@ -128,7 +128,7 @@
         imgBottom
         imgUrl={logo}
         title="Thank you for logging with Aerologger!"
-        className="card mx-auto w-96 shadow-2xl"
+        hello="card mx-auto w-96 shadow-2xl"
         actions={false}
         marginAuto
         ><p>
@@ -160,7 +160,7 @@
           Welcome back, <span class="text-primary">Pilot</span>.
         </h1>
       </div>
-      <Card marginAuto defaultWidth={false} actions={false}>
+      <Card marginAuto defaultWidth={false} actions={false} largeShadow>
         <form class="text-xl" on:submit|preventDefault={submit}>
           <div class="grid md:grid-cols-2 gap-4">
             <div class="grid md:grid-cols-12 gap-4">
