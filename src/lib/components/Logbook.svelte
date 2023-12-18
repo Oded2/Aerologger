@@ -20,6 +20,7 @@
   export let allowModification = true;
   export let supabase = supabaseClient;
   export let userId = "";
+  const refUrl = $page.url.href;
   const maxLogs = 12;
   const pageBreakpoint = 5;
   const maxPage = parseInt(
@@ -31,7 +32,6 @@
   let sortby = "depDate";
   let reversed = false;
   let showDateLogged = false;
-  const refUrl = $page.url.href;
   let inProgress = false,
     delConfirm = false;
   let currentFlight = { id: NaN, dep: {}, des: {}, time: "" };
@@ -227,7 +227,61 @@
       text="Show Date Logged"
     ></FormInput>
   </div>
-  <!-- TODO: PAGINATION -->
+  {#if logs.length > maxLogs}
+    <div class="mb-5">
+      <div class="mb-1">Total Pages: {maxPage}</div>
+      <div class="mb-3">
+        <form on:submit|preventDefault={() => (currentPage = userPage)}>
+          <label for="pageSkip" class="label">Go to Page</label>
+          <div class="join">
+            <FormInput
+              id="pageSkip"
+              bind:value={userPage}
+              min="1"
+              max={maxPage}
+              required
+              joinItem
+            ></FormInput>
+            <button
+              type="submit"
+              class="join-item btn btn-primary"
+              disabled={userPage < 1 ||
+                userPage > maxPage ||
+                isNaN(userPage) ||
+                currentPage == userPage}><i class="fa-solid fa-check" /></button
+            >
+          </div>
+        </form>
+      </div>
+      <div class="mb-7">
+        <div class="join">
+          <button
+            class="join-item btn btn-primary"
+            on:click={() => {
+              if (currentPage != 1) currentPage--;
+            }}>&laquo;</button
+          >
+          {#each { length: maxPage + (maxPage > pageBreakpoint ? pageBreakpoint % maxPage : 0) } as _, index}
+            {#if divider + pageBreakpoint >= index + 1 && index + 1 > divider}
+              <button
+                class="join-item btn btn-primary"
+                class:btn-active={index + 1 == currentPage}
+                disabled={index + 1 > maxPage}
+                on:click={() => (currentPage = index + 1)}
+                >{index + 1 <= maxPage ? index + 1 : "-"}
+              </button>
+            {/if}
+          {/each}
+          <button
+            class="join-item btn btn-primary"
+            on:click={() => {
+              if (currentPage != maxPage) currentPage++;
+            }}>&raquo;</button
+          >
+        </div>
+      </div>
+    </div>
+  {/if}
   <div class="mb-10">
     <div
       class="grid-cols-5 gap-4 text-xl hidden md:grid border-b pb-4 border-secondary"
