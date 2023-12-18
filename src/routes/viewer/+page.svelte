@@ -33,124 +33,118 @@
 
 <main>
   <Container>
-    <div class="font-google-gabarito">
-      <div class="text-center">
-        <h1 class="text-4xl">{log.dep.city} to {log.des.city}</h1>
-        <h3 class="text-2xl">
-          {formatDateStr(log.depDate)}
-        </h3>
-        <h4 class="text-xl">
-          Logged by: <a href={profileRef} class="link">{profile.display_name}</a
-          >
-        </h4>
+    <div class="text-center">
+      <h1 class="text-4xl">{log.dep.city} to {log.des.city}</h1>
+      <h3 class="text-2xl">
+        {formatDateStr(log.depDate)}
+      </h3>
+      <h4 class="text-xl">
+        Logged by: <a href={profileRef} class="link">{profile.display_name}</a>
+      </h4>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-12 text-xl mt-5 gap-4">
+      <div class="col-span-5 mb-5">
+        <Card actions={false} title="Plane Information" wider>
+          <ul class="list-disc">
+            <li class="list-item">
+              Manufacturer: <span class="capitalize font-bold">
+                {log.plane.make}</span
+              >
+            </li>
+            <li class="list-item">
+              Model: <span class="capitalize font-bold">
+                {log.plane.model}</span
+              >
+            </li>
+            <li class="list-item">
+              Tail Number: <span class="font-bold">
+                {log.tail.length > 0 ? log.tail : "N/A"}</span
+              >
+            </li>
+          </ul>
+        </Card>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-12 text-xl mt-5 gap-4">
-        <div class="col-span-5 mb-5">
-          <Card actions={false} title="Plane Information" wider>
-            <ul class="list-disc">
-              <li class="list-item">
-                Manufacturer: <span class="capitalize font-bold">
-                  {log.plane.make}</span
-                >
-              </li>
-              <li class="list-item">
-                Model: <span class="capitalize font-bold">
-                  {log.plane.model}</span
-                >
-              </li>
-              <li class="list-item">
-                Tail Number: <span class="font-bold">
-                  {log.tail.length > 0 ? log.tail : "N/A"}</span
-                >
-              </li>
-            </ul>
-          </Card>
-        </div>
-        <div class="col-span-7 mb-5">
-          <Card actions={false} title="Flight Information" wider>
-            <ul class="list-disc">
-              <li class="list-item font-bold">
-                {log.dep.icao} to {log.des.icao}
-              </li>
-              <li class="list-item">
-                Time of Departure: <span class="font-bold">
-                  {formatDateTimeStr(log.depDate, {
-                    month: "long",
-                    day: "numeric",
-                  })}</span
-                >
-              </li>
+      <div class="col-span-7 mb-5">
+        <Card actions={false} title="Flight Information" wider>
+          <ul class="list-disc">
+            <li class="list-item font-bold">
+              {log.dep.icao} to {log.des.icao}
+            </li>
+            <li class="list-item">
+              Time of Departure: <span class="font-bold">
+                {formatDateTimeStr(log.depDate, {
+                  month: "long",
+                  day: "numeric",
+                })}</span
+              >
+            </li>
 
-              <li class="list-item">
-                Time of Arrival: <span class="font-bold">
-                  {formatDateTimeStr(log.desDate, {
-                    month: "long",
-                    day: "numeric",
-                  })}</span
-                >
-              </li>
-              <li class="list-item">
-                Total Duration: <span class="font-bold">
-                  {formatDuration(
-                    new Date(log.depDate),
-                    new Date(log.desDate)
-                  )}</span
-                >
-              </li>
-              <li class="list-item">
-                Date Logged: <span class="font-bold"
-                  >{formatDateTimeStr(log.created_at)}</span
-                >
-              </li>
-            </ul>
+            <li class="list-item">
+              Time of Arrival: <span class="font-bold">
+                {formatDateTimeStr(log.desDate, {
+                  month: "long",
+                  day: "numeric",
+                })}</span
+              >
+            </li>
+            <li class="list-item">
+              Total Duration: <span class="font-bold">
+                {formatDuration(
+                  new Date(log.depDate),
+                  new Date(log.desDate)
+                )}</span
+              >
+            </li>
+            <li class="list-item">
+              Date Logged: <span class="font-bold"
+                >{formatDateTimeStr(log.created_at)}</span
+              >
+            </li>
+          </ul>
+        </Card>
+      </div>
+      {#if log.notes.length > 0}
+        <div class="col-span-full mb-5">
+          <Card fullWidth actions={false} rounded title="Notes">
+            {#if log.notes.length > min}
+              <FormInput type="checkbox" text="Expand" bind:value={notesExpand}
+              ></FormInput>
+            {/if}
+            <p class:whitespace-pre-wrap={notesExpand}>
+              {notesExpand ? log.notes : maxLen(log.notes, min)}
+            </p>
+            <div class="mt-5">
+              <button
+                class="btn btn-primary"
+                onclick="notesOptions.showModal()"
+              >
+                Options
+              </button>
+            </div>
           </Card>
         </div>
-        {#if log.notes.length > 0}
-          <div class="col-span-full mb-5">
-            <Card fullWidth actions={false} rounded title="Notes">
-              {#if log.notes.length > min}
-                <FormInput
-                  type="checkbox"
-                  text="Expand"
-                  bind:value={notesExpand}
-                ></FormInput>
-              {/if}
-              <p class:whitespace-pre-wrap={notesExpand}>
-                {notesExpand ? log.notes : maxLen(log.notes, min)}
-              </p>
-              <div class="mt-5">
-                <button
-                  class="btn btn-primary"
-                  onclick="notesOptions.showModal()"
-                >
-                  Options
-                </button>
-              </div>
-            </Card>
-          </div>
-        {/if}
-        <div
-          class="{log.dep.icao === log.des.icao
-            ? 'col-span-full'
-            : 'col-span-6'} mb-5"
-        >
+      {/if}
+      <div
+        class="{log.dep.icao === log.des.icao
+          ? 'col-span-full'
+          : 'col-span-6'} mb-5"
+      >
+        <AirportCard
+          airportData={log.dep}
+          cardTitle={log.dep.icao === log.des.icao
+            ? "Airport Information"
+            : "Departure Airport Information"}
+        />
+      </div>
+      {#if log.dep.icao !== log.des.icao}
+        <div class="col-span-6 mb-5">
           <AirportCard
-            airportData={log.dep}
-            cardTitle={log.dep.icao === log.des.icao
-              ? "Airport Information"
-              : "Departure Airport Information"}
+            airportData={log.des}
+            cardTitle="Arrival Airport Information"
+            icon="plane-arrival"
           />
         </div>
-        {#if log.dep.icao !== log.des.icao}
-          <div class="col-span-6 mb-5">
-            <AirportCard
-              airportData={log.des}
-              cardTitle="Arrival Airport Information"
-              icon="plane-arrival"
-            />
-          </div>
-        {/if}
-      </div>
+      {/if}
     </div>
   </Container>
 </main>
