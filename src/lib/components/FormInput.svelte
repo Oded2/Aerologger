@@ -108,7 +108,7 @@
       {rows}
       {cols}
       bind:value
-      class="textarea textarea-bordered resize-none"
+      class="textarea textarea-bordered resize-none text-base"
       {placeholder}
       {id}
       on:blur={() => {
