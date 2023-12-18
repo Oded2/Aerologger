@@ -192,6 +192,7 @@
                 <button
                   type="button"
                   class="btn btn-secondary join-item"
+                  tabindex="-1"
                   on:click={() => {
                     const temp = dep;
                     dep = des;
