@@ -162,100 +162,102 @@
       </div>
       <Card marginAuto defaultWidth={false} actions={false}>
         <form class="text-xl" on:submit|preventDefault={submit}>
-          <div class="grid md:grid-cols-12 gap-4 px-5">
-            <div class="col-span-6">
-              <label for="dep" class="label">Departure Airport</label>
-              <div class="join w-full">
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="grid md:grid-cols-12 gap-4">
+              <div class="col-span-6">
+                <label for="dep" class="label">Departure Airport</label>
+                <div class="join w-full">
+                  <FormInput
+                    maxWidth={false}
+                    id="dep"
+                    placeholder="TLV"
+                    text={"Name, ICAO, or IATA code"}
+                    joinItem
+                    bind:value={dep}
+                    on:blur={() => {
+                      if (dep.length == 3 || dep.length == 4)
+                        dep = dep.toUpperCase();
+                    }}
+                  />
+                  <button
+                    type="button"
+                    class="btn btn-secondary join-item"
+                    on:click={() => {
+                      const temp = dep;
+                      dep = des;
+                      des = temp;
+                    }}><i class="fa-solid fa-right-left"></i></button
+                  >
+                </div>
+              </div>
+              <div class="col-span-6">
+                <label for="des" class="label">Destination Airport</label>
                 <FormInput
                   maxWidth={false}
-                  id="dep"
-                  placeholder="TLV"
-                  text={"Name, ICAO, or IATA code"}
-                  joinItem
-                  bind:value={dep}
+                  id="des"
+                  placeholder="ATL"
+                  bind:value={des}
                   on:blur={() => {
-                    if (dep.length == 3 || dep.length == 4)
-                      dep = dep.toUpperCase();
+                    if (des.length == 3 || des.length == 4)
+                      des = des.toUpperCase();
                   }}
                 />
-                <button
-                  type="button"
-                  class="btn btn-secondary join-item"
-                  on:click={() => {
-                    const temp = dep;
-                    dep = des;
-                    des = temp;
-                  }}><i class="fa-solid fa-right-left"></i></button
+              </div>
+              <div class="col-span-4">
+                <label for="date" class="label">Date</label>
+                <FormInput
+                  maxWidth={false}
+                  type="date"
+                  id="date"
+                  bind:value={dateStr}
+                />
+              </div>
+              <div class="col-span-4">
+                <label for="depTime" class="label">Takeoff</label>
+                <FormInput
+                  maxWidth={false}
+                  id="depTime"
+                  type="time"
+                  bind:value={depTimeStr}
+                />
+              </div>
+              <div class="col-span-4">
+                <label for="desTime" class="label">Landing</label>
+                <FormInput
+                  maxWidth={false}
+                  id="desTime"
+                  type="time"
+                  bind:value={desTimeStr}
+                  text="Relative to the takeoff time zone"
+                />
+              </div>
+              <div class="col-span-6">
+                <label for="aircraft" class="label">Aircraft</label>
+                <FormInput
+                  type="select"
+                  id="aircraft"
+                  maxWidth={false}
+                  bind:value={plane}
                 >
+                  {#each airplanes as airplane}
+                    <option value={airplane.id}
+                      >{airplane.make} {airplane.model}</option
+                    >
+                  {/each}
+                </FormInput>
+              </div>
+              <div class="col-span-6">
+                <label for="tail" class="label">Tail Number</label>
+                <FormInput
+                  maxWidth={false}
+                  id="tail"
+                  max="20"
+                  bind:value={tailNum}
+                  placeholder={'"CHA"'}
+                />
               </div>
             </div>
-            <div class="col-span-6">
-              <label for="des" class="label">Destination Airport</label>
-              <FormInput
-                maxWidth={false}
-                id="des"
-                placeholder="ATL"
-                bind:value={des}
-                on:blur={() => {
-                  if (des.length == 3 || des.length == 4)
-                    des = des.toUpperCase();
-                }}
-              />
-            </div>
-            <div class="col-span-4">
-              <label for="date" class="label">Date</label>
-              <FormInput
-                maxWidth={false}
-                type="date"
-                id="date"
-                bind:value={dateStr}
-              />
-            </div>
-            <div class="col-span-4">
-              <label for="depTime" class="label">Takeoff</label>
-              <FormInput
-                maxWidth={false}
-                id="depTime"
-                type="time"
-                bind:value={depTimeStr}
-              />
-            </div>
-            <div class="col-span-4">
-              <label for="desTime" class="label">Landing</label>
-              <FormInput
-                maxWidth={false}
-                id="desTime"
-                type="time"
-                bind:value={desTimeStr}
-                text="Relative to the takeoff time zone"
-              />
-            </div>
-            <div class="col-span-6">
-              <label for="aircraft" class="label">Aircraft</label>
-              <FormInput
-                type="select"
-                id="aircraft"
-                maxWidth={false}
-                bind:value={plane}
-              >
-                {#each airplanes as airplane}
-                  <option value={airplane.id}
-                    >{airplane.make} {airplane.model}</option
-                  >
-                {/each}
-              </FormInput>
-            </div>
-            <div class="col-span-6">
-              <label for="tail" class="label">Tail Number</label>
-              <FormInput
-                maxWidth={false}
-                id="tail"
-                max="20"
-                bind:value={tailNum}
-                placeholder={'"CHA"'}
-              />
-            </div>
-            <div class="col-span-full">
+            <div>
               <label for="notes" class="label">Notes</label>
               <FormInput
                 maxWidth={false}
@@ -264,8 +266,6 @@
                 bind:value={userNotes}
                 text={`${userNotes.length}/${(10000).toLocaleString()}`}
               />
-            </div>
-            <div class="col-span-full">
               <FormInput
                 maxWidth={false}
                 type="checkbox"
