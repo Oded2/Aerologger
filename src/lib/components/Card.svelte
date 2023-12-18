@@ -58,6 +58,7 @@
           <button
             type="reset"
             on:click={() => dispatch("reset")}
+            {disabled}
             class="btn btn-secondary">Clear</button
           >
         {/if}
