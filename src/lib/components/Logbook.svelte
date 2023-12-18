@@ -185,12 +185,12 @@
 <div>
   <div class="mb-5 text-xl text-center md:text-start">
     <h3>
-      Air Time: <span class="text-primary"
+      Air Time: <span class="font-bold"
         >{hours.toLocaleString()} hours and {minutes} minutes</span
       >
     </h3>
     <h3>
-      Total Flights: <span class="text-primary"
+      Total Flights: <span class="font-bold"
         >{totalFlights.toLocaleString()}</span
       >
     </h3>
