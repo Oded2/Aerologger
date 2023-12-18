@@ -16,6 +16,8 @@
   import { supabase as supabaseClient } from "$lib/index.js";
   import Dropdown from "./Dropdown.svelte";
   import FormInput from "./FormInput.svelte";
+  import Card from "./Card.svelte";
+  import LogbookSettingGroup from "./LogbookSettingGroup.svelte";
   export let logs = [];
   export let allowModification = true;
   export let supabase = supabaseClient;
@@ -415,6 +417,67 @@
       {/if}
     {/each}
   </div>
+
+  {#if logs.length > 0}
+    <div class="my-5">
+      <Card
+        title="Logbook Settings"
+        marginAuto
+        actions={false}
+        defaultWidth={false}
+      >
+        <div class="grid md:grid-flow-col gap-4">
+          <LogbookSettingGroup
+            title="Options"
+            className="btn-secondary"
+            href="data:text/json;charset=utf-8,{JSON.stringify(logs)}"
+          >
+            <a
+              class="btn btn-secondary col-span-full"
+              class:disabled={inProgress}
+              href="data:text/json;charset=utf-8,{JSON.stringify(logs)}"
+              download="logbook.json">Export Logbook as JSON</a
+            ></LogbookSettingGroup
+          >
+
+          {#if allowModification}
+            <LogbookSettingGroup title="Privacy">
+              <button
+                class="btn btn-info col-span-6"
+                on:click={() => changeMassVisibility(false)}
+                disabled={inProgress}>Make Logs Private</button
+              >
+
+              <button
+                class="btn btn-info col-span-6"
+                on:click={() => changeMassVisibility(false)}
+                disabled={inProgress}>Make Logs Private</button
+              >
+            </LogbookSettingGroup>
+            <LogbookSettingGroup title="Danger Zone">
+              <button
+                class="btn btn-outline btn-error col-span-4"
+                on:click={() => purgePublic(false)}
+                disabled={inProgress}>Delete Private Logs</button
+              >
+              <button
+                class="btn btn-outline btn-error col-span-4"
+                on:click={() => purgePublic(true)}
+                disabled={inProgress}>Delete Public Logs</button
+              >
+              <button
+                class="btn btn-error col-span-4"
+                on:click={purge}
+                disabled={inProgress}
+              >
+                Purge Logbook
+              </button>
+            </LogbookSettingGroup>
+          {/if}
+        </div>
+      </Card>
+    </div>
+  {/if}
 </div>
 <Modal id="delModal" title="Are you sure you want to delete this flight?">
   <div class="px-5 text-lg">
