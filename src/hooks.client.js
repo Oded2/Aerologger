@@ -32,7 +32,7 @@ export function createToast(
   type,
   title,
   description,
-  duration = 5000,
+  duration = 3000,
   placement = "bottom-center"
 ) {
   return toasts.add({
