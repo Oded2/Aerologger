@@ -55,8 +55,8 @@
           </div>
         {:else}
           <div>
-            <a href={hrefs.login.link} class="btn btn-secondary w-full btn-lg"
-              >Login</a
+            <a href={hrefs.explore.link} class="btn btn-secondary w-full btn-lg"
+              >Explore</a
             >
           </div>
           <div>
