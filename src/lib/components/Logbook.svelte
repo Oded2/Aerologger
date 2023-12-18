@@ -450,8 +450,8 @@
 
               <button
                 class="btn btn-info col-span-6"
-                on:click={() => changeMassVisibility(false)}
-                disabled={inProgress}>Make Logs Private</button
+                on:click={() => changeMassVisibility(true)}
+                disabled={inProgress}>Make Logs Public</button
               >
             </LogbookSettingGroup>
             <LogbookSettingGroup title="Danger Zone">
