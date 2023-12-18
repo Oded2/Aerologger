@@ -23,7 +23,7 @@
   class:w-96={defaultWidth}
   class:mx-auto={marginAuto}
   class:shadow-lg={!largeShadow}
-  class:shadow-2xl={largeShadow}
+  class:shadow-xl={largeShadow}
   class:rounded-xl={rounded}
 >
   {#if imgTop}
