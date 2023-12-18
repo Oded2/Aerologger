@@ -87,6 +87,8 @@
       showError(error.message);
       return;
     }
+    logId = data[0].id;
+    isComplete = true;
     resetValues();
   }
   function verify() {
@@ -109,8 +111,6 @@
     return true;
   }
   function resetValues() {
-    logId = data[0].id;
-    isComplete = true;
     dep = "";
     des = "";
     dateStr = dateToStr();
