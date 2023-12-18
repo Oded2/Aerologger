@@ -10,7 +10,7 @@
     calculateMinutes,
     formatDateTime,
   } from "../../hooks.client.js";
-  import { oldHrefs } from "$lib/index.js";
+  import { hrefs } from "$lib/index.js";
   import { page } from "$app/stores";
   import ToastSetup from "./ToastSetup.svelte";
   import { supabase as supabaseClient } from "$lib/index.js";
@@ -349,7 +349,7 @@
           <div>
             <div class="join">
               <a
-                href={addParamsString(oldHrefs.logbook.viewer.link, {
+                href={addParamsString(hrefs.viewer.link, {
                   logid: log.id,
                   ref: refUrl,
                 })}
@@ -359,7 +359,7 @@
                 <li>
                   <a
                     class="disabled"
-                    href={addParamsString(oldHrefs.newFlight.home.link, {
+                    href={addParamsString(hrefs.newflight.link, {
                       preset: log.id,
                     })}>Preset Flight</a
                   >
@@ -367,7 +367,7 @@
                 {#if allowModification}
                   <li>
                     <a
-                      href={addParamsString(oldHrefs.newFlight.home.link, {
+                      href={addParamsString(hrefs.newflight.link, {
                         preset: log.id,
                         edit: true,
                       })}>Edit Flight</a
