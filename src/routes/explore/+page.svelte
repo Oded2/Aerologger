@@ -4,7 +4,7 @@
   import ExploreCard from "$lib/components/ExploreCard.svelte";
   import FormInput from "$lib/components/FormInput.svelte";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
-  import { hrefs, oldHrefs } from "$lib/index.js";
+  import { hrefs } from "$lib/index.js";
   import { addParamsString } from "../../hooks.client.js";
   let toast;
   let profileSearch = "";
@@ -30,7 +30,7 @@
     </div>
     <div class="grid md:grid-cols-2 gap-4">
       <ExploreCard
-        title={oldHrefs.explore.profile.title}
+        title={"Profile Search"}
         desc="Explore any AeroLogger pilot's logbook. Only flights set public by the pilot are shown."
         submitText="Search"
         disabled={inProgress}

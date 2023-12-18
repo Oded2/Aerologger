@@ -2,7 +2,7 @@
 import { PUBLIC_SUPABASE, PUBLIC_SBURL } from "$env/static/public";
 import { createSupabaseServerClient } from "@supabase/auth-helpers-sveltekit";
 import { redirect } from "@sveltejs/kit";
-import { oldHrefs } from "$lib/index.js";
+import { hrefs } from "$lib/index.js";
 
 export const handle = async ({ event, resolve }) => {
   event.locals.supabase = createSupabaseServerClient({
@@ -19,7 +19,7 @@ export const handle = async ({ event, resolve }) => {
   if (event.url.pathname.startsWith("/protected")) {
     const session = await event.locals.getSession();
     if (!session) {
-      throw redirect(303, oldHrefs.login.home.link);
+      throw redirect(303, hrefs.home.link);
     }
   }
 

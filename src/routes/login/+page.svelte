@@ -1,11 +1,11 @@
 <script>
   import FormInput from "$lib/components/FormInput.svelte";
-  import { hrefs, oldHrefs } from "$lib/index.js";
+  import { hrefs } from "$lib/index.js";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
   import { goto } from "$app/navigation";
   import Modal from "$lib/components/Modal.svelte";
   import { createToast } from "../../hooks.client.js";
-  import MidScreen from "$lib/components/MidScreen.svelte";
+  import { page } from "$app/stores";
   import Container from "$lib/components/Container.svelte";
   import Card from "$lib/components/Card.svelte";
   export let data;
@@ -33,7 +33,7 @@
       toast = createToast("error", "Error", error.message);
       return;
     }
-    goto(oldHrefs.home.home.link);
+    goto(hrefs.home.link);
   }
   function validateForm() {
     const errorToast = (description) => {
@@ -57,7 +57,7 @@
     }
     inProgress = true;
     const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-      redirectTo: oldHrefs.passwordreset.home.weblink,
+      redirectTo: $page.url.origin + hrefs.home.link,
     });
     inProgress = false;
     if (error) {
