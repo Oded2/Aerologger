@@ -56,7 +56,7 @@
       <div class="card-actions justify-end">
         {#if resetButton}
           <button
-            type="reset"
+            type="button"
             on:click={() => dispatch("reset")}
             {disabled}
             class="btn btn-secondary">Clear</button

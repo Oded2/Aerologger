@@ -87,15 +87,7 @@
       showError(error.message);
       return;
     }
-    logId = data[0].id;
-    isComplete = true;
-    dep = "";
-    des = "";
-    dateStr = dateToStr();
-    depTimeStr = getTimeStr();
-    desTimeStr = getTimeStr();
-    tailNum = "";
-    userNotes = "";
+    resetValues();
   }
   function verify() {
     if (!dep || dep.length == 0) {
@@ -115,6 +107,17 @@
       return false;
     }
     return true;
+  }
+  function resetValues() {
+    logId = data[0].id;
+    isComplete = true;
+    dep = "";
+    des = "";
+    dateStr = dateToStr();
+    depTimeStr = getTimeStr();
+    desTimeStr = getTimeStr();
+    tailNum = "";
+    userNotes = "";
   }
   function showError(desc) {
     toast = createToast("error", "Error", desc);
@@ -167,6 +170,7 @@
         resetButton
         buttonText="Submit"
         on:submit={submit}
+        on:reset={resetValues}
         disabled={inProgress}
       >
         <div class="grid md:grid-cols-2 gap-4 text-xl">
