@@ -110,7 +110,9 @@
               <FormInput type="checkbox" text="Expand" bind:value={notesExpand}
               ></FormInput>
             {/if}
-            <p class:whitespace-pre-wrap={notesExpand}>
+            <p
+              class:whitespace-pre-wrap={log.notes.length <= min || notesExpand}
+            >
               {notesExpand ? log.notes : maxLen(log.notes, min)}
             </p>
             <div class="mt-5">
