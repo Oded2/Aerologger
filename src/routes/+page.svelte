@@ -49,7 +49,7 @@
             >
           </div>
           <div>
-            <a href={hrefs.logbook.link} class="btn btn-primary w-full btn-lg"
+            <a href={hrefs.newflight.link} class="btn btn-primary w-full btn-lg"
               >Log New Flight</a
             >
           </div>

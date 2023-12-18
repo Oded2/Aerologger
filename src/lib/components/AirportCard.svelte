@@ -9,6 +9,7 @@
   title={cardTitle}
   actions={false}
   rounded
+  fullWidth
   iframeUrl={getOpenStreetMap(
     parseFloat(airportData.latitude),
     parseFloat(airportData.longitude)

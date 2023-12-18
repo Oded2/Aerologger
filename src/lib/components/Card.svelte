@@ -1,30 +1,37 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+
   export let imgTop = false;
   export let imgBottom = false;
   export let imgUrl = "";
   export let title = "";
   export let actions = true;
+  export let resetButton = false;
   export let buttonText = "";
   export let href = "";
   export let list = [];
   export let background = "bg-base-100";
   export let defaultWidth = true;
   export let wider = false;
+  export let fullWidth = false;
   export let marginAuto = false;
   export let disabled = false;
   export let largeShadow = false;
   export let rounded = false;
   export let iframeUrl = "";
+
+  const dispatch = createEventDispatcher();
 </script>
 
 <div
   class={`card h-full ${background}`}
   class:max-w-4xl={wider}
-  class:w-96={defaultWidth}
+  class:w-96={defaultWidth && !wider && !fullWidth}
   class:mx-auto={marginAuto}
   class:shadow-lg={!largeShadow}
   class:shadow-xl={largeShadow}
   class:rounded-xl={rounded}
+  class:w-full={fullWidth}
 >
   {#if imgTop}
     <figure>
@@ -47,6 +54,13 @@
     </div>
     {#if actions}
       <div class="card-actions justify-end">
+        {#if resetButton}
+          <button
+            type="reset"
+            on:click={() => dispatch("reset")}
+            class="btn btn-secondary">Clear</button
+          >
+        {/if}
         {#if href.length > 0}
           <a {href} class="btn btn-primary">{buttonText}</a>
         {:else}
