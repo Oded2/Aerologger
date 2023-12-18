@@ -9,15 +9,18 @@
   export let list = [];
   export let background = "bg-base-100";
   export let allowWide = false;
-  export let className = `card ${
-    allowWide ? "max-w-4xl" : "w-96"
-  } ${background} shadow-lg h-full`;
+  export let className = "card shadow-lg h-full";
   export let marginAuto = false;
   export let disabled = false;
   export let iframeUrl = "";
 </script>
 
-<div class={className} class:mx-auto={marginAuto}>
+<div
+  class={`${className} ${background}`}
+  class:max-w-4xl={allowWide}
+  class:w-96={!allowWide}
+  class:mx-auto={marginAuto}
+>
   {#if imgTop}
     <figure>
       <img src={imgUrl} alt={title} />

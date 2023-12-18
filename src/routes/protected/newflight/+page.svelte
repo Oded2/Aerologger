@@ -160,101 +160,102 @@
           Welcome back, <span class="text-primary">Pilot</span>.
         </h1>
       </div>
-      <form
-        class="card card-body shadow-2xl mx-auto max-w-2xl text-xl"
-        on:submit|preventDefault={submit}
-      >
-        <div class="md:grid grid-cols-12 gap-4 px-5">
-          <div class="col-span-6">
-            <label for="dep" class="label">Departure Airport</label>
-            <FormInput
-              id="dep"
-              placeholder="TLV"
-              text={"Name, ICAO, or IATA code"}
-              bind:value={dep}
-              on:blur={() => {
-                if (dep.length == 3 || dep.length == 4) dep = dep.toUpperCase();
-              }}
-            />
+      <Card marginAuto allowWide actions={false}>
+        <form class="text-xl" on:submit|preventDefault={submit}>
+          <div class="md:grid grid-cols-12 gap-4 px-5">
+            <div class="col-span-6">
+              <label for="dep" class="label">Departure Airport</label>
+              <FormInput
+                id="dep"
+                placeholder="TLV"
+                text={"Name, ICAO, or IATA code"}
+                bind:value={dep}
+                on:blur={() => {
+                  if (dep.length == 3 || dep.length == 4)
+                    dep = dep.toUpperCase();
+                }}
+              />
+            </div>
+            <div class="col-span-6">
+              <label for="des" class="label">Destination Airport</label>
+              <FormInput
+                id="des"
+                placeholder="ATL"
+                bind:value={des}
+                on:blur={() => {
+                  if (des.length == 3 || des.length == 4)
+                    des = des.toUpperCase();
+                }}
+              />
+            </div>
+            <div class="col-span-4">
+              <label for="date" class="label">Date</label>
+              <FormInput type="date" id="date" bind:value={dateStr} />
+            </div>
+            <div class="col-span-4">
+              <label for="depTime" class="label">Takeoff</label>
+              <FormInput id="depTime" type="time" bind:value={depTimeStr} />
+            </div>
+            <div class="col-span-4">
+              <label for="desTime" class="label">Landing</label>
+              <FormInput
+                id="desTime"
+                type="time"
+                bind:value={desTimeStr}
+                text="Relative to the takeoff time zone"
+              />
+            </div>
+            <div class="col-span-6">
+              <label for="aircraft" class="label">Aircraft</label>
+              <select
+                id="aircraft"
+                bind:value={plane}
+                class="select select-bordered w-full max-w-xs"
+              >
+                {#each airplanes as airplane}
+                  <option value={airplane.id}
+                    >{airplane.make} {airplane.model}</option
+                  >
+                {/each}
+              </select>
+            </div>
+            <div class="col-span-6">
+              <label for="tail" class="label">Tail Number</label>
+              <FormInput
+                id="tail"
+                max="20"
+                bind:value={tailNum}
+                placeholder={'"CHA"'}
+              />
+            </div>
+            <div class="col-span-full">
+              <label for="notes" class="label">Notes</label>
+              <FormInput
+                id="notes"
+                type="textarea"
+                bind:value={userNotes}
+                text={`${userNotes.length}/${(10000).toLocaleString()}`}
+              />
+            </div>
+            <div class="col-span-full">
+              <FormInput
+                type="checkbox"
+                bind:value={isPublic}
+                disabled={inProgress}
+                text="Public"
+              ></FormInput>
+            </div>
           </div>
-          <div class="col-span-6">
-            <label for="des" class="label">Destination Airport</label>
-            <FormInput
-              id="des"
-              placeholder="ATL"
-              bind:value={des}
-              on:blur={() => {
-                if (des.length == 3 || des.length == 4) des = des.toUpperCase();
-              }}
-            />
-          </div>
-          <div class="col-span-4">
-            <label for="date" class="label">Date</label>
-            <FormInput type="date" id="date" bind:value={dateStr} />
-          </div>
-          <div class="col-span-4">
-            <label for="depTime" class="label">Takeoff</label>
-            <FormInput id="depTime" type="time" bind:value={depTimeStr} />
-          </div>
-          <div class="col-span-4">
-            <label for="desTime" class="label">Landing</label>
-            <FormInput
-              id="desTime"
-              type="time"
-              bind:value={desTimeStr}
-              text="Relative to the takeoff time zone"
-            />
-          </div>
-          <div class="col-span-6">
-            <label for="aircraft" class="label">Aircraft</label>
-            <select
-              id="aircraft"
-              bind:value={plane}
-              class="select select-bordered w-full max-w-xs"
+          <div class="card-actions justify-end">
+            <button class="btn btn-secondary" disabled={inProgress} type="reset"
+              >Clear</button
             >
-              {#each airplanes as airplane}
-                <option value={airplane.id}
-                  >{airplane.make} {airplane.model}</option
-                >
-              {/each}
-            </select>
+            <button class="btn btn-primary" disabled={inProgress} type="submit"
+              >Submit</button
+            >
           </div>
-          <div class="col-span-6">
-            <label for="tail" class="label">Tail Number</label>
-            <FormInput
-              id="tail"
-              max="20"
-              bind:value={tailNum}
-              placeholder={'"CHA"'}
-            />
-          </div>
-          <div class="col-span-full">
-            <label for="notes" class="label">Notes</label>
-            <FormInput
-              id="notes"
-              type="textarea"
-              bind:value={userNotes}
-              text={`${userNotes.length}/${(10000).toLocaleString()}`}
-            />
-          </div>
-          <div class="col-span-full">
-            <FormInput
-              type="checkbox"
-              bind:value={isPublic}
-              disabled={inProgress}
-              text="Public"
-            ></FormInput>
-          </div>
-        </div>
-        <div class="card-actions justify-end">
-          <button class="btn btn-secondary" disabled={inProgress} type="reset"
-            >Clear</button
-          >
-          <button class="btn btn-primary" disabled={inProgress} type="submit"
-            >Submit</button
-          >
-        </div>
-      </form>
+        </form></Card
+      >
     {/if}
   </Container>
 </main>
