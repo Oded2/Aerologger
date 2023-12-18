@@ -162,7 +162,7 @@
       </div>
       <Card marginAuto allowWide actions={false}>
         <form class="text-xl" on:submit|preventDefault={submit}>
-          <div class="md:grid grid-cols-12 gap-4 px-5">
+          <div class="grid md:grid-cols-12 gap-4 px-5">
             <div class="col-span-6">
               <label for="dep" class="label">Departure Airport</label>
               <FormInput
