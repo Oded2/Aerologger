@@ -116,7 +116,7 @@
   <Container>
     {#if !isComplete}
       <Card
-        allowWide
+        wider
         on:submit={submit}
         marginAuto
         title="Sign Up"

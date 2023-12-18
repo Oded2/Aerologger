@@ -46,7 +46,7 @@
       </div>
       <div class="grid grid-cols-2 md:grid-cols-12 text-xl mt-5 gap-4">
         <div class="col-span-5 mb-5">
-          <Card actions={false} title="Plane Information" allowWide>
+          <Card actions={false} title="Plane Information" wider>
             <ul class="list-disc">
               <li class="list-item">
                 Manufacturer: <span class="capitalize font-bold">
@@ -67,7 +67,7 @@
           </Card>
         </div>
         <div class="col-span-7 mb-5">
-          <Card actions={false} title="Flight Information" allowWide>
+          <Card actions={false} title="Flight Information" wider>
             <ul class="list-disc">
               <li class="list-item font-bold">
                 {log.dep.icao} to {log.des.icao}

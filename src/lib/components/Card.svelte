@@ -8,7 +8,8 @@
   export let href = "";
   export let list = [];
   export let background = "bg-base-100";
-  export let allowWide = false;
+  export let defaultWidth = true;
+  export let wider = false;
   export let className = "card shadow-lg h-full";
   export let marginAuto = false;
   export let disabled = false;
@@ -17,8 +18,8 @@
 
 <div
   class={`${className} ${background}`}
-  class:max-w-4xl={allowWide}
-  class:w-96={!allowWide}
+  class:max-w-4xl={wider}
+  class:w-96={defaultWidth}
   class:mx-auto={marginAuto}
 >
   {#if imgTop}

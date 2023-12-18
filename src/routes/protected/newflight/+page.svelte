@@ -160,7 +160,7 @@
           Welcome back, <span class="text-primary">Pilot</span>.
         </h1>
       </div>
-      <Card marginAuto allowWide actions={false}>
+      <Card marginAuto wider actions={false}>
         <form class="text-xl" on:submit|preventDefault={submit}>
           <div class="grid md:grid-cols-12 gap-4 px-5">
             <div class="col-span-6">
