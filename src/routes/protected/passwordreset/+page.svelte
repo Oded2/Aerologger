@@ -4,10 +4,10 @@
   import Container from "$lib/components/Container.svelte";
   import FormInput from "$lib/components/FormInput.svelte";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
-  import { oldHrefs } from "$lib/index.js";
+  import { hrefs } from "$lib/index.js";
   import { createToast } from "../../../hooks.client.js";
   export let data;
-  const { supabase, session } = data;
+  const { supabase } = data;
   let toast;
   let password = "",
     confirmPass = "";
@@ -43,7 +43,7 @@
       "You will be automatically redirected in 5 seconds."
     );
     setTimeout(() => {
-      goto(oldHrefs.home.home.link);
+      goto(hrefs.home.link);
     }, 5000);
   }
 </script>

@@ -44,5 +44,8 @@
     },
     "profile": {
         "link": "/profile/slug"
+    },
+    "apiAirport": {
+        "link": "/apis/airports"
     }
 }

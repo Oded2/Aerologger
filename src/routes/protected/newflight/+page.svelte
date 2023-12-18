@@ -8,7 +8,7 @@
     parseDateAndTime,
   } from "../../../hooks.client.js";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
-  import { hrefs, oldHrefs } from "$lib/index.js";
+  import { hrefs } from "$lib/index.js";
   import logo from "$lib/images/logo_simplified.png";
   import FloatElement from "$lib/components/FloatElement.svelte";
   import Container from "$lib/components/Container.svelte";
@@ -17,7 +17,7 @@
   export let data;
   const { supabase, session, log, airplanes } = data;
   let { edit } = data;
-  const apiRef = oldHrefs.apis;
+  const apiRef = hrefs.apiAirport.link;
   let toast;
   let dep = log ? log.dep.icao : "",
     des = log ? log.des.icao : "";

@@ -1,5 +1,5 @@
 <script>
-  import { hrefs, oldHrefs } from "$lib/index.js";
+  import { hrefs } from "$lib/index.js";
   import {
     createToast,
     dateToStr,
