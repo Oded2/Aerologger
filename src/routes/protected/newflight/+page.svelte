@@ -151,7 +151,6 @@
           <a
             href={addParamsString(hrefs.viewer.link, {
               logid: logId,
-              ref: hrefs.newflight.link,
             })}
             class="btn btn-primary">View Flight</a
           >
