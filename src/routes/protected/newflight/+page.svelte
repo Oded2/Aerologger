@@ -232,17 +232,18 @@
             </div>
             <div class="col-span-6">
               <label for="aircraft" class="label">Aircraft</label>
-              <select
+              <FormInput
+                type="select"
                 id="aircraft"
+                maxWidth={false}
                 bind:value={plane}
-                class="select select-bordered w-full max-w-xs"
               >
                 {#each airplanes as airplane}
                   <option value={airplane.id}
                     >{airplane.make} {airplane.model}</option
                   >
                 {/each}
-              </select>
+              </FormInput>
             </div>
             <div class="col-span-6">
               <label for="tail" class="label">Tail Number</label>

@@ -136,6 +136,14 @@
       />
     </label>
   </div>
+{:else if type === "select"}
+  <select
+    {id}
+    bind:value
+    class="select select-bordered w-full"
+    {disabled}
+    class:max-w-xs={maxWidth}><slot /></select
+  >
 {:else}
   <label class="form-control w-full join" class:max-w-xs={maxWidth}>
     <input
