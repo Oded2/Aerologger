@@ -12,12 +12,14 @@
   export let cols = "30";
   export let required = false;
   export let disabled = false;
+  export let maxWidth = true;
+  export let joinItem = false;
 
   const dispatch = createEventDispatcher();
 </script>
 
 {#if type === "date"}
-  <label class="form-control w-full max-w-xs">
+  <label class="form-control w-full" class:max-w-xs={maxWidth}>
     <input
       {required}
       bind:value
@@ -36,7 +38,7 @@
     {/if}
   </label>
 {:else if type === "email"}
-  <label class="form-control w-full max-w-xs">
+  <label class="form-control w-full" class:max-w-xs={maxWidth}>
     <input
       {required}
       bind:value
@@ -59,7 +61,7 @@
     {/if}
   </label>
 {:else if type === "password"}
-  <label class="form-control w-full max-w-xs">
+  <label class="form-control w-full" class:max-w-xs={maxWidth}>
     <input
       {required}
       bind:value
@@ -81,7 +83,7 @@
     {/if}
   </label>
 {:else if type === "time"}
-  <label class="form-control w-full max-w-xs">
+  <label class="form-control w-full" class:max-w-xs={maxWidth}>
     <input
       {required}
       bind:value
@@ -135,7 +137,7 @@
     </label>
   </div>
 {:else}
-  <label class="form-control w-full max-w-xs">
+  <label class="form-control w-full join" class:max-w-xs={maxWidth}>
     <input
       {required}
       bind:value
@@ -145,6 +147,8 @@
       type="text"
       {placeholder}
       class="input input-bordered w-full"
+      class:join-item={joinItem}
+      {disabled}
       on:blur={() => {
         value = value.trim();
         dispatch("blur");

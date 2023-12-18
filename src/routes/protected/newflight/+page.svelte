@@ -160,25 +160,39 @@
           Welcome back, <span class="text-primary">Pilot</span>.
         </h1>
       </div>
-      <Card marginAuto wider actions={false}>
+      <Card marginAuto defaultWidth={false} actions={false}>
         <form class="text-xl" on:submit|preventDefault={submit}>
           <div class="grid md:grid-cols-12 gap-4 px-5">
             <div class="col-span-6">
               <label for="dep" class="label">Departure Airport</label>
-              <FormInput
-                id="dep"
-                placeholder="TLV"
-                text={"Name, ICAO, or IATA code"}
-                bind:value={dep}
-                on:blur={() => {
-                  if (dep.length == 3 || dep.length == 4)
-                    dep = dep.toUpperCase();
-                }}
-              />
+              <div class="join w-full">
+                <FormInput
+                  maxWidth={false}
+                  id="dep"
+                  placeholder="TLV"
+                  text={"Name, ICAO, or IATA code"}
+                  joinItem
+                  bind:value={dep}
+                  on:blur={() => {
+                    if (dep.length == 3 || dep.length == 4)
+                      dep = dep.toUpperCase();
+                  }}
+                />
+                <button
+                  type="button"
+                  class="btn btn-secondary join-item"
+                  on:click={() => {
+                    const temp = dep;
+                    dep = des;
+                    des = temp;
+                  }}><i class="fa-solid fa-right-left"></i></button
+                >
+              </div>
             </div>
             <div class="col-span-6">
               <label for="des" class="label">Destination Airport</label>
               <FormInput
+                maxWidth={false}
                 id="des"
                 placeholder="ATL"
                 bind:value={des}
@@ -190,15 +204,26 @@
             </div>
             <div class="col-span-4">
               <label for="date" class="label">Date</label>
-              <FormInput type="date" id="date" bind:value={dateStr} />
+              <FormInput
+                maxWidth={false}
+                type="date"
+                id="date"
+                bind:value={dateStr}
+              />
             </div>
             <div class="col-span-4">
               <label for="depTime" class="label">Takeoff</label>
-              <FormInput id="depTime" type="time" bind:value={depTimeStr} />
+              <FormInput
+                maxWidth={false}
+                id="depTime"
+                type="time"
+                bind:value={depTimeStr}
+              />
             </div>
             <div class="col-span-4">
               <label for="desTime" class="label">Landing</label>
               <FormInput
+                maxWidth={false}
                 id="desTime"
                 type="time"
                 bind:value={desTimeStr}
@@ -222,6 +247,7 @@
             <div class="col-span-6">
               <label for="tail" class="label">Tail Number</label>
               <FormInput
+                maxWidth={false}
                 id="tail"
                 max="20"
                 bind:value={tailNum}
@@ -231,6 +257,7 @@
             <div class="col-span-full">
               <label for="notes" class="label">Notes</label>
               <FormInput
+                maxWidth={false}
                 id="notes"
                 type="textarea"
                 bind:value={userNotes}
@@ -239,6 +266,7 @@
             </div>
             <div class="col-span-full">
               <FormInput
+                maxWidth={false}
                 type="checkbox"
                 bind:value={isPublic}
                 disabled={inProgress}
