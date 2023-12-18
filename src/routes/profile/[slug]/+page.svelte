@@ -23,7 +23,9 @@
       {#if profile.birthday}
         <h5 class="text-xl">{userAge.toLocaleString()} Years Old</h5>
       {/if}
-      <h6 class="text-lg">Pilot's username: {profile.username}</h6>
+      <h6 class="text-lg">
+        Pilot's username: <span class="font-bold">{profile.username}</span>
+      </h6>
     </div>
 
     <Logbook
