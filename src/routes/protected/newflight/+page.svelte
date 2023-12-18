@@ -17,7 +17,6 @@
   export let data;
   const { supabase, session, log, airplanes } = data;
   let { edit } = data;
-  const apiRef = hrefs.apiAirport.link;
   let toast;
   let dep = log ? log.dep.icao : "",
     des = log ? log.des.icao : "";
