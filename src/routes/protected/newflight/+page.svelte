@@ -29,8 +29,7 @@
   let isPublic = log ? log.public : true;
   let inProgress = false,
     isComplete = false;
-  const ogProgress = { message: "", value: 0 };
-  let progress = ogProgress;
+  let progressStage = 0;
   let logId = NaN;
   $: tailNum = tailNum.toUpperCase();
   $: depDate = parseDateAndTime(dateStr, depTimeStr);
@@ -48,23 +47,25 @@
         : new Date(tempDate.valueOf() + 86400000);
 
     inProgress = true;
-    progress = { message: "Fetching Departure Airport", value: 50 };
+    progressStage++;
     const depAirport = await getAirportDetails(dep);
     if (depAirport.length != 1) {
       showError("Departure airport not found.");
       inProgress = false;
-      progress = ogProgress;
+
+      progressStage = 0;
       return;
     }
-    progress = { message: "Fetching Destination Airport", value: 75 };
+    progressStage++;
     const desAirport = await getAirportDetails(des);
     if (desAirport.length != 1) {
       showError("Destination airport not found");
       inProgress = false;
-      progress = ogProgress;
+
+      progressStage = 0;
       return;
     }
-    progress = { message: "Inserting Into Database", value: 100 };
+    progressStage++;
     const toInsert = {
       user_id: session.user.id,
       dep: depAirport[0],
@@ -81,7 +82,7 @@
       ? await supabase.from("Logs").update(toInsert).eq("id", log.id).select()
       : await supabase.from("Logs").insert(toInsert).select();
     inProgress = false;
-    progress = ogProgress;
+    progressStage = 0;
     if (error) {
       showError(error.message);
       return;
@@ -287,6 +288,19 @@
           </div>
         </div>
       </Card>
+      {#if inProgress}
+        <ul class="steps mt-5 w-full">
+          <li class="step" class:step-primary={progressStage >= 1}>
+            Fetching Departure Airport
+          </li>
+          <li class="step" class:step-primary={progressStage >= 2}>
+            Fetching Destination Airport
+          </li>
+          <li class="step" class:step-primary={progressStage >= 3}>
+            Inserting Into Database
+          </li>
+        </ul>
+      {/if}
     {/if}
   </Container>
 </main>
