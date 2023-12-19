@@ -42,7 +42,7 @@
         Logged by: <a href={profileRef} class="link">{profile.display_name}</a>
       </h4>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-12 text-xl mt-5 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-12 text-xl mt-5 md:gap-4">
       <div class="col-span-5 mb-5">
         <Card actions={false} title="Plane Information" wider>
           <ul class="list-disc">
