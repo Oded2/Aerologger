@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import { hrefs } from "$lib/index.js";
   import { page } from "$app/stores";
+  import { themeChange } from "theme-change";
   import "../global.css";
   import Title from "$lib/components/Title.svelte";
   import logo from "$lib/images/logo_simplified_lowres.png";
@@ -11,17 +12,20 @@
   import Container from "$lib/components/Container.svelte";
   import { addParamsString } from "../hooks.client.js";
 
+  export let data;
+
   $: pageUrl = new URL($page.url);
   $: activeUrl = pageUrl.pathname;
-  let title = "AeroLogger";
+  let title = "";
   $: if (activeUrl) {
     title = findTitle();
   }
-  export let data;
+
   $: supabase = data.supabase;
   $: session = data.session;
 
   onMount(() => {
+    themeChange(false);
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, _session) => {
@@ -66,8 +70,16 @@
       </ul>
     </div>
     <div class="navbar-end">
+      <Dropdown className="btn btn-ghost me-3" icon="sun">
+        <li>
+          <button data-set-theme="alLight">Light</button>
+        </li>
+        <li>
+          <button data-set-theme="alDark">Dark</button>
+        </li>
+      </Dropdown>
       {#if session}
-        <Dropdown title="My Space" className=" btn btn-primary">
+        <Dropdown title="My Space" className="btn btn-primary">
           <li>
             <a
               href={addParamsString(hrefs.redProfile.link, {
@@ -101,6 +113,6 @@
 </Container>
 <slot />
 
-{#if title}
+{#if title.length > 0}
   <Title {title} />
 {/if}

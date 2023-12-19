@@ -45,6 +45,7 @@
 		"daisyui": "^4.4.20",
 		"md5": "^2.3.0",
 		"supabase": "^1.99.5",
-		"svelte-toasts": "^1.1.2"
+		"svelte-toasts": "^1.1.2",
+		"theme-change": "^2.5.0"
 	}
 }
