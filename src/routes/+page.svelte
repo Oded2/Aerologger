@@ -31,6 +31,7 @@
       ],
     },
   ];
+  async function contact() {}
   let progress = false;
   let contactEmail = session ? session.user.email : "";
   let contactName = "";
@@ -89,7 +90,13 @@
       </div>
     </div>
     <div class="my-5 text-xl">
-      <Card title="Contact Form" buttonText="Submit" disabled={progress} wider>
+      <Card
+        on:submit={contact}
+        title="Contact Form"
+        buttonText="Submit"
+        disabled={progress}
+        wider
+      >
         <div class="mb-3">
           <label for="contactEmail" class="label">Email</label>
           <FormInput
@@ -115,6 +122,7 @@
           <FormInput
             id="contactTopic"
             placeholder="I am your father"
+            required
             bind:value={contactTopic}
           ></FormInput>
         </div>
