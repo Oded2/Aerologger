@@ -1,6 +1,7 @@
 <script>
   import Card from "$lib/components/Card.svelte";
   import Container from "$lib/components/Container.svelte";
+  import FormInput from "$lib/components/FormInput.svelte";
   import { hrefs } from "$lib/index.js";
   export let data;
   const { session } = data;
@@ -30,6 +31,11 @@
       ],
     },
   ];
+  let progress = false;
+  let contactEmail = session ? session.user.email : "";
+  let contactName = "";
+  let contactTopic = "";
+  let contactMessage = "";
 </script>
 
 <main>
@@ -81,6 +87,49 @@
           ></Card>
         {/each}
       </div>
+    </div>
+    <div class="my-5 text-xl">
+      <Card title="Contact Form" buttonText="Submit" disabled={progress} wider>
+        <div class="mb-3">
+          <label for="contactEmail" class="label">Email</label>
+          <FormInput
+            id="contactEmail"
+            type="email"
+            text="Incase I need to get back to you"
+            placeholder="darthvader@tatooine.com"
+            bind:value={contactEmail}
+            required
+          ></FormInput>
+        </div>
+        <div class="mb-3">
+          <label for="contactName" class="label">Name</label>
+          <FormInput
+            id="contactName"
+            placeholder="Darth Vader"
+            bind:value={contactName}
+            required
+          ></FormInput>
+        </div>
+        <div class="mb-3">
+          <label for="contactTopic" class="label">Topic</label>
+          <FormInput
+            id="contactTopic"
+            placeholder="I am your father"
+            bind:value={contactTopic}
+          ></FormInput>
+        </div>
+        <div class="mb-3">
+          <label for="contactMessage" class="label">Message</label>
+          <FormInput
+            id="contactMessage"
+            type="textarea"
+            rows="5"
+            max="10000"
+            bind:value={contactMessage}
+            required
+          ></FormInput>
+        </div>
+      </Card>
     </div>
   </Container>
 </main>
