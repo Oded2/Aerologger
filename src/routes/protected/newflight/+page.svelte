@@ -34,7 +34,10 @@
   $: tailNum = tailNum.toUpperCase();
   $: depDate = parseDateAndTime(dateStr, depTimeStr);
   async function getAirportDetails(airport = "") {
-    return await fetchFromEndpoint(hrefs.apiAirport.link, { airport });
+    const response = await fetchFromEndpoint(hrefs.apiAirport.link, {
+      airport,
+    });
+    return await response.json();
   }
   async function submit() {
     if (!verify()) {

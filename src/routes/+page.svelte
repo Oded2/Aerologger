@@ -2,7 +2,9 @@
   import Card from "$lib/components/Card.svelte";
   import Container from "$lib/components/Container.svelte";
   import FormInput from "$lib/components/FormInput.svelte";
+  import ToastSetup from "$lib/components/ToastSetup.svelte";
   import { hrefs } from "$lib/index.js";
+  import { createToast, fetchFromEndpoint } from "../hooks.client.js";
   export let data;
   const { session } = data;
   const cards = [
@@ -31,7 +33,22 @@
       ],
     },
   ];
-  async function contact() {}
+  let toast;
+  async function contact() {
+    progress = true;
+    await fetchFromEndpoint("https://formspree.io/f/mgejprlb", {
+      email: contactEmail,
+      name: contactName,
+      topic: contactTopic,
+      message: contactMessage,
+    });
+    progress = false;
+    toast = createToast(
+      "success",
+      "Message Sent",
+      "Thank you for your feedback"
+    );
+  }
   let progress = false;
   let contactEmail = session ? session.user.email : "";
   let contactName = "";
@@ -141,3 +158,5 @@
     </div>
   </Container>
 </main>
+
+<ToastSetup {toast}></ToastSetup>
