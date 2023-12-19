@@ -107,6 +107,7 @@
       {required}
       {rows}
       {cols}
+      dir="auto"
       bind:value
       class="textarea textarea-bordered resize-none text-base"
       {placeholder}
