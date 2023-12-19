@@ -117,16 +117,18 @@
       }}
       {disabled}
     ></textarea>
-    {#if text.length > 0 || true}
+
+    {#if max > 0 || text.length > 0}
       <div class="label">
-        <span class="label-text-alt">{text}</span>
-      </div>
-    {/if}
-    {#if max > 0}
-      <div class="label">
-        <span class="label-text-alt"
-          >{`${value.length}/${parseInt(max).toLocaleString()}`}</span
-        >
+        {#if max > 0}
+          <span class="label-text-alt"
+            >{`${value.length}/${parseInt(max).toLocaleString()}`}</span
+          >{/if}
+        {#if text.length > 0}
+          <span class="label-text-alt">
+            {text}
+          </span>
+        {/if}
       </div>
     {/if}
   </label>

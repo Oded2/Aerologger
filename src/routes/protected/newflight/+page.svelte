@@ -276,7 +276,7 @@
               id="notes"
               type="textarea"
               bind:value={userNotes}
-              text={`${userNotes.length}/${(10000).toLocaleString()}`}
+              max="10000"
             />
             <FormInput
               maxWidth={false}
