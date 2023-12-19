@@ -118,10 +118,15 @@
             <div class="mt-5">
               <button
                 class="btn btn-primary"
-                onclick="notesOptions.showModal()"
+                on:click={() => navigator.clipboard.writeText(log.notes)}
               >
-                Options
+                Copy to Clipboard
               </button>
+              <a
+                href="data:text;charset=utf-8,{log.notes}"
+                download="{`log ${log.id} notes`}.txt"
+                class="btn btn-outline btn-primary">Export as .txt</a
+              >
             </div>
           </Card>
         </div>
@@ -177,20 +182,3 @@
 </FloatElement>
 
 <Title title={`${log.dep.city} to ${log.des.city}`}></Title>
-
-<Modal
-  id="notesOptions"
-  title={`${log.dep.city} to ${log.des.city} Note Options`}
->
-  <div class="my-3">
-    <button
-      class="btn btn-primary"
-      on:click={() => navigator.clipboard.writeText(log.notes)}>Copy</button
-    >
-    <a
-      href="data:text;charset=utf-8,{log.notes}"
-      download="{`log ${log.id} notes`}.txt"
-      class="btn btn-outline btn-primary">Export as TXT</a
-    >
-  </div>
-</Modal>
