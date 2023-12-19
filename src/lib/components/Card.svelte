@@ -24,7 +24,7 @@
 </script>
 
 <div
-  class={`card h-full ${background}`}
+  class="card h-full {background}"
   class:max-w-4xl={wider}
   class:w-96={defaultWidth && !wider && !fullWidth}
   class:mx-auto={marginAuto}
