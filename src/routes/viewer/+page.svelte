@@ -12,12 +12,12 @@
   import Title from "$lib/components/Title.svelte";
   import Container from "$lib/components/Container.svelte";
   import Card from "$lib/components/Card.svelte";
-  import Modal from "$lib/components/Modal.svelte";
   import FormInput from "$lib/components/FormInput.svelte";
   export let data;
   const { log, profile, ref, url } = data;
   const profileRef = hrefs.profile.link.replace("slug", profile.username);
   const min = 200;
+  const roundTrip = log.dep.icao === log.des.icao;
   url.searchParams.delete("ref");
 
   let notesExpand = false;
@@ -132,9 +132,9 @@
         </div>
       {/if}
       <div
-        class="{log.dep.icao === log.des.icao
-          ? 'col-span-full'
-          : 'col-span-6'} mb-5"
+        class:col-span-full={roundTrip}
+        class:col-span-6={!roundTrip}
+        class="mb-5"
       >
         <AirportCard
           airportData={log.dep}
