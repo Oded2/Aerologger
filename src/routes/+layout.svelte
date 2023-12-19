@@ -45,7 +45,7 @@
 </script>
 
 <Container margin={false}>
-  <div class="navbar mb-10">
+  <nav class="navbar mb-10">
     <div class="navbar-start">
       <div class="dropdown">
         <div tabindex="0" role="button" class="btn btn-ghost sm:hidden">
@@ -110,7 +110,7 @@
         >
       {/if}
     </div>
-  </div>
+  </nav>
 </Container>
 <slot />
 
