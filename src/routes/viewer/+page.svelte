@@ -111,6 +111,7 @@
               ></FormInput>
             {/if}
             <p
+              dir="auto"
               class:whitespace-pre-wrap={log.notes.length <= min || notesExpand}
             >
               {notesExpand ? log.notes : maxLen(log.notes, min)}
