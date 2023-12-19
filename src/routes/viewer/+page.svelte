@@ -34,7 +34,11 @@
 <main>
   <Container>
     <div class="text-center">
-      <h1 class="text-4xl">{log.dep.city} to {log.des.city}</h1>
+      <h1 class="text-4xl">
+        {roundTrip
+          ? `${log.dep.city} (Round Trip)`
+          : `${log.dep.city} to ${log.des.city}`}
+      </h1>
       <h3 class="text-2xl">
         {formatDateStr(log.depDate)}
       </h3>
