@@ -153,7 +153,6 @@
           <AirportCard
             airportData={log.des}
             cardTitle="Arrival Airport Information"
-            icon="plane-arrival"
           />
         </div>
       {/if}

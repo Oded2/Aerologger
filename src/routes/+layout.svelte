@@ -38,8 +38,9 @@
   function findTitle() {
     for (const key in hrefs) {
       const item = hrefs[key];
-      if (item.link === activeUrl) return item.title;
+      if (item.link === activeUrl) return item.title ?? "";
     }
+    return "";
   }
 </script>
 
