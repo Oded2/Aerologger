@@ -1,5 +1,6 @@
 <script>
   import { page } from "$app/stores";
+  import Title from "$lib/components/Title.svelte";
   const url = $page;
 </script>
 
@@ -12,6 +13,4 @@
   </div>
 </main>
 
-<svelte:head>
-  <title>{url.status} Error</title>
-</svelte:head>
+<Title title={`${url.status} Error`}></Title>

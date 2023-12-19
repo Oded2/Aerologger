@@ -1,6 +1,7 @@
 <script>
   import Container from "$lib/components/Container.svelte";
   import Logbook from "$lib/components/Logbook.svelte";
+  import Title from "$lib/components/Title.svelte";
   import { calculateMinutes } from "../../../hooks.client.js";
   export let data;
   const { profile, logs, session } = data;
@@ -36,4 +37,4 @@
   </Container>
 </main>
 
-<svelte:head><title>{`${profile.display_name}'s`} Profile</title></svelte:head>
+<Title title={`${profile.display_name}'s Profile'`}></Title>
