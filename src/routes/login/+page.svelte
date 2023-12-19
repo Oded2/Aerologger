@@ -15,7 +15,6 @@
     password = "";
   let resetEmail = "";
   let inProgress = false;
-  let showModal = false;
   $: emailLen = email.length > 0;
   $: passwordLen = password.length > 0;
   async function submit() {
