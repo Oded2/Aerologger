@@ -18,9 +18,7 @@
   $: emailLen = email.length > 0;
   $: passwordLen = password.length > 0;
   async function submit() {
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
     inProgress = true;
     const { error } = await supabase.auth.signInWithPassword({
       email: email,
