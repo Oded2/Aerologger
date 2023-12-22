@@ -427,11 +427,7 @@
         defaultWidth={false}
       >
         <div class="grid md:grid-flow-col gap-4">
-          <LogbookSettingGroup
-            title="Options"
-            className="btn-secondary"
-            href="data:text/json;charset=utf-8,{JSON.stringify(logs)}"
-          >
+          <LogbookSettingGroup title="Options">
             <a
               class="btn btn-secondary col-span-full"
               class:disabled={inProgress}
