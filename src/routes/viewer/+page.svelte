@@ -112,7 +112,7 @@
                     log.dep.latitude,
                     log.dep.longitude,
                     log.des.latitude,
-                    log.dep.longitude
+                    log.des.longitude
                   ).toLocaleString(undefined, {
                     maximumFractionDigits: 1,
                   })} Nautical Miles</span
