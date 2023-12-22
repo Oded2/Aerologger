@@ -72,14 +72,14 @@
       </div>
     {/if}
   </form>
-  {#if imgBottom}
+  {#if imgBottom || iframeUrl.length > 0}
     <figure>
-      <img src={imgUrl} alt={title} />
-    </figure>
-  {/if}
-  {#if iframeUrl.length > 0}
-    <figure>
-      <iframe class="w-full min-h-[500px]" src={iframeUrl} {title}></iframe>
+      {#if imgBottom}
+        <img src={imgUrl} alt={title} />
+      {/if}
+      {#if iframeUrl.length > 0}
+        <iframe class="w-full min-h-[500px]" src={iframeUrl} {title}></iframe>
+      {/if}
     </figure>
   {/if}
 </div>
