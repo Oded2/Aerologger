@@ -4,6 +4,7 @@
     formatDateTime,
     maxLen,
     formatDateStr,
+    haversineDistanceNM,
   } from "../../hooks.client.js";
   import { hrefs } from "$lib/index.js";
   import FloatElement from "$lib/components/FloatElement.svelte";
@@ -104,6 +105,20 @@
                 >{formatDateTimeStr(log.created_at)}</span
               >
             </li>
+            {#if !roundTrip}
+              <li class="list-item">
+                Distance: <span class="font-bold"
+                  >{haversineDistanceNM(
+                    log.dep.latitude,
+                    log.dep.longitude,
+                    log.des.latitude,
+                    log.dep.longitude
+                  ).toLocaleString(undefined, {
+                    maximumFractionDigits: 1,
+                  })} Nautical Miles</span
+                >
+              </li>
+            {/if}
           </ul>
         </Card>
       </div>

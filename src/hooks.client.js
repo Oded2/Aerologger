@@ -155,3 +155,19 @@ export async function fetchFromEndpoint(ref = "", params = {}) {
 export function hasNormalCharacters(inputString = "") {
   return inputString.length == 0 ? true : /^[a-zA-Z0-9]+$/.test(inputString);
 }
+
+export function haversineDistanceNM(lat1, lon1, lat2, lon2) {
+  // AI Generated Code
+  const earthRadiusInNauticalMiles = 3440.065;
+  const toRadians = (angle) => angle * (Math.PI / 180);
+  const rl1 = toRadians(lat1);
+  const rl2 = toRadians(lat2);
+  const rl3 = toRadians(lat2 - lat1);
+  const rl4 = toRadians(lon2 - lon1);
+  const a =
+    Math.sin(rl3 / 2) * Math.sin(rl3 / 2) +
+    Math.cos(rl1) * Math.cos(rl2) * Math.sin(rl4 / 2) * Math.sin(rl4 / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = earthRadiusInNauticalMiles * c;
+  return distance;
+}

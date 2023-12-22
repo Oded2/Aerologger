@@ -43,25 +43,4 @@
       Elevation: <span class="font-bold">{airportData.elevation_ft} ft</span>
     </li>
   </ul>
-
-  <!-- <div class="card-img-bottom">
-    <iframe
-      src={getOpenStreetMap(
-        parseFloat(airportData.latitude),
-        parseFloat(airportData.longitude)
-      )}
-      frameborder="0"
-      title="Open Street Map"
-    />
-  </div>
-  <div class="card-footer fs-6">
-    {`${airportData.latitude}, ${airportData.longitude}`}
-  </div> -->
 </Card>
-<!-- 
-<style>
-  iframe {
-    width: 100%;
-    height: 400px;
-  }
-</style> -->
