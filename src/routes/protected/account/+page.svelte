@@ -190,7 +190,9 @@
             placeholder="Tell about yourself"
             bind:value={bio}
             max="150"
-            text={`${bio.length}/${(150).toLocaleString()}`}
+            text={`${parseInt(
+              bio.length
+            ).toLocaleString()}/${(150).toLocaleString()}`}
           />
         </div>
         <div class="mb-3">
