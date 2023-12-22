@@ -3,7 +3,7 @@
   import Container from "$lib/components/Container.svelte";
   import FormInput from "$lib/components/FormInput.svelte";
   import ToastSetup from "$lib/components/ToastSetup.svelte";
-  import { hrefs } from "$lib/index.js";
+  import { hrefs, contact } from "$lib/index.js";
   import { createToast, fetchFromEndpoint } from "../hooks.client.js";
   export let data;
   const { session } = data;
@@ -34,7 +34,7 @@
     },
   ];
   let toast;
-  async function contact() {
+  async function submitContact() {
     progress = true;
     await fetchFromEndpoint("https://formspree.io/f/mgejprlb", {
       email: contactEmail,
@@ -64,6 +64,12 @@
           Hello <span class="text-primary">Pilot</span>.
         </h1>
         <h2 class="text-4xl">What would you like to do today?</h2>
+        <h5 class="text-lg">
+          <i class="fa-brands fa-github"></i> Check out the
+          <a href={contact.repo} class="link" target="_blank"
+            ><i class="fa-solid fa-arrow-up-right-from-square"></i> GitHub Repository</a
+          >
+        </h5>
       </div>
       <div class="grid grid-cols-2 gap-10 place-content-center mt-3 sm:mt-0">
         {#if session}
@@ -108,7 +114,7 @@
     </div>
     <div class="my-5 text-xl">
       <Card
-        on:submit={contact}
+        on:submit={submitContact}
         title="Contact Form"
         buttonText="Submit"
         disabled={progress}
