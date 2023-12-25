@@ -4,7 +4,7 @@ export async function load({ parent, url }) {
   const { supabase } = await parent();
   const logId = url.searchParams.get("logid");
   const ref = url.searchParams.get("ref");
-  if (isNaN(logId) || !logId) throw error(400, "Invalid Parameters");
+  if (!logId || isNaN(logId)) throw error(400, "Invalid Parameters");
   const {
     data: [log],
   } = await supabase.from("Logs").select().eq("id", logId);
