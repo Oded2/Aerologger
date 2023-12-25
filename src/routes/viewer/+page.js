@@ -8,7 +8,7 @@ export async function load({ parent, url }) {
   const {
     data: [log],
   } = await supabase.from("Logs").select().eq("id", logId);
-  if (log.length == 0) {
+  if (!log) {
     throw error(404, {
       message: `Log ${logId} is either set private by the owner or does not exist.`,
     });
